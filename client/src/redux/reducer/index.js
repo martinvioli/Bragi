@@ -3,4 +3,14 @@
 // STATE CREATION
 const initialState = {};
 
-// export default function reducerName(state = initialState, action){here goes the switch cases or if's... || Remember that the default always is return initialState}
+function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case "ALGO":
+      break;
+
+    default:
+      break;
+  }
+}
+
+export default rootReducer;
