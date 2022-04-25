@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
-// import reducerName from "../reducer";
-
-// Thunk para las operaciones asyncronas en relacion al store.
+import rootReducer from "../reducer";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-// const store = createStore(reducerName, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
-// export default store;
+export default store;
