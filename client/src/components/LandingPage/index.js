@@ -55,7 +55,7 @@ function LandingPage() {
           type="text"
           name="username"
           value={input.username}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
         />
         {errors.username ? (
           <label htmlFor="username">{errors.username}</label>
