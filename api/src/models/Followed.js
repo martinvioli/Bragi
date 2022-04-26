@@ -4,17 +4,17 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 
     sequelize.define("Followed", {
-        IdFollowed: {
+        idFollowed: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        UserProfileFollowed: {
+        userProfileFollowed: {
         type: DataTypes.STRING,
         allowNull: false,
         },
-        UserNameFollowed: {
+        userNameFollowed: {
             type: DataTypes.STRING,
             allowNull: false,
         },

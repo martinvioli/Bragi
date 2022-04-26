@@ -4,17 +4,17 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 
     sequelize.define("TypeUser", {
-        IdTypeUser: {
+        idTypeUser: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        NameTypeUser: {
+        nameTypeUser: {
         type: DataTypes.ENUM('Premium', 'Standard'),
         allowNull: false,
         },
-        DateTypeUser: {
+        dateTypeUser: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW

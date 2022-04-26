@@ -4,17 +4,17 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 
     sequelize.define("StateUser", {
-        IdStateUser: {
+        idStateUser: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        NameStateUser: {
+        nameStateUser: {
         type: DataTypes.ENUM('Active', 'Banned', 'Inactive'),
         allowNull: false,
         },
-        DateStateUser: {
+        dateStateUser: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW

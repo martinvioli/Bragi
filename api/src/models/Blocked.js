@@ -4,25 +4,25 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 
     sequelize.define("BlockedUser", {
-        IdBlocked: {
+        idBlocked: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        UserProfileBlocked: {
+        userProfileBlocked: {
         type: DataTypes.STRING,
         allowNull: false,
         },
-        UserNameBlocked: {
+        userNameBlocked: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        DateBlocked: {
+        dateBlocked: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
-        IsBlocked: {
+        isBlocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
