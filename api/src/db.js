@@ -2,7 +2,9 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+const {
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
+} = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -74,8 +76,8 @@ const {
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
-User.hasMany(TypeUser);
-TypeUser.belongsTo(User);
+User.belongsTo(TypeUser);
+TypeUser.hasMany(User);
 
 User.hasMany(StateUser);
 StateUser.belongsTo(User);
