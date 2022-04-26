@@ -29,7 +29,7 @@ let sequelize =
         ssl: true,
       })
     : new Sequelize(
-        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
+        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/bragidb`,
         { logging: false, native: false }
       );
 const basename = path.basename(__filename);
@@ -58,10 +58,53 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { ModelExample } = sequelize.models;
+const {
+  User,
+  Post,
+  Comment,
+  Follower,
+  TypeUser,
+  StatusPostUser,
+  StateUser,
+  Followed,
+  BlockedUser,
+  Like
+} = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+
+User.hasMany(TypeUser);
+TypeUser.belongsTo(User);
+
+User.hasMany(StateUser);
+StateUser.belongsTo(User);
+
+User.hasMany(Follower);
+Follower.belongsTo(User);
+
+User.hasMany(Followed);
+Followed.belongsTo(User);
+
+User.hasMany(BlockedUser);
+BlockedUser.belongsTo(User);
+
+User.hasMany(Post);
+Post.belongsTo(User);
+
+Post.hasMany(StatusPostUser);
+StatusPostUser.belongsTo(Post)
+
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
+
+Post.hasMany(Like);
+Like.belongsTo(Post);
+
+Comment.hasMany(Like);
+Like.belongsTo(Comment);
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
