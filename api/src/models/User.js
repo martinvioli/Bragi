@@ -4,56 +4,56 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
 // defino el modelo
     sequelize.define("User", {
-        IdUser: {
+        idUser: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        Name: {
+        name: {
         type: DataTypes.STRING,
         allowNull: false,
         },
-        LastName: {
+        lastName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        Email: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        Password: {
+        password: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        Gender: {
+        gender: {
             type: DataTypes.ENUM('Male', 'Female', 'Non binary', 'Other'),
             allowNull: false,
         },
-        Telephone: {
+        telephone: {
             type: DataTypes.INTEGER,
             allowNull: true
         },
-        Description: {
+        description: {
             type: DataTypes.TEXT,
             allowNull: true
         },
-        Birthday: {
+        birthday: {
             type: DataTypes.DATEONLY,
             allowNull: true
         },
-        UserName: {
+        userName: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false
         },
-        ProfileImage:{
+        profileImage:{
             type: DataTypes.TEXT,
             allowNull: false,
             defaultValue: 'https://i.pinimg.com/564x/e5/91/dc/e591dc82326cc4c86578e3eeecced792.jpg'
         },
-        IsAdmin: {
+        isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }

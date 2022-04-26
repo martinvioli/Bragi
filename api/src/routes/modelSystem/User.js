@@ -20,24 +20,61 @@ class UserClass {
           lastName: userFind.lastName
         };
   }
-  
-}
 
-UserClass.prototype.createUser = async (name, lastName ,email, password, gender, tel, description, admin, birthday, profileImage, userName) => {
-  if(!userName) return {msg: "Invalido"}
-  const user = await User.create(
-    {Name: name,
-      LastName: lastName ,
-      Email: email, 
-      Password: password, 
-      Gender: gender,
-      Telephone: tel,
-      Description: description,
-      IsAdmin: admin, 
-      ProfileImage: profileImage,
-      UserName: userName}
-      )
-  return user;
-}
+  async validation (email, userName) {
+    try {
+      let findUserName = await User.findOne({where: {userName: userName}})
+      if(findUserName) return {msg: "This username has already been registered"}
+    } catch (error) {
+      console.log(error)
+    }
+
+    try {
+      let findEmail = await User.findOne({where: {email: email}})
+      if(findEmail) return {msg: "This email has already been registered"}
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName){
+    const valid = await this.validation(email, userName);
+
+    if(valid) return valid;
+
+    try {
+        const user = await User.create(
+        {
+          name,
+          lastName ,
+          email,
+          password,
+          gender,
+          telephone,
+          description,
+          admin,
+          profileImage,
+          userName
+        });
+      return user;
+    } catch (error) {
+      return {msg: 'Error creating a new user'}
+    };
+
+  };
+};
+
+// async function validation (email, userName) {
+//   let findEmail = await User.findOne({where: {email: email}})
+//   let findUserName = await User.findOne({where: {userName: userName}})
+//   console.log(findEmail)
+//   console.log(findUserName)
+//   if(findEmail) {
+//     return {msg: "This email has already been registered"}
+//   }
+//   if(findUserName) {
+//     return {msg: "This username has already been registered"}
+//   }
+// }
 
 module.exports = UserClass;

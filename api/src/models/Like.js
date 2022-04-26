@@ -3,13 +3,13 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define('Like',{
-        IdLike: {
+        idLike: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        CountLike: {
+        countLike: {
             type: DataTypes.INTEGER,
             allowNull: true
         }

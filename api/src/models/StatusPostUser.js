@@ -3,17 +3,17 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define('StatusPostUser',{
-        IdStatusPost: {
+        idStatusPost: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
         },
-        NameStatusPost: {
+        nameStatusPost: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        DateStatusPost:{
+        dateStatusPost:{
             type: DataTypes.DATEONLY,
             allowNull: false,
             defaultValue: DataTypes.NOW
