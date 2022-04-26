@@ -58,7 +58,7 @@ class UserClass {
         });
       return user;
     } catch (error) {
-      console.log('se rompio la creacion')
+      return {msg: 'Error creating a new user'}
     };
 
   };
