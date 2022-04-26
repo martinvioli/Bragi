@@ -2,6 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./CreateUser.module.css";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  FormFeedback,
+  FormFeedbackProps,
+} from "reactstrap";
 
 function validate(input) {
   const errors = {};
@@ -75,43 +83,53 @@ function CreateUser() {
 
   return (
     <>
+      <Form>
+        <FormGroup className="position-relative">
+          <Label htmlFor="firstName">First name:</Label>
+          <Input
+            type="firstName"
+            name="firstName"
+            value={input.firstName}
+            onChange={(e) => handleChange(e)}
+            invalid={errors.firstName ? true : false}
+          />
+          {errors.firstName && (
+            <FormFeedback tooltip>{errors.firstName}</FormFeedback>
+          )}
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label htmlFor="lastName">Last name:</Label>
+          <Input
+            type="text"
+            name="lastName"
+            value={input.lastName}
+            onChange={(e) => handleChange(e)}
+            invalid={errors.lastName ? true : false}
+          />
+          {errors.lastName && (
+            <FormFeedback tooltip>{errors.lastName}</FormFeedback>
+          )}
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label htmlFor="email">Email:</Label>
+          <Input
+            type="email"
+            name="email"
+            value={input.email}
+            onChange={(e) => handleChange(e)}
+            invalid={errors.email ? true : false}
+          />
+          {errors.email && <FormFeedback tooltip>{errors.email}</FormFeedback>}
+        </FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+        <FormGroup className="position-relative"></FormGroup>
+      </Form>
+
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="firstName">First name:</label>
-        <input
-          type="firstName"
-          name="firstName"
-          value={input.firstName}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.firstName ? (
-          <label className={styles.errors} htmlFor="firstName">
-            {errors.firstName}
-          </label>
-        ) : null}
-        <label htmlFor="lastName">Last name:</label>
-        <input
-          type="text"
-          name="lastName"
-          value={input.lastName}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.lastName ? (
-          <label className={styles.errors} htmlFor="lastName">
-            {errors.lastName}
-          </label>
-        ) : null}
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={input.email}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.email ? (
-          <label className={styles.errors} htmlFor="email">
-            {errors.email}
-          </label>
-        ) : null}
         <label htmlFor="gender">Gender:</label>
         <select
           name="gender"
