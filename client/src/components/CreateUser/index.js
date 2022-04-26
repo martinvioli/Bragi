@@ -15,13 +15,13 @@ function validate(input) {
   const errors = {};
   if (!input.firstName) {
     errors.firstName = "FirstName is required";
-  } else if (!/^[a-z]{3,15}$/.test(input.firstName)) {
+  } else if (!/^[a-z ,.'-]+$/i.test(input.firstName)) {
     errors.firstName =
       "The FirstName must be an avaliable name with only 3 to 15 lowecase letters.";
   }
   if (!input.lastName) {
     errors.lastName = "LastName is required";
-  } else if (!/^[a-z]{3,15}$/.test(input.lastName)) {
+  } else if (!/^[a-z ,.'-]+$/i.test(input.lastName)) {
     errors.lastName =
       "The LastName must be an avaliable name with only 3 to 15 lowecase letters.";
   }
@@ -83,116 +83,116 @@ function CreateUser() {
 
   return (
     <>
-      <Form>
-        <FormGroup className="position-relative">
-          <Label htmlFor="firstName">First name:</Label>
-          <Input
-            type="firstName"
-            name="firstName"
-            value={input.firstName}
-            onChange={(e) => handleChange(e)}
-            invalid={errors.firstName ? true : false}
-          />
-          {errors.firstName && (
-            <FormFeedback tooltip>{errors.firstName}</FormFeedback>
+      <div className="container">
+        <Form onSubmit={handleSubmit}>
+          <FormGroup className="position-relative">
+            <Label htmlFor="firstName">First name:</Label>
+            <Input
+              type="firstName"
+              name="firstName"
+              value={input.firstName}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.firstName ? true : false}
+            />
+            {errors.firstName && (
+              <FormFeedback tooltip>{errors.firstName}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup className="position-relative">
+            <Label htmlFor="lastName">Last name:</Label>
+            <Input
+              type="text"
+              name="lastName"
+              value={input.lastName}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.lastName ? true : false}
+            />
+            {errors.lastName && (
+              <FormFeedback tooltip>{errors.lastName}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup className="position-relative">
+            <Label htmlFor="email">Email:</Label>
+            <Input
+              type="email"
+              name="email"
+              value={input.email}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.email ? true : false}
+            />
+            {errors.email && (
+              <FormFeedback tooltip>{errors.email}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup className="position-relative">
+            <Label htmlFor="gender">Gender: </Label>
+            <Input
+              onChange={(e) => handleChange(e)}
+              type="select"
+              name="gender"
+              value={input.gender}
+              invalid={errors.gender ? true : false}
+            >
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="noBinary">No Binary</option>
+              <option value="other">Other</option>
+              {errors.gender && (
+                <FormFeedback tooltip>{errors.gender}</FormFeedback>
+              )}
+            </Input>
+          </FormGroup>
+          <FormGroup className="position-relative">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              type="tel"
+              name="phone"
+              value={input.phone}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.phone ? true : false}
+            />
+            {errors.phone && (
+              <FormFeedback tooltip>{errors.phone}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup className="position-relative">
+            <Label htmlFor="password">Password:</Label>
+            <Input
+              type="password"
+              name="password"
+              value={input.password}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.password ? true : false}
+            />
+            {errors.password && (
+              <FormFeedback tooltip>{errors.password}</FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup className="position-relative"></FormGroup>
+          <FormGroup className="position-relative"></FormGroup>
+          <FormGroup className="position-relative"></FormGroup>
+          {errors.firstName ||
+          errors.lastName ||
+          errors.gender ||
+          errors.phone ||
+          errors.email ||
+          errors.password ||
+          !input.firstName ||
+          !input.lastName ||
+          !input.phone ||
+          !input.gender ||
+          !input.email ||
+          !input.password ? (
+            <Input type="submit" disabled />
+          ) : (
+            <Input type="submit" />
           )}
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label htmlFor="lastName">Last name:</Label>
-          <Input
-            type="text"
-            name="lastName"
-            value={input.lastName}
-            onChange={(e) => handleChange(e)}
-            invalid={errors.lastName ? true : false}
-          />
-          {errors.lastName && (
-            <FormFeedback tooltip>{errors.lastName}</FormFeedback>
-          )}
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            type="email"
-            name="email"
-            value={input.email}
-            onChange={(e) => handleChange(e)}
-            invalid={errors.email ? true : false}
-          />
-          {errors.email && <FormFeedback tooltip>{errors.email}</FormFeedback>}
-        </FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-        <FormGroup className="position-relative"></FormGroup>
-      </Form>
+        </Form>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="gender">Gender:</label>
-        <select
-          name="gender"
-          defaultValue="default"
-          onChange={(e) => handleChange(e)}
-        >
-          <option disabled value="default">
-            Select...
-          </option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="other">Other</option>
-        </select>
-        {errors.gender ? (
-          <label className={styles.errors} htmlFor="gender">
-            {errors.gender}
-          </label>
-        ) : null}
-        <label htmlFor="phone">Phone:</label>
-        <input
-          type="number"
-          inputMode="tel"
-          name="phone"
-          value={input.phone}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.phone ? (
-          <label className={styles.errors} htmlFor="phone">
-            {errors.phone}
-          </label>
-        ) : null}
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={input.password}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.password ? (
-          <label className={styles.errors} htmlFor="username">
-            {errors.password}
-          </label>
-        ) : null}
-        {errors.firstName ||
-        errors.lastName ||
-        errors.gender ||
-        errors.phone ||
-        errors.email ||
-        errors.password ||
-        !input.firstName ||
-        !input.lastName ||
-        !input.phone ||
-        !input.gender ||
-        !input.email ||
-        !input.password ? (
-          <input type="submit" disabled />
-        ) : (
-          <input type="submit" />
-        )}
-      </form>
-      <Link to="/">
-        <button>Back</button>
-      </Link>
+        <Link to="/">
+          <button>Back</button>
+        </Link>
+      </div>
     </>
   );
 }
