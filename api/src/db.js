@@ -79,8 +79,8 @@ const {
 User.belongsTo(TypeUser);
 TypeUser.hasMany(User);
 
-User.hasMany(StateUser);
-StateUser.belongsTo(User);
+User.belongsTo(StateUser);
+StateUser.hasMany(User);
 
 User.hasMany(Follower);
 Follower.belongsTo(User);
@@ -94,8 +94,8 @@ BlockedUser.belongsTo(User);
 User.hasMany(Post);
 Post.belongsTo(User);
 
-Post.hasMany(StatusPostUser);
-StatusPostUser.belongsTo(Post)
+Post.belongsTo(StatusPostUser);
+StatusPostUser.hasMany(Post)
 
 Post.hasMany(Comment);
 Comment.belongsTo(Post);
