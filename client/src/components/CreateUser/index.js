@@ -1,19 +1,29 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./CreateUser.module.css";
 
 function validate(input) {
-  const errors = {}; // un  objeto que contenga el error
+  const errors = {};
+  if (!input.firstName) {
+    errors.firstName = "FirstName is required";
+  } else if (!/^[a-z]{3,15}$/.test(input.firstName)) {
+    errors.firstName =
+      "The FirstName must be an avaliable name with only 3 to 15 lowecase letters.";
+  }
+  if (!input.lastName) {
+    errors.lastName = "LastName is required";
+  } else if (!/^[a-z]{3,15}$/.test(input.lastName)) {
+    errors.lastName =
+      "The LastName must be an avaliable name with only 3 to 15 lowecase letters.";
+  }
   if (!input.email) {
-    // sino hay nada en username, agregar propiedad al objeto
     errors.email = "Email is required";
-    // se compara la regular expression con el input de username
   } else if (
     !/[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})/i.test(
       input.email
     )
   ) {
-    // si lo que está escrito es distinto a lo esperado (mail),
-    // agregar una propiedad al objeto vacío
     errors.email = "Email is invalid";
   }
   if (!input.phone) {
@@ -27,15 +37,11 @@ function validate(input) {
     errors.gender = "Gender is required";
   }
   if (!input.password) {
-    // sino hay nada en password, agregar propiedad al objeto
     errors.password = "Password is required";
-    // se compara la regular expression con el input de password
   } else if (!/(?=.*[0-9])/.test(input.password)) {
-    // si lo que está escrito es distinto a lo esperado (password, debe tener por lo menos un número)
-    // agregar una propiedad al objeto vacío
     errors.password = "Password is invalid";
   }
-  return errors; // devolver el error
+  return errors;
 }
 
 function CreateUser() {
@@ -69,7 +75,7 @@ function CreateUser() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="firstName">First name:</label>
         <input
           type="firstName"
@@ -78,7 +84,9 @@ function CreateUser() {
           onChange={(e) => handleChange(e)}
         />
         {errors.firstName ? (
-          <label htmlFor="firstName">{errors.firstName}</label>
+          <label className={styles.errors} htmlFor="firstName">
+            {errors.firstName}
+          </label>
         ) : null}
         <label htmlFor="lastName">Last name:</label>
         <input
@@ -88,7 +96,9 @@ function CreateUser() {
           onChange={(e) => handleChange(e)}
         />
         {errors.lastName ? (
-          <label htmlFor="lastName">{errors.lastName}</label>
+          <label className={styles.errors} htmlFor="lastName">
+            {errors.lastName}
+          </label>
         ) : null}
         <label htmlFor="email">Email:</label>
         <input
@@ -97,7 +107,11 @@ function CreateUser() {
           value={input.email}
           onChange={(e) => handleChange(e)}
         />
-        {errors.email ? <label htmlFor="email">{errors.email}</label> : null}
+        {errors.email ? (
+          <label className={styles.errors} htmlFor="email">
+            {errors.email}
+          </label>
+        ) : null}
         <label htmlFor="gender">Gender:</label>
         <select
           name="gender"
@@ -111,7 +125,11 @@ function CreateUser() {
           <option value="male">Male</option>
           <option value="other">Other</option>
         </select>
-        {errors.gender ? <label htmlFor="gender">{errors.gender}</label> : null}
+        {errors.gender ? (
+          <label className={styles.errors} htmlFor="gender">
+            {errors.gender}
+          </label>
+        ) : null}
         <label htmlFor="phone">Phone:</label>
         <input
           type="number"
@@ -120,7 +138,11 @@ function CreateUser() {
           value={input.phone}
           onChange={(e) => handleChange(e)}
         />
-        {errors.phone ? <label htmlFor="phone">{errors.phone}</label> : null}
+        {errors.phone ? (
+          <label className={styles.errors} htmlFor="phone">
+            {errors.phone}
+          </label>
+        ) : null}
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -129,12 +151,18 @@ function CreateUser() {
           onChange={(e) => handleChange(e)}
         />
         {errors.password ? (
-          <label htmlFor="username">{errors.password}</label>
+          <label className={styles.errors} htmlFor="username">
+            {errors.password}
+          </label>
         ) : null}
-        {errors.email ||
-        errors.password ||
+        {errors.firstName ||
+        errors.lastName ||
         errors.gender ||
         errors.phone ||
+        errors.email ||
+        errors.password ||
+        !input.firstName ||
+        !input.lastName ||
         !input.phone ||
         !input.gender ||
         !input.email ||
@@ -144,6 +172,9 @@ function CreateUser() {
           <input type="submit" />
         )}
       </form>
+      <Link to="/">
+        <button>Back</button>
+      </Link>
     </>
   );
 }
