@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
+import { Form, FormGroup, Input, Label, FormFeedback } from "reactstrap";
+
 function validate(input) {
   const errors = {}; // un  objeto que contenga el error
-  if (!input.username) {
-    // sino hay nada en username, agregar propiedad al objeto
-    errors.username = "Username is required";
-    // se compara la regular expression con el input de username
-  } else if (!/\S+@+\S+.+\S+/.test(input.username)) {
+  if (!input.email) {
+    // sino hay nada en email, agregar propiedad al objeto
+    errors.email = "email is required";
+    // se compara la regular expression con el input de email
+  } else if (!/\S+@+\S+.+\S+/.test(input.email)) {
     // si lo que está escrito es distinto a lo esperado (mail),
     // agregar una propiedad al objeto vacío
-    errors.username = "Username is invalid";
+    errors.email = "email is invalid";
   }
   if (!input.password) {
     // sino hay nada en password, agregar propiedad al objeto
@@ -26,16 +28,11 @@ function validate(input) {
 
 function LandingPage() {
   const [input, setInput] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   setErrors(validate(errors));
-  // }, [input]);
-
-  // test
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -49,21 +46,22 @@ function LandingPage() {
     alert("Formulario Enviado con Exito");
   };
 
-  //git push --set-upstream origin ale
   return (
     <>
+      <Form>
+        <FormGroup className="position-relative">
+          <Label for="exampleEmail">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            value={input.email}
+            onChange={(e) => handleChange(e)}
+            invalid={errors.email ? true : false}
+          />
+          {errors.email && <FormFeedback tooltip>{errors.email}</FormFeedback>}
+        </FormGroup>
+      </Form>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          value={input.username}
-          onChange={(e) => handleChange(e)}
-        />
-        {errors.username ? (
-          <label className={styles.errors} htmlFor="username">
-            {errors.username}
-          </label>
-        ) : null}
         <input
           type="password"
           name="password"
@@ -71,14 +69,11 @@ function LandingPage() {
           onChange={handleChange}
         />
         {errors.password ? (
-          <label className={styles.errors} htmlFor="username">
+          <label className={styles.errors} htmlFor="email">
             {errors.password}
           </label>
         ) : null}
-        {errors.username ||
-        errors.password ||
-        !input.username ||
-        !input.password ? (
+        {errors.email || errors.password || !input.email || !input.password ? (
           <input type="submit" disabled />
         ) : (
           <input type="submit" />
@@ -88,7 +83,6 @@ function LandingPage() {
       <Link to="/register">
         <button>Register</button>
       </Link>
-      <h1>Holis</h1>
     </>
   );
 }
