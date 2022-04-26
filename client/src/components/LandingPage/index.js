@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
+import styles from "./LandingPage.module.css";
 function validate(input) {
   const errors = {}; // un  objeto que contenga el error
   if (!input.username) {
@@ -58,7 +59,9 @@ function LandingPage() {
           onChange={(e) => handleChange(e)}
         />
         {errors.username ? (
-          <label htmlFor="username">{errors.username}</label>
+          <label className={styles.errors} htmlFor="username">
+            {errors.username}
+          </label>
         ) : null}
         <input
           type="password"
@@ -67,7 +70,9 @@ function LandingPage() {
           onChange={handleChange}
         />
         {errors.password ? (
-          <label htmlFor="username">{errors.password}</label>
+          <label className={styles.errors} htmlFor="username">
+            {errors.password}
+          </label>
         ) : null}
         {errors.username ||
         errors.password ||
@@ -79,6 +84,9 @@ function LandingPage() {
         )}
       </form>
 
+      <Link to="/register">
+        <button>Register</button>
+      </Link>
       <h1>Holis</h1>
     </>
   );
