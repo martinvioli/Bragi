@@ -35,6 +35,7 @@ function LandingPage() {
   //   setErrors(validate(errors));
   // }, [input]);
 
+  // test
   const handleChange = (e) => {
     setInput({
       ...input,
