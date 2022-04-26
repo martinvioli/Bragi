@@ -1,4 +1,5 @@
 const sequelize = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define('Comment', {
@@ -15,6 +16,14 @@ module.exports = (sequelize) => {
         },
         CommentContent:{
             type: DataTypes.TEXT,
+            allowNull: false
+        },
+        IdUserComment: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        UserNameComment: {
+            type: DataTypes.STRING,
             allowNull: false
         }
     });

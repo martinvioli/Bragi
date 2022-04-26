@@ -29,7 +29,7 @@ let sequelize =
         ssl: true,
       })
     : new Sequelize(
-        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
+        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/bragidb`,
         { logging: false, native: false }
       );
 const basename = path.basename(__filename);
@@ -61,17 +61,48 @@ sequelize.models = Object.fromEntries(capsEntries);
 const {
   User,
   Post,
-  Comments,
+  Comment,
   Follower,
   TypeUser,
   StatusPostUser,
   StateUser,
   Followed,
-  Blocked
+  BlockedUser,
+  Like
 } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+
+User.hasMany(TypeUser);
+TypeUser.belongsTo(User);
+
+User.hasMany(StateUser);
+StateUser.belongsTo(User);
+
+User.hasMany(Follower);
+Follower.belongsTo(User);
+
+User.hasMany(Followed);
+Followed.belongsTo(User);
+
+User.hasMany(BlockedUser);
+BlockedUser.belongsTo(User);
+
+User.hasMany(Post);
+Post.belongsTo(User);
+
+Post.hasMany(StatusPostUser);
+StatusPostUser.belongsTo(Post)
+
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
+
+Post.hasMany(Like);
+Like.belongsTo(Post);
+
+Comment.hasMany(Like);
+Like.belongsTo(Comment);
 
 
 

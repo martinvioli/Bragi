@@ -1,4 +1,5 @@
 const sequelize = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
 
@@ -21,7 +22,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         },
-        isBlocked: {
+        IsBlocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }

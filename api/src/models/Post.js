@@ -1,4 +1,5 @@
 const sequelize = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define('Post',{
@@ -28,6 +29,6 @@ module.exports = (sequelize) => {
         LinkContent: {
             type: DataTypes.STRING,
             allowNull: true
-        }
+        },
     })
 }
