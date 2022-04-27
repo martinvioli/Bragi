@@ -69,6 +69,9 @@ class UserClass {
   async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName){
     const valid = await this.validation(email, userName);
     // this.verifactionEmail(email)
+    
+    const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
+    const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
 
     if(valid) return valid;
     await this.verifactionEmail(name, lastName, userName, email)
@@ -76,8 +79,8 @@ class UserClass {
     try {
         const user = await User.create(
         {
-          name,
-          lastName ,
+          name: nameMinus,
+          lastName: lastNameMinus ,
           email,
           password,
           gender,
