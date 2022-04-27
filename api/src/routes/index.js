@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const register = require('./routesModules/Register.js');
-const validation = require('./routesModules/Validation')
+const validation = require('./routesModules/Validation');
+const login = require('./routesModules/Login.js');
 const { User } = require("../db")
 
 // Importar todos los routers;
@@ -11,7 +12,6 @@ const router = Router();
 
 router.use('/register', register);
 router.use('/validation', validation)
-
-
+router.use('/login', login);
 
 module.exports = router;
