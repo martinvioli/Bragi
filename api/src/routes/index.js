@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const register = require('./routesModules/Register.js');
+const validation = require('./routesModules/Validation')
 const login = require('./routesModules/Login.js');
 const { User } = require("../db")
 
@@ -10,6 +11,7 @@ const { User } = require("../db")
 const router = Router();
 
 router.use('/register', register);
+router.use('/validation', validation)
 router.use('/login', login);
 
 
