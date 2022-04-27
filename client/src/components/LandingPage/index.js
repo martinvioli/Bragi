@@ -10,6 +10,8 @@ import {
   Button,
 } from "reactstrap";
 
+import { motion } from "framer-motion/dist/framer-motion";
+
 function validate(input) {
   const errors = {};
   if (!input.email) {
@@ -31,6 +33,7 @@ function LandingPage() {
   const [input, setInput] = useState({
     email: "",
     password: "",
+    userName: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -44,7 +47,7 @@ function LandingPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Todavia no tenemos DB");
+    alert("Tenemos que hacer la conexion con el back");
   };
 
   var features = [
@@ -80,7 +83,12 @@ function LandingPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}>
+      <motion.div
+        className={styles.background}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
         <div className={styles.scroller}>
           {features.map((e) => (
             <div className={styles.feature}>
@@ -150,7 +158,7 @@ function LandingPage() {
             </Button>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

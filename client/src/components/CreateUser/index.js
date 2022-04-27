@@ -2,6 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import validate from "../../Utils/validate";
+import axios from "axios";
 import {
   Form,
   FormGroup,
@@ -11,116 +14,36 @@ import {
   FormFeedbackProps,
   Button,
 } from "reactstrap";
-
-function underAgeValidate(birthday) {
-  const reverseBirthday = birthday.split("/").reverse().join("/");
-
-  // it will accept two types of format yyyy-mm-dd and yyyy/mm/dd
-  var optimizedBirthday = reverseBirthday.replace(/-/g, "/");
-
-  //set date based on birthday at 01:00:00 hours GMT+0100 (CET)
-  var myBirthday = new Date(optimizedBirthday);
-
-  // set current day on 01:00:00 hours GMT+0100 (CET)
-  var currentDate = new Date().toJSON().slice(0, 10) + " 01:00:00";
-
-  // calculate age comparing current date
-  var myAge = ~~((Date.now(currentDate) - myBirthday) / 31557600000);
-
-  if (myAge < 18) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function validate(input) {
-  const errors = {};
-  if (!input.firstName) {
-    errors.firstName = "FirstName is required";
-  } else if (!/^[a-zA-Z_-]{3,15}$/.test(input.firstName)) {
-    errors.firstName =
-      "The FirstName must be an valid name with only 3 to 15 lowecase letters.";
-  }
-  if (!input.lastName) {
-    errors.lastName = "LastName is required";
-  } else if (!/^[a-zA-Z_-]{3,15}$/.test(input.lastName)) {
-    errors.lastName =
-      "The LastName must be an valid name with only 3 to 15 lowecase letters.";
-  }
-  if (!input.email) {
-    errors.email = "Email is required";
-  } else if (
-    !/[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})/i.test(
-      input.email
-    )
-  ) {
-    errors.email = "Email is invalid";
-  }
-  if (!input.phone) {
-    errors.phone = "Phone is required";
-  } else if (
-    !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(input.phone)
-  ) {
-    errors.phone = "Phone is invalid";
-  }
-  if (!input.gender) {
-    errors.gender = "Gender is required";
-  }
-  if (!input.password) {
-    errors.password = "Password is required";
-  } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.password)
-  ) {
-    errors.password = "Password is invalid";
-  }
-  if (!input.username) {
-    errors.username = "Username is required";
-  } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.username)
-  ) {
-    errors.username = "Username is invalid";
-  }
-  if (!input.birthday) {
-    errors.birthday = "Birthday is required";
-  } else if (!underAgeValidate(input.birthday)) {
-    errors.birthday = "You need to be 18 or older.";
-  }
-
-  if (!input.repeatPassword) {
-    errors.repeatPassword = "Password is required";
-  } else if (input.repeatPassword !== input.password) {
-    errors.repeatPassword = "Passwords not match";
-  }
-  return errors;
-}
+import { url } from "../../Utils";
+import { motion } from "framer-motion/dist/framer-motion";
 
 function CreateUser() {
   const [input, setInput] = useState({
-    firstName: "",
+    name: "",
     lastName: "",
     email: "",
     gender: "",
-    phone: "",
+    tel: "",
     password: "",
     repeatPassword: "",
     birthday: "",
-    username: "",
+    userName: "",
   });
   const [errors, setErrors] = useState({
-    firstName: "",
+    name: "",
     lastName: "",
     email: "",
     gender: "",
     password: "",
     repeatPassword: "",
     birthday: "",
-    username: "",
-    phone: "",
+    userName: "",
+    tel: "",
   });
   let [show, setShow] = useState(false);
   let [show2, setShow2] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleShow = () => setShow(!show);
   const handleShow2 = () => setShow2(!show2);
   const handleChange = (e) => {
@@ -130,47 +53,68 @@ function CreateUser() {
     });
     setErrors(validate({ ...input, [e.target.name]: e.target.value }));
   };
-
-  const handleSubmit = (e) => {
+  const checkData = async (e) => {
+    if (e.target.name === "email") {
+      const response = await axios.get(
+        `${url}register/validate?email=${input.email}`
+      );
+      if (response.data.hasOwnProperty("msgE")) {
+        setErrors({ ...errors, email: response.data.msgE });
+      }
+    } else {
+      const response = await axios.get(
+        `${url}register/validate?userName=${input.userName}`
+      );
+      if (response.data.hasOwnProperty("msgE")) {
+        setErrors({ ...errors, userName: response.data.msgE });
+      }
+    }
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Formulario Enviado con Exito");
+    const newUser = await axios.post(`${url}register`, input);
     navigate("authenticate");
     setInput({
-      firstName: "",
+      name: "",
       lastName: "",
       email: "",
       gender: "",
-      phone: "",
+      tel: "",
       password: "",
       repeatPassword: "",
       birthday: "",
-      username: "",
+      userName: "",
     });
     setShow(false);
     setShow2(false);
   };
-
   return (
-    <>
-      <div className="container">
+    <div className={styles.background}>
+      <div className={styles.container}>
         <Form onSubmit={handleSubmit}>
-          <FormGroup className="position-relative">
-            <Label htmlFor="firstName">First name:</Label>
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginRight: "2%" }}
+          >
+            <Label htmlFor="name">First name:</Label>
             <Input
-              type="firstName"
-              name="firstName"
-              value={input.firstName}
+              type="name"
+              name="name"
+              value={input.name}
               onChange={(e) => handleChange(e)}
-              invalid={errors.firstName ? true : false}
-              valid={!errors.firstName && input.firstName ? true : false}
+              invalid={errors.name ? true : false}
+              valid={!errors.name && input.name ? true : false}
             />
-            {errors.firstName ? (
-              <FormFeedback tooltip>{errors.firstName}</FormFeedback>
+            {errors.name ? (
+              <FormFeedback tooltip>{errors.name}</FormFeedback>
             ) : (
               <FormFeedback tooltip></FormFeedback>
             )}
           </FormGroup>
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginLeft: "2%" }}
+          >
             <Label htmlFor="lastName">Last name:</Label>
             <Input
               type="text"
@@ -186,23 +130,27 @@ function CreateUser() {
               <FormFeedback tooltip></FormFeedback>
             )}
           </FormGroup>
-          <FormGroup className="position-relative">
-            <Label htmlFor="username">Username:</Label>
+          <FormGroup className="position-relative" style={{ width: "48%" }}>
+            <Label htmlFor="userName">Username:</Label>
             <Input
               type="text"
-              name="username"
-              value={input.username}
+              name="userName"
+              value={input.userName}
               onChange={(e) => handleChange(e)}
-              invalid={errors.username ? true : false}
-              valid={!errors.username && input.username ? true : false}
+              invalid={errors.userName ? true : false}
+              valid={!errors.userName && input.userName ? true : false}
+              onBlur={checkData}
             />
-            {errors.username ? (
-              <FormFeedback tooltip>{errors.username}</FormFeedback>
+            {errors.userName ? (
+              <FormFeedback tooltip>{errors.userName}</FormFeedback>
             ) : (
               <FormFeedback tooltip></FormFeedback>
             )}
           </FormGroup>
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginRight: "2%" }}
+          >
             <Label htmlFor="email">Email:</Label>
             <Input
               type="email"
@@ -211,6 +159,7 @@ function CreateUser() {
               onChange={(e) => handleChange(e)}
               invalid={errors.email ? true : false}
               valid={!errors.email && input.email ? true : false}
+              onBlur={checkData}
             />
             {errors.email ? (
               <FormFeedback tooltip>{errors.email}</FormFeedback>
@@ -218,22 +167,45 @@ function CreateUser() {
               <FormFeedback tooltip></FormFeedback>
             )}
           </FormGroup>
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginLeft: "2%" }}
+          >
+            <Label htmlFor="tel">Tel: </Label>
+            <Input
+              type="tel"
+              name="tel"
+              value={input.tel}
+              onChange={(e) => handleChange(e)}
+              invalid={errors.tel ? true : false}
+              valid={!errors.tel && input.tel ? true : false}
+            />
+            {errors.tel ? (
+              <FormFeedback tooltip>{errors.tel}</FormFeedback>
+            ) : (
+              <FormFeedback tooltip></FormFeedback>
+            )}
+          </FormGroup>
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginRight: "2%" }}
+          >
             <Label htmlFor="gender">Gender:</Label>
             <Input
               onChange={(e) => handleChange(e)}
               type="select"
               name="gender"
               value={input.gender}
-              invalid={errors.gender ? true : false}
+              invalid={
+                errors.gender || input.gender === "default" ? true : false
+              }
               valid={!errors.gender && input.gender ? true : false}
-              defaultValue="default"
             >
               <option value="default">Select ...</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="noBinary">No Binary</option>
-              <option value="other">Other</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Non Binary">No Binary</option>
+              <option value="Other">Other</option>
               {errors.gender ? (
                 <FormFeedback tooltip>{errors.gender}</FormFeedback>
               ) : (
@@ -241,7 +213,10 @@ function CreateUser() {
               )}
             </Input>
           </FormGroup>
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginLeft: "2%" }}
+          >
             <Label htmlFor="date">Birthday:</Label>
             <Input
               type="date"
@@ -257,23 +232,10 @@ function CreateUser() {
               <FormFeedback tooltip></FormFeedback>
             )}
           </FormGroup>
-          <FormGroup className="position-relative">
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              type="tel"
-              name="phone"
-              value={input.phone}
-              onChange={(e) => handleChange(e)}
-              invalid={errors.phone ? true : false}
-              valid={!errors.phone && input.phone ? true : false}
-            />
-            {errors.phone ? (
-              <FormFeedback tooltip>{errors.phone}</FormFeedback>
-            ) : (
-              <FormFeedback tooltip></FormFeedback>
-            )}
-          </FormGroup>
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginRight: "2%" }}
+          >
             <Label htmlFor="password">Password:</Label>
             <Input
               type={show ? "text" : "password"}
@@ -305,7 +267,10 @@ function CreateUser() {
             )}
           </FormGroup>
 
-          <FormGroup className="position-relative">
+          <FormGroup
+            className="position-relative"
+            style={{ display: "inline-block", width: "48%", marginLeft: "2%" }}
+          >
             <Label htmlFor="repeatPassword">Repeat Password:</Label>
             <Input
               type={show2 ? "text" : "password"}
@@ -341,16 +306,16 @@ function CreateUser() {
           <FormGroup className="position-relative"></FormGroup>
           <FormGroup className="position-relative"></FormGroup>
           <FormGroup className="position-relative"></FormGroup>
-          {errors.firstName ||
+          {errors.name ||
           errors.lastName ||
           errors.gender ||
-          errors.phone ||
+          errors.tel ||
           errors.email ||
           errors.password ||
           errors.repeatPassword ||
-          !input.firstName ||
+          !input.name ||
           !input.lastName ||
-          !input.phone ||
+          !input.tel ||
           !input.gender ||
           !input.email ||
           !input.password ||
@@ -367,7 +332,7 @@ function CreateUser() {
           </Button>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
 
