@@ -65,9 +65,6 @@ const {
   Post,
   Comment,
   Follower,
-  TypeUser,
-  StatusPostUser,
-  StateUser,
   Followed,
   BlockedUser,
   Like
@@ -75,12 +72,6 @@ const {
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-
-User.belongsTo(TypeUser);
-TypeUser.hasMany(User);
-
-User.belongsTo(StateUser);
-StateUser.hasMany(User);
 
 User.hasMany(Follower);
 Follower.belongsTo(User);
@@ -93,9 +84,6 @@ BlockedUser.belongsTo(User);
 
 User.hasMany(Post);
 Post.belongsTo(User);
-
-Post.belongsTo(StatusPostUser);
-StatusPostUser.hasMany(Post)
 
 Post.hasMany(Comment);
 Comment.belongsTo(Post);

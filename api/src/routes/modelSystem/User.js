@@ -6,7 +6,7 @@ class UserClass {
   async getDataUser(idUser) {
     let userFind = await User.findByPk(idUser);
     return !userFind
-      ? { msg: "User not Found" }
+      ? { msgE: "User not Found" }
       : {
           name: userFind.name,
           email: userFind.email,
@@ -25,14 +25,14 @@ class UserClass {
   async validation (email, userName) {
     try {
       let findUserName = await User.findOne({where: {userName: userName}})
-      if(findUserName) return {msg: "This username has already been registered"}
+      if(findUserName) return {msgE: "This username has already been registered"}
     } catch (error) {
       console.log(error)
     }
 
     try {
       let findEmail = await User.findOne({where: {email: email}})
-      if(findEmail) return {msg: "This email has already been registered"}
+      if(findEmail) return {msgE: "This email has already been registered"}
     } catch (error) {
       console.log(error)
     }
@@ -58,9 +58,9 @@ class UserClass {
           profileImage,
           userName
         });
-      return user;
+      return {msg: 'User created successfully'}
     } catch (error) {
-      return {msg: 'Error creating a new user'}
+      return {msgE: 'Error creating a new user'}
     };
 
   };
