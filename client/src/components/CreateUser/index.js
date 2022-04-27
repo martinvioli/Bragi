@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
 import {
   Form,
@@ -119,9 +119,10 @@ function CreateUser() {
     phone: "",
   });
   let [show, setShow] = useState(false);
-
+  let [show2, setShow2] = useState(false);
+  const navigate = useNavigate();
   const handleShow = () => setShow(!show);
-
+  const handleShow2 = () => setShow2(!show2);
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -129,13 +130,11 @@ function CreateUser() {
     });
     setErrors(validate({ ...input, [e.target.name]: e.target.value }));
   };
-  // useEffect(() => {
-  //   handleChange();
-  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Formulario Enviado con Exito");
+    navigate("authenticate");
     setInput({
       firstName: "",
       lastName: "",
@@ -148,6 +147,7 @@ function CreateUser() {
       username: "",
     });
     setShow(false);
+    setShow2(false);
   };
 
   return (
@@ -308,7 +308,7 @@ function CreateUser() {
           <FormGroup className="position-relative">
             <Label htmlFor="repeatPassword">Repeat Password:</Label>
             <Input
-              type={show ? "text" : "password"}
+              type={show2 ? "text" : "password"}
               name="repeatPassword"
               value={input.repeatPassword}
               onChange={(e) => handleChange(e)}
@@ -316,6 +316,20 @@ function CreateUser() {
               valid={
                 !errors.repeatPassword && input.repeatPassword ? true : false
               }
+              style={{ paddingLeft: "2.5em" }}
+            />
+            <input
+              type="button"
+              onClick={handleShow2}
+              value="👁"
+              style={{
+                border: "none",
+                backgroundColor: "#ffffff00",
+                top: "2.4em",
+                position: "absolute",
+                borderRight: "1px solid rgb(197, 197, 197)",
+                display: "inline",
+              }}
             />
             <FormFeedback tooltip>{errors.repeatPassword}</FormFeedback>
             {errors.repeatPassword ? (
