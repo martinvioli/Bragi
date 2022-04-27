@@ -63,7 +63,7 @@ module.exports = (sequelize) => {
             defaultValue: 'Standard'
         },
         nameStateUser: {
-        type: DataTypes.ENUM('Active', 'Banned', 'Inactive'),
+        type: DataTypes.ENUM('Active', 'Banned', 'Inactive', 'Pending'),
         allowNull: false,
         defaultValue: 'Pending'
         },
