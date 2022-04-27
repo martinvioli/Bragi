@@ -1,22 +1,11 @@
-@media (max-width: 1000px) {
-  .background {
-    flex-direction: column;
-  }
-  .form {
-    min-width: 100%;
-  }
-  .scroller {
-    min-width: 100%;
-    padding-bottom: 0;
-  }
-}
-
 .container {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(https://i.imgur.com/bOEbx0x.jpeg);
+  background-size: cover;
 }
 
 .form {
@@ -38,11 +27,11 @@
 
 .background {
   border-radius: 1em;
+  border-top-right-radius: 100%;
   width: 70%;
   height: 70%;
   padding: 1em;
-  background-image: linear-gradient(160deg, #ffffff 0%, #5da5ff 100%);
-  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.244);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,10 +42,18 @@
   padding-right: 2em;
   padding-left: 1em;
   padding-bottom: 5em;
-  height: 105%;
-  width: 50%;
+  height: 70%;
+  width: 70%;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  border-top-right-radius: 100%;
+  position: absolute;
+  padding-right: 38%;
+}
+
+.falseScroller {
+  width: 50%;
+  height: 105%;
 }
 
 .scroller::-webkit-scrollbar {
@@ -89,5 +86,28 @@
   padding: 0.1em 0.5em 0.1em 0.5em;
   font-weight: bold;
   color: white;
-  box-shadow: 4px 4px 0px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 0px -3px rgb(101, 175, 254);
+}
+
+@media (max-width: 1000px) {
+  .background {
+    flex-direction: column;
+    border-radius: 1em;
+  }
+  .form {
+    min-width: 100%;
+  }
+  .scroller {
+    min-width: 100%;
+    padding-bottom: 0;
+    position: static;
+    border-top-right-radius: 0;
+    width: 100%;
+    padding-right: 0;
+    padding-bottom: 3em;
+    margin-top: -1em;
+  }
+  .falseScroller {
+    display: none;
+  }
 }

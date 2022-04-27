@@ -90,6 +90,7 @@ function LandingPage() {
             </div>
           ))}
         </div>
+        <div className={styles.falseScroller}></div>
         <div className={styles.form}>
           <img
             src="https://www.svgrepo.com/show/194008/music.svg"
