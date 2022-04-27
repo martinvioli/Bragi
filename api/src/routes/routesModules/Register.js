@@ -25,4 +25,10 @@ router.post('/', async (req, res) =>{
     res.send(userResponse) ;
 })
 
+router.get('/validate', (req, res) =>{
+    const {email, userName} = req.query;
+    let userValidateEmailUserName = user.validation(email, userName);
+    return res.send(userValidateEmailUserName);
+})
+
 module.exports = router;

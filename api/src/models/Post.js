@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
             allowNull: true
         },
         nameStatusPost: {
-            type: DataTypes.ENUM('Paused', 'Edited', 'Deleted'),
+            type: DataTypes.ENUM('Posted','Paused', 'Edited', 'Deleted'),
             allowNull: false,
             defaultValue: 'Posted'
         },
