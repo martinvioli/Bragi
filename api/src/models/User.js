@@ -56,6 +56,16 @@ module.exports = (sequelize) => {
         isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
+        },
+        nameTypeUser: {
+            type: DataTypes.ENUM('Premium', 'Standard'),
+            allowNull: false,
+            defaultValue: 'Standard'
+        },
+        nameStateUser: {
+        type: DataTypes.ENUM('Active', 'Banned', 'Inactive'),
+        allowNull: false,
+        defaultValue: 'Pending'
+        },
     });
 };

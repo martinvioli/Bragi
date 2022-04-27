@@ -2,6 +2,7 @@ const { User } = require("../../db.js");
 
 class UserClass {
   constructor(){}
+
   async getDataUser(idUser) {
     let userFind = await User.findByPk(idUser);
     return !userFind
@@ -51,6 +52,7 @@ class UserClass {
           password,
           gender,
           telephone,
+          birthday,
           description,
           admin,
           profileImage,
