@@ -1,0 +1,8 @@
+.background {
+  height: 100vh;
+  background: linear-gradient(to top, rgb(59, 118, 255), rgb(5, 247, 255));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

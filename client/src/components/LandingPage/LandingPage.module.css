@@ -4,8 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(https://i.imgur.com/bOEbx0x.jpeg);
-  background-size: cover;
 }
 
 .form {
@@ -16,6 +14,7 @@
   border: 1px solid black;
   box-shadow: 0px 13px 6px -4px rgba(1, 1, 1, 0.3),
     0px -8px 15px -3px rgba(1, 1, 1, 0.3);
+  z-index: 2;
 }
 
 .form > img {
