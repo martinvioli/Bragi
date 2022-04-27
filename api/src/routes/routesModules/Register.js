@@ -4,8 +4,7 @@ const UserClass = require('../modelSystem/User.js');
 const user = new UserClass();
 const router = Router();
 
-router.post('/', async (req, res) =>{
-    const cyrb53 = function(str, seed = 0) {
+const passwordHash = function(str, seed = 0) {
         let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
         for (let i = 0, ch; i < str.length; i++) {
             ch = str.charCodeAt(i);
@@ -16,8 +15,11 @@ router.post('/', async (req, res) =>{
         h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
         return 4294967296 * (2097151 & h2) + (h1>>>0);
     };
+
+router.post('/', async (req, res) =>{
+    
     let {name, lastName,email, password, gender, tel, description, admin, birthday, profileImage, userName} = req.body;
-    password = cyrb53(password)
+    password = passwordHash(password)
     let userResponse = await user.createUser(name, lastName,email, password, gender, tel, description, admin, birthday, profileImage, userName)
 
     res.send(userResponse) ;
