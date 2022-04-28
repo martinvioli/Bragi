@@ -53,7 +53,7 @@ async function validationLoginUser(email, userName, password){
     }
 };
 
-async function verifactionEmail (name, lastName, userName, email){
+async function verifactionEmail (name, lastName, userName, email, codeNum){
     const transporter = nodemailer.createTransport({
         // host: "smtp.gmail.com",
         port: 465,
@@ -72,9 +72,29 @@ async function verifactionEmail (name, lastName, userName, email){
     await transporter.sendMail({
         from: '"Bragi" <BragiSystem@gmail.com>', // sender address
         to: email, // list of receivers
-        subject: "Your account has been created successfully", // Subject line
-        text: "Hello! \n\n Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.\nPlease redirect to the page and enjoy all of our content.\n\nTo access more features, please consider hiring our premium version where you will enjoy:\n- VIP discussion forums\n-Exclusive information about concerts of your favorite artists\n- Unique and variated profile customization for premium users\n- Unique discounts on concert tickets\n- Exclusive advances to the discography of your favorite artists",
-        html: "<h1>Hello!</h1> <br/><br/> Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.<br/>Please redirect to the <a>page</a> and enjoy all of our content.<br/><br/>To access more features, please consider hiring our premium version where you will enjoy:<br/>- VIP discussion forums<br/>-Exclusive information about concerts of your favorite artists<br/>- Unique and variated profile customization for premium users<br/>- Unique discounts on concert tickets<br/>- Exclusive advances to the discography of your favorite artists", // html body
+        subject: "Your account is almost ready", // Subject line
+        text: `Hello! \n\n Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.\nPlease redirect to the page and enjoy all of our content.\n\nTo access more features, please consider hiring our premium version where you will enjoy:\n- VIP discussion forums\n-Exclusive information about concerts of your favorite artists\n- Unique and variated profile customization for premium users\n- Unique discounts on concert tickets\n- Exclusive advances to the discography of your favorite artists`,
+        html: `<h1>Hello, ${name} ${lastName}!</h1>
+        <br/><br/>
+        Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.
+        <br/>
+        Please redirect to the <a>page</a> and enjoy all of our content.
+        <br/><br/>
+        To access more features, please consider hiring our premium version where you will enjoy:
+        <br/>
+        - VIP discussion forums
+        <br/>
+        -Exclusive information about concerts of your favorite artists
+        <br/>
+        - Unique and variated profile customization for premium users
+        <br/>
+        - Unique discounts on concert tickets
+        <br/>
+        - Exclusive advances to the discography of your favorite artists
+        
+        <h3>Your validation code is:</h3>
+        <h2>${codeNum}</h2>
+        `, // html body
     });
 };
 
