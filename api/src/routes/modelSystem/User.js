@@ -67,6 +67,7 @@ class UserClass {
   }
 
   async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName){
+    password = this.passwordHash(password)
     const valid = await this.validation(email, userName);
     // this.verifactionEmail(email)
     
