@@ -8,35 +8,39 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 import styles from "./Authenticate.module.css";
 function Authenticate() {
   const [input, setInput] = React.useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
     setInput(e.target.value);
   };
   const handleClick = () => {
     alert("Successful Registration");
+    navigate("/");
     setInput("");
   };
 
   return (
     <div className={styles.background}>
       <Card
-        style={{ paddingTop: "5em" }}
+        style={{ margin: "10em", paddingTop: "2em", border: "7px solid black" }}
         body
         color="info"
-        className="bg-transparent"
+        // className="bg-transparent"
       >
         <CardTitle tag="h5"></CardTitle>
         <CardText>
-          <h1>AUTHENTICATE</h1>
-          <h2>
+          <h1 className={styles.title}>AUTHENTICATE</h1>
+          <h2 className={styles.subtitle}>
             Thanks you for registering on BRAGI <br />
             Please check your email and put your code here
           </h2>
-          If you can't find this code, be sure to check your spam.
+          <p className={styles.text}>
+            If you can't find this code, be sure to check your spam.
+          </p>
         </CardText>
         <FormGroup className="position-relative">
           <Label htmlFor="input">CODE</Label>

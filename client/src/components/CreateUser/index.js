@@ -311,6 +311,7 @@ function CreateUser() {
           errors.gender ||
           errors.tel ||
           errors.email ||
+          errors.birthday ||
           errors.password ||
           errors.repeatPassword ||
           !input.name ||
@@ -318,6 +319,7 @@ function CreateUser() {
           !input.tel ||
           !input.gender ||
           !input.email ||
+          !input.birthday ||
           !input.password ||
           !input.repeatPassword ? (
             <Input type="submit" disabled value="Send" />

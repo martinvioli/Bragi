@@ -15,6 +15,8 @@ function underAgeValidate(birthday) {
 
   if (myAge < 18) {
     return false;
+  } else if (myAge > 100) {
+    return false;
   } else {
     return true;
   }
@@ -47,6 +49,8 @@ export default function validate(input) {
     errors.tel = "tel is required";
   } else if (!/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/.test(input.tel)) {
     errors.tel = "tel is invalid";
+  } else if (input.tel.length > 9 || input.tel.length < 5) {
+    errors.tel = "tel is invalid";
   }
   if (input.gender === "default" || !input.gender) {
     errors.gender = "Gender is required";
@@ -68,7 +72,8 @@ export default function validate(input) {
   if (!input.birthday) {
     errors.birthday = "Birthday is required";
   } else if (!underAgeValidate(input.birthday)) {
-    errors.birthday = "You need to be 18 or older.";
+    errors.birthday =
+      "You need to be 18 or older, but you can't be older than 100 years old.";
   }
   if (!input.repeatPassword) {
     errors.repeatPassword = "Password is required";
