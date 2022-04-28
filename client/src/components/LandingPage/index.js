@@ -16,7 +16,11 @@ function validate(input) {
   const errors = {};
   if (!input.email) {
     errors.email = "Email is required";
-  } else if (!/\S+@+\S+.+\S+/.test(input.email)) {
+  } else if (
+    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+      input.email
+    )
+  ) {
     errors.email = "Email is invalid";
   }
   if (!input.password) {

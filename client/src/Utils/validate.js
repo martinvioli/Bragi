@@ -39,7 +39,7 @@ export default function validate(input) {
   if (!input.email) {
     errors.email = "Email is required";
   } else if (
-    !/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
       input.email
     )
   ) {
@@ -58,18 +58,18 @@ export default function validate(input) {
   if (!input.password) {
     errors.password = "Password is required";
   } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.password)
+    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(input.password)
   ) {
     errors.password =
-      "Password must be only letters and numbers and must have a length of 8 or more.";
+      "Password must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
   if (!input.userName) {
     errors.userName = "Username is required";
   } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.userName)
+    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(input.userName)
   ) {
     errors.userName =
-      "Username must be only letters and numbers and must have a length of 8 or more.";
+      "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
   if (!input.birthday) {
     errors.birthday = "Birthday is required";
@@ -80,7 +80,7 @@ export default function validate(input) {
   if (!input.repeatPassword) {
     errors.repeatPassword = "Password is required";
   } else if (input.repeatPassword !== input.password) {
-    errors.repeatPassword = "Passwords dont match";
+    errors.repeatPassword = "Passwords don't match";
   }
   return errors;
 }
