@@ -25,32 +25,32 @@ function underAgeValidate(birthday) {
 export default function validate(input) {
   const errors = {};
   if (!input.name) {
-    errors.name = "name is required";
-  } else if (!/^[a-zA-Z_-]{3,15}$/.test(input.name)) {
+    errors.name = "First Name is required";
+  } else if (!/^[a-zA-Z\s]{3,25}$/.test(input.name)) {
     errors.name =
-      "The name must be an valid name with only 3 to 15 lowecase letters.";
+      "The First Name must be a valid name with only 3 to 15 letters.";
   }
   if (!input.lastName) {
-    errors.lastName = "LastName is required";
-  } else if (!/^[a-zA-Z_-]{3,15}$/.test(input.lastName)) {
+    errors.lastName = "Last Name is required";
+  } else if (!/^[a-zA-Z\s]{3,25}$/.test(input.lastName)) {
     errors.lastName =
-      "The LastName must be an valid name with only 3 to 15 lowecase letters.";
+      "The Last Name must be a valid name with only 3 to 15 letters.";
   }
   if (!input.email) {
     errors.email = "Email is required";
   } else if (
-    !/[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})/i.test(
+    !/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
       input.email
     )
   ) {
     errors.email = "Email is invalid";
   }
   if (!input.tel) {
-    errors.tel = "tel is required";
+    errors.tel = "Tel is required";
   } else if (!/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/.test(input.tel)) {
-    errors.tel = "tel is invalid";
-  } else if (input.tel.length > 9 || input.tel.length < 5) {
-    errors.tel = "tel is invalid";
+    errors.tel = "Tel is invalid";
+  } else if (input.tel.length > 15 || input.tel.length < 5) {
+    errors.tel = "Tel is invalid";
   }
   if (input.gender === "default" || !input.gender) {
     errors.gender = "Gender is required";
@@ -60,14 +60,16 @@ export default function validate(input) {
   } else if (
     !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.password)
   ) {
-    errors.password = "Password is invalid";
+    errors.password =
+      "Password must be only letters and numbers and must have a length of 8 or more.";
   }
   if (!input.userName) {
-    errors.userName = "userName is required";
+    errors.userName = "Username is required";
   } else if (
     !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.userName)
   ) {
-    errors.userName = "userName is invalid";
+    errors.userName =
+      "Username must be only letters and numbers and must have a length of 8 or more.";
   }
   if (!input.birthday) {
     errors.birthday = "Birthday is required";
@@ -78,7 +80,11 @@ export default function validate(input) {
   if (!input.repeatPassword) {
     errors.repeatPassword = "Password is required";
   } else if (input.repeatPassword !== input.password) {
-    errors.repeatPassword = "Passwords not match";
+    errors.repeatPassword = "Passwords dont match";
   }
   return errors;
 }
+
+// /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/ GOOGLE EMAIL
+
+// /[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})/i JONMIRCHA EMAIL

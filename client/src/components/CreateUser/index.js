@@ -217,7 +217,7 @@ function CreateUser() {
             className="position-relative"
             style={{ display: "inline-block", width: "48%", marginLeft: "2%" }}
           >
-            <Label htmlFor="date">Birthday:</Label>
+            <Label htmlFor="date">Date of Birth:</Label>
             <Input
               type="date"
               name="birthday"
@@ -314,9 +314,11 @@ function CreateUser() {
           errors.birthday ||
           errors.password ||
           errors.repeatPassword ||
+          errors.userName ||
           !input.name ||
           !input.lastName ||
           !input.tel ||
+          !input.userName ||
           !input.gender ||
           !input.email ||
           !input.birthday ||
