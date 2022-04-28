@@ -72,7 +72,7 @@ class UserClass {
     
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
-
+    if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
     if(valid) return valid;
     await this.verifactionEmail(name, lastName, userName, email)
 
