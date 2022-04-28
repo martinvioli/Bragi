@@ -1,4 +1,4 @@
-import { CREATE_USER } from "../actions";
+import { CREATE_USER, LOG_IN } from "../actions";
 
 // STATE CREATION
 const initialState = {
@@ -21,6 +21,11 @@ function rootReducer(state = initialState, action) {
           msg: "Formulario creado con exito.",
         };
       }
+    case LOG_IN:
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return { ...state };
   }

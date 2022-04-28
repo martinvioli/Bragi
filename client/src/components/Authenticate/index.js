@@ -10,17 +10,34 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import styles from "./Authenticate.module.css";
+import axios from "axios";
+
 function Authenticate() {
-  const [input, setInput] = React.useState("");
+  const [input, setInput] = React.useState({
+    code: "",
+    token: "",
+  });
   const navigate = useNavigate();
   const handleChange = (e) => {
-    e.preventDefault();
-    setInput(e.target.value);
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
   };
-  const handleClick = () => {
-    alert("Successful Registration");
-    navigate("/");
-    setInput("");
+  const handleClick = async (input) => {
+    try {
+      const userCredentials = window.localStorage.getItem("userCredentials");
+      const user = JSON.parse(userCredentials);
+      if (user.token) {
+        input.token = user.token;
+      }
+      const response = await axios.post("url", input);
+      alert(response.data.msg);
+      navigate("/");
+      setInput("");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -46,8 +63,8 @@ function Authenticate() {
           <Label htmlFor="input">CODE</Label>
           <Input
             type="text"
-            name="input"
-            value={input}
+            name="code"
+            value={input.code}
             onChange={(e) => handleChange(e)}
           />
         </FormGroup>

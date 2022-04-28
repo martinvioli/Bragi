@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./LandingPage.module.css";
 import {
   Form,
@@ -9,29 +9,12 @@ import {
   FormFeedback,
   Button,
 } from "reactstrap";
-
+import { url } from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
-
-function validate(input) {
-  const errors = {};
-  if (!input.email) {
-    errors.email = "Email is required";
-  } else if (
-    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
-      input.email
-    )
-  ) {
-    errors.email = "Email is invalid";
-  }
-  if (!input.password) {
-    errors.password = "Password is required";
-  } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/.test(input.password)
-  ) {
-    errors.password = "Password is invalid";
-  }
-  return errors;
-}
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../redux/actionCreators";
+import { validate } from "../../Utils/validateLogin";
 
 function LandingPage() {
   const [input, setInput] = useState({
@@ -41,6 +24,10 @@ function LandingPage() {
   });
   const [errors, setErrors] = useState({});
 
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -49,9 +36,20 @@ function LandingPage() {
     setErrors(validate({ ...input, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Tenemos que hacer la conexion con el back");
+    const response = await axios.post(`${url}`, input);
+    if (response.data.msgE) {
+      alert(response.data.msgE);
+      return;
+    }
+    const userLogin = response.data.user;
+
+    // dispatch(userLogin);
+    window.localStorage.setItem("userCredentials", JSON.stringify(userLogin));
+    navigate("home");
+    setInput("");
+    alert("Todo correcto");
   };
 
   var features = [
@@ -109,7 +107,26 @@ function LandingPage() {
             alt=""
             style={{ height: "50px", width: "50px" }}
           ></img>
-          <Form onSubmit={handleSubmit} style={{ marginBottom: "2em" }}>
+          <Form
+            onSubmit={(e) => handleSubmit(e)}
+            style={{ marginBottom: "2em" }}
+          >
+            <FormGroup className="position-relative">
+              <Label for="email">Username</Label>
+              <Input
+                type="text"
+                name="userName"
+                value={input.userName}
+                onChange={(e) => handleChange(e)}
+                invalid={errors.userName ? true : false}
+                valid={!errors.userName && input.userName ? true : false}
+              />
+              {errors.email ? (
+                <FormFeedback tooltip>{errors.email}</FormFeedback>
+              ) : (
+                <FormFeedback tooltip></FormFeedback>
+              )}
+            </FormGroup>
             <FormGroup className="position-relative">
               <Label for="email">Email</Label>
               <Input
@@ -144,6 +161,8 @@ function LandingPage() {
             </FormGroup>
             {errors.email ||
             errors.password ||
+            errors.userName ||
+            !input.userName ||
             !input.email ||
             !input.password ? (
               <Input type="submit" disabled value="Sign in" />
