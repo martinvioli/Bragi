@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const User = require('../modelSystem/User.js')
+const User = require('../modelSystem/User.js');
 
 const router = Router();
 const user = new User();
@@ -7,7 +7,7 @@ const user = new User();
 router.post('/', async (req, res) => {
     const {email, userName, password} = req.body;
     const responseLoginUser = await user.loginUser(email, userName, password);
-    //Validar si tiene una propiedad msg, de ser asi regresamos status(404) y el msg 
+    //Validar si tiene una propiedad msg, de ser asi regresamos status(404) y el msg
     res.send(responseLoginUser);
 })
 

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const UserClass = require('../modelSystem/User.js');
+const validation = require('../Validations/Validation')
 
 const user = new UserClass();
 const router = Router();
@@ -14,7 +15,7 @@ router.post('/', async (req, res) =>{
 
 router.get('/validate', async (req, res) => {
     const {email, userName} = req.query;
-    const userValidateEmailUserName = await user.validation(email, userName);
+    const userValidateEmailUserName = await validation.validationRegisterEmailUsername(email, userName);
     return res.send(userValidateEmailUserName);
 })
 

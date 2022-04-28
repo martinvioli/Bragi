@@ -21,7 +21,7 @@ class UserClass {
           profileImage: userFind.profileImage,
           userName: userFind.userName,
           lastName: userFind.lastName
-        };
+      };
   }
 
   async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName){
@@ -31,7 +31,7 @@ class UserClass {
 
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
-    if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
+    // if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
     if(valid) return valid;
     await validation.verifactionEmail(name, lastName, userName, email)
 
@@ -54,7 +54,6 @@ class UserClass {
     } catch (error) {
       return {msgE: 'Error creating a new user'}
     };
-
   };
 
   async loginUser(email, userName, password){
@@ -65,11 +64,10 @@ class UserClass {
         const userFoundDB = await User.findOne({where: {email: email}})
         if(!userFoundDB) return {msgE: "Email user not found"}
           //Si no encuentro el email, corto la función y devuelvo mensaje de error.
-        const passwordValidate = this.passwordHash(password).toString();
+        const passwordValidate = hashedFunctions.passwordHash(password).toString();
           //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
         if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
         console.log("Contraseña Correcta")
-        
       }catch(error){console.log(error)}
 
       //Validación por userName
@@ -78,11 +76,10 @@ class UserClass {
         const userFoundDB = await User.findOne({where: {userName: userName}})
         if(!userFoundDB) return {msgE: "User name not found"}
           //Si no encuentro el email, corto la función y devuelvo mensaje de error.
-        const passwordValidate = this.passwordHash(password).toString();
+        const passwordValidate = hashedFunctions.passwordHash(password).toString();
           //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
         if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
         console.log("Contraseña Correcta")
-        
       }catch(error){console.log(error)}
 
     }else{
