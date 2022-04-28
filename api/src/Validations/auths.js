@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
-const { transporter } = require ('../modelSystem/mailer');
-const { User } = require("../../db.js");
+const { User } = require("../db.js");
 
 async function validationRegisterEmailUsername (email, userName) {
     if(userName){
@@ -33,7 +32,6 @@ async function validationLoginUser(email, userName, password){
             const passwordValidate = this.passwordHash(password).toString();
             //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
             if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
-            console.log("Contraseña Correcta")
         }catch(error){console.log(error)}
 
       //Validación por userName
@@ -45,9 +43,7 @@ async function validationLoginUser(email, userName, password){
             const passwordValidate = this.passwordHash(password).toString();
             //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
             if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
-            return true
         }catch(error){console.log(error)}
-
     }else{
         return {msgE: "Incorrect data"}
     }
@@ -98,4 +94,21 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
     });
 };
 
-module.exports = {validationLoginUser, validationRegisterEmailUsername, verifactionEmail}
+
+validateUserCode = async (req,res) => {
+    const {code, token} = req.body;
+    try{
+        const userFound = await User.findOne({where: {token: token}});
+        if(!userFound){return {msgE: "User not found"}}
+        if(userFound.dataValues.validationCode === parseInt(code)){
+            return res.status(200).json({msg: "Account activated"});
+        }else{
+            return res.status(404).json({msg: "Invalid code"});
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
+module.exports = {validationLoginUser, validationRegisterEmailUsername, verifactionEmail, validateUserCode}
