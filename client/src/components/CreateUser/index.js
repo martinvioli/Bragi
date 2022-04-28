@@ -173,7 +173,7 @@ function CreateUser() {
           >
             <Label htmlFor="tel">Tel: </Label>
             <Input
-              type="tel"
+              type="number"
               name="tel"
               value={input.tel}
               onChange={(e) => handleChange(e)}
