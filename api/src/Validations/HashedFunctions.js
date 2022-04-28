@@ -10,4 +10,6 @@ function passwordHash(str, seed = 0) {
     return 4294967296 * (2097151 & h2) + (h1>>>0);
 };
 
+
+
 module.exports = {passwordHash}

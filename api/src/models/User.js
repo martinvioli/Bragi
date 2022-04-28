@@ -70,6 +70,10 @@ module.exports = (sequelize) => {
         validationCode:{
             type: DataTypes.INTEGER,
             allowNull: true,
+        },
+        token:{
+            type: DataTypes.TEXT,
+            allowNull: true,
         }
     });
 };
