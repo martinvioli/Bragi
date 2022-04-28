@@ -1,4 +1,4 @@
-import { CREATE_USER } from "../actions";
+import { CREATE_USER, LOG_IN } from "../actions";
 import axios from "axios";
 
 export const createUser = function (input) {
@@ -10,3 +10,12 @@ export const createUser = function (input) {
     });
   };
 };
+
+export const userLogin = function (user) {
+  return {
+    type: LOG_IN,
+    payload: user,
+  };
+};
+
+//export const userLogged = function () {};
