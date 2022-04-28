@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         telephone: {
-            type: DataTypes.SMALLINT,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         description: {
@@ -67,5 +67,9 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 'Pending'
         },
+        validationCode:{
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        }
     });
 };

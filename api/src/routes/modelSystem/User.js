@@ -24,16 +24,17 @@ class UserClass {
       };
   }
 
-  async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName){
+  async createUser (name, lastName ,email, password, gender, telephone, description, admin, birthday, profileImage, userName, validationCode){
     password = hashedFunctions.passwordHash(password);
     const valid = await validation.validationRegisterEmailUsername(email, userName);
     // this.verifactionEmail(email)
+    const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
 
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
     // if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
     if(valid) return valid;
-    await validation.verifactionEmail(name, lastName, userName, email)
+    await validation.verifactionEmail(name, lastName, userName, email, codeNum)
 
     try {
         const user = await User.create(
@@ -48,10 +49,12 @@ class UserClass {
           description,
           admin,
           profileImage,
-          userName
+          userName,
+          validationCode: codeNum
         });
       return {msg: 'User created successfully'}
     } catch (error) {
+      console.log(error)
       return {msgE: 'Error creating a new user'}
     };
   };
