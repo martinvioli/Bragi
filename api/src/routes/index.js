@@ -3,6 +3,7 @@ const register = require('./Register.js');
 const validation = require('./Validation');
 const login = require('./Login.js');
 const { User } = require("../db")
+const songById = require('./Song')
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -13,5 +14,6 @@ const router = Router();
 router.use('/register', register);
 router.use('/validationUser', validation)
 router.use('/login', login);
+router.use('/song/:songId', songById);
 
 module.exports = router;
