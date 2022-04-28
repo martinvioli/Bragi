@@ -3,19 +3,23 @@ const { transporter } = require ('../modelSystem/mailer');
 const { User } = require("../../db.js");
 
 async function validationRegisterEmailUsername (email, userName) {
-    try {
-        let findUserName = await User.findOne({where: {userName: userName}});
-        if(findUserName) return {msgE: "This username has already been registered"};
-    } catch (error) {
-        console.log(error);
-    };
-
-    try {
-        let findEmail = await User.findOne({where: {email: email}});
-        if(findEmail) return {msgE: "This email has already been registered"};
-    } catch (error) {
-        console.log(error);
-    };
+    if(userName){
+        try {
+            let findUserName = await User.findOne({where: {userName: userName}});
+            if(findUserName) return {msgE: "This username has already been registered"};
+        } catch (error) {
+            console.log(error);
+        };
+    }
+    if(email){
+        try {
+            let findEmail = await User.findOne({where: {email: email}});
+            if(findEmail) return {msgE: "This email has already been registered"};
+        } catch (error) {
+            console.log(error);
+        };
+    }
+    
 };
 
 async function validationLoginUser(email, userName, password){
