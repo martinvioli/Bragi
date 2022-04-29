@@ -7,7 +7,7 @@ const songById = require('./Song')
 const artistByName = require('./ArtistByName');
 const genreById = require('./GenreById')
 const songByName = require('./SongByName')
-const axios = require("axios");
+const albumByName = require('./AlbumByName')
 
 
 // Importar todos los routers;
@@ -23,4 +23,6 @@ router.use('/song', songById);
 router.use('/artist', artistByName)
 router.use('/genre', genreById)
 router.use('/search', songByName)
+router.use('/search', albumByName)
+
 module.exports = router;
