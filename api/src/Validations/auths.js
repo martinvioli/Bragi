@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
 const { User } = require("../db.js");
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 async function validationRegisterEmailUsername (email, userName) {
     if(userName){
@@ -92,7 +94,10 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
 
 
 validateUserCode = async (req,res) => {
+    //Decodificar token y buscar el id del usuario.
     const {code, token} = req.body;
+    const tokenDecode = jwt.decode(token, authConfig.secret);
+    console.log(tokenDecode)
     try{
         const userFound = await User.findOne({where: {token: token}});
         if(!userFound){return {msgE: "User not found"}}
@@ -102,7 +107,7 @@ validateUserCode = async (req,res) => {
             return res.status(404).json({msgE: "Invalid code"});
         }
     }catch(error){
-        console.log(error)
+        return res.status(404);
     }
 };
 
