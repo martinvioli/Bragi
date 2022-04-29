@@ -94,15 +94,17 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
 };
 
 
+
 validateUserCode = async (req,res) => {
     //Decodificar token y buscar el id del usuario.
     const {code, token} = req.body;
     const tokenDecode = jwt.decode(token, authConfig.secret);
-    console.log(tokenDecode)
     try{
-        const userFound = await User.findOne({where: {token: token}});
-        if(!userFound){return {msgE: "User not found"}}
+        const userFound = await User.findOne({where: {userName: tokenDecode.userName}});
+        if(!userFound){return {msgE: "User not found"}};
+        if(userFound.dataValues.nameStateUser === 'Active') res.status(400).json({msgE: 'User is already active'});
         if(userFound.dataValues.validationCode === parseInt(code)){
+            await User.update({nameStateUser: 'Active'}, {where: {userName: tokenDecode.userName}})
             return res.status(200).json({msg: "Account activated"});
         }else{
             return res.status(404).json({msgE: "Invalid code"});
