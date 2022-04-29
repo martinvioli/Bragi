@@ -74,10 +74,10 @@ function CreateUser() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`${baseUrl}register`, input);
-    const user = response.data.user;
-    window.localStorage.setItem("userCrentials", JSON.stringify(user));
     navigate("authenticate");
+    const response = await axios.post(`${baseUrl}register`, input);
+    const userToken = await response.data.token;
+    window.localStorage.setItem("userCredentials", JSON.stringify(userToken));
     setInput({
       name: "",
       lastName: "",
