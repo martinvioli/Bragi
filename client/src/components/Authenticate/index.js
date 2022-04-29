@@ -11,30 +11,38 @@ import {
 import { useNavigate } from "react-router-dom";
 import styles from "./Authenticate.module.css";
 import axios from "axios";
+import api from "../../Utils";
 
 function Authenticate() {
-  const [input, setInput] = React.useState({
+  const [inputToken, setInputToken] = React.useState({
     code: "",
     token: "",
   });
   const navigate = useNavigate();
   const handleChange = (e) => {
-    setInput({
-      ...input,
+    setInputToken({
+      ...inputToken,
       [e.target.name]: e.target.value,
     });
   };
-  const handleClick = async (input) => {
+
+  const handleClick = async () => {
     try {
       const userCredentials = window.localStorage.getItem("userCredentials");
-      const user = JSON.parse(userCredentials);
-      if (user.token) {
-        input.token = user.token;
+      const userToken = JSON.parse(userCredentials);
+      if (userToken) {
+        setInputToken({ ...inputToken, token: userToken });
       }
-      const response = await axios.post("url", input);
-      alert(response.data.msg);
-      navigate("/");
-      setInput("");
+      const response = await axios.post(`${api.authenticateUrl}`, inputToken);
+      setInputToken("");
+      if (response.data.msg) {
+        alert(response.data.msg);
+        navigate("/home");
+        return;
+      }
+      if (response.data.msgE) {
+        alert(response.data.msgE);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -60,11 +68,11 @@ function Authenticate() {
           </p>
         </CardText>
         <FormGroup className="position-relative">
-          <Label htmlFor="input">CODE</Label>
+          <Label htmlFor="code">CODE</Label>
           <Input
             type="text"
             name="code"
-            value={input.code}
+            value={inputToken.code}
             onChange={(e) => handleChange(e)}
           />
         </FormGroup>
