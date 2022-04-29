@@ -11,8 +11,11 @@ import {
   Input,
   Label,
   FormFeedback,
-  FormFeedbackProps,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
@@ -42,6 +45,13 @@ function CreateUser() {
   });
   let [show, setShow] = useState(false);
   let [show2, setShow2] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+
+  const [disabled, setDisabled] = useState(false);
+  const handleDisabled = () => setDisabled(true);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { baseUrl } = api;
@@ -74,7 +84,6 @@ function CreateUser() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("authenticate");
     const response = await axios.post(`${baseUrl}register`, input);
     const userToken = await response.data.token;
     window.localStorage.setItem("userCredentials", JSON.stringify(userToken));
@@ -92,6 +101,44 @@ function CreateUser() {
     setShow(false);
     setShow2(false);
   };
+
+  // AUTH THINGS //
+  const [inputToken, setInputToken] = React.useState({
+    code: "",
+    token: "",
+  });
+
+  const handleChangeAuth = (e) => {
+    setInputToken({
+      ...inputToken,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleClickAuth = async () => {
+    try {
+      const userCredentials = window.localStorage.getItem("userCredentials");
+      const userToken = JSON.parse(userCredentials);
+
+      if (userToken) {
+        setInputToken({ ...inputToken, token: userToken });
+        var response = await axios.post(`${api.authenticateUrl}`, inputToken);
+      }
+
+      setInputToken("");
+      if (response.data.msg) {
+        alert(response.data.msg);
+        navigate("/home");
+        return;
+      }
+      if (response.data.msgE) {
+        alert(response.data.msgE);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className={styles.background}>
       <motion.div
@@ -100,7 +147,13 @@ function CreateUser() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <Form onSubmit={handleSubmit}>
+        <Form
+          onSubmit={(e) => {
+            handleDisabled();
+            handleSubmit(e);
+            handleShowModal();
+          }}
+        >
           <FormGroup
             className="position-relative"
             style={{ display: "inline-block", width: "48%", marginRight: "2%" }}
@@ -335,7 +388,12 @@ function CreateUser() {
           !input.repeatPassword ? (
             <Input type="submit" disabled value="Send" />
           ) : (
-            <Input type="submit" className="btn-primary btn" value="Send" />
+            <Input
+              type="submit"
+              className="btn-primary btn"
+              value="Send"
+              disabled={disabled}
+            />
           )}
         </Form>
 
@@ -344,6 +402,37 @@ function CreateUser() {
             Back
           </Button>
         </Link>
+
+        {/* MODAL SECTION */}
+        <Modal centered isOpen={showModal}>
+          <ModalBody
+            className="bg-light rounded-1"
+            style={{ textAlign: "center" }}
+          >
+            <h2 className={styles.subtitle}>
+              Thanks you for registering on
+              <p className={"text-primary"}>BRAGI</p> <br />
+              Please check your email and put your code here
+            </h2>
+            <p className={styles.text}>
+              If you can't find this code, be sure to check your spam.
+            </p>
+            <FormGroup className="position-relative">
+              <Label htmlFor="code">CODE</Label>
+              <Input
+                type="text"
+                name="code"
+                value={inputToken.code}
+                onChange={(e) => handleChangeAuth(e)}
+              />
+            </FormGroup>
+          </ModalBody>
+          <ModalFooter className="bg-light rounded-1">
+            <Button color="primary" onClick={handleClickAuth}>
+              Send
+            </Button>
+          </ModalFooter>
+        </Modal>
       </motion.div>
     </div>
   );

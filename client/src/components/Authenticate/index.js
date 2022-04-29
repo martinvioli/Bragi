@@ -27,6 +27,7 @@ function Authenticate() {
   };
 
   const handleClick = async () => {
+    console.log(localStorage);
     try {
       const userCredentials = window.localStorage.getItem("userCredentials");
       const userToken = JSON.parse(userCredentials);
