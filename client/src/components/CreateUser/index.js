@@ -14,7 +14,7 @@ import {
   FormFeedbackProps,
   Button,
 } from "reactstrap";
-import { url } from "../../Utils";
+import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
 
 function CreateUser() {
@@ -44,6 +44,8 @@ function CreateUser() {
   let [show2, setShow2] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { baseUrl } = api;
+
   const handleShow = () => setShow(!show);
   const handleShow2 = () => setShow2(!show2);
   const handleChange = (e) => {
@@ -56,14 +58,14 @@ function CreateUser() {
   const checkData = async (e) => {
     if (e.target.name === "email") {
       const response = await axios.get(
-        `${url}register/validate?email=${input.email}`
+        `${baseUrl}register/validate?email=${input.email}`
       );
       if (response.data.hasOwnProperty("msgE")) {
         setErrors({ ...errors, email: response.data.msgE });
       }
     } else {
       const response = await axios.get(
-        `${url}register/validate?userName=${input.userName}`
+        `${baseUrl}register/validate?userName=${input.userName}`
       );
       if (response.data.hasOwnProperty("msgE")) {
         setErrors({ ...errors, userName: response.data.msgE });
@@ -72,7 +74,7 @@ function CreateUser() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`${url}register`, input);
+    const response = await axios.post(`${baseUrl}register`, input);
     const user = response.data.user;
     window.localStorage.setItem("userCrentials", JSON.stringify(user));
     navigate("authenticate");
