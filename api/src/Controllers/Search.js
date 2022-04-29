@@ -49,5 +49,17 @@ class Search {
             console.log(error)
         }
     }
+
+    searchAlbumByName = async (req,res) => {
+        const albumName = req.query
+        try {
+            if(albumName){
+                const albums = await axios.get(`https://api.deezer.com/search?q=album:${albumName}`)
+                return res.send(200).json(albums.data)
+            } else return res.status(404).json({ msgE: 'Album not found'})
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 module.exports = Search
