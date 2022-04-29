@@ -25,5 +25,17 @@ class Search {
             console.log(error)
         }
     }
+
+    searchGenreById = async(req, res) => {
+        const genreId = req.params.genreId;
+        try {
+            if (genreId) {
+                const genre = await axios.get(`https://api.deezer.com/genre/${genreId}`)
+                return res.status(200).json(genre.data)
+            } else return res.status(404).json({ msgE: 'Genre was not found'})
+        } catch(error) {
+            console.log(error)
+        }
+    }
 }
 module.exports = Search
