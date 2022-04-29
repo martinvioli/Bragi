@@ -14,6 +14,18 @@ class Search {
         } catch(error){console.log(error)}
     }
 
+    searchSongByName = async(req, res) => {
+        const songName = req.query.songName;
+        try {
+            if(songName){
+                const song = await axios.get(`https://api.deezer.com/search?q=track:${songName}`)
+                return res.status(200).json(song.data.data)
+            } else return res.status(404).json({ msgE: 'Song name was not found'})
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
     searchArtistByName = async(req,res) => {
         const name = req.params.name;
         try {

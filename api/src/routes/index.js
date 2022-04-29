@@ -6,6 +6,7 @@ const { User } = require("../db")
 const songById = require('./Song')
 const artistByName = require('./ArtistByName');
 const genreById = require('./GenreById')
+const songByName = require('./SongByName')
 const axios = require("axios");
 
 
@@ -21,5 +22,5 @@ router.use('/login', login);
 router.use('/song', songById);
 router.use('/artist', artistByName)
 router.use('/genre', genreById)
-
+router.use('/search', songByName)
 module.exports = router;
