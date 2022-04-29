@@ -51,6 +51,10 @@ function CreateUser() {
 
   const [disabled, setDisabled] = useState(false);
   const handleDisabled = () => setDisabled(true);
+  const [inputToken, setInputToken] = useState({
+    code: "",
+    token: "",
+  });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -86,6 +90,10 @@ function CreateUser() {
     e.preventDefault();
     const response = await axios.post(`${baseUrl}register`, input);
     const userToken = await response.data.token;
+    setInputToken({
+      ...inputToken,
+      token: response.data.token ? response.data.token : "",
+    });
     window.localStorage.setItem("userCredentials", JSON.stringify(userToken));
     setInput({
       name: "",
@@ -103,10 +111,14 @@ function CreateUser() {
   };
 
   // AUTH THINGS //
-  const [inputToken, setInputToken] = React.useState({
-    code: "",
-    token: "",
-  });
+
+  // const getToken = () => {
+  //   const userCredentials = window.localStorage.getItem("userCredentials");
+  //   const userToken = JSON.parse(userCredentials);
+  //   userToken
+  //     ? setInputToken({ ...inputToken, token: userToken })
+  //     : setInputToken({ ...inputToken, token: "" });
+  // };
 
   const handleChangeAuth = (e) => {
     setInputToken({
@@ -115,24 +127,23 @@ function CreateUser() {
     });
   };
 
-  const handleClickAuth = async () => {
+  const handleClickAuth = async (e) => {
+    e.preventDefault();
+    // getToken();
     try {
-      const userCredentials = window.localStorage.getItem("userCredentials");
-      const userToken = JSON.parse(userCredentials);
-
-      if (userToken) {
-        setInputToken({ ...inputToken, token: userToken });
-        var response = await axios.post(`${api.authenticateUrl}`, inputToken);
-      }
-
-      setInputToken("");
-      if (response.data.msg) {
-        alert(response.data.msg);
-        navigate("/home");
-        return;
-      }
-      if (response.data.msgE) {
-        alert(response.data.msgE);
+      if (inputToken.token && inputToken.code) {
+        const response = await axios.post(`${api.authenticateUrl}`, inputToken);
+        if (response.data.msg) {
+          alert(response.data.msg);
+          navigate("/home");
+        }
+        if (response.data.msgE) {
+          alert(response.data.msgE);
+        }
+        setInputToken({
+          code: "",
+          token: "",
+        });
       }
     } catch (e) {
       console.log(e);
@@ -410,7 +421,7 @@ function CreateUser() {
             style={{ textAlign: "center" }}
           >
             <h2 className={styles.subtitle}>
-              Thanks you for registering on
+              Thanks you for your registration on
               <p className={"text-primary"}>BRAGI</p> <br />
               Please check your email and put your code here
             </h2>
