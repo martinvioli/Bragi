@@ -9,7 +9,7 @@ import {
   FormFeedback,
   Button,
 } from "reactstrap";
-import { url } from "../../Utils";
+import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,8 @@ function LandingPage() {
 
   const dispatch = useDispatch();
 
+  const { baseUrl } = api;
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -38,7 +40,8 @@ function LandingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`${url}`, input);
+    //Estas son las URLs a cambiar para que funcione el back.
+    const response = await axios.post(`${baseUrl}`, input);
     if (response.data.msgE) {
       alert(response.data.msgE);
       return;
