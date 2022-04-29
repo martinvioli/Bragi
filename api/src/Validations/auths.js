@@ -108,7 +108,24 @@ validateUserCode = async (req,res) => {
     }catch(error){
         console.log(error)
     }
+};
+
+comparePasswords = async (req, res) => {
+    const {email, password} = req.body;
+    try {
+        const user = await User.findOne({
+            where: {
+                email: email
+            }
+        });
+        if (bcrypt.compareSync(password, user.password)) {
+            console.log('Sí pasé por aquí')
+            return res.status(200).json({msg: "Correct Password"})
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
-module.exports = {validationLoginUser, validationRegisterEmailUsername, verifactionEmail, validateUserCode}
+module.exports = {validationLoginUser, validationRegisterEmailUsername, verifactionEmail, validateUserCode, comparePasswords}
