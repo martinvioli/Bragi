@@ -2,13 +2,13 @@ const { Router } = require("express");
 const register = require('./Register.js');
 const validation = require('./Validation');
 const login = require('./Login.js');
-const { User } = require("../db")
-const songById = require('./Song')
+const { User } = require("../db");
+const songById = require('./Song');
 const artistByName = require('./ArtistByName');
-const genreById = require('./GenreById')
-const songByName = require('./SongByName')
-const albumByName = require('./AlbumByName')
-
+const genreById = require('./GenreById');
+const songByName = require('./SongByName');
+const albumByName = require('./AlbumByName');
+const profileData = require('./Profile.js');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,13 +17,13 @@ const albumByName = require('./AlbumByName')
 const router = Router();
 
 router.use('/register', register);
-router.use('/validationUser', validation)
+router.use('/validationUser', validation);
 router.use('/login', login);
 router.use('/song', songById);
-router.use('/artist', artistByName)
-router.use('/genre', genreById)
-router.use('/search', songByName)
-router.use('/search', albumByName)
-// router.use('/dataProfile', )
+router.use('/artist', artistByName);
+router.use('/genre', genreById);
+router.use('/search', songByName);
+router.use('/search', albumByName);
+router.use('/dataProfile', profileData);
 
 module.exports = router;

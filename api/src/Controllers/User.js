@@ -3,16 +3,19 @@ const validation = require('../Validations/auths.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
-
+const { Op } = require("sequelize");
 
 class UserClass {
   constructor(){}
 
-  async getDataUser(idUser) {
-    let userFind = await User.findByPk(idUser);
+  getDataUser = async (req, res) => {
+    const tokenUser = req.body.token;
+    const tokenDecoded = jwt.decode(tokenUser);
+    try{
+    let userFind = await User.findOne({where: {userName: tokenDecoded.userName}});
     return !userFind
-      ? { msgE: "User not Found" }
-      : {
+      ? res.status(404).json({ msgE: "User not Found" })
+      : res.status(200).json({
           name: userFind.name,
           email: userFind.email,
           password: userFind.password,
@@ -24,7 +27,10 @@ class UserClass {
           profileImage: userFind.profileImage,
           userName: userFind.userName,
           lastName: userFind.lastName
-      };
+      });
+    }catch(error){
+      console.log(error)
+    }
   }
    
 
@@ -41,7 +47,7 @@ class UserClass {
     //Send Email
     await validation.verifactionEmail(name, lastName, userName, email, codeNum);
     try {
-      const token = jwt.sign({ user: User }, authConfig.secret, {
+      const token = jwt.sign({userName , email, TypeUser: 'Standard'}, authConfig.secret, {
         expiresIn: authConfig.expires
       });
       const user = await User.create(
@@ -74,7 +80,9 @@ class UserClass {
     try{
       const userResponse = await validation.validationLoginUser(email, userName, password);
       if (userResponse) return res.status(404).json(userResponse);
-      const token = jwt.sign({ user: userResponse }, authConfig.secret, {expiresIn: authConfig.expires});
+      const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}, {email: email}]}});
+      const token = jwt.sign({ userName: userFoundDB.userName, email: userFoundDB.email ,TypeUser: userFoundDB.nameTypeUser }, authConfig.secret, {expiresIn: authConfig.expires});
+      await User.update({token} , {where: {[Op.or]: [{ userName: userName}, {email: email}]}})
       return res.status(200).json({msg: 'Everything is fine (:', token})
     }catch(error){
       return res.status(404).json({msgE: "User not found"});
