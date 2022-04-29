@@ -29,10 +29,8 @@ async function validationLoginUser(email, userName, password){
             const userFoundDB = await User.findOne({where: {email: email}})
             if(!userFoundDB) return {msgE: "Email user not found"}
             //Si no encuentro el email, corto la función y devuelvo mensaje de error.
-            const passwordValidate = this.passwordHash(password).toString();
-            //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
-            if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
-        }catch(error){console.log(error)}
+            if (!bcrypt.compareSync(password, userFoundDB.dataValues.password)) return {msgE: "Incorrect Password"};
+        }catch(error){return {msgE: "Error server", error: "500"}}
 
       //Validación por userName
     }else if(userName){
@@ -40,10 +38,8 @@ async function validationLoginUser(email, userName, password){
             const userFoundDB = await User.findOne({where: {userName: userName}})
             if(!userFoundDB) return {msgE: "User name not found"}
             //Si no encuentro el email, corto la función y devuelvo mensaje de error.
-            const passwordValidate = this.passwordHash(password).toString();
-            //El resultado de passwordHash me trae un numero por lo cúal es necesario parsearlo.
-            if(passwordValidate !== userFoundDB.dataValues.password) return {msgE: "Incorrect password"}
-        }catch(error){console.log(error)}
+            if (!bcrypt.compareSync(password, userFoundDB.dataValues.password)) return {msgE: "Incorrect Password"};
+        }catch(error){return {msgE: "Error server", error: "500"}}
     }else{
         return {msgE: "Incorrect data"}
     }
@@ -103,7 +99,7 @@ validateUserCode = async (req,res) => {
         if(userFound.dataValues.validationCode === parseInt(code)){
             return res.status(200).json({msg: "Account activated"});
         }else{
-            return res.status(404).json({msg: "Invalid code"});
+            return res.status(404).json({msgE: "Invalid code"});
         }
     }catch(error){
         console.log(error)

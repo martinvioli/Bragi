@@ -53,12 +53,8 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: 'https://i.pinimg.com/564x/e5/91/dc/e591dc82326cc4c86578e3eeecced792.jpg'
         },
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        },
         nameTypeUser: {
-            type: DataTypes.ENUM('Premium', 'Standard'),
+            type: DataTypes.ENUM('Premium', 'Standard', 'Admin'),
             allowNull: false,
             defaultValue: 'Standard'
         },
