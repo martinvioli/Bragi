@@ -94,7 +94,12 @@ function CreateUser() {
   };
   return (
     <div className={styles.background}>
-      <div className={styles.container}>
+      <motion.div
+        className={styles.container}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
         <Form onSubmit={handleSubmit}>
           <FormGroup
             className="position-relative"
@@ -339,7 +344,7 @@ function CreateUser() {
             Back
           </Button>
         </Link>
-      </div>
+      </motion.div>
     </div>
   );
 }
