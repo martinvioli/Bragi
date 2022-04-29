@@ -38,8 +38,8 @@ class UserClass {
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
     // if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
     if(valid) return valid;
+    //Send Email
     await validation.verifactionEmail(name, lastName, userName, email, codeNum);
-    
     try {
       const token = jwt.sign({ user: User }, authConfig.secret, {
         expiresIn: authConfig.expires
@@ -61,33 +61,23 @@ class UserClass {
           token
         });
         
-      return res.json({msg: 'User created successfully', token}); //Prueba para el front
+      return res.status(200).json({msg: 'User created successfully', token}); //Prueba para el front
     } catch (error) {
       console.log(error)
-      return res.json({msgE: 'Error creating a new user'});
+      return res.status(409).json({msgE: 'Error creating a new user'});
     };
   };
 
   loginUser = async (req, res) => {
     //User login validation function
-    //Validación por email
     const {email, userName, password} = req.body;
     try{
-      const user =  await User.findOne({
-        where: {
-          email: email,
-          userName: userName
-        }
-      })
-      if (!user) return res.status(500).json({msgE: 'User not found'});
-      if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({msg: "Incorrect Password"})};
-        const token = jwt.sign({ user: User }, authConfig.secret, {
-          expiresIn: authConfig.expires
-        });
-      return res.status(200).json({mgs: 'Everything is fine (:', token})
+      const userResponse = validation.validationLoginUser(email, userName, password);
+      if (userResponse) return res.status(404).json(userResponse);
+      const token = jwt.sign({ user: userResponse }, authConfig.secret, {expiresIn: authConfig.expires});
+      return res.status(200).json({msg: 'Everything is fine (:', token})
     }catch(error){
-      return res.json(error);
+      return res.status(404).json(error);
     }
   }
 
