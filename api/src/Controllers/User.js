@@ -72,7 +72,7 @@ class UserClass {
     //User login validation function
     const {email, userName, password} = req.body;
     try{
-      const userResponse = validation.validationLoginUser(email, userName, password);
+      const userResponse = await validation.validationLoginUser(email, userName, password);
       if (userResponse) return res.status(404).json(userResponse);
       const token = jwt.sign({ user: userResponse }, authConfig.secret, {expiresIn: authConfig.expires});
       return res.status(200).json({msg: 'Everything is fine (:', token})
