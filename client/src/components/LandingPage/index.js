@@ -27,6 +27,7 @@ function LandingPage() {
   const dispatch = useDispatch();
 
   const { baseUrl } = api;
+  const { loginUrl } = api;
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ function LandingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //Estas son las URLs a cambiar para que funcione el back.
-    const response = await axios.post(`${baseUrl}`, input);
+    const response = await axios.post(`${loginUrl}`, input);
     if (response.data.msgE) {
       alert(response.data.msgE);
       return;
@@ -115,7 +116,7 @@ function LandingPage() {
             style={{ marginBottom: "2em" }}
           >
             <FormGroup className="position-relative">
-              <Label for="email">Username</Label>
+              <Label for="userName">Username</Label>
               <Input
                 type="text"
                 name="userName"
@@ -124,8 +125,8 @@ function LandingPage() {
                 invalid={errors.userName ? true : false}
                 valid={!errors.userName && input.userName ? true : false}
               />
-              {errors.email ? (
-                <FormFeedback tooltip>{errors.email}</FormFeedback>
+              {errors.userName ? (
+                <FormFeedback tooltip>{errors.userName}</FormFeedback>
               ) : (
                 <FormFeedback tooltip></FormFeedback>
               )}

@@ -16,3 +16,19 @@
   max-width: 60%;
   min-width: 30em;
 }
+
+.title {
+  color: rgb(33, 100, 201);
+  font-size: 60px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  text-decoration: underline;
+}
+.subtitle {
+  color: black;
+  font-size: 20px;
+}
+.text {
+  color: black;
+  font-size: 15px;
+}
