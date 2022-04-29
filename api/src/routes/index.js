@@ -24,5 +24,6 @@ router.use('/artist', artistByName)
 router.use('/genre', genreById)
 router.use('/search', songByName)
 router.use('/search', albumByName)
+// router.use('/dataProfile', )
 
 module.exports = router;

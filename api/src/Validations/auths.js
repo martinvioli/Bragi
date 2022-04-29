@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const { User } = require("../db.js");
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
+const bcrypt = require('bcrypt');
 
 async function validationRegisterEmailUsername (email, userName) {
     if(userName){
@@ -28,11 +29,11 @@ async function validationLoginUser(email, userName, password){
       //Validación por email
     if(email){
         try{
-            const userFoundDB = await User.findOne({where: {email: email}})
-            if(!userFoundDB) return {msgE: "Email user not found"}
+            const userFoundDB = await User.findOne({where: {email: email}});
+            if(!userFoundDB) return {msgE: "Email user not found"};
             //Si no encuentro el email, corto la función y devuelvo mensaje de error.
             if (!bcrypt.compareSync(password, userFoundDB.dataValues.password)) return {msgE: "Incorrect Password"};
-        }catch(error){return {msgE: "Error server", error: "500"}}
+        }catch(error){return {msgE: "Error server", error: "500"}};
 
       //Validación por userName
     }else if(userName){
