@@ -77,7 +77,7 @@ class UserClass {
       const token = jwt.sign({ user: userResponse }, authConfig.secret, {expiresIn: authConfig.expires});
       return res.status(200).json({msg: 'Everything is fine (:', token})
     }catch(error){
-      return res.status(404).json(error);
+      return res.status(404).json({msgE: "User not found"});
     }
   }
 
