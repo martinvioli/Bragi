@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 function underAgeValidate(birthday) {
   const reverseBirthday = birthday.split("/").reverse().join("/");
 

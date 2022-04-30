@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import validate from "../../Utils/validate";
 import axios from "axios";
 import {
@@ -13,12 +13,12 @@ import {
   FormFeedback,
   Button,
   Modal,
-  ModalHeader,
   ModalBody,
   ModalFooter,
 } from "reactstrap";
 import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
+import { getToken } from "../../redux/actionCreators";
 
 function CreateUser() {
   const [input, setInput] = useState({
@@ -43,14 +43,10 @@ function CreateUser() {
     userName: "",
     tel: "",
   });
-  let [show, setShow] = useState(false);
-  let [show2, setShow2] = useState(false);
-
+  const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const handleShowModal = () => setShowModal(true);
-
   const [disabled, setDisabled] = useState(false);
-  const handleDisabled = () => setDisabled(true);
   const [inputToken, setInputToken] = useState({
     code: "",
     token: "",
@@ -58,10 +54,17 @@ function CreateUser() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { baseUrl } = api;
+
+  const { baseUrl } = api; //OBJETO CON TODAS LAS RUTAS DEL BACK
+
+  const handleShowModal = () => setShowModal(true);
+
+  const handleDisabled = () => setDisabled(true);
 
   const handleShow = () => setShow(!show);
+
   const handleShow2 = () => setShow2(!show2);
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -69,6 +72,7 @@ function CreateUser() {
     });
     setErrors(validate({ ...input, [e.target.name]: e.target.value }));
   };
+
   const checkData = async (e) => {
     if (e.target.name === "email") {
       const response = await axios.get(
@@ -86,15 +90,21 @@ function CreateUser() {
       }
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post(`${baseUrl}register`, input);
     const userToken = await response.data.token;
+
     setInputToken({
       ...inputToken,
       token: response.data.token ? response.data.token : "",
     });
+
+    dispatch(getToken(inputToken.token));
+
     window.localStorage.setItem("userCredentials", JSON.stringify(userToken));
+
     setInput({
       name: "",
       lastName: "",
@@ -112,6 +122,7 @@ function CreateUser() {
 
   // AUTH THINGS //
 
+  // ESTA FUNCION ES PARA OBTENER EL TOKEN DESDE EL LOCALSTORAGE DEPRECIADA POR EL MOMENTO.
   // const getToken = () => {
   //   const userCredentials = window.localStorage.getItem("userCredentials");
   //   const userToken = JSON.parse(userCredentials);
@@ -129,7 +140,6 @@ function CreateUser() {
 
   const handleClickAuth = async (e) => {
     e.preventDefault();
-    // getToken();
     try {
       if (inputToken.token && inputToken.code) {
         const response = await axios.post(`${api.authenticateUrl}`, inputToken);
