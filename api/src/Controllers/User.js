@@ -33,10 +33,10 @@ class UserClass {
     }
   }
    
-
   createUser = async (req, res) => {
-    let {name, lastName,email, password, gender, telephone, description, admin, birthday, profileImage, userName} = req.body;
+    let {name, lastName, email, password, gender, tel, description, birthday, profileImage, userName, repeatPassword} = req.body;
     password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+    if(!bcrypt.compareSync(repeatPassword, password)) return res.status(409).json({msgE: 'Passwords do not match'});
     const valid = await validation.validationRegisterEmailUsername(email, userName);
     // this.verifactionEmail(email)
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
@@ -57,10 +57,9 @@ class UserClass {
           email,
           password,
           gender,
-          telephone,
+          telephone: parseInt(tel) ,
           birthday,
           description,
-          admin,
           profileImage,
           userName,
           validationCode: codeNum,
