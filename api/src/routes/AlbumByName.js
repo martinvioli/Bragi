@@ -4,6 +4,6 @@ const Search = require('../Controllers/Search')
 
 const search = new Search()
 
-router.get('/', search.searchAlbumByName)
+router.get('/album', search.searchAlbumByName)
 
 module.exports = router;

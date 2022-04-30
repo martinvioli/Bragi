@@ -18,7 +18,7 @@ class Search {
         const songName = req.query.songName;
         try {
             if(songName){
-                const song = await axios.get(`https://api.deezer.com/search?q=track:${songName}`)
+                const song = await axios.get(`https://api.deezer.com/search/track?q=${songName}`)
                 return res.status(200).json(song.data.data)
             } else return res.status(404).json({ msgE: 'Song name was not found'})
         } catch(error) {
@@ -51,11 +51,12 @@ class Search {
     }
 
     searchAlbumByName = async (req,res) => {
-        const albumName = req.query
+        const albumName = req.query.albumName
         try {
             if(albumName){
-                const albums = await axios.get(`https://api.deezer.com/search?q=album:${albumName}`)
-                return res.send(200).json(albums.data)
+                const albums = await axios.get(`https://api.deezer.com/search/album?q=${albumName}`)
+                // console.log(albums.data)
+                return res.status(200).json(albums.data.data)
             } else return res.status(404).json({ msgE: 'Album not found'})
         } catch (error) {
             console.log(error)
