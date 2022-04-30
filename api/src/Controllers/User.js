@@ -82,8 +82,8 @@ class UserClass {
       if (userResponse) return res.status(404).json(userResponse);
       const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}, {email: email}]}});
       const token = jwt.sign({ userName: userFoundDB.userName, email: userFoundDB.email ,TypeUser: userFoundDB.nameTypeUser }, authConfig.secret, {expiresIn: authConfig.expires});
-      await User.update({token} , {where: {[Op.or]: [{ userName: userName}, {email: email}]}})
-      return res.status(200).json({msg: 'Everything is fine (:', token})
+      await User.update({token} , {where: {[Op.or]: [{ userName: userName}, {email: email}]}});
+      return res.status(200).json({msg: 'Everything is fine (:', token, stateUser: userFoundDB.nameStateUser})
     }catch(error){
       return res.status(404).json({msgE: "User not found"});
     }
