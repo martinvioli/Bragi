@@ -7,6 +7,10 @@ const api = {
   searchSongUrl: "http://localhost:3001/song",
   searchGenreUrl: "http://localhost:3001/genre",
   searchUrl: "http://localhost:3001/searh",
+  getUser: "http://localhost:3001/dataProfile",
+  searchSongByName: "http://localhost:3001/search/song",
+  searchAlbumByName: "http://localhost:3001/search/album",
+  searchArtistByName: "http://localhost:3001/artist",
 };
 
 export default api;
