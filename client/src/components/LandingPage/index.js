@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LandingPage.module.css";
 import {
@@ -13,7 +13,7 @@ import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { getToken } from "../../redux/actionCreators";
+import { userLogin } from "../../redux/actionCreators";
 import { validate } from "../../Utils/validateLogin";
 
 function LandingPage() {
@@ -25,9 +25,11 @@ function LandingPage() {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
+  const { baseUrl } = api;
   const { loginUrl } = api;
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInput({
@@ -45,11 +47,10 @@ function LandingPage() {
       alert(response.data.msgE);
       return;
     }
-    dispatch(getToken(response.data.token));
-    window.localStorage.setItem(
-      "userCredentials",
-      JSON.stringify(response.data.token)
-    );
+    const userLogin = response.data.user;
+
+    // dispatch(userLogin);
+    window.localStorage.setItem("userCredentials", JSON.stringify(userLogin));
     navigate("home");
     setInput("");
     alert("Todo correcto");

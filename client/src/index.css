@@ -2,18 +2,3 @@ body {
   background-image: url(https://i.imgur.com/bOEbx0x.jpeg);
   overflow-y: hidden;
 }
-
-#logo {
-  filter: invert(45%) sepia(78%) saturate(5357%) hue-rotate(217deg)
-    brightness(95%) contrast(85%);
-}
-
-a {
-  text-decoration: none !important;
-  border-radius: 0.5em;
-}
-
-a:hover {
-  background-color: rgb(193, 218, 250) !important;
-  border-radius: 0.5em;
-}
