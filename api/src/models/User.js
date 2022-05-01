@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         telephone: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             allowNull: true
         },
         description: {

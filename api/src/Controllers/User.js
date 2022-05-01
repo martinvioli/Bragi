@@ -32,18 +32,19 @@ class UserClass {
       console.log(error)
     }
   }
-   
+
   createUser = async (req, res) => {
     let {name, lastName, email, password, gender, tel, description, birthday, profileImage, userName, repeatPassword} = req.body;
     password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
     if(!bcrypt.compareSync(repeatPassword, password)) return res.status(409).json({msgE: 'Passwords do not match'});
+
     const valid = await validation.validationRegisterEmailUsername(email, userName);
-    // this.verifactionEmail(email)
+    if(valid) return res.status(400).send(valid);
+
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
-    // if(telephone.toString().length > 9) throw new Error("Telephone must be 0 characters or less")
-    if(valid) return valid;
+
     //Send Email
     await validation.verifactionEmail(name, lastName, userName, email, codeNum);
     try {
@@ -65,7 +66,6 @@ class UserClass {
           validationCode: codeNum,
           token
         });
-        
       return res.status(200).json({msg: 'User created successfully', token}); //Prueba para el front
     } catch (error) {
       console.log(error)
