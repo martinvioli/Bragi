@@ -8,6 +8,7 @@ const artistByName = require('./ArtistByName');
 const genreById = require('./GenreById');
 const searchOptions = require('./SearchOptions');
 const profileData = require('./Profile.js');
+const closeSessionUser = require('./CloseSessionUser')
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -23,5 +24,6 @@ router.use('/artist', artistByName);
 router.use('/genre', genreById);
 router.use('/search', searchOptions);
 router.use('/dataProfile', profileData);
+router.use('/closeSessionUser', closeSessionUser)
 
 module.exports = router;
