@@ -215,7 +215,7 @@ function Home() {
                 return (
                   <div
                     style={{
-                      display: "center",
+                      display: "inline-block",
                     }}
                   >
                     <SearchData data={e} key={e.id} />
