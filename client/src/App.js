@@ -5,6 +5,8 @@ import LandingPage from "./components/LandingPage";
 import Home from "./components/Home";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import Profile from "./components/Profile";
+import NavBar from "./components/Navbar";
+import Feed from "./components/Feed";
 
 function App() {
   const location = useLocation();
@@ -19,8 +21,11 @@ function App() {
             path="/register/authenticate"
             element={<Authenticate />}
           />
-          <Route exact path="/home" element={<Home />} />
-          <Route exact path="/profile" element={<Profile />} />
+          <Route path="/" element={<NavBar />}>
+            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/feed" element={<Feed />} />
+            <Route exact path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </AnimatePresence>
     </>

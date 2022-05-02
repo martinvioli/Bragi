@@ -1,0 +1,25 @@
+.nav {
+  height: 4em;
+  min-width: 40vw;
+  width: 40%;
+  background-color: rgba(240, 248, 255, 0.618);
+  position: fixed;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  border-bottom-left-radius: 10em;
+  border-bottom-right-radius: 10em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+}
+
+.navText {
+  font-size: larger;
+  font-weight: bold;
+}

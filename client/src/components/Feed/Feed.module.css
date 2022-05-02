@@ -1,0 +1,47 @@
+.container {
+  margin-top: 5em;
+  display: flex;
+  padding: 0 6em 0 6em;
+}
+
+.premiumSector {
+  width: 30%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.749);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.postSector {
+  width: 70%;
+  height: 100vh;
+  background-color: rgba(101, 193, 255, 0.609);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.newPost {
+  height: 30%;
+  border: 1px solid black;
+  width: 100%;
+}
+
+.posts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.post {
+  width: 100%;
+  height: 5em;
+  border: 1px solid black;
+}
