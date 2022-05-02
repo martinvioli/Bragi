@@ -4,6 +4,7 @@ import CreateUser from "./components/CreateUser";
 import LandingPage from "./components/LandingPage";
 import Home from "./components/Home";
 import { AnimatePresence } from "framer-motion/dist/framer-motion";
+import Profile from "./components/Profile";
 
 function App() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function App() {
             element={<Authenticate />}
           />
           <Route exact path="/home" element={<Home />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </AnimatePresence>
     </>

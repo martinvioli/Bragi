@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LandingPage.module.css";
 import {
@@ -15,6 +15,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getToken } from "../../redux/actionCreators";
 import { validate } from "../../Utils/validateLogin";
+import Swal from "sweetalert2";
 
 function LandingPage() {
   const [input, setInput] = useState({
@@ -29,6 +30,14 @@ function LandingPage() {
 
   const { loginUrl } = api;
 
+  useEffect(() => {
+    const userCredentials = window.localStorage.getItem("userCredentials");
+    const userToken = JSON.parse(userCredentials);
+    if (userToken) {
+      navigate("/home");
+    }
+  }, []);
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -39,21 +48,33 @@ function LandingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //Estas son las URLs a cambiar para que funcione el back.
-    const response = await axios.post(`${loginUrl}`, input);
-    //console.log(response.data);
-    if (response.data.msgE) {
-      alert(response.data.msgE);
-      return;
+    try {
+      const response = await axios.post(`${loginUrl}`, input);
+      //Estas son las URLs a cambiar para que funcione el back.
+      // console.log(response.code);
+      if (response.data.msgE) {
+        alert(response.data.msgE);
+        return;
+      }
+      dispatch(getToken(response.data.token));
+      window.localStorage.setItem(
+        "userCredentials",
+        JSON.stringify(response.data.token)
+      );
+      navigate("home");
+      setInput("");
+    } catch (e) {
+      setInput("");
+      Swal.fire({
+        title: "Oops...",
+        text: "That username or email is not linked to an existent account. Please, verify your inputs.",
+        icon: "error",
+        cancelButtonText: "Close",
+        cancelButtonColor: "#E74C3C ",
+        showCancelButton: true,
+        showConfirmButton: false,
+      });
     }
-    dispatch(getToken(response.data.token));
-    window.localStorage.setItem(
-      "userCredentials",
-      JSON.stringify(response.data.token)
-    );
-    navigate("home");
-    setInput("");
-    alert("Todo correcto");
   };
 
   var features = [

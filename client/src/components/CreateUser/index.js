@@ -19,7 +19,8 @@ import {
 import api from "../../Utils";
 import { motion } from "framer-motion/dist/framer-motion";
 import { getToken } from "../../redux/actionCreators";
-
+import { FcApproval } from "react-icons/fc";
+import Swal from "sweetalert2";
 function CreateUser() {
   const [input, setInput] = useState({
     name: "",
@@ -144,11 +145,15 @@ function CreateUser() {
       if (inputToken.token && inputToken.code) {
         const response = await axios.post(`${api.authenticateUrl}`, inputToken);
         if (response.data.msg) {
-          alert(response.data.msg);
+          Swal.fire({
+            title: "🎉🎊",
+            text: "Congratulations, you are now officially a member of this beatiful community!.",
+            icon: "success",
+            showConfirmButton: true,
+            confirmButtonColor: "#0d6efd",
+            timer: 2000,
+          });
           navigate("/home");
-        }
-        if (response.data.msgE) {
-          alert(response.data.msgE);
         }
         setInputToken({
           code: "",
@@ -156,7 +161,15 @@ function CreateUser() {
         });
       }
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "Oops...",
+        text: "Wrong code. Please, try again.",
+        icon: "error",
+        cancelButtonText: "Close",
+        cancelButtonColor: "#E74C3C ",
+        showCancelButton: true,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -430,19 +443,21 @@ function CreateUser() {
             className="bg-light rounded-1"
             style={{ textAlign: "center" }}
           >
+            <FcApproval style={{ width: "2em", height: "2em" }} />
             <h2 className={styles.subtitle}>
               Thanks you for your registration on
-              <p className={"text-primary"}>BRAGI</p> <br />
-              Please check your email and put your code here
+              <p className={"text-primary"}>BRAGI</p>
+              <hr />
             </h2>
             <p className={styles.text}>
-              If you can't find this code, be sure to check your spam.
+              We have sent you an email with an activation code. If you can't
+              find it, be sure to check your spam.
             </p>
             <FormGroup className="position-relative">
-              <Label htmlFor="code">CODE</Label>
               <Input
                 type="text"
                 name="code"
+                placeholder="Please insert your code here..."
                 value={inputToken.code}
                 onChange={(e) => handleChangeAuth(e)}
               />
