@@ -88,6 +88,20 @@ class UserClass {
     }
   }
 
+  closeSessionUser = async (req,res) =>{
+    const tokenUser = req.body.token;
+    const tokenDecoded = jwt.decode(tokenUser);
+    const userFind = await User.findOne({where: {userName: tokenDecoded.userName}});
+    try {
+      if(!userFind) return res.status(404).json({ msgE: 'There was an error finding the user' })
+      await User.update({ token: null }, { where: {userName: tokenDecoded.userName} });
+      return res.status(200).json({ msg: 'User logged out successfully'});
+    } catch (error) {
+      console.log(error)
+      return res.status(404).json({ msgE: 'There was an error logging out' })
+    }
+  }
+
 };
 
 module.exports = UserClass;
