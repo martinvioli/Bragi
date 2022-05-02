@@ -25,8 +25,10 @@ import {
   clearData,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const song = useSelector((state) => state.song);
   const artist = useSelector((state) => state.artist);
@@ -94,6 +96,12 @@ function Home() {
     });
   };
 
+  // button logout function
+  function handleClick(e) {
+    e.preventDefault();
+    alert("Are you sure you want to log out?");
+    navigate("/");
+  }
   return (
     <>
       <Navbar color="light" expand="md" fixed="top" light>
@@ -135,6 +143,7 @@ function Home() {
             </NavItem>
           </Nav>
         </Collapse>
+        <button onClick={(e) => handleClick(e)}>LogOut</button>
       </Navbar>
       <div className="container" style={{ margin: "100px" }}>
         <Form onSubmit={handleSubmitInput}>
