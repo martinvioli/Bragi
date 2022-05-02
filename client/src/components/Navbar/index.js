@@ -1,67 +1,73 @@
-/* import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Navbar,
-  NavbarBrand,
   Collapse,
   NavbarToggler,
   NavItem,
   NavLink,
   Nav,
   NavbarText,
+  Button,
 } from "reactstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import styles from "./Navbar.module.css";
+import { IoShareSocialSharp } from "react-icons/io";
+import { Outlet, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { MdLogout } from "react-icons/md";
 
-export default function Navbar() {
+export default function NavBar() {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+
+  const [toggle, setToggle] = useState(false);
+
+  function handleToggle() {
+    setToggle(!toggle);
+  }
+
+  // button logout function
+  function handleClick(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then((result) => {
+      if (result.isDenied) {
+        window.localStorage.removeItem("userCredentials");
+        navigate("/");
+      }
+    });
+  }
+
   return (
     <>
-      <Navbar color="light" expand="md" fixed="top" light>
-        <NavbarText href="/home">
+      <nav className={styles.nav}>
+        <p className={styles.navText}>Social</p>
+        <LinkContainer to="/feed">
           <img
-            id="logo"
-            src="https://www.svgrepo.com/show/194008/music.svg"
+            className={styles.logo}
+            src="https://cdn0.iconfinder.com/data/icons/audio-icons/110/Harp-512.png"
             alt=""
-            style={{ height: "50px", width: "50px" }}
           ></img>
-        </NavbarText>
-        <NavbarToggler onClick={handleToggle} />
-        <Collapse navbar isOpen={toggle}>
-          <Nav className="me-auto" navbar>
-            <NavItem className={styles.navFont}>
-              <LinkContainer to="/home">
-                <NavLink>
-                  <GrHomeRounded style={{ height: "30px", width: "30px" }} />
-                </NavLink>
-              </LinkContainer>
-            </NavItem>
-            <NavItem className={styles.navFont}>
-              <NavLink disabled>
-                <FaUserFriends style={{ height: "30px", width: "30px" }} />
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <LinkContainer to="/profile">
-                <NavLink>
-                  <img
-                    src={user.profileImage}
-                    alt="USER"
-                    width="30px"
-                    height="30px"
-                    style={{ borderRadius: "100%", padding: "2px" }}
-                  />
-                </NavLink>
-              </LinkContainer>
-            </NavItem>
-            <Button
-              color="danger"
-              outline
-              size="sm"
-              onClick={(e) => handleClick(e)}
-            >
-              <MdLogout style={{ height: "20px", width: "20px" }} />
-            </Button>
-          </Nav>
-        </Collapse>
-      </Navbar>
+        </LinkContainer>
+        <LinkContainer to="/profile">
+          <p className={styles.navText}>Profile</p>
+        </LinkContainer>
+        <p onClick={(e) => handleClick(e)}>🔙</p>
+      </nav>
+      <Outlet />
     </>
   );
 }
- */
