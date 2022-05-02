@@ -41,6 +41,7 @@ function LandingPage() {
     e.preventDefault();
     //Estas son las URLs a cambiar para que funcione el back.
     const response = await axios.post(`${loginUrl}`, input);
+    //console.log(response.data);
     if (response.data.msgE) {
       alert(response.data.msgE);
       return;
