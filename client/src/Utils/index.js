@@ -12,6 +12,7 @@ const api = {
   searchSongByName: "http://localhost:3001/search/song",
   searchAlbumByName: "http://localhost:3001/search/album",
   searchArtistByName: "http://localhost:3001/artist",
+  deleteToken: "http://localhost:3001/closeSessionUser",
 };
 
 export default api;

@@ -16,6 +16,8 @@ import { IoShareSocialSharp } from "react-icons/io";
 import { Outlet, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
+import axios from "axios";
+import api from "../../Utils";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ export default function NavBar() {
   }
 
   // button logout function
-  function handleClick(e) {
+  async function handleClick(e) {
     e.preventDefault();
     Swal.fire({
       title: "Are you sure you want to logout?",
@@ -43,8 +45,12 @@ export default function NavBar() {
         confirmButton: "order-2",
         denyButton: "order-3",
       },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isDenied) {
+        const response = await axios.post(api.deleteToken, {
+          token: JSON.parse(window.localStorage.getItem("userCredentials")),
+        });
+        console.log(response.data);
         window.localStorage.removeItem("userCredentials");
         navigate("/");
       }
