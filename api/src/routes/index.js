@@ -10,6 +10,7 @@ const searchOptions = require('./SearchOptions');
 const profileData = require('./Profile.js');
 const closeSessionUser = require('./CloseSessionUser')
 const searchUser = require('./SearchUser')
+const getTop10 = require('./Top10Options')
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -26,5 +27,5 @@ router.use('/search', searchOptions);
 router.use('/profileUser', profileData);
 router.use('/closeSessionUser', closeSessionUser);
 router.use('/searchUser', searchUser);
-
+router.use('/getTop10', getTop10);
 module.exports = router;
