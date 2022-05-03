@@ -9,10 +9,6 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
         },
-        titlePost: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         datePost:{
             type: DataTypes.DATEONLY,
             allowNull: false,
@@ -21,10 +17,6 @@ module.exports = (sequelize) => {
         contentPost: {
             type: DataTypes.TEXT,
             allowNull: true
-        },
-        descriptionPost: {
-            type: DataTypes.TEXT,
-            allowNull: true,
         },
         linkContent: {
             type: DataTypes.STRING,
@@ -35,5 +27,9 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: 'Posted'
         },
+        imagePost: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        }
     })
 }
