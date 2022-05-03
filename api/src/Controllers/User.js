@@ -22,11 +22,11 @@ class UserClass {
           gender: userFind.gender,
           tel: userFind.tel,
           description: userFind.description,
-          admin: userFind.admin,
           bithday: userFind.Bithday,
           profileImage: userFind.profileImage,
           userName: userFind.userName,
-          lastName: userFind.lastName
+          lastName: userFind.lastName,
+          stateUser: userFind.nameStateUser
       });
     }catch(error){
       console.log(error)

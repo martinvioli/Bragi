@@ -49,7 +49,7 @@ async function validationLoginUser(email, userName, password){
 };
 
 async function verifactionEmail (name, lastName, userName, email, codeNum){
-    const transporter = nodemailer.createTransport({
+    try{const transporter = nodemailer.createTransport({
         // host: "smtp.gmail.com",
         port: 465,
         secure: true, // true for 465, false for other ports
@@ -57,7 +57,9 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         auth: {
           user: 'BragiSystem@gmail.com', // generated ethereal user
           pass: 'arieopjcxrsipqvz', // generated ethereal password
-        },
+        },tls: {
+            rejectUnauthorized: false
+        }
     });
 
     transporter.verify().then(() => {
@@ -90,7 +92,10 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         <h3>Your validation code is:</h3>
         <h2>${codeNum}</h2>
         `, // html body
-    });
+    });}
+    catch(e){
+        console.log(e)
+    }
 };
 
 
