@@ -9,6 +9,7 @@ import {
   CLEAR_DATA,
   USER_NEW_POST,
   SONGS_MORE_PLAYED,
+  GET_ALL_POST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -117,7 +118,20 @@ export const userNewPost = function (input) {
     }
   };
 };
-
+export const getAllPost = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("url back");
+      console.log(response.data);
+      return dispatch({
+        type: GET_ALL_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const getSongsMorePLayed = function () {
   return async (dispatch) => {
     try {

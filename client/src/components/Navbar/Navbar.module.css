@@ -2,7 +2,9 @@
   height: 4em;
   min-width: 40vw;
   width: 40%;
-  background-color: rgba(240, 248, 255, 0.618);
+  background-color: rgba(3, 97, 180, 0.618);
+  /* background-color: blue; */
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 30%;
