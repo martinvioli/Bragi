@@ -45,3 +45,21 @@
   height: 5em;
   border: 1px solid black;
 }
+
+.divTextarea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textarea {
+  width: 500px;
+  height: 100px;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

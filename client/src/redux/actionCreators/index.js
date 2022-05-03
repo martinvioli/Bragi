@@ -7,6 +7,8 @@ import {
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
   CLEAR_DATA,
+  USER_NEW_POST,
+  SONGS_MORE_PLAYED,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -98,5 +100,32 @@ export const getArtistByName = function (name) {
 export const clearData = function () {
   return {
     type: CLEAR_DATA,
+  };
+};
+
+export const userNewPost = function (input) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post("url back", input);
+      console.log(response.data);
+      return dispatch({
+        type: USER_NEW_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getSongsMorePLayed = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("url back");
+      const result = response.data;
+      dispatch({ type: SONGS_MORE_PLAYED, payload: result });
+    } catch (err) {
+      console.log(err);
+    }
   };
 };

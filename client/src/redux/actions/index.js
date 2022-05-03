@@ -6,3 +6,5 @@ export const GET_SONG_BY_NAME = "GET_SONG_BY_NAME";
 export const GET_ALBUM_BY_NAME = "GET_ALBUM_BY_NAME";
 export const GET_ARTIST_BY_NAME = "GET_ARTIST_BY_NAME";
 export const CLEAR_DATA = "CLEAR_DATA";
+export const USER_NEW_POST = "USER_NEW_POST";
+export const SONGS_MORE_PLAYED = "SONGS_MORE_PLAYED";

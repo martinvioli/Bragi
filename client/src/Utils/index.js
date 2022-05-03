@@ -8,11 +8,17 @@ const api = {
   searchSongUrl: "http://localhost:3001/song",
   searchGenreUrl: "http://localhost:3001/genre",
   searchUrl: "http://localhost:3001/searh",
-  getUser: "http://localhost:3001/dataProfile",
+  getUser: "http://localhost:3001/profileUser/getData",
   searchSongByName: "http://localhost:3001/search/song",
   searchAlbumByName: "http://localhost:3001/search/album",
   searchArtistByName: "http://localhost:3001/artist",
   deleteToken: "http://localhost:3001/closeSessionUser",
+};
+
+const post = {
+  input: "El contenido del post",
+  link: ["arreglo de string para los links del post"],
+  token: "el token del usuario",
 };
 
 export default api;
