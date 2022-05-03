@@ -8,10 +8,12 @@ const artistByName = require('./ArtistByName');
 const genreById = require('./GenreById');
 const searchOptions = require('./SearchOptions');
 const profileData = require('./Profile.js');
-const closeSessionUser = require('./CloseSessionUser')
-const searchUser = require('./SearchUser')
-const follow = require('./FollowAction')
-const unFollow = require('./UnfollowAction')
+const closeSessionUser = require('./CloseSessionUser');
+const searchUser = require('./SearchUser');
+const getTop10 = require('./Top10Options');
+const follow = require('./FollowAction');
+const unFollow = require('./UnfollowAction');
+
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -28,7 +30,8 @@ router.use('/search', searchOptions);
 router.use('/profileUser', profileData);
 router.use('/closeSessionUser', closeSessionUser);
 router.use('/searchUser', searchUser);
-router.use('/follow', follow)
-router.use('/unfollow', unFollow)
+router.use('/getTop10', getTop10);
+router.use('/follow', follow);
+router.use('/unfollow', unFollow);
 
 module.exports = router;

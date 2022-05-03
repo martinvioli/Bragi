@@ -64,6 +64,39 @@ class Search {
         }
     }
 
+    getTop10songs = async (req, res) => {
+        try {
+            const songs = await axios.get('https://api.deezer.com/chart')
+            if(songs) {
+                return res.status(200).json(songs.data.tracks.data)
+            } else return res.status(404).json({ msgE: 'Songs not found'})
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    getTop10albums = async (req, res) => {
+        try {
+            const albums = await axios.get('https://api.deezer.com/chart')
+            if(albums) {
+                return res.status(200).json(albums.data.albums.data)
+            } else return res.status(404).json({ msgE: 'Albums not found'})
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    getTop10artists = async (req, res) => {
+        try {
+            const artists = await axios.get('https://api.deezer.com/chart')
+            if(artists) {
+                return res.status(200).json(artists.data.artists.data)
+            } else return res.status(404).json({ msgE: 'Artists not found'})
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
     searchUser = async(req,res) =>{
         const nameUser = req.params.nameUser;
         try {
