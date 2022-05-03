@@ -166,6 +166,7 @@ function Home() {
               song.map((e) => {
                 return (
                   <div
+                    key={e.id}
                     style={{
                       display: "inline-block",
                     }}
@@ -177,7 +178,7 @@ function Home() {
             {album &&
               album.map((e) => {
                 return (
-                  <div style={{ display: "inline-block" }}>
+                  <div key={e.id} style={{ display: "inline-block" }}>
                     <SearchData data={e} />
                   </div>
                 );
@@ -185,7 +186,7 @@ function Home() {
             {artist &&
               artist.map((e) => {
                 return (
-                  <div style={{ display: "inline-block" }}>
+                  <div key={e.id} style={{ display: "inline-block" }}>
                     <SearchData data={e} />
                   </div>
                 );
