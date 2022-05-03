@@ -54,7 +54,7 @@ module.exports = (sequelize) => {
             defaultValue: 'https://i.pinimg.com/564x/e5/91/dc/e591dc82326cc4c86578e3eeecced792.jpg'
         },
         nameTypeUser: {
-            type: DataTypes.ENUM('Premium', 'Standard', 'Admin'),
+            type: DataTypes.ENUM('Premium', 'Standard', 'Admin', 'Artist'),
             allowNull: false,
             defaultValue: 'Standard'
         },

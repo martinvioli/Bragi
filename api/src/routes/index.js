@@ -22,10 +22,9 @@ router.use('/validationUser', validation);
 router.use('/login', login);
 router.use('/song', songById);
 router.use('/artist', artistByName);
-router.use('/genre', genreById);
 router.use('/search', searchOptions);
-router.use('/dataProfile', profileData);
-router.use('/closeSessionUser', closeSessionUser)
-router.use('/searchUser', searchUser)
+router.use('/profileUser', profileData);
+router.use('/closeSessionUser', closeSessionUser);
+router.use('/searchUser', searchUser);
 
 module.exports = router;
