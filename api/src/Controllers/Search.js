@@ -1,5 +1,6 @@
 const axios = require('axios');
-
+const { User } = require("../db.js");
+const { Op } = require("sequelize");
 class Search {
     constructor(){}
 
@@ -60,6 +61,30 @@ class Search {
             } else return res.status(404).json({ msgE: 'Album not found'})
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    searchUser = async(req,res) =>{
+        const nameUser = req.params.nameUser;
+        try {
+            if(nameUser){
+                const searchNameInDb = await User.findAll({
+                    where : {
+                        [Op.or] : {
+                            name: { [Op.iLike]: `%${nameUser}%` },
+                            lastName: { [Op.iLike]: `%${nameUser}%` },
+                            userName: { [Op.iLike]: `%${nameUser}%`}
+                        }
+                    }
+                })
+                searchNameInDb
+                ? res.status(200).send(searchNameInDb)
+                : res.status(404).json({ msgE: 'User not found' })
+            }
+            return res.status(404).json({ msgE: 'Username not found' })
+        } catch (error) {
+            console.log(error)
+            return res.status(404).json({ msgE: 'searchUser no se ejecuto' })
         }
     }
 }
