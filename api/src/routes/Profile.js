@@ -12,7 +12,7 @@ const user = new User();
 const profileUser = new ProfileUser();
 
 router.post("/getData", user.getDataUser);
-router.post("/editionBasicProfile", profileUser.editionBasicDataProfile);
-router.post("/editionSensitiveProfile", profileUser.editionSensitiveDataProfile);
+router.put("/editionBasicProfile", profileUser.editionBasicDataProfile);
+router.put("/editionSensitiveProfile", profileUser.editionSensitiveDataProfile);
 
 module.exports = router;
