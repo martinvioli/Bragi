@@ -113,6 +113,7 @@ export default function Feed() {
         <div className={styles.center}>
           <div className={styles.newPost}>
             <form>
+              <h3>Add new post</h3>
               <div className={styles.divTextarea}>
                 <Input
                   color="bg-light"
@@ -142,7 +143,49 @@ export default function Feed() {
                 </Button>
               </div>
             </form>
+            <br></br>
+            <div className={styles.concertAndEventPost}>
+              <form className={styles.newConcert}>
+                <h3>Add new concert</h3>
+                <input
+                  type="textarea"
+                  name="contentConcert"
+                  placeholder="Describe some thing about the concert."
+                />
+                <input
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  name="imageConcert"
+                />
+                <input type="date" name="dateConcert" />
+                <input
+                  type="text"
+                  name="textConcert"
+                  placeholder="Name the country and the stadium or place."
+                />
+              </form>
+              <form className={styles.newEvent}>
+                <h3>Add new event</h3>
+                <input
+                  type="textarea"
+                  name="contentEvent"
+                  placeholder="Describe some thing about the event."
+                />
+                <input
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  name="imageEvent"
+                />
+                <input type="date" name="dateEvent" />
+                <input
+                  type="text"
+                  name="textEvent"
+                  placeholder="Name the place or where is going to be the event."
+                />
+              </form>
+            </div>
           </div>
+
           <div className={styles.posts}>
             See All Post
             <div className={styles.post}>

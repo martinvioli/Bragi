@@ -9,3 +9,6 @@ export const CLEAR_DATA = "CLEAR_DATA";
 export const USER_NEW_POST = "USER_NEW_POST";
 export const SONGS_MORE_PLAYED = "SONGS_MORE_PLAYED";
 export const GET_ALL_POST = " GET_ALL_POST";
+export const GET_TOP_10_ALBUMS = "GET_TOP_10_ALBUMS";
+export const GET_TOP_10_ARTISTS = "GET_TOP_10_ARTISTS";
+export const GET_TOP_10_SONGS = "GET_TOP_10_SONGS";

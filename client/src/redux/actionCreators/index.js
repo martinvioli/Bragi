@@ -10,6 +10,9 @@ import {
   USER_NEW_POST,
   SONGS_MORE_PLAYED,
   GET_ALL_POST,
+  GET_TOP_10_SONGS,
+  GET_TOP_10_ARTISTS,
+  GET_TOP_10_ALBUMS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -140,6 +143,52 @@ export const getSongsMorePLayed = function () {
       dispatch({ type: SONGS_MORE_PLAYED, payload: result });
     } catch (err) {
       console.log(err);
+    }
+  };
+};
+
+export const getTop10Songs = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getTop10songs);
+      console.log(response.data);
+      return dispatch({
+        type: GET_TOP_10_SONGS,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const getTop10artist = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getTop10artist);
+      console.log(response.data);
+      return dispatch({
+        type: GET_TOP_10_ARTISTS,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const getTop10albums = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getTop10albums);
+      console.log(response.data);
+
+      return dispatch({
+        type: GET_TOP_10_ALBUMS,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
   };
 };

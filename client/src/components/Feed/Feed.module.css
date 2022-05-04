@@ -88,3 +88,20 @@
   justify-content: center;
   align-items: center;
 }
+
+.concertAndEventPost {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newConcert {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.newEvent {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}

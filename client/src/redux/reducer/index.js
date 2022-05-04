@@ -6,9 +6,12 @@ import {
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
   CLEAR_DATA,
-  USER_NEW_POST,
+  // USER_NEW_POST,
   SONGS_MORE_PLAYED,
   GET_ALL_POST,
+  GET_TOP_10_ALBUMS,
+  GET_TOP_10_SONGS,
+  GET_TOP_10_ARTISTS,
 } from "../actions";
 
 // STATE CREATION
@@ -21,6 +24,9 @@ const initialState = {
   album: [],
   artist: [],
   songs: [],
+  topSongs: [],
+  topArtists: [],
+  topAlbums: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -83,6 +89,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         songs: action.payload,
+      };
+    case GET_TOP_10_ALBUMS:
+      return {
+        ...state,
+        topAlbums: action.payload,
+      };
+    case GET_TOP_10_ARTISTS:
+      return {
+        ...state,
+        topArtists: action.payload,
+      };
+    case GET_TOP_10_SONGS:
+      return {
+        ...state,
+        topSongs: action.payload,
       };
     default:
       return { ...state };

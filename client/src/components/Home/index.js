@@ -29,6 +29,7 @@ import SearchData from "../SearchData";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
+import Top10 from "../Top10";
 
 function Home() {
   const navigate = useNavigate();
@@ -192,6 +193,7 @@ function Home() {
                 );
               })}
           </div>
+          <Top10></Top10>
         </div>
       ) : (
         <h1 style={{ color: "white", textAlign: "center" }}>

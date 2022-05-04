@@ -45,6 +45,33 @@ function Profile() {
     },
   ];
 
+  const posts = [
+    {
+      content:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+      link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+      image: "https://picsum.photos/318/180",
+    },
+    {
+      content:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+      link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+      image: "https://picsum.photos/318/180",
+    },
+    {
+      content:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+      link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+      image: "https://picsum.photos/318/180",
+    },
+    {
+      content:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+      link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+      image: "https://picsum.photos/318/180",
+    },
+  ];
+
   console.log(user);
 
   return (
@@ -65,10 +92,12 @@ function Profile() {
                 <h1 style={{ color: "white", textAlign: "center" }}>
                   {user.userName.toUpperCase()}
                 </h1>
+                <h5>Fan/Artist</h5>
               </div>
             ) : null}
           </div>
         </div>
+        <br></br>
         <div className={styles.artist}>
           <div className={styles.events}>
             <h1>EVENTS</h1>
@@ -106,7 +135,21 @@ function Profile() {
             ))}
           </div>
         </div>
-        <div className={styles.posts}></div>
+        <br></br>
+        <div className={styles.posts}>
+          <h1>POSTS</h1>
+          {posts.map((e) => (
+            <div className={styles.post}>
+              <p>{e.content}</p>
+              <a href={e.link}>{e.link}</a>
+              <img
+                src={e.image}
+                styles={{ width: "50px", height: "50px" }}
+                alt="postImg"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
