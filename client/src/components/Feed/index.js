@@ -111,118 +111,120 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          <div className={styles.newPost}>
-            <form>
-              <h3>Add new post</h3>
-              <div className={styles.divTextarea}>
-                <Input
-                  color="bg-light"
-                  placeholder="tell us about something that has happened to you with music..."
-                  className={styles.textarea}
-                  name="content"
-                  value={input.content}
-                  type="textarea"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className={styles.buttons}>
-                <Input
-                  accept="image/png,image/jpeg"
-                  type="file"
-                  name="image"
-                  onChange={handleSearchImage}
-                />
-                <Input
-                  onChange={handleChange}
-                  type="url"
-                  name="link"
-                  placeholder="Insert URL 🔗"
-                />
-                <Button color="primary" onClick={(e) => handleClick(e)}>
-                  Post
-                </Button>
-              </div>
-            </form>
-            <br></br>
-            <div className={styles.concertAndEventPost}>
-              <form className={styles.newConcert}>
-                <h3>Add new concert</h3>
-                <input
-                  type="textarea"
-                  name="contentConcert"
-                  placeholder="Describe some thing about the concert."
-                />
-                <input
-                  accept="image/png,image/jpeg"
-                  type="file"
-                  name="imageConcert"
-                />
-                <input type="date" name="dateConcert" />
-                <input
-                  type="text"
-                  name="textConcert"
-                  placeholder="Name the country and the stadium or place."
-                />
+          {user.typeUser === "Artist" ? (
+            <div className={styles.newPost}>
+              <form>
+                <h3>Add new post</h3>
+                <div className={styles.divTextarea}>
+                  <Input
+                    color="bg-light"
+                    placeholder="tell us about something that has happened to you with music..."
+                    className={styles.textarea}
+                    name="content"
+                    value={input.content}
+                    type="textarea"
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <div className={styles.buttons}>
+                  <Input
+                    accept="image/png,image/jpeg"
+                    type="file"
+                    name="image"
+                    onChange={handleSearchImage}
+                  />
+                  <Input
+                    onChange={handleChange}
+                    type="url"
+                    name="link"
+                    placeholder="Insert URL 🔗"
+                  />
+                  <Button color="primary" onClick={(e) => handleClick(e)}>
+                    Post
+                  </Button>
+                </div>
               </form>
-              <form className={styles.newEvent}>
-                <h3>Add new event</h3>
-                <input
-                  type="textarea"
-                  name="contentEvent"
-                  placeholder="Describe some thing about the event."
-                />
-                <input
-                  accept="image/png,image/jpeg"
-                  type="file"
-                  name="imageEvent"
-                />
-                <input type="date" name="dateEvent" />
-                <input
-                  type="text"
-                  name="textEvent"
-                  placeholder="Name the place or where is going to be the event."
-                />
-              </form>
+              <br></br>
+              <div className={styles.concertAndEventPost}>
+                <form className={styles.newConcert}>
+                  <h3>Add new concert</h3>
+                  <input
+                    type="textarea"
+                    name="contentConcert"
+                    placeholder="Describe some thing about the concert."
+                  />
+                  <input
+                    accept="image/png,image/jpeg"
+                    type="file"
+                    name="imageConcert"
+                  />
+                  <input type="date" name="dateConcert" />
+                  <input
+                    type="text"
+                    name="textConcert"
+                    placeholder="Name the country and the stadium or place."
+                  />
+                </form>
+                <form className={styles.newEvent}>
+                  <h3>Add new event</h3>
+                  <input
+                    type="textarea"
+                    name="contentEvent"
+                    placeholder="Describe some thing about the event."
+                  />
+                  <input
+                    accept="image/png,image/jpeg"
+                    type="file"
+                    name="imageEvent"
+                  />
+                  <input type="date" name="dateEvent" />
+                  <input
+                    type="text"
+                    name="textEvent"
+                    placeholder="Name the place or where is going to be the event."
+                  />
+                </form>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={styles.posts}>
+              See All Post
+              <div className={styles.post}>
+                {posts &&
+                  posts.map((e) => {
+                    return (
+                      <Card
+                        style={{
+                          width: "70%",
+                        }}
+                        color="bg-light"
+                        className={styles.backgroundPost}
+                        key={e.token}
+                      >
+                        <CardBody>
+                          <CardTitle tag="h5">{user.username}</CardTitle>
+                          <CardSubtitle className="mb-2 text-muted" tag="h6">
+                            {e.content}
+                          </CardSubtitle>
+                        </CardBody>
+                        <div className={styles.img}>
+                          <img
+                            alt="img"
+                            src={e.image}
+                            height="250px"
+                            width="300px"
+                          />
+                        </div>
 
-          <div className={styles.posts}>
-            See All Post
-            <div className={styles.post}>
-              {posts &&
-                posts.map((e) => {
-                  return (
-                    <Card
-                      style={{
-                        width: "70%",
-                      }}
-                      color="bg-light"
-                      className={styles.backgroundPost}
-                      key={e.token}
-                    >
-                      <CardBody>
-                        <CardTitle tag="h5">{user.username}</CardTitle>
-                        <CardSubtitle className="mb-2 text-muted" tag="h6">
-                          {e.content}
-                        </CardSubtitle>
-                      </CardBody>
-                      <div className={styles.img}>
-                        <img
-                          alt="img"
-                          src={e.image}
-                          height="250px"
-                          width="300px"
-                        />
-                      </div>
-
-                      <CardLink
-                        href={e.link}
-                      >{`LINK DEL POST : ${e.link}`}</CardLink>
-                    </Card>
-                  );
-                })}
+                        <CardLink
+                          href={e.link}
+                        >{`LINK DEL POST : ${e.link}`}</CardLink>
+                      </Card>
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

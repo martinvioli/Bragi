@@ -5,7 +5,7 @@ import {
   getTop10albums,
 } from "../../redux/actionCreators";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Table } from "reactstrap";
 function Top10() {
   const songs = useSelector((state) => state.topSongs);
   const artists = useSelector((state) => state.topArtists);
@@ -19,6 +19,15 @@ function Top10() {
 
   return (
     <>
+      <div>
+        <style>
+          {`.custom-tag {
+                  max-width: 100%;
+                  height: 500px;
+                  background: black;
+                }`}
+        </style>
+      </div>
       <div className="container" style={{ color: "white" }}>
         <div className="row aling-items-start">
           <div className="col">
@@ -30,7 +39,11 @@ function Top10() {
                     <h4>Artista : {e.artist.name}</h4>
                     <h4>Album : {e.album.title}</h4>
                     <a href={e.link}>TRACK</a>
-                    <audio src={e.preview} controls></audio>
+                    <audio
+                      style={{ height: "50px", width: "50px" }}
+                      src={e.preview}
+                      controls
+                    ></audio>
                     <img
                       src={e.artist.picture_small}
                       class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
@@ -75,7 +88,6 @@ function Top10() {
                 );
               })}
           </div>
-          {/* <h1>Holaaa</h1> */}
         </div>
       </div>
     </>
