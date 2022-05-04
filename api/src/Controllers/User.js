@@ -108,9 +108,39 @@ class UserClass {
     const { userName } = req.body;
     const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}]}});
     try {
-      if(!userFoundDB) return res.status(404).json({ msgE: 'There was an error finding the user' })
+      console.log(userFoundDB.dataValues.nameTypeUser)
+      if(!userFoundDB) return res.status(404).json({ msgE: 'Could not find the user' })
+      if(userFoundDB.dataValues.nameTypeUser === 'Artist') return res.status(400).json({ msgE: 'The user was already Artist' })
       await User.update({nameTypeUser: 'Artist'}, {where: {[Op.or]: [{ userName: userName}]}})
-      res.sendStatus(200).json({ msgE: 'User updated to artist' })
+      res.sendStatus(200).json({ msgE: 'User updated to Artist' })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  changeUserToPremium = async (req, res) => {
+    console.log('Route is legible')
+    const { userName } = req.body;
+    const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}]}});
+    try {
+      if(!userFoundDB) return res.status(404).json({ msgE: 'Could not find the user' })
+      if(userFoundDB.dataValues.nameTypeUser === 'Premium') return res.status(400).json({ msgE: 'The user was already Premium' })
+      await User.update({nameTypeUser: 'Premium'}, {where: {[Op.or]: [{ userName: userName}]}})
+      res.sendStatus(200).json({ msgE: 'User updated to Premium' })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  changeUserToStandard = async (req, res) => {
+    console.log('Route is legible')
+    const { userName } = req.body;
+    const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}]}});
+    try {
+      if(!userFoundDB) return res.status(404).json({ msgE: 'Could not find the user' })
+      if(userFoundDB.dataValues.nameTypeUser === 'Standard') return res.status(400).json({ msgE: 'The user was already Standard' })
+      await User.update({nameTypeUser: 'Standard'}, {where: {[Op.or]: [{ userName: userName}]}})
+      res.sendStatus(200).json({ msgE: 'User updated to Standard' })
     } catch (error) {
       console.log(error)
     }
