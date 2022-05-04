@@ -72,6 +72,45 @@ function Profile() {
     },
   ];
 
+  var followed = [
+    {
+      name: "Taylor Swift",
+      user: "taylorSwiftOK",
+      image:
+        "https://images.ecestaticos.com/dlsHpoc7C5yGsaGTQwhVNcF0-e0=/155x146:1981x1515/1200x899/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F04a%2F214%2F268%2F04a214268f07ee4870e767106a8b1527.jpg",
+    },
+    {
+      name: "Metallica",
+      user: "metallica_rock",
+      image:
+        "https://studiosol-a.akamaihd.net/uploadfile/letras/fotos/c/b/e/3/cbe32534b5d42220e47b16a1a9c9c0dd.jpg",
+    },
+    {
+      name: "Duki",
+      user: "dukiGOAT",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/9/98/Duko_concierto.jpg",
+    },
+  ];
+
+  var assistedConcerts = [
+    {
+      name: "Hannah Montana DisneyTours",
+      place: "Estadio Unico de La Plata",
+      date: "20/05/2010",
+    },
+    {
+      name: "Kiss: the Comeback",
+      place: "Quilmes Rock",
+      date: "02/05/2022",
+    },
+    {
+      name: "The Beatles",
+      place: "Abbey Road",
+      date: "09/12/1970",
+    },
+  ];
+
   console.log(user);
 
   return (
@@ -92,64 +131,99 @@ function Profile() {
                 <h1 style={{ color: "white", textAlign: "center" }}>
                   {user.userName.toUpperCase()}
                 </h1>
-                <h5>Fan/Artist</h5>
+                <h5>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h5>
+                <p>{user.description}</p>
               </div>
             ) : null}
           </div>
         </div>
         <br></br>
-        <div className={styles.artist}>
-          <div className={styles.events}>
-            <h1>EVENTS</h1>
-            {events.map((e) => (
-              <div className={styles.event}>
-                <p>
-                  DATE:<span>{e.date}</span>
-                </p>
-                <p>
-                  COUNTRY: <span>{e.country}</span>
-                </p>
-                <p>
-                  PLACE:<span>{e.place}</span>
-                </p>
+        {user.typeUser === "Artist" ? (
+          <>
+            <div className={styles.artist}>
+              <div className={styles.events}>
+                <h1>EVENTS</h1>
+                {events.map((e) => (
+                  <div className={styles.event}>
+                    <p>
+                      DATE:<span>{e.date}</span>
+                    </p>
+                    <p>
+                      COUNTRY: <span>{e.country}</span>
+                    </p>
+                    <p>
+                      PLACE:<span>{e.place}</span>
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className={styles.concerts}>
-            <h1>CONCERTS</h1>
-            {concerts.map((e) => (
-              <div className={styles.concert}>
-                <p>
-                  DATE:<span>{e.date}</span>
-                </p>
-                <p>
-                  TYPE:<span>{e.type}</span>
-                </p>
-                <p>
-                  COUNTRY: <span>{e.country}</span>
-                </p>
-                <p>
-                  PLACE:<span>{e.place}</span>
-                </p>
+              <div className={styles.concerts}>
+                <h1>CONCERTS</h1>
+                {concerts.map((e) => (
+                  <div className={styles.concert}>
+                    <p>
+                      DATE:<span>{e.date}</span>
+                    </p>
+                    <p>
+                      TYPE:<span>{e.type}</span>
+                    </p>
+                    <p>
+                      COUNTRY: <span>{e.country}</span>
+                    </p>
+                    <p>
+                      PLACE:<span>{e.place}</span>
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-        <br></br>
-        <div className={styles.posts}>
-          <h1>POSTS</h1>
-          {posts.map((e) => (
-            <div className={styles.post}>
-              <p>{e.content}</p>
-              <a href={e.link}>{e.link}</a>
-              <img
-                src={e.image}
-                styles={{ width: "50px", height: "50px" }}
-                alt="postImg"
-              />
             </div>
-          ))}
-        </div>
+            <div className={styles.posts}>
+              <h1>POSTS</h1>
+              {posts.map((e) => (
+                <div className={styles.post}>
+                  <p>{e.content}</p>
+                  <a href={e.link}>{e.link}</a>
+                  <img
+                    src={e.image}
+                    style={{ width: "50px", height: "50px" }}
+                    alt="postImg"
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className={styles.fan}>
+            <div className={styles.followed}>
+              {followed.map((e) => (
+                <div className={styles.followedArtist}>
+                  <img
+                    src={e.image}
+                    alt={e.name}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "100%",
+                    }}
+                  />
+                  <section>
+                    <p>{e.name}</p>
+                    <p>{e.user}</p>
+                  </section>
+                </div>
+              ))}
+            </div>
+            <div className={styles.assistedConcerts}>
+              {assistedConcerts.map((e) => (
+                <div className={styles.assistedConcert}>
+                  <p>{e.name}</p>
+                  <p>{e.place}</p>
+                  <p>{e.date}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

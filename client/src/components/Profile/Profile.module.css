@@ -85,3 +85,47 @@
   justify-content: center;
   align-items: center;
 }
+
+.fan {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.299);
+}
+
+.followed {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.followedArtist {
+  display: flex;
+  border: 1px solid black;
+  width: 15em;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.followedArtist > section {
+  width: 8em;
+}
+
+.assistedConcerts {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.assistedConcert {
+  display: flex;
+  border: 1px solid black;
+  width: 15em;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
