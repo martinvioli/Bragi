@@ -195,7 +195,8 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
-                          width: "70%",
+                          width: "50%",
+                          height: "40%",
                         }}
                         color="bg-light"
                         className={styles.backgroundPost}
@@ -209,16 +210,14 @@ export default function Feed() {
                         </CardBody>
                         <div className={styles.img}>
                           <img
+                            className={styles.img}
                             alt="img"
                             src={e.image}
-                            height="250px"
-                            width="300px"
+                            height="90px"
+                            width="90px"
                           />
                         </div>
-
-                        <CardLink
-                          href={e.link}
-                        >{`LINK DEL POST : ${e.link}`}</CardLink>
+                        <CardLink href={e.link}>Link</CardLink>
                       </Card>
                     );
                   })}

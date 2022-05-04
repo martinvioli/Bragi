@@ -38,6 +38,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 5px;
 }
 .posts {
   width: 100%;
