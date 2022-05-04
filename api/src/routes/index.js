@@ -14,6 +14,7 @@ const getTop10 = require('./Top10Options');
 const follow = require('./FollowAction');
 const unFollow = require('./UnfollowAction');
 const postRoutes = require('./Post') ;
+const userToArtist = require('./BecomeArtist')
 
 
 // Importar todos los routers;
@@ -34,6 +35,7 @@ router.use('/searchUser', searchUser);
 router.use('/getTop10', getTop10);
 router.use('/follow', follow);
 router.use('/unfollow', unFollow);
-router.use('/post', postRoutes)
+router.use('/post', postRoutes);
+router.use('/userToArtist', userToArtist);
 
 module.exports = router;
