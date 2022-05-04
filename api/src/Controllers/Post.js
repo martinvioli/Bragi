@@ -1,4 +1,7 @@
 const { Post } = require('../db.js');
+const { Comment } = require("../db");
+const { User } = require('../db');
+const jwt = require('jsonwebtoken');
 
 class PostClass {
     constructor(){}
@@ -35,18 +38,17 @@ class PostClass {
     }
 
     createPost = async (req, res) => {
-        const { contentPost, linkContent, nameStatusPost, imagePost, UserIdUser } = req.body;
+        const { contentPost, linkContent, imagePost, token } = req.body;
+        const tokenDecode = jwt.decode(token)
+
         try {
-            const newPost = await Post.create(
-                {
-                    UserIdUser,
-                    contentPost,
-                    linkContent,
-                    nameStatusPost,
-                    imagePost
-                }
-                );
-            return res.status(200).json(newPost)
+            const user = await User.findOne({ where: { userName: tokenDecode.userName } })
+            if(!user) return res.status(404).json({ msgE: 'Could not find your user' })
+
+            const newPost = await Post.create({ contentPost, linkContent, imagePost });
+            await newPost.setUser(user.idUser)
+
+            return res.status(201).json({ msg: "Post created successfully", newPost})
         } catch (error) {
             res.status(500).json({message: error.message})
         }
@@ -56,35 +58,46 @@ class PostClass {
         const { idPost } = req.params;
         const id = req.body.idPost;
         const {datePost, nameStatusPost, createdAt, updatedAt, UserIdUser} = req.body;
-        try { 
-            if(id || datePost || nameStatusPost || createdAt || updatedAt || UserIdUser) return res.status(500).json({error: 'You cannot change this properties'});     
+        try {
+            if(id || datePost || nameStatusPost || createdAt || updatedAt || UserIdUser) return res.status(500).json({error: 'You cannot change this properties'});
             const post = await Post.findByPk(idPost);
             if (!post) return res.status(404).json({msgE: 'The post with that id doest not exist'});
 
-            
-          post.set(req.body);
-          await post.save();
-          return res.status(200).json(post);
+            post.set(req.body);
+            await post.save();
+            return res.status(200).json(post);
         } catch (error) {
-          return res.status(500).json({ msgE: error.message });
+            return res.status(500).json({ msgE: error.message });
         }
-      }
+    }
 
-      deletePost = async(req, res) => {
+    deletePost = async(req, res) => {
         const { idPost } = req.params;
         try {
-          const post = await Post.findByPk(idPost);
-          if (!post) return res.status(404).json({msgE: 'The post with that id doest not exist'});
-          
-          await post.destroy();
+            const post = await Post.findByPk(idPost);
+            if (!post) return res.status(404).json({msgE: 'The post with that id doest not exist'});
+            await post.destroy();
 
-          return res.status(200).json({msg: 'Post deleted succesfully'});
+            return res.status(200).json({msg: 'Post deleted succesfully'});
         } catch (error) {
-          return res.status(500).json({ msgE: error.message });
+        return res.status(500).json({ msgE: error.message });
         }
-      };
+    };
 
-      
+    getAllComments = async(req,res) => {
+        const { idPost } = req.params;
+
+        try {
+            const comments = await Comment.findAll({
+                attributes: ["idComment", "dateComment", "commentContent", "userNameComment"],
+                where: { PostIdPost: idPost },
+            });
+            res.json(comments);
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+
 };
 
 module.exports = PostClass;
