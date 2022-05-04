@@ -26,7 +26,8 @@ class UserClass {
           profileImage: userFind.profileImage,
           userName: userFind.userName,
           lastName: userFind.lastName,
-          stateUser: userFind.nameStateUser
+          stateUser: userFind.nameStateUser,
+          typeUser: userFind.nameTypeUser
       });
     }catch(error){
       console.log(error)
