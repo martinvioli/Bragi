@@ -102,6 +102,19 @@ class UserClass {
     }
   }
 
+  changeUserToArtist = async (req, res) => {
+    console.log('Route is legible')
+    const { userName } = req.body;
+    const userFoundDB = await User.findOne({where: {[Op.or]: [{ userName: userName}]}});
+    try {
+      if(!userFoundDB) return res.status(404).json({ msgE: 'There was an error finding the user' })
+      await User.update({nameTypeUser: 'Artist'}, {where: {[Op.or]: [{ userName: userName}]}})
+      res.sendStatus(200).json({ msgE: 'User updated to artist' })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 };
 
 module.exports = UserClass;
