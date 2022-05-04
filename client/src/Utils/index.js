@@ -13,6 +13,9 @@ const api = {
   searchAlbumByName: "http://localhost:3001/search/album",
   searchArtistByName: "http://localhost:3001/artist",
   deleteToken: "http://localhost:3001/closeSessionUser",
+  getTop10artist: "http://localhost:3001/getTop10/artists",
+  getTop10albums: "http://localhost:3001/getTop10/albums",
+  getTop10songs: "http://localhost:3001/getTop10/songs",
 };
 
 const post = {
