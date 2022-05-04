@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 
 function Profile() {
-  const user = useSelector((state) => state.user);
+  var user = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
@@ -16,6 +16,12 @@ function Profile() {
     if (userToken) {
     }
   }, []);
+
+  user = {
+    ...user,
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  };
 
   var concerts = [
     {
@@ -77,7 +83,7 @@ function Profile() {
       name: "Taylor Swift",
       user: "taylorSwiftOK",
       image:
-        "https://images.ecestaticos.com/dlsHpoc7C5yGsaGTQwhVNcF0-e0=/155x146:1981x1515/1200x899/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F04a%2F214%2F268%2F04a214268f07ee4870e767106a8b1527.jpg",
+        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-1353100170.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*",
     },
     {
       name: "Metallica",
@@ -126,12 +132,9 @@ function Profile() {
             {user.name ? (
               <div>
                 <h1
-                  style={{ color: "white", textAlign: "center" }}
+                  style={{ color: "white" }}
                 >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
-                <h1 style={{ color: "white", textAlign: "center" }}>
-                  {user.userName.toUpperCase()}
-                </h1>
-                <h5>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h5>
+                <h3>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h3>
                 <p>{user.description}</p>
               </div>
             ) : null}
@@ -195,15 +198,17 @@ function Profile() {
         ) : (
           <div className={styles.fan}>
             <div className={styles.followed}>
+              <h1>FOLLOWING</h1>
               {followed.map((e) => (
                 <div className={styles.followedArtist}>
-                  <img
-                    src={e.image}
-                    alt={e.name}
+                  <div
                     style={{
-                      width: "50px",
-                      height: "50px",
+                      width: "4.5em",
+                      height: "4.5em",
                       borderRadius: "100%",
+                      backgroundImage: `url(${e.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
                     }}
                   />
                   <section>
@@ -214,6 +219,7 @@ function Profile() {
               ))}
             </div>
             <div className={styles.assistedConcerts}>
+              <h1>ASSISTED</h1>
               {assistedConcerts.map((e) => (
                 <div className={styles.assistedConcert}>
                   <p>{e.name}</p>
