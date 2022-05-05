@@ -7,12 +7,14 @@ import {
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
   CLEAR_DATA,
-  USER_NEW_POST,
   SONGS_MORE_PLAYED,
-  GET_ALL_POST,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
   GET_TOP_10_ALBUMS,
+  GET_ALL_POST,
+  USER_NEW_POST,
+  USER_UPDATE_POST,
+  DELETE_POST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -52,6 +54,9 @@ export const getUser = function (token) {
   };
 };
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+//_ SEARCHBAR OPTIONS
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 export const getSongByName = function (name) {
   return async (dispatch) => {
     try {
@@ -107,46 +112,9 @@ export const clearData = function () {
   };
 };
 
-export const userNewPost = function (input) {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post("url back", input);
-      console.log(response.data);
-      return dispatch({
-        type: USER_NEW_POST,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-export const getAllPost = function () {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get("url back");
-      console.log(response.data);
-      return dispatch({
-        type: GET_ALL_POST,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-export const getSongsMorePLayed = function () {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get("url back");
-      const result = response.data;
-      dispatch({ type: SONGS_MORE_PLAYED, payload: result });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+//_ TOP 10 OPTIONS
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 export const getTop10Songs = function () {
   return async (dispatch) => {
     try {
@@ -189,6 +157,66 @@ export const getTop10albums = function () {
       });
     } catch (e) {
       console.log(e);
+    }
+  };
+};
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+//_ CRUD - POST
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+export const getAllPost = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getAllPost);
+      console.log(response.data);
+      return dispatch({
+        type: GET_ALL_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const userNewPost = function (input) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.userNewPost, input);
+      console.log(response.data);
+      return dispatch({
+        type: USER_NEW_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const userUpdatePost = function (idPost) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${api.userUpdatePost}/${idPost}`);
+      console.log(response.data);
+      return dispatch({
+        type: USER_UPDATE_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const deletePost = function (idPost) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`${api.deletePost}/${idPost}`);
+      console.log(response.data);
+      return dispatch({
+        type: DELETE_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 };

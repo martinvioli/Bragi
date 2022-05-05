@@ -16,6 +16,10 @@ const api = {
   getTop10artist: "http://localhost:3001/getTop10/artists",
   getTop10albums: "http://localhost:3001/getTop10/albums",
   getTop10songs: "http://localhost:3001/getTop10/songs",
+  getAllPost: "http://localhost:3001/post",
+  userNewPost: "http://localhost:3001/post",
+  userUpdatePost: "http://localhost:3001/post",
+  deletePost: "http://localhost:3001/post",
 };
 
 const post = {
