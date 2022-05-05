@@ -3,12 +3,14 @@ const { User } = require('../db')
 const { Post } = require('../db')
 const jwt = require('jsonwebtoken');
 
+
 class CommentClass {
     constructor() {}
 
     postComment = async(req,res) => {
         const { commentContent, token, idPost } = req.body;
         const tokenDecode = jwt.decode(token)
+        const badWords = ["mother fucker"]
 
         try {
             const user = await User.findOne({
@@ -17,6 +19,8 @@ class CommentClass {
                 }
             })
             if(!user) return res.status(404).json({ msgE: 'Could not find your user' })
+
+            if(commentContent.length > 255) return res.status(403).json({ msgE: "This content is too long" })
 
             const createComment = await Comment.create({ commentContent: commentContent, idUserComment: user.idUser, userNameComment: user.userName })
             if(!createComment) return res.status(400).json({ msgE: "There was an error creating the comment" })
@@ -37,6 +41,8 @@ class CommentClass {
         try {
             const commentToEdit = Comment.findByPk(idComment)
             if(!commentToEdit) return res.status(404).json({ msgE: "Comment not found" })
+
+            if(commentContent.length > 255) return res.status(403).json({ msgE: "This content is too long" })
 
             await Comment.update({ commentContent: editContent }, { where: { idComment: idComment } })
             return res.status(200).json({ msg: "Post edited successfully" })

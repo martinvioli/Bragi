@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getToken, getUser } from "../../redux/actionCreators";
+import { getToken, getUser, userNewPost } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
 import { FcEditImage } from "react-icons/fc";
@@ -23,47 +23,50 @@ import {
   CardImg,
 } from "reactstrap";
 
-const posts = [
-  {
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-    image: "https://picsum.photos/318/180",
-  },
-  {
-    content:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-    image: "https://picsum.photos/318/180",
-  },
-  {
-    content:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-    image: "https://picsum.photos/318/180",
-  },
-  {
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-    image: "https://picsum.photos/318/180",
-  },
-];
+// const posts = [
+//   {
+//     content:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+//     image: "https://picsum.photos/318/180",
+//   },
+//   {
+//     content:
+//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+//     image: "https://picsum.photos/318/180",
+//   },
+//   {
+//     content:
+//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+//     image: "https://picsum.photos/318/180",
+//   },
+//   {
+//     content:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+//     image: "https://picsum.photos/318/180",
+//   },
+// ];
 
 export default function Feed() {
-  const [input, setInput] = useState({
-    content: "",
-    token: "",
-    link: "",
-    image: "",
-  });
-
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const posts = useSelector((state) => state.posts);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [input, setInput] = useState({
+    contentPost: "",
+    token: "",
+    linkContent: "",
+    imagePost: "",
+  });
 
-  //dispatch(getAllPost());
+  useEffect(() => {
+    setInput({ ...input, token: token });
+  }, [token]);
 
   useEffect(() => {
     const userToken = JSON.parse(
@@ -71,6 +74,7 @@ export default function Feed() {
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
+    dispatch(getAllPost());
     if (!userToken) {
       navigate("/");
     }
@@ -78,10 +82,9 @@ export default function Feed() {
 
   const handleSearchImage = (e) => {
     setInput({
-      image: e.target.files[0],
+      ...input,
+      imagePost: e.target.files[0],
     });
-    console.log(e.target);
-    console.log(e.target.files[0]);
   };
 
   function handleChange(e) {
@@ -90,15 +93,13 @@ export default function Feed() {
   }
   function handleClick(e) {
     e.preventDefault();
-    setInput({ ...input, token: token });
-    posts.unshift(input);
+    dispatch(userNewPost(input));
     setInput({
-      content: "",
-      token: "",
-      link: "",
-      image: "",
+      ...input,
+      contentPost: "",
+      linkContent: "",
+      imagePost: "",
     });
-    // dispatch(userNewPost(input))
   }
 
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
@@ -124,8 +125,8 @@ export default function Feed() {
                     color="bg-light"
                     placeholder="tell us about something that has happened to you with music..."
                     className={styles.textarea}
-                    name="content"
-                    value={input.content}
+                    name="contentPost"
+                    value={input.contentPost}
                     type="textarea"
                     onChange={(e) => handleChange(e)}
                   />
@@ -134,16 +135,21 @@ export default function Feed() {
                   <Input
                     accept="image/png,image/jpeg"
                     type="file"
-                    name="image"
+                    name="imagePost"
                     onChange={handleSearchImage}
                   />
                   <Input
                     onChange={handleChange}
                     type="url"
-                    name="link"
+                    name="linkContent"
                     placeholder="Insert URL 🔗"
                   />
-                  <Button color="primary" onClick={(e) => handleClick(e)}>
+                  <Button
+                    color="primary"
+                    onClick={(e) => {
+                      handleClick(e);
+                    }}
+                  >
                     Post
                   </Button>
                 </div>
@@ -199,8 +205,10 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
+                          marginLeft: "10em",
                           width: "50%",
                           height: "40%",
+                          minWidth: "25em",
                         }}
                         color="bg-light"
                         className={styles.backgroundPost}
@@ -224,20 +232,32 @@ export default function Feed() {
                             }}
                           /> */}
 
-                          <CardTitle tag="h5">{user.username}</CardTitle>
+                          <CardTitle
+                            style={{
+                              color: "blue",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                            }}
+                            tag="h5"
+                          >
+                            {user.userName}
+                          </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
-                            {e.content}
+                            {e.contentPost}
                           </CardSubtitle>
                         </CardBody>
-                        <div className={styles.img}>
-                          <img
-                            src={e.image}
-                            class="img-fluid"
-                            alt="Responsive"
-                          />
-                        </div>
+                        {e.imagePost && (
+                          <div className={styles.img}>
+                            <img
+                              src={e.imagePost}
+                              class="img-fluid"
+                              alt="Responsive"
+                            />
+                          </div>
+                        )}
+
                         <div className={styles.icons}>
-                          <CardLink href={e.link}>
+                          <CardLink href={e.linkContent}>
                             <FcLink
                               style={{
                                 marginBottom: "0.4em",
