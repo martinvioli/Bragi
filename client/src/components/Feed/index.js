@@ -53,19 +53,20 @@ import {
 export default function Feed() {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  //console.log(token);
   const posts = useSelector((state) => state.posts);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     contentPost: "",
-    token: token,
+    token: "",
     linkContent: "",
     imagePost: "",
   });
 
-  //dispatch(getAllPost());
+  useEffect(() => {
+    setInput({ ...input, token: token });
+  }, [token]);
 
   useEffect(() => {
     const userToken = JSON.parse(
@@ -84,8 +85,6 @@ export default function Feed() {
       ...input,
       imagePost: e.target.files[0],
     });
-    console.log(e.target);
-    console.log(e.target.files[0]);
   };
 
   function handleChange(e) {
@@ -94,13 +93,10 @@ export default function Feed() {
   }
   function handleClick(e) {
     e.preventDefault();
-
-    console.log(input);
     dispatch(userNewPost(input));
-    //posts.unshift(input);
     setInput({
+      ...input,
       contentPost: "",
-      token: "",
       linkContent: "",
       imagePost: "",
     });
@@ -120,7 +116,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -151,8 +147,6 @@ export default function Feed() {
                   <Button
                     color="primary"
                     onClick={(e) => {
-                      console.log(token);
-                      // setInput({ ...input, token: token });
                       handleClick(e);
                     }}
                   >
@@ -213,6 +207,7 @@ export default function Feed() {
                         style={{
                           width: "50%",
                           height: "40%",
+                          minWidth: "50em",
                         }}
                         color="bg-light"
                         className={styles.backgroundPost}
