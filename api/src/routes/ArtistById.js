@@ -4,8 +4,6 @@ const Search = require('../Controllers/Search')
 
 const search = new Search()
 
-router.get('/song', search.searchSongByName)
-router.get('/album', search.searchAlbumByName)
-router.get('/artist', search.searchArtistByName)
+router.get('/:artistId', search.searchArtistById)
 
 module.exports = router;
