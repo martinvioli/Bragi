@@ -205,9 +205,10 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
+                          marginLeft: "10em",
                           width: "50%",
                           height: "40%",
-                          minWidth: "50em",
+                          minWidth: "25em",
                         }}
                         color="bg-light"
                         className={styles.backgroundPost}
@@ -231,18 +232,30 @@ export default function Feed() {
                             }}
                           /> */}
 
-                          <CardTitle tag="h5">{user.userName}</CardTitle>
+                          <CardTitle
+                            style={{
+                              color: "blue",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                            }}
+                            tag="h5"
+                          >
+                            {user.userName}
+                          </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
                           </CardSubtitle>
                         </CardBody>
-                        <div className={styles.img}>
-                          <img
-                            src={e.imagePost}
-                            class="img-fluid"
-                            alt="Responsive"
-                          />
-                        </div>
+                        {e.imagePost && (
+                          <div className={styles.img}>
+                            <img
+                              src={e.imagePost}
+                              class="img-fluid"
+                              alt="Responsive"
+                            />
+                          </div>
+                        )}
+
                         <div className={styles.icons}>
                           <CardLink href={e.linkContent}>
                             <FcLink
