@@ -120,7 +120,7 @@ function Profile() {
   console.log(user);
 
   return (
-    <div style={{ marginTop: "5em" }}>
+    <div>
       <div className={styles.container}>
         <div className={styles.profile}>
           <img
@@ -215,16 +215,6 @@ function Profile() {
                     <p>{e.name}</p>
                     <p>{e.user}</p>
                   </section>
-                </div>
-              ))}
-            </div>
-            <div className={styles.assistedConcerts}>
-              <h1>ASSISTED</h1>
-              {assistedConcerts.map((e) => (
-                <div className={styles.assistedConcert}>
-                  <p>{e.name}</p>
-                  <p>{e.place}</p>
-                  <p>{e.date}</p>
                 </div>
               ))}
             </div>
