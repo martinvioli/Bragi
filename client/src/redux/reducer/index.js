@@ -6,12 +6,13 @@ import {
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
   CLEAR_DATA,
-  // USER_NEW_POST,
-  SONGS_MORE_PLAYED,
-  GET_ALL_POST,
   GET_TOP_10_ALBUMS,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
+  GET_ALL_POST,
+  USER_NEW_POST,
+  USER_UPDATE_POST,
+  DELETE_POST,
 } from "../actions";
 
 // STATE CREATION
@@ -75,21 +76,12 @@ function rootReducer(state = initialState, action) {
         artist: [],
         album: [],
       };
-    case GET_ALL_POST:
-      return {
-        ...state,
-        posts: action.payload,
-      };
+
     // case USER_NEW_POST:
     //   return {
     //     ...state,
     //     posts: state.posts.unshift(action.payload),
     //   };
-    case SONGS_MORE_PLAYED:
-      return {
-        ...state,
-        songs: action.payload,
-      };
     case GET_TOP_10_ALBUMS:
       return {
         ...state,
@@ -104,6 +96,26 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         topSongs: action.payload,
+      };
+    case GET_ALL_POST:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+    case USER_NEW_POST:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+    case USER_UPDATE_POST:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((p) => p.idPost !== action.payload),
       };
     default:
       return { ...state };
