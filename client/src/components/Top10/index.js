@@ -6,6 +6,7 @@ import {
 } from "../../redux/actionCreators";
 import { useSelector, useDispatch } from "react-redux";
 import { Table } from "reactstrap";
+import styles from "./Top10.module.css";
 function Top10() {
   const songs = useSelector((state) => state.topSongs);
   const artists = useSelector((state) => state.topArtists);
@@ -19,71 +20,76 @@ function Top10() {
 
   return (
     <>
-      <div>
-        <style>
-          {`.custom-tag {
-                  max-width: 100%;
-                  height: 500px;
-                  background: black;
-                }`}
-        </style>
-      </div>
-      <div className="container" style={{ color: "white" }}>
+      <div
+        className={`container ${styles.divContainer}`}
+        style={{ color: "white" }}
+      >
         <div className="row aling-items-start">
-          <div className="col">
+          <div className={`col ${styles.column}`}>
+            <h5>Top 10 Songs</h5>
+            <hr />
             {songs &&
-              songs.map((e) => {
+              songs.map((e, i) => {
                 return (
                   <div key={e.id}>
-                    <h3>{e.title}</h3>
-                    <h4>Artista : {e.artist.name}</h4>
-                    <h4>Album : {e.album.title}</h4>
-                    <a href={e.link}>TRACK</a>
+                    <p>{i + 1}</p>
+                    <p>Song : {e.title}</p>
+                    <p>Artista : {e.artist.name}</p>
+                    {/* <p>Album : {e.album.title}</p> */}
+                    <a href={e.link}>Link to the track</a>
+                    <label>Demo: </label>
                     <audio
-                      style={{ height: "50px", width: "50px" }}
                       src={e.preview}
+                      className={styles.audio}
                       controls
                     ></audio>
-                    <img
+                    {/* <img
                       src={e.artist.picture_small}
                       class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
                       alt="TOP"
-                    />
+                    /> */}
+                    <hr />
                   </div>
                 );
               })}
           </div>
-          <div class="col">
+          <div class={`col ${styles.column}`}>
+            <h5>Top 10 Artists</h5>
+            <hr />
             {artists &&
               artists.map((e) => {
                 return (
                   <div key={e.id}>
-                    <h1>{e.position}</h1>
-                    <h3>{e.name}</h3>
-                    <a href={e.link}>TRACK</a>
+                    <p>{e.position}</p>
+                    <p>{e.name}</p>
+                    {/* <a href={e.link}>Link to the track</a> */}
                     <img
                       src={e.picture}
                       class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
                       alt="TOP"
                     />
+                    <hr />
                   </div>
                 );
               })}
           </div>
-          <div className="col">
+          <div className={`col ${styles.column}`}>
+            <h5>Top 10 Albums</h5>
+            <hr />
             {albums &&
-              albums.map((e) => {
+              albums.map((e, i) => {
                 return (
                   <div key={e.id}>
-                    <h3>{e.title}</h3>
-                    <h4>Artista : {e.artist.name}</h4>
-                    <h4>Album : {e.title}</h4>
-                    <a href={e.link}>TRACK</a>
+                    <p>{i + 1}</p>
+                    <p>Album : {e.title}</p>
+                    <p>Artista : {e.artist.name}</p>
+                    <a href={e.link}>Link to the track</a>
                     <img
-                      src={e.cover}
+                      src={e.cover_small}
                       class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
                       alt="TOP"
                     />
+                    <hr />
                   </div>
                 );
               })}
