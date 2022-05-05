@@ -13,7 +13,7 @@ router.put('/:idPost', post.updatePost);
 router.delete('/:idPost', post.deletePost);
 
 router.post('/comment', postComment.postComment);
-router.post('/comment/edit/:idComment', postComment.editComment);
+router.put('/comment/edit/:idComment', postComment.editComment);
 router.delete('/comment/:idComment', postComment.deleteComment);
 router.get('/comments/:idPost', post.getAllComments)
 

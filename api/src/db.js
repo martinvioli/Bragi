@@ -67,7 +67,9 @@ const {
   Follower,
   Followed,
   BlockedUser,
-  Like
+  Like,
+  RowReport,
+  ReportPostCommentUser
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -94,6 +96,8 @@ Like.belongsTo(Post);
 Comment.hasMany(Like);
 Like.belongsTo(Comment);
 
+ReportPostCommentUser.belongsToMany(RowReport, { through: "ReportPostCommentUser_RowReport"});
+RowReport.belongsToMany(ReportPostCommentUser, { through: "ReportPostCommentUser_RowReport"});
 
 
 module.exports = {
