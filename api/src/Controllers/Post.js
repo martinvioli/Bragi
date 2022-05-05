@@ -19,7 +19,8 @@ class PostClass {
                     'UserIdUser'
                 ]
             });
-            return res.status(200).json(posts)
+            const reverse = posts.reverse()
+            return res.status(200).json(reverse)
         } catch (error) {
             return res.status(500).json({ message: error.message })
         }
