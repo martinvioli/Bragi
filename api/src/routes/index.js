@@ -14,7 +14,8 @@ const getTop10 = require('./Top10Options');
 const follow = require('./FollowAction');
 const unFollow = require('./UnfollowAction');
 const postRoutes = require('./Post') ;
-const changeUserType = require('./ChangeUserType')
+const changeUserType = require('./ChangeUserType');
+const report = require('./Report')
 
 
 // Importar todos los routers;
@@ -37,5 +38,6 @@ router.use('/follow', follow);
 router.use('/unfollow', unFollow);
 router.use('/post', postRoutes);
 router.use('/changeUserType', changeUserType);
+router.use('/report', report )
 
 module.exports = router;
