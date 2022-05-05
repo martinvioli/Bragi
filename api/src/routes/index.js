@@ -4,7 +4,8 @@ const validation = require('./Validation');
 const login = require('./Login.js');
 const { User } = require("../db");
 const songById = require('./Song');
-const artistByName = require('./ArtistByName');
+const artistById = require('./ArtistById');
+const albumById = require('./AlbumById')
 const genreById = require('./GenreById');
 const searchOptions = require('./SearchOptions');
 const profileData = require('./Profile.js');
@@ -28,7 +29,8 @@ router.use('/register', register);
 router.use('/validationUser', validation);
 router.use('/login', login);
 router.use('/song', songById);
-router.use('/artist', artistByName);
+router.use('/artist', artistById);
+router.use('/album', albumById)
 router.use('/search', searchOptions);
 router.use('/profileUser', profileData);
 router.use('/closeSessionUser', closeSessionUser);

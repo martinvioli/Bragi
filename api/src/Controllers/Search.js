@@ -15,6 +15,30 @@ class Search {
         } catch(error){console.log(error)}
     }
 
+    searchAlbumById = async(req,res) => {
+        const id = req.params.albumId
+        try {
+            if(id){
+                const song = await axios.get(`https://api.deezer.com/album/${id}`)
+                return res.status(200).json(song.data);
+            } else res.status(404).send({msgE: 'No album ID Provided'})
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+        searchArtistById = async(req,res) => {
+        const id = req.params.artistId
+        try {
+            if(id){
+                const song = await axios.get(`https://api.deezer.com/artist/${id}`)
+                return res.status(200).json(song.data);
+            } else res.status(404).send({msgE: 'No artist ID Provided'})
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     searchSongByName = async(req, res) => {
         const songName = req.query.songName;
         try {
@@ -28,10 +52,10 @@ class Search {
     }
 
     searchArtistByName = async(req,res) => {
-        const name = req.params.name;
+        const artistName = req.query.artistName;
         try {
-            if(name){
-                const artist = await axios.get(`https://api.deezer.com/artist/${name}`)
+            if(artistName){
+                const artist = await axios.get(`https://api.deezer.com/search/artist?q=${artistName}`)
                 return res.status(200).json(artist.data)
             }else return res.status(404).json({ msgE: 'The artist was not found'})
         } catch (error) {
