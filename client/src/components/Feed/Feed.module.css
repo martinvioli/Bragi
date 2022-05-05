@@ -51,6 +51,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 65em;
   /* border: 1px solid black; */
 }
 
@@ -59,7 +60,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
   /* width: fit-content;
   height: fit-content; */
   /* border: 1px solid black; */
