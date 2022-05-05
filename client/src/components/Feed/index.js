@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { getToken, getUser } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
-
+import { FcEditImage } from "react-icons/fc";
+import { FcFullTrash } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
+import { FcRedo } from "react-icons/fc";
+import { FcLink } from "react-icons/fc";
 import {
   Input,
   Form,
@@ -203,6 +207,23 @@ export default function Feed() {
                         key={e.token}
                       >
                         <CardBody>
+                          {/* {user.username} */}
+                          {/* <FcFullTrash
+                            value={{ color: "blue" }}
+                            style={{
+                              color: "black",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          />
+                          <FcEditImage
+                            style={{
+                              color: "blue",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          /> */}
+
                           <CardTitle tag="h5">{user.username}</CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.content}
@@ -210,14 +231,39 @@ export default function Feed() {
                         </CardBody>
                         <div className={styles.img}>
                           <img
-                            className={styles.img}
-                            alt="img"
                             src={e.image}
-                            height="90px"
-                            width="90px"
+                            class="img-fluid"
+                            alt="Responsive"
                           />
                         </div>
-                        <CardLink href={e.link}>Link</CardLink>
+                        <div className={styles.icons}>
+                          <CardLink href={e.link}>
+                            <FcLink
+                              style={{
+                                marginBottom: "0.4em",
+                                width: "2em",
+                                height: "2em",
+                              }}
+                            ></FcLink>
+                          </CardLink>
+                          <FcLike
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2.5em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          />
+                          <FcRedo
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2em",
+                              marginRight: "1em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          />
+                        </div>
                       </Card>
                     );
                   })}
