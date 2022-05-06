@@ -5,8 +5,23 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const { Op } = require("sequelize");
 
+
 class UserClass {
   constructor(){}
+
+  getPhotoUser = async (req, res) => {
+    const userNameQuery = req.query.userName;
+    // const tokenDecoded = jwt.decode(tokenUser);
+    try{
+    let userFind = await User.findOne({where: {userName: userNameQuery}});
+    return !userFind
+      ? res.status(404).json({ msgE: 'User not Found'})
+      :res.status(200).end(userFind.profileImage);
+    }catch(error){
+      console.log(error)
+      res.status(404).json({ msgE: 'Error to get photo'})
+    }
+  }
 
   getDataUser = async (req, res) => {
     const tokenUser = req.body.token;
@@ -15,22 +30,22 @@ class UserClass {
     let userFind = await User.findOne({where: {userName: tokenDecoded.userName}});
     return !userFind
       ? res.status(404).json({ msgE: "User not Found" })
-      : res.status(200).json({
-          name: userFind.name,
-          email: userFind.email,
-          password: userFind.password,
-          gender: userFind.gender,
-          tel: userFind.tel,
-          description: userFind.description,
-          bithday: userFind.Bithday,
-          profileImage: userFind.profileImage,
-          userName: userFind.userName,
-          lastName: userFind.lastName,
-          stateUser: userFind.nameStateUser,
-          typeUser: userFind.nameTypeUser
+      :res.json({
+        name: userFind.name,
+        email: userFind.email,
+        password: userFind.password,
+        gender: userFind.gender,
+        tel: userFind.tel,
+        description: userFind.description,
+        bithday: userFind.Bithday,
+        userName: userFind.userName,
+        lastName: userFind.lastName,
+        stateUser: userFind.nameStateUser,
+        typeUser: userFind.nameTypeUser
       });
     }catch(error){
       console.log(error)
+      res.status(404).json({ msgE: 'Error getting user data'})
     }
   }
 
@@ -45,7 +60,7 @@ class UserClass {
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
-
+  
     //Send Email
     await validation.verifactionEmail(name, lastName, userName, email, codeNum);
     try {

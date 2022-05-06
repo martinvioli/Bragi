@@ -49,7 +49,7 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         profileImage:{
-            type: DataTypes.TEXT,
+            type: DataTypes.BLOB,
             allowNull: false,
             defaultValue: 'https://i.pinimg.com/564x/e5/91/dc/e591dc82326cc4c86578e3eeecced792.jpg'
         },

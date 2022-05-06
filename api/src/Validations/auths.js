@@ -56,7 +56,7 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         service: 'Gmail',
         auth: {
           user: 'BragiSystem@gmail.com', // generated ethereal user
-          pass: 'arieopjcxrsipqvz', // generated ethereal password
+          pass: 'clcnvcwtptmsaqnq', // generated ethereal password
         },tls: {
             rejectUnauthorized: false
         }
