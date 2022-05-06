@@ -3,6 +3,7 @@ const { User } = require("../db.js");
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const bcrypt = require('bcrypt');
+const logo = '../assets/Ipn3eCY.png'
 
 async function validationRegisterEmailUsername (email, userName) {
     if(userName){
@@ -56,7 +57,7 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         service: 'Gmail',
         auth: {
           user: 'BragiSystem@gmail.com', // generated ethereal user
-          pass: 'arieopjcxrsipqvz', // generated ethereal password
+          pass: 'clcnvcwtptmsaqnq', // generated ethereal password
         },tls: {
             rejectUnauthorized: false
         }
@@ -71,26 +72,33 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         to: email, // list of receivers
         subject: "Your account is almost ready", // Subject line
         text: `Hello! \n\n Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.\nPlease redirect to the page and enjoy all of our content.\n\nTo access more features, please consider hiring our premium version where you will enjoy:\n- VIP discussion forums\n-Exclusive information about concerts of your favorite artists\n- Unique and variated profile customization for premium users\n- Unique discounts on concert tickets\n- Exclusive advances to the discography of your favorite artists`,
-        html: `<h1>Hello, ${name} ${lastName}!</h1>
-        <br/><br/>
-        Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.
-        <br/>
-        Please redirect to the <a>page</a> and enjoy all of our content.
-        <br/><br/>
-        To access more features, please consider hiring our premium version where you will enjoy:
-        <br/>
-        - VIP discussion forums
-        <br/>
-        -Exclusive information about concerts of your favorite artists
-        <br/>
-        - Unique and variated profile customization for premium users
-        <br/>
-        - Unique discounts on concert tickets
-        <br/>
-        - Exclusive advances to the discography of your favorite artists
-        
-        <h3>Your validation code is:</h3>
-        <h2>${codeNum}</h2>
+        html: `
+        <div style="width: 400px; border: 5px solid cyan;padding: 50px; margin: auto;">
+            <header>
+                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -25px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
+            </header>
+                <h2>Hello, ${name} ${lastName}!</h2>
+                <br/><br/>
+                Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.
+                <br/>
+                Please redirect to the <a>page</a> and enjoy all of our content.
+                <br/><br/>
+                To access more features, please consider hiring our premium version where you will enjoy:
+                <br/>
+                - VIP discussion forums
+                <br/>
+                -Exclusive information about concerts of your favorite artists
+                <br/>
+                - Unique and variated profile customization for premium users
+                <br/>
+                - Unique discounts on concert tickets
+                <br/>
+                - Exclusive advances to the discography of your favorite artists
+                <br/><br/>
+                
+                <h3>Your validation code is:</h3>
+                <h2>${codeNum}</h2>
+        </div>
         `, // html body
     });}
     catch(e){

@@ -1,11 +1,11 @@
 const {Router} = require('express');
-const Report = require('../Controllers/Report');
+const RowReport = require('../Controllers/RowReport');
 
 const router = Router();
-const report = new Report();
+const rowReport = new RowReport();
 
-router.post('/comment', report.reportComment)
-router.post('/post', report.reportPost)
-router.post('/user', report.reportUser)
+router.post('/comment', rowReport.reportComment)
+router.post('/post', rowReport.reportPost)
+router.post('/user', rowReport.reportUser)
 
 module.exports = router;
