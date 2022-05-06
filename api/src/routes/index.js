@@ -4,7 +4,8 @@ const validation = require('./Validation');
 const login = require('./Login.js');
 const { User } = require("../db");
 const songById = require('./Song');
-const artistByName = require('./ArtistByName');
+const artistById = require('./ArtistById');
+const albumById = require('./AlbumById')
 const genreById = require('./GenreById');
 const searchOptions = require('./SearchOptions');
 const profileData = require('./Profile.js');
@@ -14,7 +15,8 @@ const getTop10 = require('./Top10Options');
 const follow = require('./FollowAction');
 const unFollow = require('./UnfollowAction');
 const postRoutes = require('./Post') ;
-const changeUserType = require('./ChangeUserType')
+const changeUserType = require('./ChangeUserType');
+const report = require('./Report')
 
 
 // Importar todos los routers;
@@ -27,7 +29,8 @@ router.use('/register', register);
 router.use('/validationUser', validation);
 router.use('/login', login);
 router.use('/song', songById);
-router.use('/artist', artistByName);
+router.use('/artist', artistById);
+router.use('/album', albumById)
 router.use('/search', searchOptions);
 router.use('/profileUser', profileData);
 router.use('/closeSessionUser', closeSessionUser);
@@ -37,5 +40,6 @@ router.use('/follow', follow);
 router.use('/unfollow', unFollow);
 router.use('/post', postRoutes);
 router.use('/changeUserType', changeUserType);
+router.use('/report', report )
 
 module.exports = router;
