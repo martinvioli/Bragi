@@ -1,27 +1,15 @@
 .nav {
   height: 4em;
-  min-width: 40vw;
-  width: 40%;
-  background-color: rgba(3, 97, 180, 0.618);
-  /* background-color: blue; */
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.326);
   z-index: 1;
-  position: fixed;
-  top: 0;
-  left: 30%;
-  right: 30%;
-  border-bottom-left-radius: 10em;
-  border-bottom-right-radius: 10em;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 3em;
 }
 
 .logo {
   width: 70px;
   height: 70px;
-}
-
-.navText {
-  font-size: larger;
-  font-weight: bold;
 }
