@@ -64,23 +64,26 @@ export default function NavBar() {
       <nav className={styles.nav}>
         <FaUserFriends
           style={{ width: "3em", height: "3em", color: "white" }}
+          className={styles.logoTwo}
         />
         <LinkContainer to="/feed">
           <img
             className={styles.logo}
-            src="https://cdn0.iconfinder.com/data/icons/audio-icons/110/Harp-512.png"
+            src="https://i.imgur.com/Ipn3eCY.png"
             alt=""
           ></img>
         </LinkContainer>
         <LinkContainer
           to="/profile"
           style={{ width: "2em", height: "2em", color: "white" }}
+          className={styles.logoTwo}
         >
           <FaUserAlt />
         </LinkContainer>
         <HiLogout
           onClick={(e) => handleClick(e)}
           style={{ width: "1.5em", height: "1.5em", color: "white" }}
+          className={styles.logoTwo}
         />
       </nav>
       <Outlet />
