@@ -64,7 +64,7 @@ function Top10() {
                     <p>{e.name}</p>
                     {/* <a href={e.link}>Link to the track</a> */}
                     <img
-                      src={e.picture}
+                      src={e.picture_small}
                       class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
                       alt="TOP"
                     />

@@ -15,6 +15,10 @@ import {
   USER_NEW_POST,
   USER_UPDATE_POST,
   DELETE_POST,
+  GET_SONG_BY_ID,
+  GET_ALBUM_BY_ID,
+  GET_ARTIST_BY_ID,
+  CLEAR_DETAILS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -219,4 +223,45 @@ export const deletePost = function (idPost) {
       console.log(error);
     }
   };
+};
+
+/////////////////////////////////////
+////////////////////////////////////
+//               DETAILS OPTIONS
+
+export const getSongByID = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`${api.getSongByID}${id}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_SONG_BY_ID,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAlbumByID = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`${api.getAlbumByID}${id}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ALBUM_BY_ID,
+      payload: response.data,
+    });
+  };
+};
+
+export const getArtistByID = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`${api.getArtistByID}${id}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ARTIST_BY_ID,
+      payload: response.data,
+    });
+  };
+};
+
+export const clearDetails = () => {
+  return { type: CLEAR_DETAILS };
 };

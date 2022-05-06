@@ -19,3 +19,9 @@ export const GET_ALL_POST = " GET_ALL_POST";
 export const USER_NEW_POST = "USER_NEW_POST";
 export const USER_UPDATE_POST = "USER_UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
+
+//DETAILS BY ID
+export const GET_SONG_BY_ID = "GET_SONG_BY_ID";
+export const GET_ARTIST_BY_ID = "GET_ARTIST_BY_ID";
+export const GET_ALBUM_BY_ID = "GET_ALBUM_BY_ID";
+export const CLEAR_DETAILS = "CLEAR_DETAILS";

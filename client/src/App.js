@@ -7,6 +7,9 @@ import { AnimatePresence } from "framer-motion/dist/framer-motion";
 import Profile from "./components/Profile";
 import NavBar from "./components/Navbar";
 import Feed from "./components/Feed";
+import DetailsAlbum from "./components/Details/DetailsAlbum";
+import DetailsSong from "./components/Details/DetailsSong";
+import DetailsArtist from "./components/Details/DetailsArtist";
 
 function App() {
   const location = useLocation();
@@ -25,6 +28,9 @@ function App() {
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/feed" element={<Feed />} />
             <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/song/:id" element={<DetailsSong />} />
+            <Route exact path="/artist/:id" element={<DetailsArtist />} />
+            <Route exact path="/album/:id" element={<DetailsAlbum />} />
           </Route>
         </Routes>
       </AnimatePresence>

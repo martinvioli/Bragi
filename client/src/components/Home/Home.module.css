@@ -3,6 +3,26 @@
 }
 
 .top10 {
-  height: 100vh;
+  height: auto;
   width: 50%;
+  display: flex;
+  margin-right: -2px;
+}
+
+.divContainer {
+  display: flex;
+}
+
+.inputContainer {
+  width: 50%;
+}
+
+.searchData {
+  background-color: rgba(2, 2, 53, 0.507);
+  border-radius: 20px;
+  border: 1px solid rgba(2, 2, 53, 0.507);
+  margin-right: 2px;
+  margin-top: 2px;
+  text-align: center;
+  align-items: center;
 }
