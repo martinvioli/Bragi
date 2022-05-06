@@ -8,16 +8,20 @@
 
 .column {
   background-color: rgba(2, 2, 53, 0.507);
-  width: 100px;
+  /* width: 100px; */
   border: 1px solid rgba(2, 2, 53, 0.507);
   border-radius: 20px;
+  margin-right: 2px;
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
 }
 
 .divContainer {
   margin-top: 100px;
-  width: 300px;
   height: auto;
   display: flex;
+  max-width: 450px;
 }
 
 a {

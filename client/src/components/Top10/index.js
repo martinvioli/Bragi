@@ -20,10 +20,7 @@ function Top10() {
 
   return (
     <>
-      <div
-        className={`container ${styles.divContainer}`}
-        style={{ color: "white" }}
-      >
+      <div className={`${styles.divContainer}`} style={{ color: "white" }}>
         <div className="row aling-items-start">
           <div className={`col ${styles.column}`}>
             <h5>Top 10 Songs</h5>

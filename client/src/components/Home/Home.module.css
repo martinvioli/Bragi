@@ -3,10 +3,10 @@
 }
 
 .top10 {
-  height: auto;
-  width: 50%;
+  height: fit-content;
+  max-width: 25%;
   display: flex;
-  margin-right: -2px;
+  flex-direction: flex-end;
 }
 
 .divContainer {
@@ -14,15 +14,15 @@
 }
 
 .inputContainer {
-  width: 50%;
+  width: 75%;
 }
 
 .searchData {
-  background-color: rgba(2, 2, 53, 0.507);
+  /* background-color: rgba(2, 2, 53, 0.507); */
   border-radius: 20px;
   border: 1px solid rgba(2, 2, 53, 0.507);
   margin-right: 2px;
-  margin-top: 2px;
+  margin-top: 20px;
   text-align: center;
   align-items: center;
 }
