@@ -6,9 +6,16 @@ const authConfig = require("../config/auth");
 const { Op } = require("sequelize");
 class ProfileUser {
   constructor() {}
-
+ 
   editionBasicDataProfile = async (req, res) => {
-    const { token, name, lastName, gender, description, birthday, profileImage} = req.body;
+    let dataPhoto;
+    const {token, name, lastName, gender, description, birthday} = req.body;
+    //Si no se pasa el token, devolvemos un error
+    if(!token){return res.status(400).json({msgE: "Token doesn't exist"})}
+    //Valida si pasaron una foto
+    if(req.files){
+      dataPhoto = req.files.photoProfile.data;      
+    };
     const tokenDecode = jwt.decode(token, authConfig.secret);
     try {
       /*-Primero busco el usuario para luego buscarlo cuando quiero actualizar los datos por el id*/
@@ -24,12 +31,12 @@ class ProfileUser {
       const userUpdate = await User.update(
         {
             //En el caso que alguno de los parámetros no me lo pasen, busco el valor que tiene el usuario y le setteo el mismo.
-          name: (name !== userFound.dataValues.name)? name: userFound.dataValues.name,
-          lastName: (lastName !== userFound.dataValues.lastName)? lastName: userFound.dataValues.lastName,
-          gender: (gender !== userFound.dataValues.gender)? gender: userFound.dataValues.gender,
-          description: (description !== userFound.dataValues.description)? description: userFound.dataValues.description,
-          birthday: (birthday !== userFound.dataValues.birthday)? birthday: userFound.dataValues.birthday,
-          profileImage: (profileImage !== userFound.dataValues.profileImage)? profileImage: userFound.dataValues.profileImage,
+          name: (name && name !== userFound.dataValues.name)? name: userFound.dataValues.name,
+          lastName: (lastName && lastName !== userFound.dataValues.lastName)? lastName: userFound.dataValues.lastName,
+          gender: (gender && gender !== userFound.dataValues.gender)? gender: userFound.dataValues.gender,
+          description: (description && description !== userFound.dataValues.description)? description: userFound.dataValues.description,
+          birthday: (birthday && birthday !== userFound.dataValues.birthday)? birthday: userFound.dataValues.birthday,
+          profileImage: (dataPhoto && dataPhoto !== userFound.dataValues.profileImage)? dataPhoto: userFound.dataValues.profileImage,
         },
         { where: {idUser: userFound.dataValues.idUser}}
       );
@@ -48,8 +55,9 @@ class ProfileUser {
     try{
         const userFound = await User.findOne({where: {[Op.or]: [{ userName: tokenDecode.userName },{ email: tokenDecode.email }]}});
         if(!userFound) return res.status(404).json({ msgE: "User not found" }); 
-        if(password !== repeatPassword) return res.status(409).json({msgE: 'Passwords do not match'});
-        const passwordHash = bcrypt.hashSync(password, Number.parseInt(authConfig.rounds));
+        if(password && repeatPassword && password !== repeatPassword) return res.status(409).json({msgE: 'Passwords do not match'});
+        let passwordHash;
+        if(password && repeatPassword){passwordHash = bcrypt.hashSync(password, Number.parseInt(authConfig.rounds));}
         const token = jwt.sign({ userName, email, TypeUser: userFound.dataValues.nameTypeUser}, authConfig.secret, { expiresIn: authConfig.expires });
         const userEditSensitiveData = await User.update({
             email: (email !== userFound.dataValues.email)? email: userFound.dataValues.email,

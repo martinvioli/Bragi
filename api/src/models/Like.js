@@ -9,9 +9,9 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
         },
-        countLike: {
-            type: DataTypes.INTEGER,
-            allowNull: true
+        idUserLikePost: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     })
 }
