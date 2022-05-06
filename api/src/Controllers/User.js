@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const { Op } = require("sequelize");
-
-
+const axios = require('axios')
+const fs = require('fs')
 class UserClass {
   constructor(){}
 
@@ -60,7 +60,10 @@ class UserClass {
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
-  
+    
+    //Obtiene la foto del enlace en modo de bufer y la almacena en la DB como imagen de defecto.
+    const photo = await axios.get('https://i.pinimg.com/564x/e5/91/dc/e591dc82326cc4c86578e3eeecced792.jpg', { responseType: 'arraybuffer' });
+    
     //Send Email
     await validation.verifactionEmail(name, lastName, userName, email, codeNum);
     try {
@@ -77,7 +80,7 @@ class UserClass {
           telephone: parseInt(tel) ,
           birthday,
           description,
-          profileImage,
+          profileImage: photo.data,
           userName,
           validationCode: codeNum,
           token
