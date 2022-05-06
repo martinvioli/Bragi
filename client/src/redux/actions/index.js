@@ -24,3 +24,4 @@ export const DELETE_POST = "DELETE_POST";
 export const GET_SONG_BY_ID = "GET_SONG_BY_ID";
 export const GET_ARTIST_BY_ID = "GET_ARTIST_BY_ID";
 export const GET_ALBUM_BY_ID = "GET_ALBUM_BY_ID";
+export const CLEAR_DETAILS = "CLEAR_DETAILS";

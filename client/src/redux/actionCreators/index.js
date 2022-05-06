@@ -18,6 +18,7 @@ import {
   GET_SONG_BY_ID,
   GET_ALBUM_BY_ID,
   GET_ARTIST_BY_ID,
+  CLEAR_DETAILS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -259,4 +260,8 @@ export const getArtistByID = (id) => {
       payload: response.data,
     });
   };
+};
+
+export const clearDetails = () => {
+  return { type: CLEAR_DETAILS };
 };

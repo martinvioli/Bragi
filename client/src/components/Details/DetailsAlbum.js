@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAlbumByID } from "../../redux/actionCreators";
+import { getAlbumByID, clearDetails } from "../../redux/actionCreators";
 
 const DetailsAlbum = () => {
   const id = useParams().id;
@@ -10,7 +10,7 @@ const DetailsAlbum = () => {
 
   useEffect(() => {
     dispatch(getAlbumByID(id));
-    album && console.log(album);
+    return dispatch(clearDetails());
   }, []);
 
   return (

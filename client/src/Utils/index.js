@@ -21,8 +21,8 @@ const api = {
   userUpdatePost: "http://localhost:3001/post",
   deletePost: "http://localhost:3001/post",
   getSongByID: "http://localhost:3001/song/",
-  getAlbumByID: "http://localhost:3001/artist/",
-  getArtistByID: "http://localhost:3001/album/",
+  getAlbumByID: "http://localhost:3001/album/",
+  getArtistByID: "http://localhost:3001/artist/",
 };
 
 export default api;

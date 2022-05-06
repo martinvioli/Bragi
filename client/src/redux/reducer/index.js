@@ -16,6 +16,7 @@ import {
   GET_SONG_BY_ID,
   GET_ALBUM_BY_ID,
   GET_ARTIST_BY_ID,
+  CLEAR_DETAILS,
 } from "../actions";
 
 // STATE CREATION
@@ -137,6 +138,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         artistById: action.payload,
+      };
+    case CLEAR_DETAILS:
+      return {
+        ...state,
+        songById: {},
+        artistById: {},
+        albumById: {},
       };
     default:
       return { ...state };
