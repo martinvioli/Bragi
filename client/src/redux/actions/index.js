@@ -2,6 +2,7 @@ export const CREATE_USER = "CREATE_USER";
 export const LOG_IN = "LOG_IN";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_USER = "GET_USER";
+export const GET_PHOTO_USER = "GET_PHOTO_USER";
 
 // SEARCH BAR OPTIONS
 export const GET_SONG_BY_NAME = "GET_SONG_BY_NAME";
@@ -19,3 +20,9 @@ export const GET_ALL_POST = " GET_ALL_POST";
 export const USER_NEW_POST = "USER_NEW_POST";
 export const USER_UPDATE_POST = "USER_UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
+
+//DETAILS BY ID
+export const GET_SONG_BY_ID = "GET_SONG_BY_ID";
+export const GET_ARTIST_BY_ID = "GET_ARTIST_BY_ID";
+export const GET_ALBUM_BY_ID = "GET_ALBUM_BY_ID";
+export const CLEAR_DETAILS = "CLEAR_DETAILS";

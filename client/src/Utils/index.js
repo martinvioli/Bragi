@@ -20,12 +20,10 @@ const api = {
   userNewPost: "http://localhost:3001/post",
   userUpdatePost: "http://localhost:3001/post",
   deletePost: "http://localhost:3001/post",
-};
-
-const post = {
-  input: "El contenido del post",
-  link: ["arreglo de string para los links del post"],
-  token: "el token del usuario",
+  getSongByID: "http://localhost:3001/song/",
+  getAlbumByID: "http://localhost:3001/album/",
+  getArtistByID: "http://localhost:3001/artist/",
+  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
 };
 
 export default api;

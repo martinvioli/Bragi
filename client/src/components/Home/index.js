@@ -24,9 +24,10 @@ import {
   getUser,
   getToken,
   clearData,
+  getPhotoUser,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
 import Top10 from "../Top10";
@@ -45,8 +46,9 @@ function Home() {
     if (userCredentials) {
       setShow(true);
       const userToken = JSON.parse(userCredentials);
-      userToken && dispatch(getUser(userToken));
-      userToken && dispatch(getToken(userToken));
+      dispatch(getUser(userToken));
+      dispatch(getToken(userToken));
+      dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
       console.log(user);
@@ -136,64 +138,78 @@ function Home() {
   return (
     <div>
       {show ? (
-        <div>
-          <div className="container" style={{ margin: "100px" }}>
-            <Form onSubmit={handleSubmitInput}>
-              <Input
-                type="select"
-                name="searchOption"
-                value={input.searchOption}
-                defaultValue="default"
-                onChange={handleInput}
-              >
-                <option value="default">Search ...</option>
-                <option value="album">Search for Albums</option>
-                <option value="song">Search for Songs</option>
-                <option value="artist">Search for Artists</option>
-                <option value="genre">Search for Genre</option>
-              </Input>
-              <Input
-                onChange={handleInput}
-                type="text"
-                value={input.search}
-                name="search"
-                placeholder="Search ..."
-              />
-              <Input type="submit" value="Search" />
-            </Form>
+        <div className={`${styles.divContainer}`}>
+          <div className={`${styles.inputContainer}`}>
+            <div className="container" style={{ marginTop: "100px" }}>
+              <Form onSubmit={handleSubmitInput}>
+                <Input
+                  type="select"
+                  name="searchOption"
+                  value={input.searchOption}
+                  defaultValue="default"
+                  onChange={handleInput}
+                >
+                  <option value="default">Search ...</option>
+                  <option value="album">Search for Albums</option>
+                  <option value="song">Search for Songs</option>
+                  <option value="artist">Search for Artists</option>
+                  <option value="genre">Search for Genre</option>
+                </Input>
+                <Input
+                  onChange={handleInput}
+                  type="text"
+                  value={input.search}
+                  name="search"
+                  placeholder="Search ..."
+                />
+                <Input type="submit" value="Search" />
+              </Form>
+            </div>
+            <div style={{ color: "white" }}>
+              {song &&
+                song.map((e) => {
+                  return (
+                    <Link
+                      to={`/song/${e.id}`}
+                      style={{ display: "inline-block" }}
+                    >
+                      <div
+                        className={`${styles.searchData}`}
+                        key={e.id}
+                        style={{
+                          display: "inline-block",
+                        }}
+                      >
+                        <SearchData data={e} key={e.id} />
+                      </div>
+                    </Link>
+                  );
+                })}
+              {album &&
+                album.map((e) => {
+                  return (
+                    <Link to={`/album/${e.id}`}>
+                      <div key={e.id} style={{ display: "inline-block" }}>
+                        <SearchData data={e} />
+                      </div>
+                    </Link>
+                  );
+                })}
+              {artist &&
+                artist.map((e) => {
+                  return (
+                    <Link to={`/artist/${e.id}`}>
+                      <div key={e.id} style={{ display: "inline-block" }}>
+                        <SearchData data={e} />
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
           </div>
-          <div style={{ color: "white" }}>
-            {song &&
-              song.map((e) => {
-                return (
-                  <div
-                    key={e.id}
-                    style={{
-                      display: "inline-block",
-                    }}
-                  >
-                    <SearchData data={e} key={e.id} />
-                  </div>
-                );
-              })}
-            {album &&
-              album.map((e) => {
-                return (
-                  <div key={e.id} style={{ display: "inline-block" }}>
-                    <SearchData data={e} />
-                  </div>
-                );
-              })}
-            {artist &&
-              artist.map((e) => {
-                return (
-                  <div key={e.id} style={{ display: "inline-block" }}>
-                    <SearchData data={e} />
-                  </div>
-                );
-              })}
+          <div className={`${styles.top10}`}>
+            <Top10></Top10>
           </div>
-          <Top10></Top10>
         </div>
       ) : (
         <h1 style={{ color: "white", textAlign: "center" }}>

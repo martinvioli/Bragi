@@ -9,7 +9,7 @@ function SearchData({ data }) {
         {data.album && <img src={data.album.cover} alt="Imagen" />}
         {data.cover && <img src={data.cover} alt="Imagen" />}
         {data.name && <h1>{data.name}</h1>}
-        {data.picture_big && <img src={data.picture_big} alt="img" />}
+        {data.picture && <img src={data.picture} alt="img" />}
       </div>
     </>
   );
