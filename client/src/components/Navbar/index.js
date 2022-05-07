@@ -16,6 +16,8 @@ import { IoShareSocialSharp } from "react-icons/io";
 import { Outlet, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
+import { FaUserFriends, FaUserAlt } from "react-icons/fa";
+import { HiLogout } from "react-icons/hi";
 import axios from "axios";
 import api from "../../Utils";
 
@@ -60,18 +62,29 @@ export default function NavBar() {
   return (
     <>
       <nav className={styles.nav}>
-        <p className={styles.navText}>Social</p>
+        <FaUserFriends
+          style={{ width: "3em", height: "3em", color: "white" }}
+          className={styles.logoTwo}
+        />
         <LinkContainer to="/feed">
           <img
             className={styles.logo}
-            src="https://cdn0.iconfinder.com/data/icons/audio-icons/110/Harp-512.png"
+            src="https://i.imgur.com/Ipn3eCY.png"
             alt=""
           ></img>
         </LinkContainer>
-        <LinkContainer to="/profile">
-          <p className={styles.navText}>Profile</p>
+        <LinkContainer
+          to="/profile"
+          style={{ width: "2em", height: "2em", color: "white" }}
+          className={styles.logoTwo}
+        >
+          <FaUserAlt />
         </LinkContainer>
-        <p onClick={(e) => handleClick(e)}>🔙</p>
+        <HiLogout
+          onClick={(e) => handleClick(e)}
+          style={{ width: "1.5em", height: "1.5em", color: "white" }}
+          className={styles.logoTwo}
+        />
       </nav>
       <Outlet />
     </>

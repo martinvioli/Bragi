@@ -68,12 +68,15 @@ export default function Feed() {
     setInput({ ...input, token: token });
   }, [token]);
 
+  //useEffect(() => {}, []);
   useEffect(() => {
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
+    //setTimeout(dispatch(getAllPost()), 5000);
+
     dispatch(getAllPost());
     if (!userToken) {
       navigate("/");
@@ -93,9 +96,11 @@ export default function Feed() {
   }
   function handleClick(e) {
     e.preventDefault();
+    console.log(input);
     dispatch(userNewPost(input));
+    dispatch(getAllPost());
     setInput({
-      ...input,
+      token: token,
       contentPost: "",
       linkContent: "",
       imagePost: "",
@@ -116,7 +121,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" ? (
+          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -142,6 +147,7 @@ export default function Feed() {
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
+                    value={input.linkContent}
                     placeholder="Insert URL 🔗"
                   />
                   <Button
@@ -154,7 +160,100 @@ export default function Feed() {
                   </Button>
                 </div>
               </form>
-              <br></br>
+              <div className={styles.posts}>
+                See All Post
+                <div className={styles.post}>
+                  {posts.length &&
+                    posts.map((e) => {
+                      return (
+                        <Card
+                          style={{
+                            marginLeft: "5em",
+                            width: "50%",
+                            height: "40%",
+                            minWidth: "25em",
+                          }}
+                          color="bg-light"
+                          className={styles.backgroundPost}
+                          key={e.idPost}
+                        >
+                          <CardBody>
+                            <div className={styles.icons}>
+                              <FcFullTrash
+                                style={{
+                                  marginBottom: "0.4em",
+                                  marginLeft: "2.5em",
+                                  width: "1.5em",
+                                  height: "1.5em",
+                                }}
+                              />
+                              <FcEditImage
+                                style={{
+                                  marginBottom: "0.4em",
+                                  marginLeft: "2.5em",
+                                  width: "1.5em",
+                                  height: "1.5em",
+                                }}
+                              />
+                            </div>
+                            <CardTitle
+                              style={{
+                                color: "blue",
+                                display: "flex",
+                                justifyContent: "flex-start",
+                              }}
+                              tag="h6"
+                            >
+                              {`@${user.userName}`}
+                            </CardTitle>
+                            <CardSubtitle className="mb-2 text-muted" tag="h6">
+                              {e.contentPost}
+                            </CardSubtitle>
+                          </CardBody>
+                          {e.imagePost && (
+                            <div className={styles.img}>
+                              <img
+                                src={e.imagePost}
+                                class="img-fluid"
+                                alt="Responsive"
+                              />
+                            </div>
+                          )}
+
+                          <div className={styles.icons}>
+                            <CardLink href={e.linkContent}>
+                              <FcLink
+                                style={{
+                                  marginBottom: "0.4em",
+                                  width: "1.5em",
+                                  height: "1.5em",
+                                }}
+                              ></FcLink>
+                            </CardLink>
+                            <FcLike
+                              style={{
+                                marginBottom: "0.4em",
+                                marginLeft: "2.5em",
+                                width: "1.5em",
+                                height: "1.5em",
+                              }}
+                            />
+                            <FcRedo
+                              style={{
+                                marginBottom: "0.4em",
+                                marginLeft: "2em",
+                                marginRight: "1em",
+                                width: "1.5em",
+                                height: "1.5em",
+                              }}
+                            />
+                          </div>
+                        </Card>
+                      );
+                    })}
+                </div>
+              </div>
+              {/* <br></br>
               <div className={styles.concertAndEventPost}>
                 <form className={styles.newConcert}>
                   <h3>Add new concert</h3>
@@ -194,7 +293,7 @@ export default function Feed() {
                     placeholder="Name the place or where is going to be the event."
                   />
                 </form>
-              </div>
+              </div> */}
             </div>
           ) : (
             <div className={styles.posts}>
@@ -215,23 +314,6 @@ export default function Feed() {
                         key={e.token}
                       >
                         <CardBody>
-                          {/* {user.username} */}
-                          {/* <FcFullTrash
-                            value={{ color: "blue" }}
-                            style={{
-                              color: "black",
-                              width: "2em",
-                              height: "2em",
-                            }}
-                          />
-                          <FcEditImage
-                            style={{
-                              color: "blue",
-                              width: "2em",
-                              height: "2em",
-                            }}
-                          /> */}
-
                           <CardTitle
                             style={{
                               color: "blue",
@@ -255,7 +337,6 @@ export default function Feed() {
                             />
                           </div>
                         )}
-
                         <div className={styles.icons}>
                           <CardLink href={e.linkContent}>
                             <FcLink
