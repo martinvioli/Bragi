@@ -23,6 +23,7 @@ const api = {
   getSongByID: "http://localhost:3001/song/",
   getAlbumByID: "http://localhost:3001/album/",
   getArtistByID: "http://localhost:3001/artist/",
+  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
 };
 
 export default api;

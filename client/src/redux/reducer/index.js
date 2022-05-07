@@ -1,3 +1,4 @@
+import api from "../../Utils";
 import {
   CREATE_USER,
   GET_TOKEN,
@@ -17,6 +18,7 @@ import {
   GET_ALBUM_BY_ID,
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
+  GET_PHOTO_USER,
 } from "../actions";
 
 // STATE CREATION
@@ -35,6 +37,7 @@ const initialState = {
   songById: {},
   albumById: {},
   artistById: {},
+  profileImage: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -145,6 +148,11 @@ function rootReducer(state = initialState, action) {
         songById: {},
         artistById: {},
         albumById: {},
+      };
+    case GET_PHOTO_USER:
+      return {
+        ...state,
+        profileImage: `${api.getPhotoUser}${action.payload}`,
       };
     default:
       return { ...state };

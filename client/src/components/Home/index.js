@@ -24,6 +24,7 @@ import {
   getUser,
   getToken,
   clearData,
+  getPhotoUser,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,8 +46,9 @@ function Home() {
     if (userCredentials) {
       setShow(true);
       const userToken = JSON.parse(userCredentials);
-      userToken && dispatch(getUser(userToken));
-      userToken && dispatch(getToken(userToken));
+      dispatch(getUser(userToken));
+      dispatch(getToken(userToken));
+      dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
       console.log(user);

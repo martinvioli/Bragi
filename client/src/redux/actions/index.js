@@ -2,6 +2,7 @@ export const CREATE_USER = "CREATE_USER";
 export const LOG_IN = "LOG_IN";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_USER = "GET_USER";
+export const GET_PHOTO_USER = "GET_PHOTO_USER";
 
 // SEARCH BAR OPTIONS
 export const GET_SONG_BY_NAME = "GET_SONG_BY_NAME";

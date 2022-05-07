@@ -19,6 +19,7 @@ import {
   GET_ALBUM_BY_ID,
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
+  GET_PHOTO_USER,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -37,6 +38,23 @@ export const userLogin = function (user) {
   return {
     type: LOG_IN,
     payload: user,
+  };
+};
+
+// export const getPhotoUser = (username) => {
+//   return async (dispatch) => {
+//     const response = await axios.post(`${api.getPhotoUser}${username}`);
+//     return dispatch({
+//       type: GET_PHOTO_USER,
+//       payload: response.data,
+//     });
+//   };
+// };
+
+export const getPhotoUser = (userName) => {
+  return {
+    type: GET_PHOTO_USER,
+    payload: userName,
   };
 };
 
