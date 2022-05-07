@@ -75,8 +75,9 @@ export default function Feed() {
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
-    //setTimeout(dispatch(getAllPost()), 5000);
-
+    // setTimeout(function () {
+    //   dispatch(getAllPost());
+    // }, 1000);
     dispatch(getAllPost());
     if (!userToken) {
       navigate("/");
@@ -99,6 +100,9 @@ export default function Feed() {
     console.log(input);
     dispatch(userNewPost(input));
     dispatch(getAllPost());
+    setTimeout(function () {
+      dispatch(getAllPost());
+    }, 500);
     setInput({
       token: token,
       contentPost: "",
@@ -121,15 +125,16 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
                 <div className={styles.divTextarea}>
                   <Input
+                    style={{ width: "50em", height: "6em" }}
                     color="bg-light"
                     placeholder="tell us about something that has happened to you with music..."
-                    className={styles.textarea}
+                    //className={styles.textarea}
                     name="contentPost"
                     value={input.contentPost}
                     type="textarea"
@@ -137,13 +142,14 @@ export default function Feed() {
                   />
                 </div>
                 <div className={styles.buttons}>
-                  <Input
+                  {/* <Input
                     accept="image/png,image/jpeg"
                     type="file"
                     name="imagePost"
                     onChange={handleSearchImage}
-                  />
+                  /> */}
                   <Input
+                    style={{ width: "45em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
@@ -151,6 +157,7 @@ export default function Feed() {
                     placeholder="Insert URL 🔗"
                   />
                   <Button
+                    style={{ width: "5em", height: "2.5em" }}
                     color="primary"
                     onClick={(e) => {
                       handleClick(e);
@@ -168,9 +175,9 @@ export default function Feed() {
                       return (
                         <Card
                           style={{
-                            marginLeft: "5em",
+                            //marginLeft: "4em",
                             width: "50%",
-                            height: "40%",
+                            height: "50%",
                             minWidth: "25em",
                           }}
                           color="bg-light"
@@ -200,10 +207,14 @@ export default function Feed() {
                               style={{
                                 color: "blue",
                                 display: "flex",
+                                flexDirection: "column",
                                 justifyContent: "flex-start",
+                                alignItems: "flex-start",
                               }}
                               tag="h6"
                             >
+                              {e.datePost}
+                              <br />
                               {`@${user.userName}`}
                             </CardTitle>
                             <CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -320,9 +331,9 @@ export default function Feed() {
                               display: "flex",
                               justifyContent: "flex-start",
                             }}
-                            tag="h5"
+                            tag="h7"
                           >
-                            {user.userName}
+                            {`date: ${e.datePost}`}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
