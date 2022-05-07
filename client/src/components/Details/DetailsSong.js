@@ -23,11 +23,11 @@ const DetailsSong = () => {
           <p>
             {/* Paises en la que esta disponible {song.available_countries.lenght} */}
           </p>
-          <p>Duracion : {song.duration / 60}</p>
-          <label>Preview :</label>
+          <h3>Duracion : {song.duration} seconds</h3>
+          <label style={{ fontSize: "40px" }}>Preview :</label>
           <audio src={song.preview} controls></audio>
-          <p>RANKING : {song.ranking}</p>
-          <p>FECHA DE LANZAMIENTO : {song.realease_date}</p>
+          <h3>RANKING : {song.rank}</h3>
+          <h3>FECHA DE LANZAMIENTO : {song.release_date}</h3>
         </div>
       ) : null}
     </>

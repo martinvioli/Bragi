@@ -15,7 +15,12 @@ const DetailsArtist = () => {
 
   return (
     <>
-      <div>Hello World</div>
+      {artist && (
+        <div className="container">
+          <h1>NAME : {artist.name}</h1>
+          <h3>Number of albums : {artist.album}</h3>
+        </div>
+      )}
     </>
   );
 };
