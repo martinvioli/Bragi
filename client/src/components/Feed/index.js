@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getToken, getUser, userNewPost } from "../../redux/actionCreators";
+import {
+  deletePost,
+  getToken,
+  getUser,
+  userNewPost,
+} from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
 import { FcEditImage } from "react-icons/fc";
@@ -110,7 +115,38 @@ export default function Feed() {
       imagePost: "",
     });
   }
-
+  const handleClickPost = (e) => {
+    e.preventDefault();
+    console.log(e.target.name);
+    console.log(e.target.value);
+    if (e.target.name) {
+      if (
+        window.confirm("Are you sure you want to delete this post") === true
+      ) {
+        dispatch(deletePost(e.target.name));
+        setTimeout(function () {
+          dispatch(getAllPost());
+        }, 500);
+        alert("post deleted successfully");
+      } else {
+        alert("action cancelled");
+      }
+    } else if (e.target.value) {
+      if (
+        window.confirm("Are you sure you want to delete this post") === true
+      ) {
+        dispatch(deletePost(e.target.value));
+        setTimeout(function () {
+          dispatch(getAllPost());
+        }, 500);
+        alert("post deleted successfully");
+      } else {
+        alert("action cancelled");
+      }
+    } else {
+      alert("please, click again");
+    }
+  };
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
   // //   onUploadProgress: (progressEvent) => {
   // //     console.log(
@@ -125,7 +161,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" ? (
+          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -186,22 +222,40 @@ export default function Feed() {
                         >
                           <CardBody>
                             <div className={styles.icons}>
-                              <FcFullTrash
+                              <Button
                                 style={{
-                                  marginBottom: "0.4em",
-                                  marginLeft: "2.5em",
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  background: "white",
+                                  border: "0px",
                                 }}
-                              />
-                              <FcEditImage
+                                name={e.idPost}
+                                value={e.idPost}
+                                onClick={(e) => handleClickPost(e)}
+                              >
+                                <FcFullTrash
+                                  style={{
+                                    marginBottom: "0.5em",
+                                    marginLeft: "1em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
+                              <Button
                                 style={{
-                                  marginBottom: "0.4em",
-                                  marginLeft: "2.5em",
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  background: "white",
+                                  border: "0px",
                                 }}
-                              />
+                              >
+                                <FcEditImage
+                                  style={{
+                                    marginBottom: "0.5em",
+                                    // margin: "2em",
+                                    marginLeft: "0.5em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
                             </div>
                             <CardTitle
                               style={{
@@ -315,7 +369,7 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
-                          marginLeft: "10em",
+                          marginLeft: "20em",
                           width: "50%",
                           height: "40%",
                           minWidth: "25em",
