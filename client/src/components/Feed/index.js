@@ -161,7 +161,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
