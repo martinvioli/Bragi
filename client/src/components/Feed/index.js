@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getToken, getUser, userNewPost } from "../../redux/actionCreators";
+import {
+  deletePost,
+  getToken,
+  getUser,
+  userNewPost,
+} from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
 import { FcEditImage } from "react-icons/fc";
@@ -75,8 +80,9 @@ export default function Feed() {
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
-    //setTimeout(dispatch(getAllPost()), 5000);
-
+    // setTimeout(function () {
+    //   dispatch(getAllPost());
+    // }, 1000);
     dispatch(getAllPost());
     if (!userToken) {
       navigate("/");
@@ -99,6 +105,9 @@ export default function Feed() {
     console.log(input);
     dispatch(userNewPost(input));
     dispatch(getAllPost());
+    setTimeout(function () {
+      dispatch(getAllPost());
+    }, 500);
     setInput({
       token: token,
       contentPost: "",
@@ -106,7 +115,38 @@ export default function Feed() {
       imagePost: "",
     });
   }
-
+  const handleClickPost = (e) => {
+    e.preventDefault();
+    console.log(e.target.name);
+    console.log(e.target.value);
+    if (e.target.name) {
+      if (
+        window.confirm("Are you sure you want to delete this post") === true
+      ) {
+        dispatch(deletePost(e.target.name));
+        setTimeout(function () {
+          dispatch(getAllPost());
+        }, 500);
+        alert("post deleted successfully");
+      } else {
+        alert("action cancelled");
+      }
+    } else if (e.target.value) {
+      if (
+        window.confirm("Are you sure you want to delete this post") === true
+      ) {
+        dispatch(deletePost(e.target.value));
+        setTimeout(function () {
+          dispatch(getAllPost());
+        }, 500);
+        alert("post deleted successfully");
+      } else {
+        alert("action cancelled");
+      }
+    } else {
+      alert("please, click again");
+    }
+  };
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
   // //   onUploadProgress: (progressEvent) => {
   // //     console.log(
@@ -127,9 +167,10 @@ export default function Feed() {
                 <h3>Add new post</h3>
                 <div className={styles.divTextarea}>
                   <Input
+                    style={{ width: "50em", height: "6em" }}
                     color="bg-light"
                     placeholder="tell us about something that has happened to you with music..."
-                    className={styles.textarea}
+                    //className={styles.textarea}
                     name="contentPost"
                     value={input.contentPost}
                     type="textarea"
@@ -137,13 +178,14 @@ export default function Feed() {
                   />
                 </div>
                 <div className={styles.buttons}>
-                  <Input
+                  {/* <Input
                     accept="image/png,image/jpeg"
                     type="file"
                     name="imagePost"
                     onChange={handleSearchImage}
-                  />
+                  /> */}
                   <Input
+                    style={{ width: "45em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
@@ -151,6 +193,7 @@ export default function Feed() {
                     placeholder="Insert URL 🔗"
                   />
                   <Button
+                    style={{ width: "5em", height: "2.5em" }}
                     color="primary"
                     onClick={(e) => {
                       handleClick(e);
@@ -168,9 +211,9 @@ export default function Feed() {
                       return (
                         <Card
                           style={{
-                            marginLeft: "5em",
+                            //marginLeft: "4em",
                             width: "50%",
-                            height: "40%",
+                            height: "50%",
                             minWidth: "25em",
                           }}
                           color="bg-light"
@@ -179,31 +222,53 @@ export default function Feed() {
                         >
                           <CardBody>
                             <div className={styles.icons}>
-                              <FcFullTrash
+                              <Button
                                 style={{
-                                  marginBottom: "0.4em",
-                                  marginLeft: "2.5em",
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  background: "white",
+                                  border: "0px",
                                 }}
-                              />
-                              <FcEditImage
+                                name={e.idPost}
+                                value={e.idPost}
+                                onClick={(e) => handleClickPost(e)}
+                              >
+                                <FcFullTrash
+                                  style={{
+                                    marginBottom: "0.5em",
+                                    marginLeft: "1em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
+                              <Button
                                 style={{
-                                  marginBottom: "0.4em",
-                                  marginLeft: "2.5em",
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  background: "white",
+                                  border: "0px",
                                 }}
-                              />
+                              >
+                                <FcEditImage
+                                  style={{
+                                    marginBottom: "0.5em",
+                                    // margin: "2em",
+                                    marginLeft: "0.5em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
                             </div>
                             <CardTitle
                               style={{
                                 color: "blue",
                                 display: "flex",
+                                flexDirection: "column",
                                 justifyContent: "flex-start",
+                                alignItems: "flex-start",
                               }}
                               tag="h6"
                             >
+                              {e.datePost}
+                              <br />
                               {`@${user.userName}`}
                             </CardTitle>
                             <CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -304,7 +369,7 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
-                          marginLeft: "10em",
+                          marginLeft: "20em",
                           width: "50%",
                           height: "40%",
                           minWidth: "25em",
@@ -320,9 +385,9 @@ export default function Feed() {
                               display: "flex",
                               justifyContent: "flex-start",
                             }}
-                            tag="h5"
+                            tag="h7"
                           >
-                            {user.userName}
+                            {`date: ${e.datePost}`}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
