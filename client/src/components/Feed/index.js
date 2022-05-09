@@ -27,6 +27,7 @@ import {
   CardSubtitle,
   CardImg,
 } from "reactstrap";
+import Swal from "sweetalert2";
 
 // const posts = [
 //   {
@@ -115,37 +116,31 @@ export default function Feed() {
       imagePost: "",
     });
   }
-  const handleClickPost = (e) => {
-    e.preventDefault();
-    console.log(e.target.name);
-    console.log(e.target.value);
-    if (e.target.name) {
-      if (
-        window.confirm("Are you sure you want to delete this post") === true
-      ) {
-        dispatch(deletePost(e.target.name));
+  const handleDelete = (e) => {
+    //e.preventDefault();
+    console.log(e.idPost);
+    //console.log(e.target.value);
+    Swal.fire({
+      title: "Are you sure you want to delete this post?",
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then((result) => {
+      if (result.isDenied) {
+        dispatch(deletePost(e.idPost));
         setTimeout(function () {
           dispatch(getAllPost());
         }, 500);
-        alert("post deleted successfully");
-      } else {
-        alert("action cancelled");
       }
-    } else if (e.target.value) {
-      if (
-        window.confirm("Are you sure you want to delete this post") === true
-      ) {
-        dispatch(deletePost(e.target.value));
-        setTimeout(function () {
-          dispatch(getAllPost());
-        }, 500);
-        alert("post deleted successfully");
-      } else {
-        alert("action cancelled");
-      }
-    } else {
-      alert("please, click again");
-    }
+    });
   };
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
   // //   onUploadProgress: (progressEvent) => {
@@ -161,7 +156,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" ? (
+          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -229,7 +224,7 @@ export default function Feed() {
                                 }}
                                 name={e.idPost}
                                 value={e.idPost}
-                                onClick={(e) => handleClickPost(e)}
+                                onClick={() => handleDelete(e)}
                               >
                                 <FcFullTrash
                                   style={{
