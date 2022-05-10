@@ -145,7 +145,10 @@ function Profile() {
                 </div>
                 <div>
                   {showEditProfile ? (
-                    <EditProfile showModal={showEditProfile} />
+                    <EditProfile
+                      showModal={showEditProfile}
+                      handleShowModal={handleShowEditProfile}
+                    />
                   ) : (
                     <Button
                       className="secondary"

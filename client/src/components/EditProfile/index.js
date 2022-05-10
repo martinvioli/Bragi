@@ -11,12 +11,22 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+  Row,
+  Col,
+  Card,
+  CardTitle,
+  CardText,
 } from "reactstrap";
 import { getPhotoUser, getToken, getUser } from "../../redux/actionCreators";
 import axios from "axios";
 import api from "../../Utils";
 
-function EditProfile({ showModal }) {
+function EditProfile({ showModal, handleShowModal }) {
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -40,9 +50,11 @@ function EditProfile({ showModal }) {
     tel: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
 
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -88,7 +100,31 @@ function EditProfile({ showModal }) {
 
   const handleShowPassword = (e) => setShowPassword(!showPassword);
 
-  const handleSubmit = (e) => alert("holis");
+  const handleSubmit = async (e) => {
+    const response = await axios.post(api.updateBasicData);
+  };
+
+  const handleTabs = (e, tab) => {
+    if (!e.target.className.includes("active")) {
+      e.target.className = e.target.className + " active";
+    }
+    setActiveTab(tab);
+  };
+
+  const handleBlur = (e) => {
+    e.target.className.replace("active", "");
+  };
+
+  const handlePremium = async () => {
+    try {
+      const response = await axios.post(api.changeUserToPremium, {
+        userName: user.userName,
+      });
+      alert(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -99,52 +135,6 @@ function EditProfile({ showModal }) {
               handleSubmit(e);
             }}
           >
-            <FormGroup
-              className="position-relative"
-              style={{
-                display: "inline-block",
-                width: "48%",
-                marginRight: "2%",
-              }}
-            >
-              <Label htmlFor="name">First name:</Label>
-              <Input
-                type="name"
-                name="name"
-                value={input.name}
-                onChange={(e) => handleChange(e)}
-                invalid={errors.name ? true : false}
-                valid={!errors.name && input.name ? true : false}
-              />
-              {errors.name ? (
-                <FormFeedback tooltip>{errors.name}</FormFeedback>
-              ) : (
-                <FormFeedback tooltip></FormFeedback>
-              )}
-            </FormGroup>
-            <FormGroup
-              className="position-relative"
-              style={{
-                display: "inline-block",
-                width: "48%",
-                marginLeft: "2%",
-              }}
-            >
-              <Label htmlFor="lastName">Last name:</Label>
-              <Input
-                type="text"
-                name="lastName"
-                value={input.lastName}
-                onChange={(e) => handleChange(e)}
-                invalid={errors.lastName ? true : false}
-                valid={!errors.lastName && input.lastName ? true : false}
-              />
-              {errors.lastName ? (
-                <FormFeedback tooltip>{errors.lastName}</FormFeedback>
-              ) : (
-                <FormFeedback tooltip></FormFeedback>
-              )}
-            </FormGroup>
             <FormGroup className="position-relative" style={{ width: "48%" }}>
               <Label htmlFor="userName">Username:</Label>
               <Input
@@ -186,29 +176,7 @@ function EditProfile({ showModal }) {
                 <FormFeedback tooltip></FormFeedback>
               )}
             </FormGroup>
-            <FormGroup
-              className="position-relative"
-              style={{
-                display: "inline-block",
-                width: "48%",
-                marginLeft: "2%",
-              }}
-            >
-              <Label htmlFor="tel">Tel: </Label>
-              <Input
-                type="number"
-                name="tel"
-                value={input.tel}
-                onChange={(e) => handleChange(e)}
-                invalid={errors.tel ? true : false}
-                valid={!errors.tel && input.tel ? true : false}
-              />
-              {errors.tel ? (
-                <FormFeedback tooltip>{errors.tel}</FormFeedback>
-              ) : (
-                <FormFeedback tooltip></FormFeedback>
-              )}
-            </FormGroup>
+
             <FormGroup
               className="position-relative"
               style={{
@@ -373,13 +341,156 @@ function EditProfile({ showModal }) {
               />
             )}
           </Form>
+          <div>
+            <Nav tabs>
+              <NavItem>
+                <NavLink className="active" onClick={(e) => handleTabs(e, "1")}>
+                  Personal Data
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className=""
+                  onClick={(e) => handleTabs(e, "2")}
+                  onBlur={handleBlur}
+                >
+                  User Information
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="" onClick={(e) => handleTabs(e, "3")}>
+                  Premium Suscription
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <TabContent activeTab={activeTab}>
+              <TabPane tabId="1">
+                <Row>
+                  <Col sm="12">
+                    <FormGroup
+                      className="position-relative"
+                      style={{
+                        display: "inline-block",
+                        width: "48%",
+                        marginRight: "2%",
+                      }}
+                    >
+                      <Label htmlFor="name">First name:</Label>
+                      <Input
+                        type="name"
+                        name="name"
+                        value={input.name}
+                        onChange={(e) => handleChange(e)}
+                        invalid={errors.name ? true : false}
+                        valid={!errors.name && input.name ? true : false}
+                      />
+                      {errors.name ? (
+                        <FormFeedback tooltip>{errors.name}</FormFeedback>
+                      ) : (
+                        <FormFeedback tooltip></FormFeedback>
+                      )}
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col sm="12">
+                    <FormGroup
+                      className="position-relative"
+                      style={{
+                        display: "inline-block",
+                        width: "48%",
+                        marginLeft: "2%",
+                      }}
+                    >
+                      <Label htmlFor="lastName">Last name:</Label>
+                      <Input
+                        type="text"
+                        name="lastName"
+                        value={input.lastName}
+                        onChange={(e) => handleChange(e)}
+                        invalid={errors.lastName ? true : false}
+                        valid={
+                          !errors.lastName && input.lastName ? true : false
+                        }
+                      />
+                      {errors.lastName ? (
+                        <FormFeedback tooltip>{errors.lastName}</FormFeedback>
+                      ) : (
+                        <FormFeedback tooltip></FormFeedback>
+                      )}
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FormGroup
+                      className="position-relative"
+                      style={{
+                        display: "inline-block",
+                        width: "48%",
+                        marginLeft: "2%",
+                      }}
+                    >
+                      <Label htmlFor="tel">Tel: </Label>
+                      <Input
+                        type="number"
+                        name="tel"
+                        value={input.tel}
+                        onChange={(e) => handleChange(e)}
+                        invalid={errors.tel ? true : false}
+                        valid={!errors.tel && input.tel ? true : false}
+                      />
+                      {errors.tel ? (
+                        <FormFeedback tooltip>{errors.tel}</FormFeedback>
+                      ) : (
+                        <FormFeedback tooltip></FormFeedback>
+                      )}
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="2">
+                <Row>
+                  <Col sm="6">
+                    <Card body>
+                      <CardTitle>Special Title Treatment</CardTitle>
+                      <CardText>
+                        With supporting text below as a natural lead-in to
+                        additional content.
+                      </CardText>
+                      <Button>Go somewhere</Button>
+                    </Card>
+                  </Col>
+                  <Col sm="6">
+                    <Card body>
+                      <CardTitle>Special Title Treatment</CardTitle>
+                      <CardText>
+                        With supporting text below as a natural lead-in to
+                        additional content.
+                      </CardText>
+                      <Button>Go somewhere</Button>
+                    </Card>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="3">
+                <Row>
+                  <Col sm="12">
+                    <Button onClick={handlePremium}>Became Premium</Button>
+                  </Col>
+                </Row>
+              </TabPane>
+            </TabContent>
+          </div>
         </ModalBody>
         <ModalFooter>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <Button color="primary" style={{ marginTop: "2em" }}>
-              Back
-            </Button>
-          </Link>
+          <Button
+            color="primary"
+            style={{ marginTop: "2em" }}
+            onClick={handleShowModal}
+          >
+            Back
+          </Button>
         </ModalFooter>
       </Modal>
     </>

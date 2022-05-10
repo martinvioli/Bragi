@@ -25,6 +25,12 @@ const api = {
   getArtistByID: "https://bragiproject.herokuapp.com/artist/",
   getPhotoUser:
     "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
+  changeUserToPremium:
+    "https://bragiproject.herokuapp.com/changeUserType/toPremium",
+  updateBasicData:
+    "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
+  updateSensitiveData:
+    "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
 };
 
 export default api;
