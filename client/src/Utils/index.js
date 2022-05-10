@@ -23,8 +23,11 @@ const api = {
   getSongByID: "https://bragiproject.herokuapp.com/song/",
   getAlbumByID: "https://bragiproject.herokuapp.com/album/",
   getArtistByID: "https://bragiproject.herokuapp.com/artist/",
-  getPhotoUser:
-    "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
+  getPhotoUser: "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
+  getAllComments: "https://bragiproject.herokuapp.com/post/comments",
+  userNewComment: "https://bragiproject.herokuapp.com/post/comments",
+  userUpdateComment: "https://bragiproject.herokuapp.com/post/comments/edit",
+  deleteComment: "https://bragiproject.herokuapp.com/post/comments",
 };
 
 export default api;
