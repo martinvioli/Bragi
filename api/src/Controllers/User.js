@@ -1,4 +1,4 @@
-const { User } = require("../db.js");
+const { User, Post } = require("../db.js");
 const validation = require('../Validations/auths.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -8,6 +8,31 @@ const axios = require('axios')
 const fs = require('fs')
 class UserClass {
   constructor(){}
+
+  getAllUsers = async (req, res) => {
+    try {
+      const users = await User.findAll({
+        atributes: [
+          'idUser',
+          'name',
+          'lastName',
+          'email',
+          'password',
+          'gender',
+          'telephone',
+          'birthday',
+          'description',
+          'userName',
+          'profileImage',
+          'nameTypeUser',
+          'nameStateUser'
+        ]
+      });
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json({message: error.message})
+    }
+  }
 
   getPhotoUser = async (req, res) => {
     const userNameQuery = req.query.userName;
@@ -161,6 +186,19 @@ class UserClass {
       res.sendStatus(200).json({ msgE: 'User updated to Standard' })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  getUserPosts = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const posts = await Post.findAll({
+        atributes: ['idPost', 'UserIdUser', 'datePost', 'contentPost', 'linkContent', 'imagePost'],
+        where: { UserIdUser: id }
+      });
+      return res.status(200).json(posts);
+    } catch (error) {
+      return res.status(500).json({ message: error.message })
     }
   }
 
