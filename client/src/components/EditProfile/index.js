@@ -91,6 +91,8 @@ function EditProfile({ showModal, handleShowModal }) {
         setErrors({ ...errors, userName: response.data.msgE });
       }
     }
+
+    //Para poder pullear
     setErrors(
       validateEdit({
         ...input,
