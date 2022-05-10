@@ -26,6 +26,10 @@ import {
   CardTitle,
   CardSubtitle,
   CardImg,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
 import Swal from "sweetalert2";
 
@@ -69,6 +73,7 @@ export default function Feed() {
     linkContent: "",
     imagePost: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setInput({ ...input, token: token });
@@ -108,7 +113,7 @@ export default function Feed() {
     dispatch(getAllPost());
     setTimeout(function () {
       dispatch(getAllPost());
-    }, 500);
+    }, 1000);
     setInput({
       token: token,
       contentPost: "",
@@ -117,7 +122,6 @@ export default function Feed() {
     });
   }
   const handleDelete = (e) => {
-    //e.preventDefault();
     console.log(e.idPost);
     //console.log(e.target.value);
     Swal.fire({
@@ -138,9 +142,13 @@ export default function Feed() {
         dispatch(deletePost(e.idPost));
         setTimeout(function () {
           dispatch(getAllPost());
-        }, 500);
+        }, 1000);
       }
     });
+  };
+
+  const handleEdit = (e) => {
+    setShowModal(true);
   };
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
   // //   onUploadProgress: (progressEvent) => {
@@ -222,8 +230,6 @@ export default function Feed() {
                                   background: "white",
                                   border: "0px",
                                 }}
-                                name={e.idPost}
-                                value={e.idPost}
                                 onClick={() => handleDelete(e)}
                               >
                                 <FcFullTrash
@@ -240,11 +246,12 @@ export default function Feed() {
                                   background: "white",
                                   border: "0px",
                                 }}
+                                onClick={() => handleEdit(e)}
                               >
                                 <FcEditImage
                                   style={{
                                     marginBottom: "0.5em",
-                                    // margin: "2em",
+
                                     marginLeft: "0.5em",
                                     width: "1.5em",
                                     height: "1.5em",
@@ -312,6 +319,27 @@ export default function Feed() {
                       );
                     })}
                 </div>
+                <Modal isOpen={showModal}>
+                  <ModalHeader toggle={function noRefCheck() {}}>
+                    Edit your post
+                  </ModalHeader>
+                  <ModalBody>
+                    aca van los inputs a editar
+                    <Input
+                      style={{ width: "20em", height: "3em" }}
+                      color="bg-light"
+                      //className={styles.textarea}
+                      name="contentPost"
+                      value={input.contentPost}
+                      type="textarea"
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary">Do Something</Button>{" "}
+                    <Button>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
               </div>
               {/* <br></br>
               <div className={styles.concertAndEventPost}>
