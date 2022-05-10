@@ -1,5 +1,5 @@
 .nav {
-  height: 75px;
+  height: 90px;
   width: 100%;
   background-color: #1c1c1c;
   z-index: 1;
@@ -64,3 +64,31 @@
 .logoBragi:hover, .logoFriends:hover, .logoHome:hover, .logoOut:hover, .logoProfile:hover, .logoSearch:hover{
   color: #dd9202;
 }
+.home{
+  margin-left: 13px;
+}
+.search{
+margin-left: -15px;
+}
+
+.social{
+margin-left: -15px;
+}
+
+.profile{
+margin-left: -25px;
+}
+
+.logout{
+margin-left: -35px;
+padding-right: 25px;
+}
+
+.home, .logout, .search, .social, .profile{
+  color: white;
+  font-size: 25px;
+  /* color: white; */
+  /* display: flex;
+  justify-content: flex-start;
+  align-self: flex-end;*/
+} 
