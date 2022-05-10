@@ -27,6 +27,8 @@ const api = {
     "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
   changeUserToPremium:
     "https://bragiproject.herokuapp.com/changeUserType/toPremium",
+  changeUserToArtist:
+    "https://bragiproject.herokuapp.com/changeUserType/toArtist",
   updateBasicData:
     "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
   updateSensitiveData:
