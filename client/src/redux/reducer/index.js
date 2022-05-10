@@ -10,6 +10,7 @@ import {
   GET_TOP_10_ALBUMS,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
+  GET_USER_BY_NAME,
   GET_ALL_POST,
   USER_NEW_POST,
   USER_UPDATE_POST,
@@ -37,6 +38,7 @@ const initialState = {
   songById: {},
   albumById: {},
   artistById: {},
+  usersList: [],
   profileImage: "",
 };
 
@@ -79,6 +81,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         artist: [action.payload],
       };
+    case GET_USER_BY_NAME:
+      return {
+        ...state,
+        usersList: [action.payload]
+      }
     case CLEAR_DATA:
       return {
         ...state,

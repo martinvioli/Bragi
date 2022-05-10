@@ -10,6 +10,7 @@ function SearchData({ data }) {
         {data.cover && <img src={data.cover} alt="Imagen" />}
         {data.name && <h1>{data.name}</h1>}
         {data.picture && <img src={data.picture} alt="img" />}
+        {data.userName && <h1 color="white">{data.userName}</h1>}
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getPhotoUser, getUser } from "../../redux/actionCreators";
 import styles from "./Profile.module.css";
 
+
 function Profile() {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
@@ -131,11 +132,14 @@ function Profile() {
           <div>
             {user.name ? (
               <div>
-                <h1
-                  style={{ color: "white" }}
+                <h1  
+                  style={{ color: "white", marginTop: "-2.5em", display:"flex", justifyContent:"center" }}
                 >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
-                <h3>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h3>
-                <p>{user.description}</p>
+                <h2 style={{ color: "white", marginTop: "1em", display:"flex", justifyContent:"center" }}>@{user.userName}</h2>
+                <h3>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
+                <div>
+                <p className={styles.description}>{user.description} </p>
+                </div>
               </div>
             ) : null}
           </div>
