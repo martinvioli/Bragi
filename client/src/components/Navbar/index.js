@@ -62,36 +62,51 @@ export default function NavBar() {
 return(
   <>
   <nav className={styles.nav}>
-        <LinkContainer to="/feed">
+    <div>
+      <LinkContainer to="/feed">
         <FaHome
           className={styles.logoHome}
           // src="https://i.imgur.com/7DI9tsb.png"
           // alt="HomeLogo"
           />
-        </LinkContainer>
+      </LinkContainer>
+      <h2 className={styles.home}>Home</h2>
+    </div>
           <img
             className={styles.logoBragi}
             src="https://i.imgur.com/4UBgUvv.png"
             alt="logo"
           />
-        <LinkContainer to="/home">
-        <FaSearch
-        className={styles.logoSearch}
-        />
-        </LinkContainer>
-        <FaUserFriends
+          <div>
+          <LinkContainer to="/home">
+            <FaSearch
+            className={styles.logoSearch}
+            />
+          </LinkContainer>
+          <h2 className={styles.search}>Search</h2>
+          </div>
+        <div>
+          <FaUserFriends
           className={styles.logoFriends}
-        />
-        <LinkContainer
+          />
+          <h2 className={styles.social}>Social</h2>
+        </div>
+        <div>
+          <LinkContainer
           to="/profile"
           className={styles.logoProfile}
         >
           <FaUserAlt />
         </LinkContainer>
-        <HiLogout
+        <h2 className={styles.profile}>Profile</h2>
+        </div>
+        <div>
+          <HiLogout
           onClick={(e) => handleClick(e)}
           className={styles.logoOut}
         />
+        <h2 className={styles.logout}>Log out</h2>
+        </div>
   </nav>
   <Outlet className={styles.outlet} />
   </>
