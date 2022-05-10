@@ -93,7 +93,7 @@ return(
           className={styles.logoOut}
         />
   </nav>
-  <Outlet />
+  <Outlet className={styles.outlet} />
   </>
 )
 }

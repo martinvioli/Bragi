@@ -6,7 +6,10 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
+  position: fixed;
+  top: 0;
+  width: 100%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.479);
 }
 
@@ -28,7 +31,7 @@
   width: 3.5em;
   height: 3.5em;
   color: white;
-  margin-right: -750px;
+  margin-right: 0px;
   padding-right: 10px;
 }
 
@@ -36,7 +39,7 @@
   width: 2.5em;
   height: 2.5em;
   color: white;
-  margin-right: -750px;
+  margin-right: 0px;
   padding-right: 10px;
 }
 
@@ -46,13 +49,14 @@
   color: white;
   margin-right: 10px;
   padding-right: 0px;
+  margin-right: 0px;
 }
 
 .logoSearch {
   width: 2.5em;
   height: 2.5em;
   color: white;
-  margin-right: -750px;
+  margin-right: 0px;
   padding-right: 10px;
 }
 

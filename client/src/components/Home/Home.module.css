@@ -2,19 +2,20 @@
   font-size: larger !important;
 }
 
-.top10 {
-  height: fit-content;
-  max-width: 25%;
+/* .top10 {
+  height: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: flex-end;
-}
+} */
 
 .divContainer {
-  display: flex;
+  /* display: flex; */
 }
 
 .inputContainer {
-  width: 75%;
+  width: 100%;
+  display: block;
 }
 
 .searchData {
