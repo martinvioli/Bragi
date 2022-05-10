@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 1em 5em 1em 5em;
@@ -9,18 +9,17 @@
 }
 
 .profile {
-  padding: 1em;
-  display: flex;
-  height: 30em;
-  width: 40em;
+  height: 50em;
+  width: 80em;
   border-radius: 1em;
   background-color: #dd9202;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
+}
+.description{
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center; 
+}
 .profile > div > div > p {
   height: 12em;
   overflow: auto;
@@ -79,6 +78,9 @@
 }
 
 .profileImg {
+  /*padding-top: 2px;*/
+  margin-top: 5px;
+  margin-left: 5px;
   border-radius: 100%;
   height: 8em;
   width: 8em;

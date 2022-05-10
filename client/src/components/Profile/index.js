@@ -6,6 +6,7 @@ import { getPhotoUser, getUser } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
+
 function Profile() {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
@@ -135,30 +136,7 @@ function Profile() {
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           <div>
             {user.name ? (
-              <>
-                <div>
-                  <h1
-                    style={{ color: "white" }}
-                  >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
-                  <h3>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h3>
-                  <p>{user.description}</p>
-                </div>
-                <div>
-                  {showEditProfile ? (
-                    <EditProfile
-                      showModal={showEditProfile}
-                      handleShowModal={handleShowEditProfile}
-                    />
-                  ) : (
-                    <Button
-                      className="secondary"
-                      onClick={handleShowEditProfile}
-                    >
-                      Wanna Edit Your Profile
-                    </Button>
-                  )}
-                </div>
-              </>
+
             ) : null}
           </div>
         </div>

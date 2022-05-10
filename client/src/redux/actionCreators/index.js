@@ -6,6 +6,7 @@ import {
   GET_SONG_BY_NAME,
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
+  GET_USER_BY_NAME,
   CLEAR_DATA,
   SONGS_MORE_PLAYED,
   GET_TOP_10_SONGS,
@@ -20,6 +21,7 @@ import {
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
   GET_PHOTO_USER,
+  POST_FOLLOW_NOTIFICATION
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -127,6 +129,21 @@ export const getArtistByName = function (name) {
     }
   };
 };
+
+export const getUserByName = function (nameUser) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/search/${nameUser}`);
+      console.log(response.data);
+      return dispatch({
+        type: GET_USER_BY_NAME,
+        payload: response.data,
+      });
+    } catch (error) {
+      return error;
+    }
+  };
+}
 
 export const clearData = function () {
   return {
@@ -283,3 +300,18 @@ export const getArtistByID = (id) => {
 export const clearDetails = () => {
   return { type: CLEAR_DETAILS };
 };
+
+////////////////////////////////////////////////////////////
+// FOLLOWER // FOLLOWED actionCreators
+////////////////////////////////////////////////////////////
+
+export const followUser = (token, idFollowed) => {
+  return async(dispatch) => {
+    const response = await axios.post('localhost:3000/follow', token, idFollowed)
+    console.log(response.data);
+    return dispatch({
+      type: POST_FOLLOW_NOTIFICATION,
+      payload: response.data,
+    });
+  }
+}
