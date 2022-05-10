@@ -34,7 +34,6 @@ router.use('/album', albumById)
 router.use('/search', searchOptions);
 router.use('/profileUser', profileData);
 router.use('/closeSessionUser', closeSessionUser);
-router.use('/searchUser', searchUser);
 router.use('/getTop10', getTop10);
 router.use('/follow', follow);
 router.use('/unfollow', unFollow);
