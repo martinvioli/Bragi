@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button } from "reactstrap";
 import { getPhotoUser, getUser } from "../../redux/actionCreators";
+import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
 function Profile() {
@@ -9,6 +11,7 @@ function Profile() {
   const profileImage = useSelector((state) => state.profileImage);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showEditProfile, setShowEditProfile] = useState(false);
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
@@ -123,6 +126,8 @@ function Profile() {
 
   console.log(user);
 
+  const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
+
   return (
     <div>
       <div className={styles.container}>
@@ -130,13 +135,30 @@ function Profile() {
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           <div>
             {user.name ? (
-              <div>
-                <h1
-                  style={{ color: "white" }}
-                >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
-                <h3>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h3>
-                <p>{user.description}</p>
-              </div>
+              <>
+                <div>
+                  <h1
+                    style={{ color: "white" }}
+                  >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
+                  <h3>{user.typeUser === "Standard" ? "Fan" : "Artist"}</h3>
+                  <p>{user.description}</p>
+                </div>
+                <div>
+                  {showEditProfile ? (
+                    <EditProfile
+                      showModal={showEditProfile}
+                      handleShowModal={handleShowEditProfile}
+                    />
+                  ) : (
+                    <Button
+                      className="secondary"
+                      onClick={handleShowEditProfile}
+                    >
+                      Wanna Edit Your Profile
+                    </Button>
+                  )}
+                </div>
+              </>
             ) : null}
           </div>
         </div>
