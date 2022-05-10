@@ -2,7 +2,7 @@ const { RowReport } = require('../db.js');
 const { Post } = require('../db');
 const { Comment } = require('../db');
 
-class ReportClass {
+class RowReportClass {
     constructor(){}
 
     reportComment = async(req,res) => {
@@ -62,4 +62,4 @@ class ReportClass {
 
 }
 
-module.exports = ReportClass;
+module.exports = RowReportClass;

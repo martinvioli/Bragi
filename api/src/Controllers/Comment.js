@@ -10,15 +10,18 @@ class CommentClass {
     postComment = async(req,res) => {
         const { commentContent, token, idPost } = req.body;
         const tokenDecode = jwt.decode(token)
-        const badWords = ["mother fucker"]
 
         try {
+            if(!idPost) return res.status(400).json({ msgE:"The post was not found" })
+
             const user = await User.findOne({
                 where: {
                     userName: tokenDecode.userName
                 }
             })
             if(!user) return res.status(404).json({ msgE: 'Could not find your user' })
+
+            if(user.nameTypeUser !== "Premium") return res.status(400).json({ msgE:"Only premium users can comment posts" })
 
             if(commentContent.length > 255) return res.status(403).json({ msgE: "This content is too long" })
 

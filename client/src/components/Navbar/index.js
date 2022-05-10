@@ -16,7 +16,7 @@ import { IoShareSocialSharp } from "react-icons/io";
 import { Outlet, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
-import { FaUserFriends, FaUserAlt } from "react-icons/fa";
+import { FaUserFriends, FaUserAlt, FaHome, FaSearch } from "react-icons/fa";
 import { HiLogout } from "react-icons/hi";
 import axios from "axios";
 import api from "../../Utils";
@@ -59,34 +59,41 @@ export default function NavBar() {
     });
   }
 
-  return (
-    <>
-      <nav className={styles.nav}>
-        <FaUserFriends
-          style={{ width: "3em", height: "3em", color: "white" }}
-          className={styles.logoTwo}
-        />
+return(
+  <>
+  <nav className={styles.nav}>
         <LinkContainer to="/feed">
-          <img
-            className={styles.logo}
-            src="https://i.imgur.com/Ipn3eCY.png"
-            alt=""
-          ></img>
+        <FaHome
+          className={styles.logoHome}
+          // src="https://i.imgur.com/7DI9tsb.png"
+          // alt="HomeLogo"
+          />
         </LinkContainer>
+          <img
+            className={styles.logoBragi}
+            src="https://i.imgur.com/4UBgUvv.png"
+            alt="logo"
+          />
+        <LinkContainer to="/home">
+        <FaSearch
+        className={styles.logoSearch}
+        />
+        </LinkContainer>
+        <FaUserFriends
+          className={styles.logoFriends}
+        />
         <LinkContainer
           to="/profile"
-          style={{ width: "2em", height: "2em", color: "white" }}
-          className={styles.logoTwo}
+          className={styles.logoProfile}
         >
           <FaUserAlt />
         </LinkContainer>
         <HiLogout
           onClick={(e) => handleClick(e)}
-          style={{ width: "1.5em", height: "1.5em", color: "white" }}
-          className={styles.logoTwo}
+          className={styles.logoOut}
         />
-      </nav>
-      <Outlet />
-    </>
-  );
+  </nav>
+  <Outlet className={styles.outlet} />
+  </>
+)
 }
