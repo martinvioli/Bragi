@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button } from "reactstrap";
 import { getPhotoUser, getUser } from "../../redux/actionCreators";
+import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
 
@@ -10,6 +12,7 @@ function Profile() {
   const profileImage = useSelector((state) => state.profileImage);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showEditProfile, setShowEditProfile] = useState(false);
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
@@ -124,6 +127,8 @@ function Profile() {
 
   console.log(user);
 
+  const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
+
   return (
     <div>
       <div className={styles.container}>
@@ -131,16 +136,7 @@ function Profile() {
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           <div>
             {user.name ? (
-              <div>
-                <h1  
-                  style={{ color: "white", marginTop: "-2.5em", display:"flex", justifyContent:"center" }}
-                >{`${user.name.toUpperCase()} ${user.lastName.toUpperCase()}`}</h1>
-                <h2 style={{ color: "white", marginTop: "1em", display:"flex", justifyContent:"center" }}>@{user.userName}</h2>
-                <h3>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
-                <div>
-                <p className={styles.description}>{user.description} </p>
-                </div>
-              </div>
+
             ) : null}
           </div>
         </div>
