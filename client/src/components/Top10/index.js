@@ -22,72 +22,114 @@ function Top10() {
     <>
       <div className={`${styles.divContainer}`} style={{ color: "white" }}>
         <div className="row aling-items-start">
-          <div className={`col ${styles.column}`}>
-            <h5>Top 10 Songs</h5>
-            <hr />
+          <h3>Top 10 Artists</h3>
+          <div class={`col ${styles.columnArtists}`}>
+              <hr/>
+              {artists &&
+                artists.map((e) => {
+                  return (
+                    <div key={e.id}>
+                      <br/>
+                      <div class={styles.container}>
+                        <img src={e.picture_medium} alt="Avatar" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <div class={styles.overlay}>
+                          <div class={styles.text}>
+                            <p>{e.position}</p>
+                            <a href={e.link}>{e.name}</a>
+                          </div>
+                        </div>
+                      </div>
+                      {/*
+                      <p>{e.position}</p>
+                      <p>{e.name}</p>
+                      <img
+                        src={e.picture_medium}
+                        class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+                        alt="TOP"
+                      />
+                      <hr /> 
+                      */}
+                      <br/>
+                    </div>
+                  );
+                })}
+            </div>
+            <br></br>
+
+            <h3>Top 10 Songs</h3>
+            <br></br>
+            <div class={`col ${styles.columnSongs}`}>
+              <hr/>
             {songs &&
               songs.map((e, i) => {
                 return (
-                  <div key={e.id}>
-                    <p>{i + 1}</p>
-                    <p>Song : {e.title}</p>
-                    <p>Artista : {e.artist.name}</p>
-                    {/* <p>Album : {e.album.title}</p> */}
-                    <a href={e.link}>Link to the track</a>
-                    <label>Demo: </label>
-                    <audio
-                      src={e.preview}
-                      className={styles.audio}
-                      controls
-                    ></audio>
-                    {/* <img
-                      src={e.artist.picture_small}
-                      class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
-                      alt="TOP"
-                    /> */}
-                    <hr />
-                  </div>
+                   <div key={e.id}>
+                      <div class={styles.container}>
+                        <img src={e.album.cover_medium} alt="Song Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <div class={styles.overlay}>
+                          <div class={styles.text}>
+                            <p>{e.position}</p>
+                            <p>{e.artist.name}</p>
+                            <a href={e.link}>{e.title}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  // <div key={e.id}>
+                  //   <p>{i + 1}</p>
+                  //   <p>Song : {e.title}</p>
+                  //   <p>Artista : {e.artist.name}</p>
+                  //   <p>Album : {e.album.title}</p>
+                  //   <a href={e.link}>Link to the track</a>
+                  //   <br></br>
+                  //   <label>Demo: </label>
+                  //   <br></br>
+                  //   <audio
+                  //     src={e.preview}
+                  //     className={styles.audio}
+                  //     controls
+                  //   ></audio>
+                  //   <img
+                  //     src={e.artist.picture_small}
+                  //     class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+                  //     alt="TOP"
+                  //   />
+                    // <hr />
+                  // </div>
                 );
               })}
           </div>
-          <div class={`col ${styles.column}`}>
-            <h5>Top 10 Artists</h5>
+          <br></br>
+
+          <h3>Top 10 Albums</h3>
+          <div className={`col ${styles.columnAlbums}`}>
             <hr />
-            {artists &&
-              artists.map((e) => {
-                return (
-                  <div key={e.id}>
-                    <p>{e.position}</p>
-                    <p>{e.name}</p>
-                    {/* <a href={e.link}>Link to the track</a> */}
-                    <img
-                      src={e.picture_small}
-                      class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
-                      alt="TOP"
-                    />
-                    <hr />
-                  </div>
-                );
-              })}
-          </div>
-          <div className={`col ${styles.column}`}>
-            <h5>Top 10 Albums</h5>
-            <hr />
-            {albums &&
+          {albums &&
               albums.map((e, i) => {
                 return (
                   <div key={e.id}>
-                    <p>{i + 1}</p>
-                    <p>Album : {e.title}</p>
-                    <p>Artista : {e.artist.name}</p>
-                    <a href={e.link}>Link to the track</a>
-                    <img
-                      src={e.cover_small}
-                      class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
-                      alt="TOP"
-                    />
-                    <hr />
-                  </div>
+                      <div class={styles.container}>
+                        <img src={e.cover_medium} alt="Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <div class={styles.overlay}>
+                          <div class={styles.text}>
+                            <p>{e.position}</p>
+                            <a href={e.link}>{e.title}</a>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                  // <div key={e.id}>
+                  //   <p>{i + 1}</p>
+                  //   <p>Album : {e.title}</p>
+                  //   <p>Artista : {e.artist.name}</p>
+                  //   <a href={e.link}>Link to the track</a>
+                  //   <img
+                  //     src={e.cover_small}
+                  //     class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+                  //     alt="TOP"
+                  //   />
+                  //   <hr />
+                  // </div>
                 );
               })}
           </div>
@@ -95,6 +137,82 @@ function Top10() {
       </div>
     </>
   );
+
+    // <>
+    //   <div className={`${styles.divContainer}`} style={{ color: "white" }}>
+    //     <div className="row aling-items-start">
+    //       <div className={`col ${styles.column}`}>
+    //         <h5>Top 10 Songs</h5>
+    //         <hr />
+    //         {songs &&
+    //           songs.map((e, i) => {
+    //             return (
+    //               <div key={e.id}>
+    //                 <p>{i + 1}</p>
+    //                 <p>Song : {e.title}</p>
+    //                 <p>Artista : {e.artist.name}</p>
+    //                 {/* <p>Album : {e.album.title}</p> */}
+    //                 <a href={e.link}>Link to the track</a>
+    //                 <label>Demo: </label>
+    //                 <audio
+    //                   src={e.preview}
+    //                   className={styles.audio}
+    //                   controls
+    //                 ></audio>
+    //                 {/* <img
+    //                   src={e.artist.picture_small}
+    //                   class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+    //                   alt="TOP"
+    //                 /> */}
+    //                 <hr />
+    //               </div>
+    //             );
+    //           })}
+    //       </div>
+    //       <div class={`col ${styles.column}`}>
+    //         <h5>Top 10 Artists</h5>
+    //         <hr />
+    //         {artists &&
+    //           artists.map((e) => {
+    //             return (
+    //               <div key={e.id}>
+    //                 <p>{e.position}</p>
+    //                 <p>{e.name}</p>
+    //                 {/* <a href={e.link}>Link to the track</a> */}
+    //                 <img
+    //                   src={e.picture_small}
+    //                   class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+    //                   alt="TOP"
+    //                 />
+    //                 <hr />
+    //               </div>
+    //             );
+    //           })}
+    //       </div>
+    //       <div className={`col ${styles.column}`}>
+    //         <h5>Top 10 Albums</h5>
+    //         <hr />
+    //         {albums &&
+    //           albums.map((e, i) => {
+    //             return (
+    //               <div key={e.id}>
+    //                 <p>{i + 1}</p>
+    //                 <p>Album : {e.title}</p>
+    //                 <p>Artista : {e.artist.name}</p>
+    //                 <a href={e.link}>Link to the track</a>
+    //                 <img
+    //                   src={e.cover_small}
+    //                   class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"
+    //                   alt="TOP"
+    //                 />
+    //                 <hr />
+    //               </div>
+    //             );
+    //           })}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </>
 }
 
 export default Top10;

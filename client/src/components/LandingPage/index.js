@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LandingPage.module.css";
+import { FaMusic } from "react-icons/fa";
+import { IoMdMusicalNotes } from "react-icons/io";
 import {
   Form,
   FormGroup,
@@ -61,7 +63,7 @@ function LandingPage() {
         "userCredentials",
         JSON.stringify(response.data.token)
       );
-      navigate("home");
+      navigate("feed");
       setInput("");
     } catch (e) {
       setInput("");
@@ -127,11 +129,12 @@ function LandingPage() {
         </div>
         <div className={styles.falseScroller}></div>
         <div className={styles.form}>
-          <img
+          <IoMdMusicalNotes className={styles.logoMusic} />
+          {/* <img
             src="https://www.svgrepo.com/show/194008/music.svg"
             alt=""
             style={{ height: "50px", width: "50px" }}
-          ></img>
+          ></img> */}
           <Form
             onSubmit={(e) => handleSubmit(e)}
             style={{ marginBottom: "2em" }}

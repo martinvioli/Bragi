@@ -17,11 +17,16 @@ class PostClass {
                     'nameStatusPost',
                     'imagePost',
                     'UserIdUser'
-                ]
+                ],
+                include:{
+                    model: User,
+                    attributes: ["userName"]
+                }
             });
             const reverse = posts.reverse()
             return res.status(200).json(reverse)
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ message: error.message })
         }
     }

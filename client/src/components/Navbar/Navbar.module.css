@@ -1,17 +1,99 @@
 .nav {
-  height: 4em;
+  height: 90px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.326);
+  background-color: #1c1c1c;
   z-index: 1;
   display: flex;
-  justify-content: center;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 3em;
+  justify-content: space-between; 
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.479);
 }
 
-.logo {
+.logoHome{
   width: 55px;
   height: 55px;
-  filter: invert(100%) sepia(95%) saturate(0%) hue-rotate(75deg)
-    brightness(101%) contrast(101%);
+  display: flex;
+  color: white;
+  margin-left: 15px;
+}
+
+.logoBragi {
+  width: 115px;
+  height: 125px;
+  margin-top: 10px;
+}
+
+.logoFriends{
+  width: 3.5em;
+  height: 3.5em;
+  color: white;
+  margin-right: 0px;
+  padding-right: 10px;
+}
+
+.logoProfile{
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  margin-right: 0px;
+  padding-right: 10px;
+}
+
+.logoOut{
+  width: 1.5em;
+  height: 1.5em;
+  color: white;
+  margin-right: 10px;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+.logoSearch {
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  margin-right: 0px;
+  padding-right: 10px;
+}
+
+
+.logoBragi:hover, .logoFriends:hover, .logoHome:hover, .logoOut:hover, .logoProfile:hover, .logoSearch:hover{
+  color: #dd9202;
+}
+.home{
+  margin-left: 13px;
+}
+.search{
+margin-left: -15px;
+}
+
+.social{
+margin-left: -15px;
+}
+
+.profile{
+margin-left: -25px;
+}
+
+.logout{
+margin-left: -35px;
+padding-right: 25px;
+}
+
+.home, .logout, .search, .social, .profile{
+  color: white;
+  font-size: 25px;
+  /* color: white; */
+  /* display: flex;
+  justify-content: flex-start;
+  align-self: flex-end;*/
+} 
+
+.h2{
+  display: flex;
+  align-items: baseline;
 }

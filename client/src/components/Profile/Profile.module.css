@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   padding: 1em 5em 1em 5em;
+  padding-top: 100px;
 }
 
 .profile {
@@ -13,7 +14,7 @@
   height: 30em;
   width: 40em;
   border-radius: 1em;
-  background-color: rgba(81, 123, 200, 0.767);
+  background-color: #dd9202;
   flex-direction: column;
   justify-content: center;
   align-items: center;

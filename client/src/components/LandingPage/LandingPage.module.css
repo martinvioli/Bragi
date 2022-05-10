@@ -88,18 +88,19 @@
 }
 
 .feature > h2 {
-  color: rgb(0, 115, 255);
+  color: #dd9202;
   font-weight: bold;
 }
 
 .feature > h1 {
-  background-color: #009dff;
+  background-color: #dd9202;
   display: inline;
   border-radius: 100%;
   padding: 0.1em 0.5em 0.1em 0.5em;
   font-weight: bold;
   color: white;
-  box-shadow: 4px 4px 0px -3px rgb(101, 175, 254);
+  /* box-shadow: 4px 4px 0px -3px rgb(101, 175, 254); */
+  /* box-shadow: 4px 4px 4px 0 rgba(222, 145, 2, 0.555); */
 }
 
 @media (max-width: 1000px) {
@@ -131,4 +132,11 @@
   .falseScroller {
     display: none;
   }
+}
+
+.logoMusic{
+  width: 100px;
+  height: 100px;
+  color: #dd9202;
+  margin-left: 250px;
 }

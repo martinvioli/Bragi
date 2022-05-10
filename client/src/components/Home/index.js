@@ -207,9 +207,9 @@ function Home() {
                 })}
             </div>
           </div>
-          <div className={`${styles.top10}`}>
-            <Top10></Top10>
-          </div>
+          {/* <div className={`${styles.top10}`}> */}
+            <Top10/>
+          {/* </div> */}
         </div>
       ) : (
         <h1 style={{ color: "white", textAlign: "center" }}>
