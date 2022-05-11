@@ -25,7 +25,7 @@ import {
   GET_ALL_COMMENT,
   USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -137,7 +137,9 @@ export const getArtistByName = function (name) {
 export const getUserByName = function (nameUser) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3001/search/${nameUser}`);
+      const response = await axios.get(
+        `http://localhost:3001/search/${nameUser}`
+      );
       return dispatch({
         type: GET_USER_BY_NAME,
         payload: response.data,
@@ -146,7 +148,7 @@ export const getUserByName = function (nameUser) {
       return error;
     }
   };
-}
+};
 
 export const clearData = function () {
   return {
@@ -287,10 +289,7 @@ export const userNewComment = function (input) {
     try {
       const response = await axios.post(api.userNewComment, input);
       console.log(response.data);
-      return dispatch({
-        type: USER_NEW_COMMENT,
-        payload: response.data,
-      });
+      return dispatch(getAllComments(input.idPost));
     } catch (error) {
       console.log(error);
     }
@@ -371,12 +370,16 @@ export const clearDetails = () => {
 ////////////////////////////////////////////////////////////
 
 export const followUser = (token, idFollowed) => {
-  return async(dispatch) => {
-    const response = await axios.post('localhost:3000/follow', token, idFollowed)
+  return async (dispatch) => {
+    const response = await axios.post(
+      "localhost:3000/follow",
+      token,
+      idFollowed
+    );
     console.log(response.data);
     return dispatch({
       type: POST_FOLLOW_NOTIFICATION,
       payload: response.data,
     });
-  }
-}
+  };
+};
