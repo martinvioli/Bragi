@@ -218,6 +218,8 @@ function EditProfile({ showModal, handleShowModal }) {
     setPhotoProfile(e.target.files[0]);
   };
 
+  //Esto es solo para el pull
+
   return (
     <>
       <Modal size="lg" centered fade scrollable isOpen={showModal}>
