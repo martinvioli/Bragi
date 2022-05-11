@@ -68,7 +68,7 @@ class PostClass {
             const newPost = await Post.create({ contentPost, linkContent, imagePost });
             await newPost.setUser(user.idUser)
 
-            return res.status(201).json({ msg: "Post created successfully", newPost})
+            return res.status(201).json({ msg: "Post created successfully", newPost, userName: user.userName})
         } catch (error) {
             res.status(500).json({message: error.message})
         }
