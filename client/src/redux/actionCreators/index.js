@@ -27,6 +27,8 @@ import {
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
   FOLLOW_USER,
+  FALSE_DISLIKE,
+  FALSE_LIKE,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -379,6 +381,40 @@ export const followUser = (token, idFollowed) => {
         type: FOLLOW_USER,
         payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//////////////////////////////////////
+// == LIKES == //
+/////////////////////////////////////
+
+export const falseLike = (payload) => {
+  return { type: FALSE_LIKE, payload };
+};
+
+export const falseDislike = (payload) => {
+  return { type: FALSE_DISLIKE, payload };
+};
+
+export const like = function (payload) {
+  return async () => {
+    try {
+      const response = await axios.post(api.likePost, payload);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const dislike = function (payload) {
+  return async () => {
+    try {
+      const response = await axios.post(api.dislikePost, payload);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
