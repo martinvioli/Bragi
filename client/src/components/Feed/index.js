@@ -4,9 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   deletePost,
+  dislike,
+  falseDislike,
+  falseLike,
   getAllComments,
   getToken,
   getUser,
+  like,
   userNewComment,
   userNewPost,
 } from "../../redux/actionCreators";
@@ -19,6 +23,7 @@ import {
   FcRedo,
   FcLink,
   FcComments,
+  FcLikePlaceholder,
 } from "react-icons/fc";
 import {
   Input,
@@ -183,7 +188,7 @@ export default function Feed() {
 
   const [slicer, setSlicer] = useState(3);
 
-  console.log(comments);
+  console.log(posts);
 
   return (
     <div className="container-fluid">
@@ -479,14 +484,52 @@ export default function Feed() {
                               }}
                             ></FcLink>
                           </CardLink>
-                          <FcLike
+                          <div
                             style={{
                               marginBottom: "0.4em",
                               marginLeft: "2.5em",
-                              width: "2em",
-                              height: "2em",
                             }}
-                          />
+                          >
+                            <span
+                              style={{ color: "black", paddingRight: "0.5em" }}
+                            >
+                              {e.Likes.length}
+                            </span>
+                            {e.Likes.some(
+                              (e) => e.userName === user.userName
+                            ) ? (
+                              <FcLike
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseDislike({ index: posts.indexOf(e) })
+                                  );
+                                  dispatch(
+                                    dislike({ token, idPost: e.idPost })
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <FcLikePlaceholder
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseLike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
+                                  );
+                                  dispatch(like({ token, idPost: e.idPost }));
+                                }}
+                              />
+                            )}
+                          </div>
                           <FcRedo
                             style={{
                               marginBottom: "0.4em",
@@ -574,21 +617,13 @@ export default function Feed() {
                 <CardLink href={viewPost.linkContent}>
                   <FcLink
                     style={{
-                      marginBottom: "0.4em",
+                      marginBottom: "0.2em",
+                      marginRight: "1em",
                       width: "2em",
                       height: "2em",
                     }}
                   ></FcLink>
                 </CardLink>
-                <FcLike
-                  style={{
-                    marginBottom: "0.4em",
-                    marginLeft: "2.5em",
-                    marginRight: "1em",
-                    width: "2em",
-                    height: "2em",
-                  }}
-                />
               </div>
             </Card>
           </ModalHeader>
@@ -620,7 +655,7 @@ export default function Feed() {
                 )}
               </>
             ) : (
-              <p>No comments yet...</p>
+              <p style={{ textAlign: "center" }}>No comments yet... ☹</p>
             )}
           </ModalBody>
           {user.typeUser === "Premium" && (
@@ -633,7 +668,7 @@ export default function Feed() {
                 onChange={(e) =>
                   setCommentInput({
                     ...commentInput,
-                    [e.target.name]: e.target.value.trim(),
+                    [e.target.name]: e.target.value,
                   })
                 }
                 value={commentInput.commentContent}
@@ -643,7 +678,9 @@ export default function Feed() {
                 size="sm"
                 outline
                 style={{ marginLeft: "82%", marginTop: "10px" }}
-                disabled={commentInput.commentContent === "" ? true : false}
+                disabled={
+                  commentInput.commentContent.trim() === "" ? true : false
+                }
                 onClick={() => {
                   dispatch(userNewComment(commentInput));
                   setCommentInput({ ...commentInput, commentContent: "" });
