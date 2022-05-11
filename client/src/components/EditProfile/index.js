@@ -35,7 +35,6 @@ function EditProfile({ showModal, handleShowModal }) {
     repeatPassword: "",
     birthday: "",
     userName: "",
-    photoProfile: {},
     description: "",
   });
   const [errors, setErrors] = useState({
@@ -49,8 +48,8 @@ function EditProfile({ showModal, handleShowModal }) {
     userName: "",
     tel: "",
     description: "",
-    profileImage: "",
   });
+  const [photoProfile, setPhotoProfile] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
 
@@ -121,15 +120,31 @@ function EditProfile({ showModal, handleShowModal }) {
 
   const handleSubmitBasicData = async (e) => {
     e.preventDefault();
-    const response = await axios.put(api.updateBasicData, {
-      token: token,
-      name: input.name ? input.name : user.name,
-      lastName: input.lastName ? input.lastName : user.lastName,
-      gender: input.gender ? input.gender : user.gender,
-      description: input.description ? input.description : user.description,
-      birthday: input.birthday ? input.birthday : user.birthday,
-      photoProfile: input.photoProfile,
-    });
+    console.log(photoProfile);
+    const fd = new FormData();
+    fd.append("photoProfile", photoProfile);
+    fd.append("token", token);
+    fd.append("name", input.name ? input.name : user.name);
+    fd.append("lastName", input.lastName ? input.lastName : user.lastName);
+    fd.append("gender", input.gender ? input.gender : user.gender);
+    fd.append(
+      "description",
+      input.description ? input.description : user.description
+    );
+    fd.append("birthday", input.birthday ? input.birthday : user.birthday);
+    console.log(fd);
+
+    // {
+    //   token: token,
+    //   name: input.name ? input.name : user.name,
+    //   lastName: input.lastName ? input.lastName : user.lastName,
+    //   gender: input.gender ? input.gender : user.gender,
+    //   description: input.description ? input.description : user.description,
+    //   birthday: input.birthday ? input.birthday : user.birthday,
+    //   photoProfile: photoProfile,
+    // }
+
+    const response = await axios.put(api.updateBasicData, fd);
     if (response.data.msgE) {
       alert(response.data.msgE);
     }
@@ -200,10 +215,7 @@ function EditProfile({ showModal, handleShowModal }) {
 
   const handleImage = (e) => {
     console.log(e.target.files[0]);
-    setInput({
-      ...input,
-      photoProfile: e.target.files[0],
-    });
+    setPhotoProfile(e.target.files[0]);
   };
 
   return (
@@ -347,7 +359,7 @@ function EditProfile({ showModal, handleShowModal }) {
                           <option value="default">Select ...</option>
                           <option value="Female">Female</option>
                           <option value="Male">Male</option>
-                          <option value="Non Binary">No Binary</option>
+                          <option value="Non binary">No Binary</option>
                           <option value="Other">Other</option>
                           {errors.gender ? (
                             <FormFeedback tooltip>{errors.gender}</FormFeedback>

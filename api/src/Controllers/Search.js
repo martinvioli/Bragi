@@ -138,7 +138,7 @@ class Search {
                 ? res.status(200).send(searchNameInDb)
                 : res.status(404).json({ msgE: 'User not found' })
             }
-            return res.status(404).json({ msgE: 'Username not found' })
+            // return res.status(404).json({ msgE: 'Username not found' })
         } catch (error) {
             console.log(error)
             return res.status(404).json({ msgE: 'searchUser no se ejecuto' })
