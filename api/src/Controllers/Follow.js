@@ -35,9 +35,9 @@ class Follow{
                     userNameFollower: userFwer.userName,
                 }
             })
-            console.log(userFollower)
-            // if(userFollower.userProfileFollower === user.idUser && userFollower.UserIdUser === idFollowed){
-            //     return res.status(406).json({ msgE: "You already follow this user" })
+            // console.log(userFollower)
+            // if(userFollower.userProfileFollower && userFollower.UserIdUser){
+            //     if(userFollower.userProfileFollower === userFwer.idUser && userFollower.UserIdUser === userFwed.idUser) return res.status(406).json({ msgE: "You already follow this user" })
             // }
 
             const userFollowerCreate = await Follower.create({userProfileFollower: userFwer.idUser, userNameFollower: userFwer.userName})//si no esta lo creo

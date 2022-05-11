@@ -6,6 +6,6 @@ const { verifyToken } = require('../middlewares/authjwt')
 const router = Router();
 const user = new User();
 
-router.get('/', [verifyToken], user.getAllUsers);
+router.get('/', user.getAllUsers);
 
 module.exports = router;
