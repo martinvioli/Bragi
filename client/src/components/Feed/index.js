@@ -10,11 +10,7 @@ import {
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
-import { FcEditImage } from "react-icons/fc";
-import { FcFullTrash } from "react-icons/fc";
-import { FcLike } from "react-icons/fc";
-import { FcRedo } from "react-icons/fc";
-import { FcLink } from "react-icons/fc";
+import { FcEditImage, FcFullTrash, FcLike, FcRedo, FcLink, FcComments } from "react-icons/fc";
 import {
   Input,
   Form,
@@ -305,6 +301,16 @@ export default function Feed() {
                                 height: "1.5em",
                               }}
                             />
+                            <CardLink href={e.linkContent}>
+                              <FcComments
+                            style={{
+                                marginBottom: "0.4em",
+                                marginLeft: "2.5em",
+                                width: "1.5em",
+                                height: "1.5em",
+                              }}
+                            />
+                            </CardLink>
                             <FcRedo
                               style={{
                                 marginBottom: "0.4em",
@@ -385,7 +391,7 @@ export default function Feed() {
             </div>
           ) : (
             <div className={styles.posts}>
-              See All Post
+              <p>See All Posts</p>
               <div className={styles.post}>
                 {posts &&
                   posts.map((e) => {

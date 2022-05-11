@@ -10,9 +10,10 @@
 
 .profile {
   height: 50em;
-  width: 80em;
+  width: 500px;
   border-radius: 1em;
   background-color: #dd9202;
+  margin-right: 250px;
 
 }
 .description{
@@ -72,19 +73,50 @@
   overflow-y: auto;
   background-color: rgba(255, 255, 255, 0.274);
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .profileImg {
   /*padding-top: 2px;*/
-  margin-top: 5px;
-  margin-left: 5px;
-  border-radius: 100%;
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  /* align-items: center;
+  justify-content: center; */
+  /* border-radius: 50%; */
+  margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   height: 8em;
   width: 8em;
   border: 1px solid black;
+}
+
+.name{
+  text-align: center;
+  font-size: 25px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: white;
+}
+
+.description{
+  margin-top: 25px;
+  border: 1px solid orange;
+  border-radius: 25%;
+  height: fit-content;
+  width: fit-content;
+  display: block;
+  background-color: #b87903;
+  border-radius: 25px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  padding: 4px;
+  box-shadow: 0px 9px 25px rgba(0, 0, 0, .7);
 }
 
 .post {
@@ -95,25 +127,31 @@
 }
 
 .fan {
-  display: flex;
-  width: 100%;
-  max-width: 60em;
-  justify-content: center;
+  /* display: flex; */
+  /* width: 100%;
+  max-width: 60em; */
+  /* justify-content: center; */
+  /* border: 1px solid white; */
+  text-align: center;
+}
+
+.fan > h1{
+  text-align: center;
+  color: white;
 }
 
 .followed {
   margin-top: 1em;
   overflow-y: auto;
-  width: 50%;
+  width: auto;
   height: 25em;
-  display: flex;
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(3, 1fr);
+  /* display: flex;*/
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.followed > h1 {
-  color: white;
 }
 
 .followedArtist {
@@ -125,6 +163,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: rgba(240, 248, 255, 0.484);
+
 }
 
 .followedArtist > section {
