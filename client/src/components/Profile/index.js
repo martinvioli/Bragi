@@ -13,6 +13,9 @@ function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(3);
+
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
@@ -104,6 +107,23 @@ function Profile() {
       user: "dukiGOAT",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/9/98/Duko_concierto.jpg",
+    }, {
+      name: "Soda Stereo",
+      user: "graciasTotales",
+      image:
+        "https://www.luminariastv.com/wp-content/uploads/2022/03/7595380A-F908-48CF-8DE4-D7D7FF80D181.png",
+    },
+    {
+      name: "Los Piojos",
+      user: "Piojos4Ever",
+      image:
+        "https://pbs.twimg.com/profile_images/519964199296847872/jySIY1bd_400x400.jpeg",
+    },
+    {
+      name: "Ciro y los Persas",
+      user: "LosPiojosV2",
+      image:
+        "https://www.cmtv.com.ar/tapas-cd/ciroylospersas27.jpg",
     },
   ];
 
@@ -134,8 +154,14 @@ function Profile() {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
-          <div>
-            {user.name} 
+          <div className={styles.name}>
+            {user.name + " " + user.lastName}
+          </div>
+          <div className={styles.name}>
+            @{user.userName}
+          </div>
+          <div className={styles.description}>
+            {user.description}
           </div>
         </div>
         <br></br>
@@ -195,8 +221,8 @@ function Profile() {
           </>
         ) : (
           <div className={styles.fan}>
+            <h1>FOLLOWING</h1>
             <div className={styles.followed}>
-              <h1>FOLLOWING</h1>
               {followed.map((e) => (
                 <div className={styles.followedArtist}>
                   <div
