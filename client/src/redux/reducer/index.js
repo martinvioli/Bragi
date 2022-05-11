@@ -21,9 +21,11 @@ import {
   CLEAR_DETAILS,
   GET_PHOTO_USER,
   GET_ALL_COMMENT,
-  USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  FOLLOW_USER,
+  FALSE_LIKE,
+  FALSE_DISLIKE,
 } from "../actions";
 
 // STATE CREATION
@@ -44,7 +46,8 @@ const initialState = {
   artistById: {},
   usersList: [],
   profileImage: "",
-  comments:[],
+  comments: [],
+  followed: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -89,8 +92,8 @@ function rootReducer(state = initialState, action) {
     case GET_USER_BY_NAME:
       return {
         ...state,
-        usersList: [action.payload]
-      }
+        usersList: [action.payload],
+      };
     case CLEAR_DATA:
       return {
         ...state,
@@ -166,12 +169,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         profileImage: `${api.getPhotoUser}${action.payload}`,
       };
-      case GET_ALL_COMMENT:
-        return{
-        ...state,
-        comments: action.payload,
-      };
-      case USER_NEW_COMMENT:
+    case GET_ALL_COMMENT:
       return {
         ...state,
         comments: action.payload,
@@ -185,6 +183,26 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         comments: action.payload,
+      };
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followed: action.payload,
+    case FALSE_LIKE:
+      var postsEditable = [...state.posts];
+      postsEditable[action.payload.index].Likes.push({
+        userName: action.payload.userName,
+      });
+      return {
+        ...state,
+        posts: postsEditable,
+      };
+    case FALSE_DISLIKE:
+      var postsEditable2 = [...state.posts];
+      postsEditable2[action.payload.index].Likes.pop();
+      return {
+        ...state,
+        posts: postsEditable2,
       };
     default:
       return { ...state };

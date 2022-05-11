@@ -35,7 +35,6 @@ function EditProfile({ showModal, handleShowModal }) {
     repeatPassword: "",
     birthday: "",
     userName: "",
-    photoProfile: {},
     description: "",
   });
   const [errors, setErrors] = useState({
@@ -49,10 +48,11 @@ function EditProfile({ showModal, handleShowModal }) {
     userName: "",
     tel: "",
     description: "",
-    profileImage: "",
   });
+  const [photoProfile, setPhotoProfile] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
+  const [responseEdit, setResponseEdit] = useState("");
 
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -72,6 +72,13 @@ function EditProfile({ showModal, handleShowModal }) {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    let username = user.userName;
+    dispatch(getUser(token));
+    dispatch(getPhotoUser(username));
+    setResponseEdit("");
+  }, [responseEdit]);
 
   const { baseUrl } = api;
 
@@ -120,22 +127,43 @@ function EditProfile({ showModal, handleShowModal }) {
   const handleShowPassword = (e) => setShowPassword(!showPassword);
 
   const handleSubmitBasicData = async (e) => {
-    e.preventDefault();
-    const response = await axios.put(api.updateBasicData, {
-      token: token,
-      name: input.name ? input.name : user.name,
-      lastName: input.lastName ? input.lastName : user.lastName,
-      gender: input.gender ? input.gender : user.gender,
-      description: input.description ? input.description : user.description,
-      birthday: input.birthday ? input.birthday : user.birthday,
-      photoProfile: input.photoProfile,
-    });
+    console.log(photoProfile);
+    const fd = new FormData();
+    fd.append("photoProfile", photoProfile);
+    fd.append("token", token);
+    fd.append("name", input.name ? input.name : user.name);
+    fd.append("lastName", input.lastName ? input.lastName : user.lastName);
+    fd.append("gender", input.gender ? input.gender : user.gender);
+    fd.append(
+      "description",
+      input.description ? input.description : user.description
+    );
+    fd.append("birthday", input.birthday ? input.birthday : user.birthday);
+    fd.append("tel", input.tel ? input.tel : user.tel);
+
+    const response = await axios.put(api.updateBasicData, fd);
     if (response.data.msgE) {
+      setResponseEdit(response.data.msgE);
       alert(response.data.msgE);
     }
     if (response.data.msg) {
+      setResponseEdit(response.data.msg);
       alert(response.data.msg);
     }
+    setInput({
+      name: "",
+      lastName: "",
+      email: "",
+      gender: "",
+      tel: "",
+      password: "",
+      repeatPassword: "",
+      birthday: "",
+      userName: "",
+      description: "",
+    });
+    handleShowModal();
+    navigate("/profile");
   };
 
   const handleSubmitSenstiveData = async (e) => {
@@ -165,9 +193,9 @@ function EditProfile({ showModal, handleShowModal }) {
       repeatPassword: "",
       birthday: "",
       userName: "",
-      photoProfile: "",
       description: "",
     });
+    handleShowModal();
   };
 
   const handleTabs = (tab) => {
@@ -200,11 +228,10 @@ function EditProfile({ showModal, handleShowModal }) {
 
   const handleImage = (e) => {
     console.log(e.target.files[0]);
-    setInput({
-      ...input,
-      photoProfile: e.target.files[0],
-    });
+    setPhotoProfile(e.target.files[0]);
   };
+
+  //Esto es solo para el pull
 
   return (
     <>
@@ -347,7 +374,7 @@ function EditProfile({ showModal, handleShowModal }) {
                           <option value="default">Select ...</option>
                           <option value="Female">Female</option>
                           <option value="Male">Male</option>
-                          <option value="Non Binary">No Binary</option>
+                          <option value="Non binary">No Binary</option>
                           <option value="Other">Other</option>
                           {errors.gender ? (
                             <FormFeedback tooltip>{errors.gender}</FormFeedback>

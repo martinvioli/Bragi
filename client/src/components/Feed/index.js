@@ -4,8 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   deletePost,
+  dislike,
+  falseDislike,
+  falseLike,
+  getAllComments,
   getToken,
   getUser,
+  like,
+  userNewComment,
   userNewPost,
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
@@ -17,6 +23,7 @@ import {
   FcRedo,
   FcLink,
   FcComments,
+  FcLikePlaceholder,
 } from "react-icons/fc";
 import {
   Input,
@@ -173,14 +180,22 @@ export default function Feed() {
 
   const comments = useSelector((state) => state.comments);
 
-  console.log(comments);
+  const [commentInput, setCommentInput] = useState({
+    commentContent: "",
+    token: null,
+    idPost: null,
+  });
+
+  const [slicer, setSlicer] = useState(3);
+
+  console.log(posts);
 
   return (
     <div className="container-fluid">
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.nameTypeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -420,7 +435,7 @@ export default function Feed() {
                         style={{
                           marginLeft: "20em",
                           width: "50%",
-                          height: "40%",
+                          height: "43%",
                           minWidth: "25em",
                         }}
                         color="bg-light"
@@ -430,16 +445,21 @@ export default function Feed() {
                         <CardBody>
                           <CardTitle
                             style={{
+                              color: "orange",
+                            }}
+                            tag="h7"
+                          >
+                            {e.User.userName}
+                          </CardTitle>
+                          <CardTitle
+                            style={{
                               color: "blue",
                               display: "flex",
                               justifyContent: "flex-start",
                             }}
                             tag="h7"
                           >
-                            {`@${e.User.userName}`}
-                            <div className={styles.date}>
-                              {`${e.datePost}`}
-                            </div>
+                            {e.datePost}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
@@ -464,14 +484,52 @@ export default function Feed() {
                               }}
                             ></FcLink>
                           </CardLink>
-                          <FcLike
+                          <div
                             style={{
                               marginBottom: "0.4em",
                               marginLeft: "2.5em",
-                              width: "2em",
-                              height: "2em",
                             }}
-                          />
+                          >
+                            <span
+                              style={{ color: "black", paddingRight: "0.5em" }}
+                            >
+                              {e.Likes.length}
+                            </span>
+                            {e.Likes.some(
+                              (e) => e.userName === user.userName
+                            ) ? (
+                              <FcLike
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseDislike({ index: posts.indexOf(e) })
+                                  );
+                                  dispatch(
+                                    dislike({ token, idPost: e.idPost })
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <FcLikePlaceholder
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseLike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
+                                  );
+                                  dispatch(like({ token, idPost: e.idPost }));
+                                }}
+                              />
+                            )}
+                          </div>
                           <FcRedo
                             style={{
                               marginBottom: "0.4em",
@@ -482,8 +540,14 @@ export default function Feed() {
                             }}
                             onClick={() => {
                               setViewPost({ ...e });
-                              dispatch(getAllPost(e.idPost));
+                              dispatch(getAllComments(e.idPost));
                               handleShowModalComments();
+                              setCommentInput({
+                                ...commentInput,
+                                idPost: e.idPost,
+                                token: token,
+                              });
+                              setSlicer(3);
                             }}
                           />
                         </div>
@@ -497,8 +561,20 @@ export default function Feed() {
       </div>
       {/* MODAL PARA VER COMENTARIOS */}
       {viewPost && (
-        <Modal centered isOpen={showModalComments}>
+        <Modal centered isOpen={showModalComments} scrollable>
           <ModalHeader>
+            <Button
+              color="danger"
+              onClick={() => {
+                handleShowModalComments();
+                setViewPost(null);
+                setCommentInput({ ...commentInput, commentContent: "" });
+              }}
+              size="sm"
+              style={{ marginLeft: "94%" }}
+            >
+              X
+            </Button>
             <Card
               style={{
                 marginLeft: "0.5em",
@@ -506,20 +582,23 @@ export default function Feed() {
                 height: "40%",
                 minWidth: "22em",
               }}
-              color="bg-light"
+              color="light"
               className={styles.backgroundPost}
               key={viewPost.token}
             >
               <CardBody>
+                <CardTitle style={{ color: "orange" }} tag="h7">
+                  {viewPost.User.userName}
+                </CardTitle>
                 <CardTitle
                   style={{
                     color: "blue",
                     display: "flex",
                     justifyContent: "flex-start",
+                    fontSize: "small",
                   }}
-                  tag="h7"
                 >
-                  {`date: ${viewPost.datePost}`}
+                  {viewPost.datePost}
                 </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
                   {viewPost.contentPost}
@@ -538,45 +617,79 @@ export default function Feed() {
                 <CardLink href={viewPost.linkContent}>
                   <FcLink
                     style={{
-                      marginBottom: "0.4em",
+                      marginBottom: "0.2em",
+                      marginRight: "1em",
                       width: "2em",
                       height: "2em",
                     }}
                   ></FcLink>
                 </CardLink>
-                <FcLike
-                  style={{
-                    marginBottom: "0.4em",
-                    marginLeft: "2.5em",
-                    marginRight: "1em",
-                    width: "2em",
-                    height: "2em",
-                  }}
-                />
               </div>
             </Card>
           </ModalHeader>
           <ModalBody>
             {comments.length > 0 ? (
-              <p>hay comentarios</p>
+              <>
+                {comments.slice(0, slicer).map((e) => (
+                  <Card key={e.idComment} style={{ marginBottom: "0.5em" }}>
+                    <CardBody>
+                      <CardTitle tag="h5">{e.userNameComment}</CardTitle>
+                      <CardSubtitle
+                        className="mb-2 text-muted"
+                        style={{ fontSize: "small" }}
+                      >
+                        {e.dateComment}
+                      </CardSubtitle>
+                      <CardText>{e.commentContent}</CardText>
+                    </CardBody>
+                  </Card>
+                ))}
+                {comments.slice(0, slicer + 3).length !==
+                  comments.slice(0, slicer).length && (
+                  <p
+                    className={styles.loadMoreComments}
+                    onClick={() => setSlicer(slicer + 3)}
+                  >
+                    🖱 Click me to load more comments...
+                  </p>
+                )}
+              </>
             ) : (
-              <p>No comments yet...</p>
-            )}
-            {user.nameTypeUser === "Premium" && (
-              <p>Es premium, puede comentar XD</p>
+              <p style={{ textAlign: "center" }}>No comments yet... ☹</p>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button
-              color="danger"
-              onClick={() => {
-                handleShowModalComments();
-                setViewPost(null);
-              }}
-            >
-              X
-            </Button>
-          </ModalFooter>
+          {user.typeUser === "Premium" && (
+            <ModalFooter>
+              <br></br>
+              <Input
+                name="commentContent"
+                type="textarea"
+                placeholder="Write a comment..."
+                onChange={(e) =>
+                  setCommentInput({
+                    ...commentInput,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                value={commentInput.commentContent}
+              ></Input>
+              <Button
+                color="success"
+                size="sm"
+                outline
+                style={{ marginLeft: "82%", marginTop: "10px" }}
+                disabled={
+                  commentInput.commentContent.trim() === "" ? true : false
+                }
+                onClick={() => {
+                  dispatch(userNewComment(commentInput));
+                  setCommentInput({ ...commentInput, commentContent: "" });
+                }}
+              >
+                Comment!
+              </Button>
+            </ModalFooter>
+          )}
         </Modal>
       )}
     </div>

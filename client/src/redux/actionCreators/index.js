@@ -25,7 +25,10 @@ import {
   GET_ALL_COMMENT,
   USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  FOLLOW_USER,
+  FALSE_DISLIKE,
+  FALSE_LIKE,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -137,7 +140,9 @@ export const getArtistByName = function (name) {
 export const getUserByName = function (nameUser) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3001/search/${nameUser}`);
+      const response = await axios.get(
+        `http://localhost:3001/search/${nameUser}`
+      );
       return dispatch({
         type: GET_USER_BY_NAME,
         payload: response.data,
@@ -146,7 +151,7 @@ export const getUserByName = function (nameUser) {
       return error;
     }
   };
-}
+};
 
 export const clearData = function () {
   return {
@@ -287,10 +292,7 @@ export const userNewComment = function (input) {
     try {
       const response = await axios.post(api.userNewComment, input);
       console.log(response.data);
-      return dispatch({
-        type: USER_NEW_COMMENT,
-        payload: response.data,
-      });
+      return dispatch(getAllComments(input.idPost));
     } catch (error) {
       console.log(error);
     }
@@ -366,17 +368,55 @@ export const clearDetails = () => {
   return { type: CLEAR_DETAILS };
 };
 
-////////////////////////////////////////////////////////////
-// FOLLOWER // FOLLOWED actionCreators
-////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//_ FOLLOW
+//-----------------------------------------------------------------------------
 
 export const followUser = (token, idFollowed) => {
-  return async(dispatch) => {
-    const response = await axios.post('localhost:3000/follow', token, idFollowed)
-    console.log(response.data);
-    return dispatch({
-      type: POST_FOLLOW_NOTIFICATION,
-      payload: response.data,
-    });
-  }
-}
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.followUser, { token, idFollowed });
+      console.log(response.data);
+      return dispatch({
+        type: FOLLOW_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//////////////////////////////////////
+// == LIKES == //
+/////////////////////////////////////
+
+export const falseLike = (payload) => {
+  return { type: FALSE_LIKE, payload };
+};
+
+export const falseDislike = (payload) => {
+  return { type: FALSE_DISLIKE, payload };
+};
+
+export const like = function (payload) {
+  return async () => {
+    try {
+      const response = await axios.post(api.likePost, payload);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const dislike = function (payload) {
+  return async () => {
+    try {
+      const response = await axios.post(api.dislikePost, payload);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
