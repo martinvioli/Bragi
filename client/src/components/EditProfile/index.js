@@ -52,6 +52,7 @@ function EditProfile({ showModal, handleShowModal }) {
   const [photoProfile, setPhotoProfile] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
+  const [responseEdit, setResponseEdit] = useState("");
 
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -71,6 +72,13 @@ function EditProfile({ showModal, handleShowModal }) {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    let username = user.userName;
+    dispatch(getUser(token));
+    dispatch(getPhotoUser(username));
+    setResponseEdit("");
+  }, [responseEdit]);
 
   const { baseUrl } = api;
 
@@ -119,7 +127,6 @@ function EditProfile({ showModal, handleShowModal }) {
   const handleShowPassword = (e) => setShowPassword(!showPassword);
 
   const handleSubmitBasicData = async (e) => {
-    e.preventDefault();
     console.log(photoProfile);
     const fd = new FormData();
     fd.append("photoProfile", photoProfile);
@@ -132,25 +139,31 @@ function EditProfile({ showModal, handleShowModal }) {
       input.description ? input.description : user.description
     );
     fd.append("birthday", input.birthday ? input.birthday : user.birthday);
-    console.log(fd);
-
-    // {
-    //   token: token,
-    //   name: input.name ? input.name : user.name,
-    //   lastName: input.lastName ? input.lastName : user.lastName,
-    //   gender: input.gender ? input.gender : user.gender,
-    //   description: input.description ? input.description : user.description,
-    //   birthday: input.birthday ? input.birthday : user.birthday,
-    //   photoProfile: photoProfile,
-    // }
+    fd.append("tel", input.tel ? input.tel : user.tel);
 
     const response = await axios.put(api.updateBasicData, fd);
     if (response.data.msgE) {
+      setResponseEdit(response.data.msgE);
       alert(response.data.msgE);
     }
     if (response.data.msg) {
+      setResponseEdit(response.data.msg);
       alert(response.data.msg);
     }
+    setInput({
+      name: "",
+      lastName: "",
+      email: "",
+      gender: "",
+      tel: "",
+      password: "",
+      repeatPassword: "",
+      birthday: "",
+      userName: "",
+      description: "",
+    });
+    handleShowModal();
+    navigate("/profile");
   };
 
   const handleSubmitSenstiveData = async (e) => {
@@ -180,9 +193,9 @@ function EditProfile({ showModal, handleShowModal }) {
       repeatPassword: "",
       birthday: "",
       userName: "",
-      photoProfile: "",
       description: "",
     });
+    handleShowModal();
   };
 
   const handleTabs = (tab) => {
@@ -217,6 +230,8 @@ function EditProfile({ showModal, handleShowModal }) {
     console.log(e.target.files[0]);
     setPhotoProfile(e.target.files[0]);
   };
+
+  //Esto es solo para el pull
 
   return (
     <>
