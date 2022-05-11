@@ -1,8 +1,8 @@
-const { Post } = require('../db.js');
+const { Post, Like} = require('../db.js');
 const { Comment } = require("../db");
 const { User } = require('../db');
 const jwt = require('jsonwebtoken');
-
+const sequelize = require('sequelize')
 class PostClass {
     constructor(){}
 
@@ -17,11 +17,20 @@ class PostClass {
                     'nameStatusPost',
                     'imagePost',
                     'UserIdUser'
-                ]
+                ],
+                include:[{
+                    model: User,
+                    attributes: ["userName"],
+                },{
+                    model: Like,
+                    attributes: ["userName"]
+                    
+                }]
             });
             const reverse = posts.reverse()
             return res.status(200).json(reverse)
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ message: error.message })
         }
     }
@@ -29,7 +38,17 @@ class PostClass {
     getPost = async (req, res) => {
         const { idPost } = req.params;
         try {
-            const post = await Post.findByPk(idPost);
+            const post = await Post.findOne({
+                where:{idPost},
+                include:[
+                    {
+                        model: User,
+                        attributes: ["userName"], 
+                    },{
+                        model: Like,
+                        attributes: ["userName"]
+                    }
+                ]});
             if (!post) return res.status(404).json({msgE: 'The post with that id doest not exist'});
 
             res.status(200).json(post)

@@ -10,6 +10,7 @@ import {
   GET_TOP_10_ALBUMS,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
+  GET_USER_BY_NAME,
   GET_ALL_POST,
   USER_NEW_POST,
   USER_UPDATE_POST,
@@ -19,6 +20,10 @@ import {
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
   GET_PHOTO_USER,
+  GET_ALL_COMMENT,
+  USER_NEW_COMMENT,
+  USER_UPDATE_COMMENT,
+  DELETE_COMMENT
 } from "../actions";
 
 // STATE CREATION
@@ -37,7 +42,9 @@ const initialState = {
   songById: {},
   albumById: {},
   artistById: {},
+  usersList: [],
   profileImage: "",
+  comments:[],
 };
 
 function rootReducer(state = initialState, action) {
@@ -79,6 +86,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         artist: [action.payload],
       };
+    case GET_USER_BY_NAME:
+      return {
+        ...state,
+        usersList: [action.payload]
+      }
     case CLEAR_DATA:
       return {
         ...state,
@@ -153,6 +165,26 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         profileImage: `${api.getPhotoUser}${action.payload}`,
+      };
+      case GET_ALL_COMMENT:
+        return{
+        ...state,
+        comments: action.payload,
+      };
+      case USER_NEW_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+    case USER_UPDATE_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        comments: action.payload,
       };
     default:
       return { ...state };

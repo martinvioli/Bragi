@@ -3,11 +3,12 @@ export const LOG_IN = "LOG_IN";
 export const GET_TOKEN = "GET_TOKEN";
 export const GET_USER = "GET_USER";
 export const GET_PHOTO_USER = "GET_PHOTO_USER";
-
+export const POST_FOLLOW_NOTIFICATION = "POST_FOLLOW_NOTIFICATION";
 // SEARCH BAR OPTIONS
 export const GET_SONG_BY_NAME = "GET_SONG_BY_NAME";
 export const GET_ALBUM_BY_NAME = "GET_ALBUM_BY_NAME";
 export const GET_ARTIST_BY_NAME = "GET_ARTIST_BY_NAME";
+export const GET_USER_BY_NAME = "GET_USER_BY_NAME";
 export const CLEAR_DATA = "CLEAR_DATA";
 
 //TOP 10 OPTIONS
@@ -26,3 +27,10 @@ export const GET_SONG_BY_ID = "GET_SONG_BY_ID";
 export const GET_ARTIST_BY_ID = "GET_ARTIST_BY_ID";
 export const GET_ALBUM_BY_ID = "GET_ALBUM_BY_ID";
 export const CLEAR_DETAILS = "CLEAR_DETAILS";
+
+//COMMENTS
+export const GET_ALL_COMMENT = "GET_ALL_COMMENT";
+export const USER_NEW_COMMENT = "USER_NEW_COMMENT";
+export const USER_UPDATE_COMMENT = "USER_UPDATE_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+

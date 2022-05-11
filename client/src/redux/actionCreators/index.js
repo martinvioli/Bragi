@@ -6,6 +6,7 @@ import {
   GET_SONG_BY_NAME,
   GET_ALBUM_BY_NAME,
   GET_ARTIST_BY_NAME,
+  GET_USER_BY_NAME,
   CLEAR_DATA,
   SONGS_MORE_PLAYED,
   GET_TOP_10_SONGS,
@@ -20,6 +21,11 @@ import {
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
   GET_PHOTO_USER,
+  POST_FOLLOW_NOTIFICATION,
+  GET_ALL_COMMENT,
+  USER_NEW_COMMENT,
+  USER_UPDATE_COMMENT,
+  DELETE_COMMENT
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -127,6 +133,20 @@ export const getArtistByName = function (name) {
     }
   };
 };
+
+export const getUserByName = function (nameUser) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/search/${nameUser}`);
+      return dispatch({
+        type: GET_USER_BY_NAME,
+        payload: response.data,
+      });
+    } catch (error) {
+      return error;
+    }
+  };
+}
 
 export const clearData = function () {
   return {
@@ -243,6 +263,68 @@ export const deletePost = function (idPost) {
   };
 };
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+//_ COMMENTS
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+
+export const getAllComments = function (idPost) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${api.getAllComments}/${idPost}`);
+      console.log(response.data);
+      return dispatch({
+        type: GET_ALL_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const userNewComment = function (input) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.userNewComment, input);
+      console.log(response.data);
+      return dispatch({
+        type: USER_NEW_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const userUpdateComment = function (idPost) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${api.userUpdateComment}/${idPost}`);
+      console.log(response.data);
+      return dispatch({
+        type: USER_UPDATE_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const deleteComment = function (idComment) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`${api.deleteComment}/${idComment}`);
+      console.log(response.data);
+      return dispatch({
+        type: DELETE_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 /////////////////////////////////////
 ////////////////////////////////////
 //               DETAILS OPTIONS
@@ -283,3 +365,18 @@ export const getArtistByID = (id) => {
 export const clearDetails = () => {
   return { type: CLEAR_DETAILS };
 };
+
+////////////////////////////////////////////////////////////
+// FOLLOWER // FOLLOWED actionCreators
+////////////////////////////////////////////////////////////
+
+export const followUser = (token, idFollowed) => {
+  return async(dispatch) => {
+    const response = await axios.post('localhost:3000/follow', token, idFollowed)
+    console.log(response.data);
+    return dispatch({
+      type: POST_FOLLOW_NOTIFICATION,
+      payload: response.data,
+    });
+  }
+}

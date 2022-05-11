@@ -21,6 +21,7 @@ import {
   getAlbumByName,
   getArtistByName,
   getSongByName,
+  getUserByName,
   getUser,
   getToken,
   clearData,
@@ -38,12 +39,14 @@ function Home() {
   const song = useSelector((state) => state.song);
   const artist = useSelector((state) => state.artist);
   const album = useSelector((state) => state.album);
+  const userSearch = useSelector((state) => state.usersList);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     if (userCredentials) {
+      console.log(userSearch);
       setShow(true);
       const userToken = JSON.parse(userCredentials);
       dispatch(getUser(userToken));
@@ -101,6 +104,9 @@ function Home() {
         dispatch(clearData());
         alert("No hay busqueda por genero.");
         break;
+      case "user":
+        dispatch(getUserByName(input.search));
+        break;
       default:
         dispatch(clearData());
         alert("El parametro ingresado no es valido.");
@@ -154,6 +160,7 @@ function Home() {
                   <option value="song">Search for Songs</option>
                   <option value="artist">Search for Artists</option>
                   <option value="genre">Search for Genre</option>
+                  <option value="user">Search for Users</option>
                 </Input>
                 <Input
                   onChange={handleInput}
@@ -205,11 +212,20 @@ function Home() {
                     </Link>
                   );
                 })}
+              {userSearch[0] &&
+                userSearch[0].map((e) => {
+                  return (
+                    <div key={e.idUser} style={{ display: "inline-block" }}>
+                      <SearchData data={e} />
+                      <button>+</button>
+                    </div>
+                  );
+                })}
             </div>
           </div>
-          <div className={`${styles.top10}`}>
-            <Top10></Top10>
-          </div>
+          {/* <div className={`${styles.top10}`}> */}
+          <Top10 />
+          {/* </div> */}
         </div>
       ) : (
         <h1 style={{ color: "white", textAlign: "center" }}>

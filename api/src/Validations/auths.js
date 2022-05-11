@@ -73,11 +73,11 @@ async function verifactionEmail (name, lastName, userName, email, codeNum){
         subject: "Your account is almost ready", // Subject line
         text: `Hello! \n\n Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.\nPlease redirect to the page and enjoy all of our content.\n\nTo access more features, please consider hiring our premium version where you will enjoy:\n- VIP discussion forums\n-Exclusive information about concerts of your favorite artists\n- Unique and variated profile customization for premium users\n- Unique discounts on concert tickets\n- Exclusive advances to the discography of your favorite artists`,
         html: `
-        <div style="width: 400px; border: 5px solid cyan;padding: 50px; margin: auto;">
-            <header>
-                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -25px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
+        <div style="width: 400px; border: 5px solid cyan; padding: 50px; margin: auto;">
+            <header style="border-bottom: 5px solid cyan">
+                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -50px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
             </header>
-                <h2>Hello, ${name} ${lastName}!</h2>
+            <h2 style="margin-top:px">Hello, ${name} ${lastName}!</h2>
                 <br/><br/>
                 Thank you for wanting to be part of Bragi, we send you this email to confirm that your account was successfully created.
                 <br/>
