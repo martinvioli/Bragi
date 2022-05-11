@@ -33,10 +33,15 @@ const apiHeroku = {
     "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
   updateSensitiveData:
     "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
+  getPhotoUser:
+    "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
   getAllComments: "https://bragiproject.herokuapp.com/post/comments",
-  userNewComment: "https://bragiproject.herokuapp.com/post/comments",
-  userUpdateComment: "https://bragiproject.herokuapp.com/post/comments/edit",
-  deleteComment: "https://bragiproject.herokuapp.com/post/comments",
+  userNewComment: "https://bragiproject.herokuapp.com/post/comment",
+  userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
+  deleteComment: "https://bragiproject.herokuapp.com/post/comment",
+  detectLikePost: "https://bragiproject.herokuapp.com/likeDetect",
+  likePost: "https://bragiproject.herokuapp.com/likePost",
+  dislikePost: "https://bragiproject.herokuapp.com/dislikePost",
   reportComment: "https://bragiproject.herokuapp.com/report/comment",
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",

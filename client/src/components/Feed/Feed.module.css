@@ -133,6 +133,17 @@
   width: 45%;
 }
 
+
+.loadMoreComments {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.loadMoreComments:hover {
+  text-decoration: underline;
+}
+
 .date{
   opacity: 30%;
   margin-left: 5px;
