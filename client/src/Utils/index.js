@@ -1,4 +1,4 @@
-const api = {
+const apiHeroku = {
   baseUrl: "https://bragiproject.herokuapp.com/",
   registerUrl: "https://bragiproject.herokuapp.com/register/",
   registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
@@ -33,11 +33,53 @@ const api = {
     "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
   updateSensitiveData:
     "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
-  getPhotoUser: "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
   getAllComments: "https://bragiproject.herokuapp.com/post/comments",
   userNewComment: "https://bragiproject.herokuapp.com/post/comments",
   userUpdateComment: "https://bragiproject.herokuapp.com/post/comments/edit",
   deleteComment: "https://bragiproject.herokuapp.com/post/comments",
+  reportComment: "https://bragiproject.herokuapp.com/report/comment",
+  reportPost: "https://bragiproject.herokuapp.com/report/post",
+  reportUser: "https://bragiproject.herokuapp.com/report/user",
+};
+
+const api = {
+  baseUrl: "http://localhost:3001/",
+  registerUrl: "http://localhost:3001/register/",
+  registerValidateUrl: "http://localhost:3001/register/validate",
+  authenticateUrl: "http://localhost:3001/validationUser/",
+  loginUrl: "http://localhost:3001/login",
+  logoutUrl: "http://localhost:3001/closeSessionUser",
+  searchSongUrl: "http://localhost:3001/song",
+  searchGenreUrl: "http://localhost:3001/genre",
+  searchUrl: "http://localhost:3001/searh",
+  getUser: "http://localhost:3001/profileUser/getData",
+  searchSongByName: "http://localhost:3001/search/song",
+  searchAlbumByName: "http://localhost:3001/search/album",
+  searchArtistByName: "http://localhost:3001/artist",
+  deleteToken: "http://localhost:3001/closeSessionUser",
+  getTop10artist: "http://localhost:3001/getTop10/artists",
+  getTop10albums: "http://localhost:3001/getTop10/albums",
+  getTop10songs: "http://localhost:3001/getTop10/songs",
+  getAllPost: "http://localhost:3001/post",
+  userNewPost: "http://localhost:3001/post",
+  userUpdatePost: "http://localhost:3001/post",
+  deletePost: "http://localhost:3001/post",
+  getSongByID: "http://localhost:3001/song/",
+  getAlbumByID: "http://localhost:3001/album/",
+  getArtistByID: "http://localhost:3001/artist/",
+  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
+  changeUserToPremium: "http://localhost:3001/changeUserType/toPremium",
+  changeUserToArtist: "http://localhost:3001/changeUserType/toArtist",
+  updateBasicData: "http://localhost:3001/profileUser/editionBasicProfile",
+  updateSensitiveData:
+    "http://localhost:3001/profileUser/editionSensitiveProfile",
+  getAllComments: "http://localhost:3001/post/comments",
+  userNewComment: "http://localhost:3001/post/comments",
+  userUpdateComment: "http://localhost:3001/post/comments/edit",
+  deleteComment: "http://localhost:3001/post/comments",
+  reportComment: "http://localhost:3001/report/comment",
+  reportPost: "http://localhost:3001/report/post",
+  reportUser: "http://localhost:3001/report/user",
 };
 
 export default api;

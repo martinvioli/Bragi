@@ -300,7 +300,7 @@ function CreateUser() {
               <option value="default">Select ...</option>
               <option value="Female">Female</option>
               <option value="Male">Male</option>
-              <option value="Non Binary">No Binary</option>
+              <option value="Non binary">No Binary</option>
               <option value="Other">Other</option>
               {errors.gender ? (
                 <FormFeedback tooltip>{errors.gender}</FormFeedback>
