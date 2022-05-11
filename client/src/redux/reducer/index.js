@@ -23,6 +23,7 @@ import {
   GET_ALL_COMMENT,
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
+  FOLLOW_USER,
 } from "../actions";
 
 // STATE CREATION
@@ -44,6 +45,7 @@ const initialState = {
   usersList: [],
   profileImage: "",
   comments: [],
+  followed: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -179,6 +181,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         comments: action.payload,
+      };
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followed: action.payload,
       };
     default:
       return { ...state };
