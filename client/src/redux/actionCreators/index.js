@@ -134,7 +134,6 @@ export const getUserByName = function (nameUser) {
   return async (dispatch) => {
     try {
       const response = await axios.get(`http://localhost:3001/search/${nameUser}`);
-      console.log(response.data);
       return dispatch({
         type: GET_USER_BY_NAME,
         payload: response.data,

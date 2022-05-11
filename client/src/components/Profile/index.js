@@ -135,9 +135,7 @@ function Profile() {
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           <div>
-            {user.name ? (
-
-            ) : null}
+            {user.name} 
           </div>
         </div>
         <br></br>

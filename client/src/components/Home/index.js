@@ -212,8 +212,8 @@ function Home() {
                     </Link>
                   );
                 })}
-                {userSearch &&
-                  userSearch.map((e) => {
+                {userSearch[0] &&
+                  userSearch[0].map((e) => {
                     return (
                       <div key={e.idUser} style={{ display: "inline-block" }}>
                         <SearchData data={e} />
