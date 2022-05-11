@@ -6,6 +6,6 @@ const { verifyToken } = require('../middlewares/authjwt')
 const router = Router();
 const follow = new Follow();
 
-router.post('/', [verifyToken], follow.followAction)
+router.post('/', follow.followAction)
 
 module.exports = router;
