@@ -84,7 +84,7 @@ class ReactionPostComment{
         }
     }
     //ADICIONAL PONER COMENTARIOS
-    getLikesPost = async (req, res) => { //Solamente número
+    getLikesPost = async (req, res) => { //Solamente número.
     
     }
     likeComment = async (req, res) => {
