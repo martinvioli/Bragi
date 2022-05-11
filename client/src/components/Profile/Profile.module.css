@@ -10,11 +10,11 @@
 
 .profile {
   height: 50em;
-  width: 500px;
+  width: 50em;
+  margin-left: 1em;
   border-radius: 1em;
   background-color: #dd9202;
   margin-right: 250px;
-
 }
 .description{
   margin-left: 20px;

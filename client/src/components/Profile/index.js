@@ -6,7 +6,6 @@ import { getPhotoUser, getUser } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
-
 function Profile() {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
@@ -107,7 +106,8 @@ function Profile() {
       user: "dukiGOAT",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/9/98/Duko_concierto.jpg",
-    }, {
+    },
+    {
       name: "Soda Stereo",
       user: "graciasTotales",
       image:
@@ -122,8 +122,7 @@ function Profile() {
     {
       name: "Ciro y los Persas",
       user: "LosPiojosV2",
-      image:
-        "https://www.cmtv.com.ar/tapas-cd/ciroylospersas27.jpg",
+      image: "https://www.cmtv.com.ar/tapas-cd/ciroylospersas27.jpg",
     },
   ];
 
@@ -154,15 +153,34 @@ function Profile() {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
-          <div className={styles.name}>
-            {user.name + " " + user.lastName}
-          </div>
-          <div className={styles.name}>
-            @{user.userName}
-          </div>
-          <div className={styles.description}>
-            {user.description}
-          </div>
+          {user.name ? (
+            <div>
+              <div>
+                <div className={styles.name}>
+                  {user.name + " " + user.lastName}
+                </div>
+                <div className={styles.name}>@{user.userName}</div>
+                <h3>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
+                <div className={styles.description}>
+                  {user.description
+                    ? user.description
+                    : "Hey there! I'm using Bragi"}
+                </div>
+              </div>
+              <div>
+                {showEditProfile ? (
+                  <EditProfile
+                    showModal={showEditProfile}
+                    handleShowModal={handleShowEditProfile}
+                  />
+                ) : (
+                  <Button className="secondary" onClick={handleShowEditProfile}>
+                    Wanna Edit Your Profile
+                  </Button>
+                )}
+              </div>
+            </div>
+          ) : null}
         </div>
         <br></br>
         {user.typeUser === "Artist" ? (

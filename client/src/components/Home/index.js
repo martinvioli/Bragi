@@ -46,7 +46,7 @@ function Home() {
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     if (userCredentials) {
-      console.log(userSearch)
+      console.log(userSearch);
       setShow(true);
       const userToken = JSON.parse(userCredentials);
       dispatch(getUser(userToken));
@@ -106,7 +106,7 @@ function Home() {
         break;
       case "user":
         dispatch(getUserByName(input.search));
-        break
+        break;
       default:
         dispatch(clearData());
         alert("El parametro ingresado no es valido.");
@@ -212,18 +212,19 @@ function Home() {
                     </Link>
                   );
                 })}
-                {userSearch[0] &&
-                  userSearch[0].map((e) => {
-                    return (
-                      <div key={e.idUser} style={{ display: "inline-block" }}>
-                        <SearchData data={e} />
-                      </div>
-                    );
-                  })}
+              {userSearch[0] &&
+                userSearch[0].map((e) => {
+                  return (
+                    <div key={e.idUser} style={{ display: "inline-block" }}>
+                      <SearchData data={e} />
+                      <button>+</button>
+                    </div>
+                  );
+                })}
             </div>
           </div>
           {/* <div className={`${styles.top10}`}> */}
-            <Top10/>
+          <Top10 />
           {/* </div> */}
         </div>
       ) : (
