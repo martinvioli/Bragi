@@ -9,13 +9,12 @@ class ProfileUser {
  
   editionBasicDataProfile = async (req, res) => {
     let dataPhoto;
-    const {token, name, lastName, gender, description, birthday} = req.body;
+    console.log(req.body)
+    const {token, name, lastName, gender, description, birthday, tel} = req.body;
     //Si no se pasa el token, devolvemos un error
     if(!token){return res.status(400).json({msgE: "Token doesn't exist"})}
     //Valida si pasaron una foto
-    if(req.files){
-      dataPhoto = req.files.photoProfile.data;      
-    };
+    dataPhoto = req.files.photoProfile.data;      
     const tokenDecode = jwt.decode(token, authConfig.secret);
     try {
       /*-Primero busco el usuario para luego buscarlo cuando quiero actualizar los datos por el id*/
@@ -35,6 +34,7 @@ class ProfileUser {
           lastName: (lastName && lastName !== userFound.dataValues.lastName)? lastName: userFound.dataValues.lastName,
           gender: (gender && gender !== userFound.dataValues.gender)? gender: userFound.dataValues.gender,
           description: (description && description !== userFound.dataValues.description)? description: userFound.dataValues.description,
+          telephone: (tel && tel !== userFound.dataValues.telephone)? tel: userFound.dataValues.telephone,
           birthday: (birthday && birthday !== userFound.dataValues.birthday)? birthday: userFound.dataValues.birthday,
           profileImage: (dataPhoto && dataPhoto !== userFound.dataValues.profileImage)? dataPhoto: userFound.dataValues.profileImage,
         },

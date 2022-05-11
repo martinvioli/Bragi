@@ -53,6 +53,7 @@ class UserClass {
     const tokenDecoded = jwt.decode(tokenUser);
     try{
     let userFind = await User.findOne({where: {userName: tokenDecoded.userName}});
+    console.log(userFind)
     return !userFind
       ? res.status(404).json({ msgE: "User not Found" })
       :res.json({
@@ -60,7 +61,7 @@ class UserClass {
         email: userFind.email,
         password: userFind.password,
         gender: userFind.gender,
-        tel: userFind.tel,
+        tel: userFind.telephone,
         description: userFind.description,
         bithday: userFind.Bithday,
         userName: userFind.userName,
