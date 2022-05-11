@@ -6,6 +6,6 @@ const { verifyToken } = require('../middlewares/authjwt')
 
 const search = new Search()
 
-router.get('/:albumId', [verifyToken], search.searchAlbumById)
+router.get('/:albumId', search.searchAlbumById)
 
 module.exports = router;
