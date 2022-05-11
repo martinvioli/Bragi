@@ -217,7 +217,6 @@ function Home() {
                   return (
                     <div key={e.idUser} style={{ display: "inline-block" }}>
                       <SearchData data={e} />
-                      <button>+</button>
                     </div>
                   );
                 })}

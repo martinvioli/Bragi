@@ -162,12 +162,25 @@ export default function Feed() {
   // //     );
   // //   },
   // });
+
+  // SECTOR MODAL VER COMENTARIOS
+  const [viewPost, setViewPost] = useState();
+  const [showModalComments, setShowModalComments] = useState(false);
+
+  function handleShowModalComments() {
+    setShowModalComments(!showModal);
+  }
+
+  const comments = useSelector((state) => state.comments);
+
+  console.log(comments);
+
   return (
     <div className="container-fluid">
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.nameTypeUser === "Artist" || user.userName === "primoro12" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -398,7 +411,7 @@ export default function Feed() {
             </div>
           ) : (
             <div className={styles.posts}>
-              <p>See All Posts</p>
+              <p>See Alls Posts</p>
               <div className={styles.post}>
                 {posts &&
                   posts.map((e) => {
@@ -464,6 +477,11 @@ export default function Feed() {
                               width: "2em",
                               height: "2em",
                             }}
+                            onClick={() => {
+                              setViewPost({ ...e });
+                              dispatch(getAllPost(e.idPost));
+                              handleShowModalComments();
+                            }}
                           />
                         </div>
                       </Card>
@@ -474,6 +492,90 @@ export default function Feed() {
           )}
         </div>
       </div>
+      {/* MODAL PARA VER COMENTARIOS */}
+      {viewPost && (
+        <Modal centered isOpen={showModalComments}>
+          <ModalHeader>
+            <Card
+              style={{
+                marginLeft: "0.5em",
+                width: "40%",
+                height: "40%",
+                minWidth: "22em",
+              }}
+              color="bg-light"
+              className={styles.backgroundPost}
+              key={viewPost.token}
+            >
+              <CardBody>
+                <CardTitle
+                  style={{
+                    color: "blue",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
+                  tag="h7"
+                >
+                  {`date: ${viewPost.datePost}`}
+                </CardTitle>
+                <CardSubtitle className="mb-2 text-muted" tag="h6">
+                  {viewPost.contentPost}
+                </CardSubtitle>
+              </CardBody>
+              {viewPost.imagePost && (
+                <div className={viewPost.img}>
+                  <img
+                    src={viewPost.imagePost}
+                    class="img-fluid"
+                    alt="Responsive"
+                  />
+                </div>
+              )}
+              <div className={styles.icons}>
+                <CardLink href={viewPost.linkContent}>
+                  <FcLink
+                    style={{
+                      marginBottom: "0.4em",
+                      width: "2em",
+                      height: "2em",
+                    }}
+                  ></FcLink>
+                </CardLink>
+                <FcLike
+                  style={{
+                    marginBottom: "0.4em",
+                    marginLeft: "2.5em",
+                    marginRight: "1em",
+                    width: "2em",
+                    height: "2em",
+                  }}
+                />
+              </div>
+            </Card>
+          </ModalHeader>
+          <ModalBody>
+            {comments.length > 0 ? (
+              <p>hay comentarios</p>
+            ) : (
+              <p>No comments yet...</p>
+            )}
+            {user.nameTypeUser === "Premium" && (
+              <p>Es premium, puede comentar XD</p>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="danger"
+              onClick={() => {
+                handleShowModalComments();
+                setViewPost(null);
+              }}
+            >
+              X
+            </Button>
+          </ModalFooter>
+        </Modal>
+      )}
     </div>
   );
 }
