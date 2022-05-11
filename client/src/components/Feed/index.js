@@ -436,7 +436,10 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
-                            {`date: ${e.datePost}`}
+                            {`@${e.User.userName}`}
+                            <div className={styles.date}>
+                              {`${e.datePost}`}
+                            </div>
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
