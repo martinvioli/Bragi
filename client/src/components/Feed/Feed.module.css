@@ -133,7 +133,6 @@
   width: 45%;
 }
 
-
 .loadMoreComments {
   text-align: center;
   margin: 0;
@@ -142,9 +141,10 @@
 
 .loadMoreComments:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
-.date{
+.date {
   opacity: 30%;
   margin-left: 5px;
 }

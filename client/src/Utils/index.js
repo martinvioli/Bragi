@@ -1,4 +1,4 @@
-const apiHeroku = {
+const api = {
   baseUrl: "https://bragiproject.herokuapp.com/",
   registerUrl: "https://bragiproject.herokuapp.com/register/",
   registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
@@ -39,15 +39,14 @@ const apiHeroku = {
   userNewComment: "https://bragiproject.herokuapp.com/post/comment",
   userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
   deleteComment: "https://bragiproject.herokuapp.com/post/comment",
-  detectLikePost: "https://bragiproject.herokuapp.com/likeDetect",
-  likePost: "https://bragiproject.herokuapp.com/likePost",
-  dislikePost: "https://bragiproject.herokuapp.com/dislikePost",
   reportComment: "https://bragiproject.herokuapp.com/report/comment",
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",
+  likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
+  dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
 };
 
-const api = {
+const apiLocal = {
   baseUrl: "http://localhost:3001/",
   registerUrl: "http://localhost:3001/register/",
   registerValidateUrl: "http://localhost:3001/register/validate",
