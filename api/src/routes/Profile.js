@@ -10,9 +10,9 @@ const user = new User();
 const profileUser = new ProfileUser();
 
 router.use(fileUpload());
-router.post("/getData", [verifyToken], user.getDataUser);
-router.get("/getPhotoUser", [verifyToken], user.getPhotoUser);
-router.put("/editionBasicProfile", [verifyToken], profileUser.editionBasicDataProfile);
-router.put("/editionSensitiveProfile", [verifyToken], profileUser.editionSensitiveDataProfile);
+router.post("/getData", user.getDataUser);
+router.get("/getPhotoUser", user.getPhotoUser);
+router.put("/editionBasicProfile", profileUser.editionBasicDataProfile);
+router.put("/editionSensitiveProfile", profileUser.editionSensitiveDataProfile);
 
 module.exports = router;
