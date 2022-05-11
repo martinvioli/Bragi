@@ -180,7 +180,7 @@ export default function Feed() {
       <div className={styles.container}>
         <div className={styles.premiumSector}>Sector Premium</div>
         <div className={styles.center}>
-          {user.nameTypeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <h3>Add new post</h3>
@@ -562,7 +562,7 @@ export default function Feed() {
             ) : (
               <p>No comments yet...</p>
             )}
-            {user.nameTypeUser === "Premium" && (
+            {user.typeUser === "Premium" && (
               <p>Es premium, puede comentar XD</p>
             )}
           </ModalBody>
