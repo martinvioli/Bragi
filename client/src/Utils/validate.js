@@ -84,9 +84,6 @@ export default function validate(input) {
   } else if (input.repeatPassword !== input.password) {
     errors.repeatPassword = "Passwords don't match";
   }
-  if (input.description.lenght > 300) {
-    errors.description = "Your description is too long.";
-  }
   return errors;
 }
 
