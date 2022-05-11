@@ -5,21 +5,25 @@
   justify-content: center;
   align-items: center;
   padding: 1em 5em 1em 5em;
-  padding-top: 100px;
+  padding-top: 125px;
 }
 
 .profile {
   height: 50em;
-  width: 50em;
+  min-width: 30em;
   margin-left: 1em;
   border-radius: 1em;
   background-color: #dd9202;
-  margin-right: 250px;
+  margin-right: 150px;
 }
 .description{
-  margin-left: 20px;
+  margin-bottom: 2em;
+  margin-left: 8em;
   margin-right: 20px;
   text-align: center; 
+}
+.editButton{
+  margin-left: 1em;
 }
 .profile > div > div > p {
   height: 12em;
@@ -132,6 +136,7 @@
   max-width: 60em; */
   /* justify-content: center; */
   /* border: 1px solid white; */
+  margin-top: -12em;
   text-align: center;
 }
 
