@@ -33,6 +33,9 @@ export const GET_ALL_COMMENT = "GET_ALL_COMMENT";
 export const USER_UPDATE_COMMENT = "USER_UPDATE_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
+//FOLLOW
+export const FOLLOW_USER = "FOLLOW_USER";
+=======
 // LIKES
 export const FALSE_LIKE = "FALSE_LIKE";
 export const FALSE_DISLIKE = "FALSE_DISLIKE";

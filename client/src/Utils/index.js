@@ -42,6 +42,7 @@ const api = {
   reportComment: "https://bragiproject.herokuapp.com/report/comment",
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",
+  followUser: "https://bragiproject.herokuapp.com/follow",
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
 };
@@ -84,6 +85,7 @@ const apiLocal = {
   reportComment: "http://localhost:3001/report/comment",
   reportPost: "http://localhost:3001/report/post",
   reportUser: "http://localhost:3001/report/user",
+  followUser: "http://localhost:3001/follow",
 };
 
 export default api;

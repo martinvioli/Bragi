@@ -23,6 +23,7 @@ import {
   GET_ALL_COMMENT,
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
+  FOLLOW_USER,
   FALSE_LIKE,
   FALSE_DISLIKE,
 } from "../actions";
@@ -46,6 +47,7 @@ const initialState = {
   usersList: [],
   profileImage: "",
   comments: [],
+  followed: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -182,6 +184,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: action.payload,
       };
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followed: action.payload,
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({

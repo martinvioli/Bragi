@@ -26,6 +26,7 @@ import {
   USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
+  FOLLOW_USER,
   FALSE_DISLIKE,
   FALSE_LIKE,
 } from "../actions";
@@ -367,22 +368,22 @@ export const clearDetails = () => {
   return { type: CLEAR_DETAILS };
 };
 
-////////////////////////////////////////////////////////////
-// FOLLOWER // FOLLOWED actionCreators
-////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//_ FOLLOW
+//-----------------------------------------------------------------------------
 
 export const followUser = (token, idFollowed) => {
   return async (dispatch) => {
-    const response = await axios.post(
-      "localhost:3000/follow",
-      token,
-      idFollowed
-    );
-    console.log(response.data);
-    return dispatch({
-      type: POST_FOLLOW_NOTIFICATION,
-      payload: response.data,
-    });
+    try {
+      const response = await axios.post(api.followUser, { token, idFollowed });
+      console.log(response.data);
+      return dispatch({
+        type: FOLLOW_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
