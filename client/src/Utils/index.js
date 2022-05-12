@@ -34,8 +34,6 @@ const apiHeroku = {
     "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
   updateSensitiveData:
     "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
-  getPhotoUser:
-    "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
   getAllComments: "https://bragiproject.herokuapp.com/post/comments",
   userNewComment: "https://bragiproject.herokuapp.com/post/comment",
   userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
@@ -44,6 +42,7 @@ const apiHeroku = {
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",
   followUser: "https://bragiproject.herokuapp.com/follow",
+  unfollowUser: "https://bragiproject.herokuapp.com/unfollow",
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
 };
@@ -80,7 +79,6 @@ const api = {
   updateBasicData: "http://localhost:3001/profileUser/editionBasicProfile",
   updateSensitiveData:
     "http://localhost:3001/profileUser/editionSensitiveProfile",
-  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
   getAllComments: "http://localhost:3001/post/comments",
   userNewComment: "http://localhost:3001/post/comment",
   userUpdateComment: "http://localhost:3001/post/comment/edit",
