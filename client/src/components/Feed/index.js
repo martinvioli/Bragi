@@ -14,6 +14,7 @@ import {
   like,
   userNewComment,
   userNewPost,
+  getPhotoUser
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
@@ -75,6 +76,8 @@ export default function Feed() {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const posts = useSelector((state) => state.posts);
+  const profileImage = useSelector((state) => state.profileImage);
+  // console.log(posts[0].User.userName)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -97,6 +100,10 @@ export default function Feed() {
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
+    // posts.forEach((e) => {
+    //   console.log(e)
+    //   dispatch(getPhotoUser(e.userName))
+    // })
     // setTimeout(function () {
     //   dispatch(getAllPost());
     // }, 1000);
@@ -108,6 +115,12 @@ export default function Feed() {
       navigate("/");
     }
   }, []);
+
+  posts.forEach((e) => {
+    // console.log(e)
+    dispatch(getPhotoUser(e.User.userName))
+  })
+
 
   const handleSearchImage = (e) => {
     setInput({
@@ -449,14 +462,16 @@ export default function Feed() {
                         <CardBody>
                           <CardTitle
                             style={{
-                              color: "orange",
+                              color: "black",
                             }}
                             tag="h7"
                           >
+                            <img className={styles.profileImg} src={profileImage} alt=""></img>
                             {e.User.userName === user.userName ? (
                               e.User.userName
                             ) : (
                               <Link
+                                className={styles.userName}
                                 to={`/profile/${e.User.userName}`}
                                 onClick={() =>
                                   dispatch(
@@ -464,9 +479,10 @@ export default function Feed() {
                                   )
                                 }
                               >
-                                {e.User.userName}
+                                {`@${e.User.userName}`}
                               </Link>
                             )}
+                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
                           </CardTitle>
                           <CardTitle
                             style={{
@@ -476,7 +492,6 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
-                            {e.datePost}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
