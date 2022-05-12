@@ -30,6 +30,11 @@ import {
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
+  BAN_USER,
+  DIS_BAN_USER,
+  GET_STATISTICS,
+  GET_REPORTS,
+  MODIFY_PLANS_PREMIUMS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -454,5 +459,62 @@ export const getUseProfile = (token, userName) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+//-----------------------------------------------------------------------------
+//_ ADMIN
+//-----------------------------------------------------------------------------
+
+export const banUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.banUser, id);
+      console.log(response.data);
+      return dispatch({ type: BAN_USER, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const disBanUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.disBanUser, id);
+      console.log(response.data);
+      return dispatch({ type: DIS_BAN_USER, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAllStatistics = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllStatistics);
+    return dispatch({
+      type: GET_STATISTICS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllReports = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllReports);
+    return dispatch({
+      type: GET_REPORTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const modifyPlansPremiums = () => {
+  return async (dispatch) => {
+    const response = await axios.put("");
+    return dispatch({
+      type: MODIFY_PLANS_PREMIUMS,
+      payload: response.data,
+    });
   };
 };
