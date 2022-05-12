@@ -101,6 +101,9 @@ export default function Feed() {
     //   dispatch(getAllPost());
     // }, 1000);
     dispatch(getAllPost());
+    if (user.typeUser === "admin") {
+      navigate("/admin");
+    }
     if (!userToken) {
       navigate("/");
     }
