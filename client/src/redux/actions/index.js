@@ -37,6 +37,14 @@ export const DELETE_COMMENT = "DELETE_COMMENT";
 //FOLLOW
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
+
 // LIKES
 export const FALSE_LIKE = "FALSE_LIKE";
 export const FALSE_DISLIKE = "FALSE_DISLIKE";
+
+//ADMIN OPTIONS
+export const BAN_USER = "BAN_USER";
+export const DIS_BAN_USER = "DIS_BAN_USER";
+export const GET_STATISTICS = "GET_STATISTICS";
+export const GET_REPORTS = "GET_REPORTS";
+export const MODIFY_PLANS_PREMIUMS = "MODIFY_PLANS_PREMIUMS";
