@@ -11,6 +11,7 @@ const profileUser = new ProfileUser();
 
 router.use(fileUpload());
 router.post("/getData", user.getDataUser);
+router.post("/profile", user.getProfileUser);
 router.get("/getPhotoUser", user.getPhotoUser);
 router.put("/editionBasicProfile", profileUser.editionBasicDataProfile);
 router.put("/editionSensitiveProfile", profileUser.editionSensitiveDataProfile);
