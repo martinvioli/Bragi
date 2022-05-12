@@ -15,7 +15,7 @@ import {
   like,
   userNewComment,
   userNewPost,
-  getPhotoUser
+  getPhotoUser,
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
@@ -119,9 +119,8 @@ export default function Feed() {
 
   posts.forEach((e) => {
     // console.log(e)
-    dispatch(getPhotoUser(e.User.userName))
-  })
-
+    dispatch(getPhotoUser(e.User.userName));
+  });
 
   const handleSearchImage = (e) => {
     setInput({
@@ -265,7 +264,6 @@ export default function Feed() {
                 </div>
               </form>
               <div className={styles.posts}>
-
                 YOUR POSTS
                 <div className={styles.post}>
                   {ownPosts.length > 0 &&
@@ -317,50 +315,16 @@ export default function Feed() {
                                   }}
                                 />
                               </Button>
-                          <CardTitle
-                            style={{
-                              color: "blue",
-                              display: "flex",
-                              justifyContent: "flex-start",
-                            }}
-                            tag="h7"
-                          >
-                          {User.userName}
-                          </CardTitle>
-                          <CardSubtitle className="mb-2 text-muted" tag="h6">
-                            {e.contentPost}
-                          </CardSubtitle>
-                        </CardBody>
-                        {e.imagePost && (
-                          <div className={styles.img}>
-                            <img
-                              src={e.imagePost}
-                              class="img-fluid"
-                              alt="Responsive"
-                            />
-                          </div>
-                        )}
-                        <div className={styles.icons}>
-                          <CardLink href={e.linkContent}>
-                            <FcLink
+                            </div>
+                            <CardTitle
                               style={{
-                                marginBottom: "0.4em",
-                                width: "2em",
-                                height: "2em",
+                                color: "blue",
+                                display: "flex",
+                                justifyContent: "flex-start",
                               }}
-                            ></FcLink>
-                          </CardLink>
-                          <div
-                            style={{
-                              marginBottom: "0.4em",
-                              marginLeft: "2.5em",
-                            }}
-                          >
-                            <span
-                              style={{ color: "black", paddingRight: "0.5em" }}
+                              tag="h7"
                             >
-                              {e.datePost}
-                              <br />
+                              {user.userName}
                             </CardTitle>
                             <CardSubtitle className="mb-2 text-muted" tag="h6">
                               {e.contentPost}
@@ -375,11 +339,11 @@ export default function Feed() {
                               />
                             </div>
                           )}
-
                           <div className={styles.icons}>
                             <CardLink href={e.linkContent}>
                               <FcLink
                                 style={{
+                                  marginBottom: "0.4em",
                                   width: "2em",
                                   height: "2em",
                                 }}
@@ -391,64 +355,103 @@ export default function Feed() {
                                 marginLeft: "2.5em",
                               }}
                             >
-                              <span style={{ color: "black" }}>
-                                {e.Likes.length}
-                              </span>
-                              <FcLike
+                              <span
                                 style={{
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  color: "black",
+                                  paddingRight: "0.5em",
                                 }}
-                              />
+                              >
+                                {e.datePost}
+                                <br />
+                              </span>
                             </div>
-                            <div
+                            <CardSubtitle className="mb-2 text-muted" tag="h6">
+                              {e.contentPost}
+                            </CardSubtitle>
+
+                            {e.imagePost && (
+                              <div className={styles.img}>
+                                <img
+                                  src={e.imagePost}
+                                  class="img-fluid"
+                                  alt="Responsive"
+                                />
+                              </div>
+                            )}
+
+                            <div className={styles.icons}>
+                              <CardLink href={e.linkContent}>
+                                <FcLink
+                                  style={{
+                                    width: "2em",
+                                    height: "2em",
+                                  }}
+                                ></FcLink>
+                              </CardLink>
+                              <div
+                                style={{
+                                  marginBottom: "0.4em",
+                                  marginLeft: "2.5em",
+                                }}
+                              >
+                                <span style={{ color: "black" }}>
+                                  {e.Likes.length}
+                                </span>
+                                <FcLike
+                                  style={{
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </div>
+                              <div
+                                style={{
+                                  marginBottom: "0.4em",
+                                  marginLeft: "2.5em",
+                                }}
+                              >
+                                <span style={{ color: "black" }}>
+                                  {e.Comments.length}
+                                </span>
+                                <FcComments
+                                  style={{
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                  onClick={() => {
+                                    setViewPost({ ...e });
+                                    dispatch(getAllComments(e.idPost));
+                                    handleShowModalComments();
+                                    setSlicer(3);
+                                  }}
+                                />
+                              </div>
+                            </div>
+                            <FcRedo
                               style={{
                                 marginBottom: "0.4em",
-                                marginLeft: "2.5em",
+                                marginLeft: "2em",
+                                marginRight: "1em",
+                                width: "2em",
+                                height: "2em",
                               }}
-                            >
-                              <span style={{ color: "black" }}>
-                                {e.Comments.length}
-                              </span>
-                              <FcComments
-                                style={{
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                }}
-                                onClick={() => {
-                                  setViewPost({ ...e });
-                                  dispatch(getAllComments(e.idPost));
-                                  handleShowModalComments();
-                                  setSlicer(3);
-                                }}
-                              />
-                            </div>
+                              onClick={() => {
+                                setViewPost({ ...e });
+                                dispatch(getAllComments(e.idPost));
+                                handleShowModalComments();
+                                setCommentInput({
+                                  ...commentInput,
+                                  idPost: e.idPost,
+                                  token: token,
+                                });
+                                setSlicer(3);
+                              }}
+                            />
                           </div>
-                          <FcRedo
-                            style={{
-                              marginBottom: "0.4em",
-                              marginLeft: "2em",
-                              marginRight: "1em",
-                              width: "2em",
-                              height: "2em",
-                            }}
-                            onClick={() => {
-                              setViewPost({ ...e });
-                              dispatch(getAllComments(e.idPost));
-                              handleShowModalComments();
-                              setCommentInput({
-                                ...commentInput,
-                                idPost: e.idPost,
-                                token: token,
-                              });
-                              setSlicer(3);
-                            }}
-                          />
-                        </div>
-                      </Card>
-                    );
-                  })}
-              </div>
+                        </Card>
+                      );
+                    })}
+                </div>
                 <Modal isOpen={showModal}>
                   <ModalHeader toggle={function noRefCheck() {}}>
                     Edit your post
@@ -538,7 +541,11 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
-                            <img className={styles.profileImg} src={profileImage} alt=""></img>
+                            <img
+                              className={styles.profileImg}
+                              src={profileImage}
+                              alt=""
+                            ></img>
                             {e.User.userName === user.userName ? (
                               e.User.userName
                             ) : (
@@ -554,7 +561,12 @@ export default function Feed() {
                                 {`@${e.User.userName}`}
                               </Link>
                             )}
-                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
+                            <div
+                              style={{ display: "inline-block" }}
+                              className={styles.date}
+                            >
+                              {e.datePost}
+                            </div>
                           </CardTitle>
                           <CardTitle
                             style={{
@@ -563,8 +575,7 @@ export default function Feed() {
                               justifyContent: "flex-start",
                             }}
                             tag="h7"
-                          >
-                          </CardTitle>
+                          ></CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
                           </CardSubtitle>
