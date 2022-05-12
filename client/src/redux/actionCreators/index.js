@@ -30,6 +30,8 @@ import {
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
+  GET_OWN_POSTS,
+  POST_REEPLACER,
   BAN_USER,
   DIS_BAN_USER,
   GET_STATISTICS,
@@ -272,6 +274,24 @@ export const deletePost = function (idPost) {
       console.log(error);
     }
   };
+};
+
+export const getOwnPosts = function (userName) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${api.getAllPost}/${userName}/posts`);
+      return dispatch({
+        type: GET_OWN_POSTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const postReeplacer = function () {
+  return { type: POST_REEPLACER };
 };
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
