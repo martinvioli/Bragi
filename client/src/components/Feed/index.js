@@ -307,11 +307,16 @@ export default function Feed() {
                                 }}
                                 onClick={() => handleEdit(e)}
                               >
-                                {`@${e.User.userName}`}
-                              </Link>
-                            )}
-                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
-                          </CardTitle>
+                                <FcEditImage
+                                  style={{
+                                    marginBottom: "0.5em",
+
+                                    marginLeft: "0.5em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
                           <CardTitle
                             style={{
                               color: "blue",
@@ -320,6 +325,7 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
+                          {User.userName}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
