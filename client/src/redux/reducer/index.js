@@ -27,6 +27,7 @@ import {
   FALSE_LIKE,
   FALSE_DISLIKE,
   GET_USER_PROFILE,
+  UNFOLLOW_USER,
 } from "../actions";
 
 // STATE CREATION
@@ -49,6 +50,7 @@ const initialState = {
   profileImage: "",
   comments: [],
   followed: [],
+  unfollowed: [],
   userProfile: {},
 };
 
@@ -190,6 +192,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         followed: action.payload,
+      };
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        unfollowed: action.payload,
       };
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
