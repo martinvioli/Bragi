@@ -1,4 +1,4 @@
-const api = {
+const apiHeroku = {
   baseUrl: "https://bragiproject.herokuapp.com/",
   registerUrl: "https://bragiproject.herokuapp.com/register/",
   registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
@@ -9,6 +9,7 @@ const api = {
   searchGenreUrl: "https://bragiproject.herokuapp.com/genre",
   searchUrl: "https://bragiproject.herokuapp.com/searh",
   getUser: "https://bragiproject.herokuapp.com/profileUser/getData",
+  getUserProfile: "https://bragiproject.herokuapp.com/profileUser/profile",
   searchSongByName: "https://bragiproject.herokuapp.com/search/song",
   searchAlbumByName: "https://bragiproject.herokuapp.com/search/album",
   searchArtistByName: "https://bragiproject.herokuapp.com/artist",
@@ -47,7 +48,7 @@ const api = {
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
 };
 
-const apiLocal = {
+const api = {
   baseUrl: "http://localhost:3001/",
   registerUrl: "http://localhost:3001/register/",
   registerValidateUrl: "http://localhost:3001/register/validate",
@@ -58,6 +59,7 @@ const apiLocal = {
   searchGenreUrl: "http://localhost:3001/genre",
   searchUrl: "http://localhost:3001/searh",
   getUser: "http://localhost:3001/profileUser/getData",
+  getUserProfile: "http://localhost:3001/profileUser/profile",
   searchSongByName: "http://localhost:3001/search/song",
   searchAlbumByName: "http://localhost:3001/search/album",
   searchArtistByName: "http://localhost:3001/artist",
@@ -78,14 +80,17 @@ const apiLocal = {
   updateBasicData: "http://localhost:3001/profileUser/editionBasicProfile",
   updateSensitiveData:
     "http://localhost:3001/profileUser/editionSensitiveProfile",
+  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
   getAllComments: "http://localhost:3001/post/comments",
-  userNewComment: "http://localhost:3001/post/comments",
-  userUpdateComment: "http://localhost:3001/post/comments/edit",
-  deleteComment: "http://localhost:3001/post/comments",
+  userNewComment: "http://localhost:3001/post/comment",
+  userUpdateComment: "http://localhost:3001/post/comment/edit",
+  deleteComment: "http://localhost:3001/post/comment",
   reportComment: "http://localhost:3001/report/comment",
   reportPost: "http://localhost:3001/report/post",
   reportUser: "http://localhost:3001/report/user",
   followUser: "http://localhost:3001/follow",
+  likePost: "http://localhost:3001/reactionHeart/likePost",
+  dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
 };
 
 export default api;
