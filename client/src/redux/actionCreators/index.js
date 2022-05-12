@@ -8,7 +8,6 @@ import {
   GET_ARTIST_BY_NAME,
   GET_USER_BY_NAME,
   CLEAR_DATA,
-  SONGS_MORE_PLAYED,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
   GET_TOP_10_ALBUMS,
@@ -21,12 +20,13 @@ import {
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
   GET_PHOTO_USER,
-  POST_FOLLOW_NOTIFICATION,
+  //POST_FOLLOW_NOTIFICATION,
   GET_ALL_COMMENT,
-  USER_NEW_COMMENT,
+  //USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
   FOLLOW_USER,
+  UNFOLLOW_USER,
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
@@ -370,13 +370,13 @@ export const clearDetails = () => {
 };
 
 //-----------------------------------------------------------------------------
-//_ FOLLOW
+//_ FOLLOW AND UNFOLLOW
 //-----------------------------------------------------------------------------
 
-export const followUser = (token, idFollowed) => {
+export const followUser = (obj) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(api.followUser, { token, idFollowed });
+      const response = await axios.post(api.followUser, obj);
       console.log(response.data);
       return dispatch({
         type: FOLLOW_USER,
@@ -387,7 +387,20 @@ export const followUser = (token, idFollowed) => {
     }
   };
 };
-
+export const unfollowUser = (obj) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.unfollowUser, obj);
+      console.log(response.data);
+      return dispatch({
+        type: UNFOLLOW_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 //////////////////////////////////////
 // == LIKES == //
 /////////////////////////////////////
