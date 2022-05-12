@@ -5,6 +5,7 @@ export const GET_USER = "GET_USER";
 export const GET_PHOTO_USER = "GET_PHOTO_USER";
 export const POST_FOLLOW_NOTIFICATION = "POST_FOLLOW_NOTIFICATION";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
+export const POST_REEPLACER = "POST_REEPLACER";
 // SEARCH BAR OPTIONS
 export const GET_SONG_BY_NAME = "GET_SONG_BY_NAME";
 export const GET_ALBUM_BY_NAME = "GET_ALBUM_BY_NAME";
@@ -18,10 +19,11 @@ export const GET_TOP_10_ARTISTS = "GET_TOP_10_ARTISTS";
 export const GET_TOP_10_SONGS = "GET_TOP_10_SONGS";
 
 // CRUD - POST
-export const GET_ALL_POST = " GET_ALL_POST";
+export const GET_ALL_POST = "GET_ALL_POST";
 export const USER_NEW_POST = "USER_NEW_POST";
 export const USER_UPDATE_POST = "USER_UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
+export const GET_OWN_POSTS = "GET_OWN_POSTS";
 
 //DETAILS BY ID
 export const GET_SONG_BY_ID = "GET_SONG_BY_ID";

@@ -8,6 +8,7 @@ import {
   falseDislike,
   falseLike,
   getAllComments,
+  getOwnPosts,
   getToken,
   getUseProfile,
   getUser,
@@ -137,9 +138,9 @@ export default function Feed() {
     e.preventDefault();
     console.log(input);
     dispatch(userNewPost(input));
-    dispatch(getAllPost());
+
     setTimeout(function () {
-      dispatch(getAllPost());
+      dispatch(getOwnPosts(user.userName));
     }, 1000);
     setInput({
       token: token,
@@ -168,7 +169,8 @@ export default function Feed() {
       if (result.isDenied) {
         dispatch(deletePost(e.idPost));
         setTimeout(function () {
-          dispatch(getAllPost());
+          user.typeUser === "Artist" && dispatch(getOwnPosts(user.userName));
+          user.typeUser !== "Artist" && dispatch(getAllPost());
         }, 1000);
       }
     });
@@ -192,7 +194,7 @@ export default function Feed() {
   const [showModalComments, setShowModalComments] = useState(false);
 
   function handleShowModalComments() {
-    setShowModalComments(!showModal);
+    setShowModalComments(!showModalComments);
   }
 
   const comments = useSelector((state) => state.comments);
@@ -206,6 +208,14 @@ export default function Feed() {
   const [slicer, setSlicer] = useState(3);
 
   console.log(posts);
+
+  // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
+
+  const ownPosts = useSelector((state) => state.ownPosts);
+  useEffect(() => {
+    user.typeUser === "Artist" && dispatch(getOwnPosts(user.userName));
+    user.typeUser !== "Artist" && dispatch(getAllPost());
+  }, [user]);
 
   return (
     <div className="container-fluid">
@@ -255,47 +265,58 @@ export default function Feed() {
                 </div>
               </form>
               <div className={styles.posts}>
-              <p>See Alls Posts</p>
-              <div className={styles.post}>
-                {posts &&
-                  posts.map((e) => {
-                    return (
-                      <Card
-                        style={{
-                          marginLeft: "20em",
-                          width: "50%",
-                          height: "43%",
-                          minWidth: "25em",
-                        }}
-                        color="bg-light"
-                        className={styles.backgroundPost}
-                        key={e.token}
-                      >
-                        <CardBody>
-                          <CardTitle
-                            style={{
-                              color: "black",
-                            }}
-                            tag="h7"
-                          >
-                            <img className={styles.profileImg} src={profileImage} alt=""></img>
-                            {e.User.userName === user.userName ? (
-                              e.User.userName
-                            ) : (
-                              <Link
-                                className={styles.userName}
-                                to={`/profile/${e.User.userName}`}
-                                onClick={() =>
-                                  dispatch(
-                                    getUseProfile(token, e.User.userName)
-                                  )
-                                }
+
+                YOUR POSTS
+                <div className={styles.post}>
+                  {ownPosts.length > 0 &&
+                    ownPosts.map((e) => {
+                      return (
+                        <Card
+                          style={{
+                            //marginLeft: "4em",
+                            width: "50%",
+                            height: "50%",
+                            minWidth: "25em",
+                          }}
+                          color="bg-light"
+                          className={styles.backgroundPost}
+                          key={e.idPost}
+                        >
+                          <CardBody>
+                            <div className={styles.icons}>
+                              <Button
+                                style={{
+                                  background: "white",
+                                  border: "0px",
+                                }}
+                                onClick={() => handleDelete(e)}
                               >
-                                {`@${e.User.userName}`}
-                              </Link>
-                            )}
-                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
-                          </CardTitle>
+                                <FcFullTrash
+                                  style={{
+                                    marginBottom: "0.5em",
+                                    marginLeft: "1em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
+                              <Button
+                                style={{
+                                  background: "white",
+                                  border: "0px",
+                                }}
+                                onClick={() => handleEdit(e)}
+                              >
+                                <FcEditImage
+                                  style={{
+                                    marginBottom: "0.5em",
+
+                                    marginLeft: "0.5em",
+                                    width: "1.5em",
+                                    height: "1.5em",
+                                  }}
+                                />
+                              </Button>
                           <CardTitle
                             style={{
                               color: "blue",
@@ -304,6 +325,7 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
+                          {User.userName}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
@@ -337,42 +359,70 @@ export default function Feed() {
                             <span
                               style={{ color: "black", paddingRight: "0.5em" }}
                             >
-                              {e.Likes.length}
-                            </span>
-                            {e.Likes.some(
-                              (e) => e.userName === user.userName
-                            ) ? (
+                              {e.datePost}
+                              <br />
+                            </CardTitle>
+                            <CardSubtitle className="mb-2 text-muted" tag="h6">
+                              {e.contentPost}
+                            </CardSubtitle>
+                          </CardBody>
+                          {e.imagePost && (
+                            <div className={styles.img}>
+                              <img
+                                src={e.imagePost}
+                                class="img-fluid"
+                                alt="Responsive"
+                              />
+                            </div>
+                          )}
+
+                          <div className={styles.icons}>
+                            <CardLink href={e.linkContent}>
+                              <FcLink
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                              ></FcLink>
+                            </CardLink>
+                            <div
+                              style={{
+                                marginBottom: "0.4em",
+                                marginLeft: "2.5em",
+                              }}
+                            >
+                              <span style={{ color: "black" }}>
+                                {e.Likes.length}
+                              </span>
                               <FcLike
                                 style={{
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                                onClick={() => {
-                                  dispatch(
-                                    falseDislike({ index: posts.indexOf(e) })
-                                  );
-                                  dispatch(
-                                    dislike({ token, idPost: e.idPost })
-                                  );
+                                  width: "1.5em",
+                                  height: "1.5em",
                                 }}
                               />
-                            ) : (
-                              <FcLikePlaceholder
+                            </div>
+                            <div
+                              style={{
+                                marginBottom: "0.4em",
+                                marginLeft: "2.5em",
+                              }}
+                            >
+                              <span style={{ color: "black" }}>
+                                {e.Comments.length}
+                              </span>
+                              <FcComments
                                 style={{
-                                  width: "2em",
-                                  height: "2em",
+                                  width: "1.5em",
+                                  height: "1.5em",
                                 }}
                                 onClick={() => {
-                                  dispatch(
-                                    falseLike({
-                                      index: posts.indexOf(e),
-                                      userName: user.userName,
-                                    })
-                                  );
-                                  dispatch(like({ token, idPost: e.idPost }));
+                                  setViewPost({ ...e });
+                                  dispatch(getAllComments(e.idPost));
+                                  handleShowModalComments();
+                                  setSlicer(3);
                                 }}
                               />
-                            )}
+                            </div>
                           </div>
                           <FcRedo
                             style={{
@@ -559,7 +609,10 @@ export default function Feed() {
                                 }}
                                 onClick={() => {
                                   dispatch(
-                                    falseDislike({ index: posts.indexOf(e) })
+                                    falseDislike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
                                   );
                                   dispatch(
                                     dislike({ token, idPost: e.idPost })
@@ -584,26 +637,36 @@ export default function Feed() {
                               />
                             )}
                           </div>
-                          <FcRedo
+                          <div
                             style={{
                               marginBottom: "0.4em",
                               marginLeft: "2em",
                               marginRight: "1em",
-                              width: "2em",
-                              height: "2em",
                             }}
-                            onClick={() => {
-                              setViewPost({ ...e });
-                              dispatch(getAllComments(e.idPost));
-                              handleShowModalComments();
-                              setCommentInput({
-                                ...commentInput,
-                                idPost: e.idPost,
-                                token: token,
-                              });
-                              setSlicer(3);
-                            }}
-                          />
+                          >
+                            <span
+                              style={{ color: "black", paddingRight: "0.5em" }}
+                            >
+                              {e.Comments ? e.Comments.length : "0"}
+                            </span>
+                            <FcComments
+                              style={{
+                                width: "2em",
+                                height: "2em",
+                              }}
+                              onClick={() => {
+                                setViewPost({ ...e });
+                                dispatch(getAllComments(e.idPost));
+                                handleShowModalComments();
+                                setCommentInput({
+                                  ...commentInput,
+                                  idPost: e.idPost,
+                                  token: token,
+                                });
+                                setSlicer(3);
+                              }}
+                            />
+                          </div>
                         </div>
                       </Card>
                     );
@@ -638,11 +701,11 @@ export default function Feed() {
               }}
               color="light"
               className={styles.backgroundPost}
-              key={viewPost.token}
+              key={viewPost.idPost}
             >
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
-                  {viewPost.User.userName}
+                  {viewPost.User ? viewPost.User.userName : user.userName}
                 </CardTitle>
                 <CardTitle
                   style={{

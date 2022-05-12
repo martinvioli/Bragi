@@ -28,6 +28,8 @@ import {
   FALSE_DISLIKE,
   GET_USER_PROFILE,
   UNFOLLOW_USER,
+  GET_OWN_POSTS,
+  POST_REEPLACER,
   GET_STATISTICS,
   BAN_USER,
   DIS_BAN_USER,
@@ -56,6 +58,7 @@ const initialState = {
   followed: [],
   unfollowed: [],
   userProfile: {},
+  ownPosts: [],
   statistics: {},
   banned: [],
   disbanned: [],
@@ -211,7 +214,9 @@ function rootReducer(state = initialState, action) {
       };
     case FALSE_DISLIKE:
       var postsEditable2 = [...state.posts];
-      postsEditable2[action.payload.index].Likes.pop();
+      postsEditable2[action.payload.index].Likes = postsEditable2[
+        action.payload.index
+      ].Likes.filter((e) => e.userName !== action.payload.userName);
       return {
         ...state,
         posts: postsEditable2,
@@ -221,6 +226,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         userProfile: action.payload,
       };
+    case GET_OWN_POSTS:
+      return {
+        ...state,
+        ownPosts: action.payload,
+      };
+    case POST_REEPLACER:
+      return {
+        ...state,
+        posts: state.userProfile.Posts,
+      }
     case GET_STATISTICS:
       return {
         ...state,

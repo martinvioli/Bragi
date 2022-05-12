@@ -42,6 +42,7 @@ const apiHeroku = {
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",
   followUser: "https://bragiproject.herokuapp.com/follow",
+  unfollowUser: "https://bragiproject.herokuapp.com/unfollow",
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
   banUser: "https://bragiproject.herokuapp.com/admin/banUser",
