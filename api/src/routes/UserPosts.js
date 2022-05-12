@@ -1,4 +1,4 @@
-const { Router } = require('express');
+/* const { Router } = require('express');
 const User = require('../Controllers/User');
 const { verifyToken } = require('../middlewares/authjwt')
 
@@ -7,4 +7,6 @@ const user = new User();
 
 router.get('/:id/posts', user.getUserPosts);
 
-module.exports = router;
+module.exports = router; */
+
+// ESTA PASADO A POST.JS

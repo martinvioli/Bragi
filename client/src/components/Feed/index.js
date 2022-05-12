@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deletePost,
   dislike,
@@ -9,6 +9,7 @@ import {
   falseLike,
   getAllComments,
   getToken,
+  getUseProfile,
   getUser,
   like,
   userNewComment,
@@ -449,7 +450,20 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
-                            {e.User.userName}
+                            {e.User.userName === user.userName ? (
+                              e.User.userName
+                            ) : (
+                              <Link
+                                to={`/profile/${e.User.userName}`}
+                                onClick={() =>
+                                  dispatch(
+                                    getUseProfile(token, e.User.userName)
+                                  )
+                                }
+                              >
+                                {e.User.userName}
+                              </Link>
+                            )}
                           </CardTitle>
                           <CardTitle
                             style={{

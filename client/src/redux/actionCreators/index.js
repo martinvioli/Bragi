@@ -29,6 +29,7 @@ import {
   FOLLOW_USER,
   FALSE_DISLIKE,
   FALSE_LIKE,
+  GET_USER_PROFILE,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -415,6 +416,28 @@ export const dislike = function (payload) {
     try {
       const response = await axios.post(api.dislikePost, payload);
       console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//////////////////////
+// == VER PERFIL DE OTRO USER == //
+//////////////////////
+
+export const getUseProfile = (token, userName) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.getUserProfile, {
+        token,
+        userName,
+      });
+      console.log(response.data);
+      return dispatch({
+        type: GET_USER_PROFILE,
+        payload: response.data,
+      });
     } catch (error) {
       console.log(error);
     }
