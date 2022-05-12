@@ -11,6 +11,7 @@ import DetailsAlbum from "./components/Details/DetailsAlbum";
 import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
+import Admin from "./components/Admin";
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
             path="/register/authenticate"
             element={<Authenticate />}
           />
+          <Route exact path="/admin" element={<Admin />} />
           <Route path="/" element={<NavBar />}>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/feed" element={<Feed />} />

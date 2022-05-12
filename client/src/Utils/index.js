@@ -34,8 +34,6 @@ const apiHeroku = {
     "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
   updateSensitiveData:
     "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
-  getPhotoUser:
-    "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
   getAllComments: "https://bragiproject.herokuapp.com/post/comments",
   userNewComment: "https://bragiproject.herokuapp.com/post/comment",
   userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
@@ -46,6 +44,10 @@ const apiHeroku = {
   followUser: "https://bragiproject.herokuapp.com/follow",
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
+  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
+  disBanUser: "https://bragiproject.herokuapp.com/admin/allowUser",
+  getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
+  getAllReports: "https://bragiproject.herokuapp.com/admin/getAllReports",
 };
 
 const api = {
@@ -80,7 +82,6 @@ const api = {
   updateBasicData: "http://localhost:3001/profileUser/editionBasicProfile",
   updateSensitiveData:
     "http://localhost:3001/profileUser/editionSensitiveProfile",
-  getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
   getAllComments: "http://localhost:3001/post/comments",
   userNewComment: "http://localhost:3001/post/comment",
   userUpdateComment: "http://localhost:3001/post/comment/edit",
@@ -92,6 +93,10 @@ const api = {
   unfollowUser: "http://localhost:3001/unfollow",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
+  banUser: "http://localhost:3001/admin/banUser",
+  disBanUser: "http://localhost:3001/admin/allowUser",
+  getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
+  getAllReports: "http://localhost:3001/admin/getAllReports",
 };
 
 export default api;
