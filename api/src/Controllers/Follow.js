@@ -116,6 +116,31 @@ class Follow{
         const deleteFollowed = await findFollowedInDb.destroy()
         return { msg: "Unfollowed correctly" }
     }
+
+    getFollowers = async(req,res) => {
+        const { idUser } = req.body;
+        try {
+
+            const followers = await Follower.findAll({ where: { UserIdUser: idUser } })
+            console.log(1, followers)
+            return res.status(200).json(followers)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error)
+        } 
+    }
+
+    getFolloweds = async(req,res) => {
+        const {idUser} = req.body;
+        try {
+            const followeds = await Followed.findAll({ where: { UserIdUser: idUser } })
+            console.log(1, followeds)
+            return res.status(200).json(followeds)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error)
+        }
+    }
 }
 
 module.exports = Follow;
