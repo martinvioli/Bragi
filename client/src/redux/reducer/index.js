@@ -30,6 +30,10 @@ import {
   UNFOLLOW_USER,
   GET_OWN_POSTS,
   POST_REEPLACER,
+  GET_STATISTICS,
+  BAN_USER,
+  DIS_BAN_USER,
+  GET_REPORTS,
 } from "../actions";
 
 // STATE CREATION
@@ -55,6 +59,10 @@ const initialState = {
   unfollowed: [],
   userProfile: {},
   ownPosts: [],
+  statistics: {},
+  banned: [],
+  disbanned: [],
+  reports: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -108,12 +116,6 @@ function rootReducer(state = initialState, action) {
         artist: [],
         album: [],
       };
-
-    // case USER_NEW_POST:
-    //   return {
-    //     ...state,
-    //     posts: state.posts.unshift(action.payload),
-    //   };
     case GET_TOP_10_ALBUMS:
       return {
         ...state,
@@ -233,6 +235,25 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.userProfile.Posts,
+    case GET_STATISTICS:
+      return {
+        ...state,
+        statistics: action.payload,
+      };
+    case BAN_USER:
+      return {
+        ...state,
+        banned: action.payload,
+      };
+    case DIS_BAN_USER:
+      return {
+        ...state,
+        disbanned: action.payload,
+      };
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: action.payload,
       };
     default:
       return { ...state };

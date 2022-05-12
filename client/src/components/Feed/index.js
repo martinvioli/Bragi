@@ -15,6 +15,7 @@ import {
   like,
   userNewComment,
   userNewPost,
+  getPhotoUser
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
@@ -76,6 +77,8 @@ export default function Feed() {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const posts = useSelector((state) => state.posts);
+  const profileImage = useSelector((state) => state.profileImage);
+  // console.log(posts[0].User.userName)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -98,13 +101,27 @@ export default function Feed() {
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
+    // posts.forEach((e) => {
+    //   console.log(e)
+    //   dispatch(getPhotoUser(e.userName))
+    // })
     // setTimeout(function () {
     //   dispatch(getAllPost());
     // }, 1000);
+    dispatch(getAllPost());
+    if (user.typeUser === "admin") {
+      navigate("/admin");
+    }
     if (!userToken) {
       navigate("/");
     }
   }, []);
+
+  posts.forEach((e) => {
+    // console.log(e)
+    dispatch(getPhotoUser(e.User.userName))
+  })
+
 
   const handleSearchImage = (e) => {
     setInput({
@@ -208,8 +225,8 @@ export default function Feed() {
           {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
-                <h3>Add new post</h3>
                 <div className={styles.divTextarea}>
+                  <h3>Add new post</h3>
                   <Input
                     style={{ width: "50em", height: "6em" }}
                     color="bg-light"
@@ -248,6 +265,7 @@ export default function Feed() {
                 </div>
               </form>
               <div className={styles.posts}>
+
                 YOUR POSTS
                 <div className={styles.post}>
                   {ownPosts.length > 0 &&
@@ -289,26 +307,51 @@ export default function Feed() {
                                 }}
                                 onClick={() => handleEdit(e)}
                               >
-                                <FcEditImage
-                                  style={{
-                                    marginBottom: "0.5em",
-
-                                    marginLeft: "0.5em",
-                                    width: "1.5em",
-                                    height: "1.5em",
-                                  }}
-                                />
-                              </Button>
-                            </div>
-                            <CardTitle
+                                {`@${e.User.userName}`}
+                              </Link>
+                            )}
+                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
+                          </CardTitle>
+                          <CardTitle
+                            style={{
+                              color: "blue",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                            }}
+                            tag="h7"
+                          >
+                          </CardTitle>
+                          <CardSubtitle className="mb-2 text-muted" tag="h6">
+                            {e.contentPost}
+                          </CardSubtitle>
+                        </CardBody>
+                        {e.imagePost && (
+                          <div className={styles.img}>
+                            <img
+                              src={e.imagePost}
+                              class="img-fluid"
+                              alt="Responsive"
+                            />
+                          </div>
+                        )}
+                        <div className={styles.icons}>
+                          <CardLink href={e.linkContent}>
+                            <FcLink
                               style={{
-                                color: "blue",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "flex-start",
-                                alignItems: "flex-start",
+                                marginBottom: "0.4em",
+                                width: "2em",
+                                height: "2em",
                               }}
-                              tag="h6"
+                            ></FcLink>
+                          </CardLink>
+                          <div
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2.5em",
+                            }}
+                          >
+                            <span
+                              style={{ color: "black", paddingRight: "0.5em" }}
                             >
                               {e.datePost}
                               <br />
@@ -331,9 +374,8 @@ export default function Feed() {
                             <CardLink href={e.linkContent}>
                               <FcLink
                                 style={{
-                                  marginBottom: "0.4em",
-                                  width: "1.5em",
-                                  height: "1.5em",
+                                  width: "2em",
+                                  height: "2em",
                                 }}
                               ></FcLink>
                             </CardLink>
@@ -376,10 +418,31 @@ export default function Feed() {
                               />
                             </div>
                           </div>
-                        </Card>
-                      );
-                    })}
-                </div>
+                          <FcRedo
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2em",
+                              marginRight: "1em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                            onClick={() => {
+                              setViewPost({ ...e });
+                              dispatch(getAllComments(e.idPost));
+                              handleShowModalComments();
+                              setCommentInput({
+                                ...commentInput,
+                                idPost: e.idPost,
+                                token: token,
+                              });
+                              setSlicer(3);
+                            }}
+                          />
+                        </div>
+                      </Card>
+                    );
+                  })}
+              </div>
                 <Modal isOpen={showModal}>
                   <ModalHeader toggle={function noRefCheck() {}}>
                     Edit your post
@@ -465,14 +528,16 @@ export default function Feed() {
                         <CardBody>
                           <CardTitle
                             style={{
-                              color: "orange",
+                              color: "black",
                             }}
                             tag="h7"
                           >
+                            <img className={styles.profileImg} src={profileImage} alt=""></img>
                             {e.User.userName === user.userName ? (
                               e.User.userName
                             ) : (
                               <Link
+                                className={styles.userName}
                                 to={`/profile/${e.User.userName}`}
                                 onClick={() =>
                                   dispatch(
@@ -480,9 +545,10 @@ export default function Feed() {
                                   )
                                 }
                               >
-                                {e.User.userName}
+                                {`@${e.User.userName}`}
                               </Link>
                             )}
+                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
                           </CardTitle>
                           <CardTitle
                             style={{
@@ -492,7 +558,6 @@ export default function Feed() {
                             }}
                             tag="h7"
                           >
-                            {e.datePost}
                           </CardTitle>
                           <CardSubtitle className="mb-2 text-muted" tag="h6">
                             {e.contentPost}
