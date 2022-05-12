@@ -2,7 +2,12 @@ import React from "react";
 import { FcPlus } from "react-icons/fc";
 import { FaMinusCircle } from "react-icons/fa";
 import { Button } from "reactstrap";
-import { followUser, getToken, getUser } from "../../redux/actionCreators";
+import {
+  followUser,
+  getToken,
+  getUser,
+  unfollowUser,
+} from "../../redux/actionCreators";
 import { useDispatch } from "react-redux";
 import styles from "./SearchData.css";
 function SearchData({ data }) {
@@ -15,7 +20,9 @@ function SearchData({ data }) {
     // dispatch(getToken(userToken));
     // dispatch(getUser(userToken));
     console.log(userToken);
-    console.log(data.token);
+    // console.log(data.userName);
+    let userNameOtherProfile = data.userName;
+    console.log(userNameOtherProfile);
   }, []);
   console.log(data);
   const handleClickFollow = (data) => {
@@ -24,8 +31,20 @@ function SearchData({ data }) {
       window.localStorage.getItem("userCredentials")
     );
     console.log(userToken);
-    console.log(data.token);
-    dispatch(followUser(userToken, data.token));
+    // console.log(data.token);
+    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    console.log(obj);
+    dispatch(followUser(obj));
+  };
+  const handleClickUnfollow = (data) => {
+    const userToken = JSON.parse(
+      window.localStorage.getItem("userCredentials")
+    );
+    console.log(userToken);
+    // console.log(data.token);
+    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    console.log(obj);
+    dispatch(unfollowUser(obj));
   };
 
   return (
@@ -50,7 +69,7 @@ function SearchData({ data }) {
             <Button onClick={() => handleClickFollow(data)}>
               <FcPlus style={{ width: "3em", height: "3em" }}></FcPlus>
             </Button>{" "}
-            <Button>
+            <Button onClick={() => handleClickUnfollow(data)}>
               <FaMinusCircle
                 style={{ width: "3em", height: "3em" }}
               ></FaMinusCircle>
