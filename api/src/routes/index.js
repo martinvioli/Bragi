@@ -1,7 +1,7 @@
 const { Router } = require("express");
-const register = require('./Register.js');
-const validation = require('./Validation');
-const login = require('./Login.js');
+const register = require("./Register.js");
+const validation = require("./Validation");
+const login = require("./Login.js");
 const { User } = require("../db");
 const songById = require('./Song');
 const artistById = require('./ArtistById');

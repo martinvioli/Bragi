@@ -6,7 +6,7 @@ import { getPhotoUser, getUser } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
-function Profile() {
+function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
   const navigate = useNavigate();
@@ -143,11 +143,122 @@ function Profile() {
     },
   ];
 
-  console.log(user);
-
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
-  return (
+  //// VER PERFIL AJENO
+
+  const profile = useSelector((state) => state.userProfile);
+  console.log(profile);
+
+  return props.visitant ? (
+    <div>
+      <div className={styles.container}>
+        <div className={styles.profile}>
+          <img className={styles.profileImg} src={profileImage} alt=""></img>
+          {profile.name ? (
+            <div>
+              <div>
+                <div className={styles.name}>
+                  {profile.name + " " + profile.lastName}
+                </div>
+                <div className={styles.name}>@{profile.userName}</div>
+                <h3>
+                  {profile.nameTypeUser === "Standard"
+                    ? "Fan"
+                    : profile.nameTypeUser}
+                </h3>
+                <div className={styles.description}>
+                  {profile.description
+                    ? profile.description
+                    : "Hey there! I'm using Bragi"}
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <br></br>
+        {profile.nameTypeUser === "Artist" ? (
+          <>
+            <div className={styles.artist}>
+              <div className={styles.events}>
+                <h1>EVENTS</h1>
+                {events.map((e) => (
+                  <div className={styles.event}>
+                    <p>
+                      DATE:<span>{e.date}</span>
+                    </p>
+                    <p>
+                      COUNTRY: <span>{e.country}</span>
+                    </p>
+                    <p>
+                      PLACE:<span>{e.place}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.concerts}>
+                <h1>CONCERTS</h1>
+                {concerts.map((e) => (
+                  <div className={styles.concert}>
+                    <p>
+                      DATE:<span>{e.date}</span>
+                    </p>
+                    <p>
+                      TYPE:<span>{e.type}</span>
+                    </p>
+                    <p>
+                      COUNTRY: <span>{e.country}</span>
+                    </p>
+                    <p>
+                      PLACE:<span>{e.place}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.posts}>
+              <h1>POSTS</h1>
+              {posts.map((e) => (
+                <div className={styles.post}>
+                  <p>{e.content}</p>
+                  <a href={e.link}>{e.link}</a>
+                  <img
+                    src={e.image}
+                    style={{ width: "50px", height: "50px" }}
+                    alt="postImg"
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className={styles.fan}>
+            <h1>FOLLOWING</h1>
+            <div className={styles.followed}>
+              {followed.map((e) => (
+                <div className={styles.followedArtist}>
+                  <div
+                    style={{
+                      width: "4.5em",
+                      height: "4.5em",
+                      borderRadius: "100%",
+                      backgroundImage: `url(${e.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <section>
+                    <p>{e.name}</p>
+                    <p>{e.user}</p>
+                  </section>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  ) : (
     <div>
       <div className={styles.container}>
         <div className={styles.profile}>
