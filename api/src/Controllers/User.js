@@ -1,4 +1,4 @@
-const { User, Post } = require("../db.js");
+const { User, Post, Like} = require("../db.js");
 const validation = require('../Validations/auths.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -74,6 +74,38 @@ class UserClass {
       res.status(404).json({ msgE: 'Error getting user data'})
     }
   }
+
+  getProfileUser = async (req, res) => {
+    let dataUserProfile = {};
+    const {token, userName} = req.body;
+    const userFoundDB = await User.findOne({
+      where: {userName},
+      include: [{
+        model: Post,
+        include: [{
+          model: Like,
+          attributes: ["userName"]
+        }]
+      }]
+    },);
+    if(!userFoundDB) return res.status(404).json({msgE: "User not found"});
+    res.status(200).json(userFoundDB)
+    // dataUserProfile.dataUser = {
+    //   name: userFind.name,
+    //   email: userFind.email,
+    //   password: userFind.password,
+    //   gender: userFind.gender,
+    //   tel: userFind.telephone,
+    //   description: userFind.description,
+    //   bithday: userFind.Bithday,
+    //   userName: userFind.userName,
+    //   lastName: userFind.lastName,
+    //   stateUser: userFind.nameStateUser,
+    //   typeUser: userFind.nameTypeUser
+    // }
+
+  }
+
 
   createUser = async (req, res) => {
     let {name, lastName, email, password, gender, tel, description, birthday, profileImage, userName, repeatPassword} = req.body;

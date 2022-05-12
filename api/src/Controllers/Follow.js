@@ -9,11 +9,12 @@ class Follow{
 
     //Las siguientes 2 funciones, tratan sobre un usuario que sigue a otro y que lo deja de seguir
     followAction = async(req, res) => { //user1 -> user2
-        const { token, tokenFollowed} = req.body//token de user1 y token de user2
+        const { token, userNameOtherProfile} = req.body//token de user1 y token de user2
         const tokenDecode = jwt.decode(token)
-        const decodeFollowed = jwt.decode(tokenFollowed)
+        // const decodeFollowed = jwt.decode(tokenFollowed)
         // console.log(decodeFollowed)
-
+        const userName = userNameOtherProfile;
+        console.log(tokenDecode, userNameOtherProfile)
         try {
             const userFwer = await User.findOne({ //busco a user1
                 where: {
@@ -25,7 +26,8 @@ class Follow{
 
             const userFwed = await User.findOne({ //busco a user2
                 where: {
-                    userName: decodeFollowed.userName
+                    userName
+                    // userName: decodeFollowed.userName
                 }
             })
             if(!userFwer) return res.status(404).json({ msgE: 'Could not find your user' })
@@ -36,6 +38,7 @@ class Follow{
                     userNameFollower: userFwer.userName,
                 }
             })
+            if(userFollower) return res.status(404).json({ msgE: "You already follow this user" }) 
             // console.log(userFollower)
             // if(userFollower.userProfileFollower && userFollower.UserIdUser){
             //     if(userFollower.userProfileFollower === userFwer.idUser && userFollower.UserIdUser === userFwed.idUser) return res.status(406).json({ msgE: "You already follow this user" })
@@ -56,10 +59,10 @@ class Follow{
     }
 
     unFollowAction = async(req,res) => { //user1 -/->  user2
-        const { token, tokenFollowed } = req.body //llega el token de user1
+        const { token, userNameOtherProfile } = req.body //llega el token de user1
         const tokenDecode = jwt.decode(token)
-        const decodeFollowed = jwt.decode(tokenFollowed)
-
+        // const decodeFollowed = jwt.decode(tokenFollowed)
+        const userName= userNameOtherProfile;
         try {
             const userFwer = await User.findOne({ //busco a user2
                 where: {
@@ -69,7 +72,8 @@ class Follow{
             // if(!userFwed) return res.status(404).json({ msgE: 'Could not find your user' })
             const userFwed = await User.findOne({ //busco a user2
                 where: {
-                    userName: decodeFollowed.userName
+                    userName
+                    // userName: decodeFollowed.userName
                 }
             })
             // if(!userFwed) return res.status(404).json({ msgE: 'Could not find your user' })
