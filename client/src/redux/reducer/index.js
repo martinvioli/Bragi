@@ -235,6 +235,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.userProfile.Posts,
+      }
     case GET_STATISTICS:
       return {
         ...state,
