@@ -212,8 +212,8 @@ export default function Feed() {
           {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
-                <h3>Add new post</h3>
                 <div className={styles.divTextarea}>
+                  <h3>Add new post</h3>
                   <Input
                     style={{ width: "50em", height: "6em" }}
                     color="bg-light"
@@ -252,128 +252,150 @@ export default function Feed() {
                 </div>
               </form>
               <div className={styles.posts}>
-                See All Post
-                <div className={styles.post}>
-                  {posts.length &&
-                    posts.map((e) => {
-                      return (
-                        <Card
-                          style={{
-                            //marginLeft: "4em",
-                            width: "50%",
-                            height: "50%",
-                            minWidth: "25em",
-                          }}
-                          color="bg-light"
-                          className={styles.backgroundPost}
-                          key={e.idPost}
-                        >
-                          <CardBody>
-                            <div className={styles.icons}>
-                              <Button
-                                style={{
-                                  background: "white",
-                                  border: "0px",
-                                }}
-                                onClick={() => handleDelete(e)}
+              <p>See Alls Posts</p>
+              <div className={styles.post}>
+                {posts &&
+                  posts.map((e) => {
+                    return (
+                      <Card
+                        style={{
+                          marginLeft: "20em",
+                          width: "50%",
+                          height: "43%",
+                          minWidth: "25em",
+                        }}
+                        color="bg-light"
+                        className={styles.backgroundPost}
+                        key={e.token}
+                      >
+                        <CardBody>
+                          <CardTitle
+                            style={{
+                              color: "black",
+                            }}
+                            tag="h7"
+                          >
+                            <img className={styles.profileImg} src={profileImage} alt=""></img>
+                            {e.User.userName === user.userName ? (
+                              e.User.userName
+                            ) : (
+                              <Link
+                                className={styles.userName}
+                                to={`/profile/${e.User.userName}`}
+                                onClick={() =>
+                                  dispatch(
+                                    getUseProfile(token, e.User.userName)
+                                  )
+                                }
                               >
-                                <FcFullTrash
-                                  style={{
-                                    marginBottom: "0.5em",
-                                    marginLeft: "1em",
-                                    width: "1.5em",
-                                    height: "1.5em",
-                                  }}
-                                />
-                              </Button>
-                              <Button
-                                style={{
-                                  background: "white",
-                                  border: "0px",
-                                }}
-                                onClick={() => handleEdit(e)}
-                              >
-                                <FcEditImage
-                                  style={{
-                                    marginBottom: "0.5em",
-
-                                    marginLeft: "0.5em",
-                                    width: "1.5em",
-                                    height: "1.5em",
-                                  }}
-                                />
-                              </Button>
-                            </div>
-                            <CardTitle
-                              style={{
-                                color: "blue",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "flex-start",
-                                alignItems: "flex-start",
-                              }}
-                              tag="h6"
-                            >
-                              {e.datePost}
-                              <br />
-                              {`@${user.userName}`}
-                            </CardTitle>
-                            <CardSubtitle className="mb-2 text-muted" tag="h6">
-                              {e.contentPost}
-                            </CardSubtitle>
-                          </CardBody>
-                          {e.imagePost && (
-                            <div className={styles.img}>
-                              <img
-                                src={e.imagePost}
-                                class="img-fluid"
-                                alt="Responsive"
-                              />
-                            </div>
-                          )}
-
-                          <div className={styles.icons}>
-                            <CardLink href={e.linkContent}>
-                              <FcLink
-                                style={{
-                                  marginBottom: "0.4em",
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                }}
-                              ></FcLink>
-                            </CardLink>
-                            <FcLike
-                              style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2.5em",
-                                width: "1.5em",
-                                height: "1.5em",
-                              }}
-                            />
-                            <CardLink href={e.linkContent}>
-                              <FcComments
-                                style={{
-                                  marginBottom: "0.4em",
-                                  marginLeft: "2.5em",
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                }}
-                              />
-                            </CardLink>
-                            <FcRedo
-                              style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2em",
-                                marginRight: "1em",
-                                width: "1.5em",
-                                height: "1.5em",
-                              }}
+                                {`@${e.User.userName}`}
+                              </Link>
+                            )}
+                            <div style={{ display: "inline-block" }} className={styles.date}>{e.datePost}</div>
+                          </CardTitle>
+                          <CardTitle
+                            style={{
+                              color: "blue",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                            }}
+                            tag="h7"
+                          >
+                          </CardTitle>
+                          <CardSubtitle className="mb-2 text-muted" tag="h6">
+                            {e.contentPost}
+                          </CardSubtitle>
+                        </CardBody>
+                        {e.imagePost && (
+                          <div className={styles.img}>
+                            <img
+                              src={e.imagePost}
+                              class="img-fluid"
+                              alt="Responsive"
                             />
                           </div>
-                        </Card>
-                      );
-                    })}
-                </div>
+                        )}
+                        <div className={styles.icons}>
+                          <CardLink href={e.linkContent}>
+                            <FcLink
+                              style={{
+                                marginBottom: "0.4em",
+                                width: "2em",
+                                height: "2em",
+                              }}
+                            ></FcLink>
+                          </CardLink>
+                          <div
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2.5em",
+                            }}
+                          >
+                            <span
+                              style={{ color: "black", paddingRight: "0.5em" }}
+                            >
+                              {e.Likes.length}
+                            </span>
+                            {e.Likes.some(
+                              (e) => e.userName === user.userName
+                            ) ? (
+                              <FcLike
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseDislike({ index: posts.indexOf(e) })
+                                  );
+                                  dispatch(
+                                    dislike({ token, idPost: e.idPost })
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <FcLikePlaceholder
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                                onClick={() => {
+                                  dispatch(
+                                    falseLike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
+                                  );
+                                  dispatch(like({ token, idPost: e.idPost }));
+                                }}
+                              />
+                            )}
+                          </div>
+                          <FcRedo
+                            style={{
+                              marginBottom: "0.4em",
+                              marginLeft: "2em",
+                              marginRight: "1em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                            onClick={() => {
+                              setViewPost({ ...e });
+                              dispatch(getAllComments(e.idPost));
+                              handleShowModalComments();
+                              setCommentInput({
+                                ...commentInput,
+                                idPost: e.idPost,
+                                token: token,
+                              });
+                              setSlicer(3);
+                            }}
+                          />
+                        </div>
+                      </Card>
+                    );
+                  })}
+              </div>
                 <Modal isOpen={showModal}>
                   <ModalHeader toggle={function noRefCheck() {}}>
                     Edit your post
