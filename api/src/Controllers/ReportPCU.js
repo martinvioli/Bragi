@@ -1,5 +1,6 @@
 const {User, Post, Comment, ReportPostCommentUser, RowReport} = require('../db.js');
 const jwt = require('jsonwebtoken');
+const {Op} = require('sequelize')
 class ReportPCUClass {
     constructor(){}
 
@@ -10,25 +11,25 @@ class ReportPCUClass {
             //Searches and validations
             const userFound = await User.findOne({where: {userName: tokenDecoded.userName}});
             if(!userFound) return res.status(404).json({msgE: "User not found"});
-            const commentFound = await User.findOne({where: {idComment}});
+            const commentFound = await Comment.findOne({where: {idComment}});
             if(!commentFound) return res.status(404).json({msgE: "Comment not found"});
+            if(commentFound.dataValues.idUserComment === userFound.dataValues.idUser) return res.status(400).json({ msgE: "You want to report your comment? 😶" })
 
             //Create comment report
             const [createdReport, existReport]= await ReportPostCommentUser.findOrCreate(
                 {
-                    where:{idComment},
-                    defaults: {typeReport: 'Comment', idComment} //Vinculación de la creación del reporte y el commentario.}
+                    where:{CommentIdComment: idComment},
+                    defaults: {typeReport: 'comment', CommentIdComment: idComment} //Vinculación de la creación del reporte y el commentario.}
                 }
             )
-            if(existReport){
+            if(!existReport){ //Entra por falso, o sea, no lo creo, ya existía.
                 const existRowReport = await RowReport.findOne(
                     {where: {
-                        [Op.and]:[{idUserReporter: token.dataValues.idUser}, {idPostCommentUser: idComment}]
+                        [Op.and]:[{idUserReporter: userFound.dataValues.idUser}, {idPostCommentUser: idComment}]
                     }}
                 );
                 if(existRowReport) return res.status(400).json({msgE: "You already reported this comment"});
             }
-            if(commentFound.dataValues.idUserComment === idComment) return res.status(400).json({ msgE: "You want to report your comment? 😶" })
             const createRowReport = await RowReport.create({
                 idUserReporter: userFound.dataValues.idUser,
                 idPostCommentUser: commentFound.dataValues.idComment,
@@ -48,25 +49,25 @@ class ReportPCUClass {
             //Searches and validations
             const userFound = await User.findOne({where: {userName: tokenDecoded.userName}});
             if(!userFound) return res.status(404).json({msgE: "User not found"});
-            const postFound = await User.findOne({where: {idPost}});
+            const postFound = await Post.findOne({where: {idPost}});
             if(!postFound) return res.status(404).json({msgE: "Post not found"});
+            if(postFound.dataValues.UserIdUser === userFound.dataValues.idUser) return res.status(400).json({ msgE: "You wanna report your own post? 😳" })
 
             //Create post report
             const [createdReport, existReport]= await ReportPostCommentUser.findOrCreate(
                 {
-                    where:{idPost},
-                    defaults: {typeReport: 'Post', idPost} //Vinculación de la creación del reporte y el posteo.}
+                    where:{PostIdPost: idPost},
+                    defaults: {typeReport: 'post', PostIdPost: idPost} //Vinculación de la creación del reporte y el posteo.}
                 }
             )
-            if(existReport){
+            if(!existReport){ //Entra por falso, o sea, no lo creo, ya existía.
                 const existRowReport = await RowReport.findOne(
                     {where: {
-                        [Op.and]:[{idUserReporter: token.dataValues.idUser}, {idPostCommentUser: idPost}]
+                        [Op.and]:[{idUserReporter: userFound.dataValues.idUser}, {idPostCommentUser: idPost}]
                     }}
                 );
                 if(existRowReport) return res.status(400).json({msgE: "You already reported this post"});
             }
-            if(postFound.dataValues.UserIdUser === userFound.dataValues.idUser) return res.status(400).json({ msgE: "You wanna report your own post? 😳" })
             const createRowReport = await RowReport.create({
                 idUserReporter: userFound.dataValues.idUser,
                 idPostCommentUser: postFound.dataValues.idPost,
@@ -88,23 +89,24 @@ class ReportPCUClass {
             if(!userFound) return res.status(404).json({msgE: "User not found"});
             const userReportedFound = await User.findOne({where: {idUser}});
             if(!userReportedFound) return res.status(404).json({msgE: "User reported not found"});
-
+            if(userFound.dataValues.idUser === idUser) return res.status(400).json({ msgE: "Do you wanna report yourself? 😨" })
+            
             //Create user report
             const [createdReport, existReport]= await ReportPostCommentUser.findOrCreate(
                 {
-                    where:{idUser},
-                    defaults: {typeReport: 'User', idUser} //Vinculación de la creación del reporte y el user.}
+                    where:{UserIdUser: idUser},
+                    defaults: {typeReport: 'user', UserIdUser: idUser} //Vinculación de la creación del reporte y el user.}
                 }
             )
-            if(existReport){
+           
+            if(!existReport){ //Entra por falso, o sea, no lo creo, ya existía.
                 const existRowReport = await RowReport.findOne(
                     {where: {
-                        [Op.and]:[{idUserReporter: token.dataValues.idUser}, {idPostCommentUser: idUser}]
+                        [Op.and]:[{idUserReporter: userFound.dataValues.idUser}, {idPostCommentUser: idUser}]
                     }}
                 );
                 if(existRowReport) return res.status(400).json({msgE: "You already reported this user"});
             }
-            if(userFound.dataValues.idUse === idUser) return res.status(400).json({ msgE: "Do you wanna report yourself? 😨" })
             const createRowReport = await RowReport.create({
                 idUserReporter: userFound.dataValues.idUser,
                 idPostCommentUser: userReportedFound.dataValues.idUser,
