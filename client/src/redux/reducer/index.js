@@ -188,6 +188,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         followed: action.payload,
+      };
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({
