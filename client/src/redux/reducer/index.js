@@ -26,6 +26,7 @@ import {
   FOLLOW_USER,
   FALSE_LIKE,
   FALSE_DISLIKE,
+  GET_USER_PROFILE,
 } from "../actions";
 
 // STATE CREATION
@@ -48,6 +49,7 @@ const initialState = {
   profileImage: "",
   comments: [],
   followed: [],
+  userProfile: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -204,6 +206,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: postsEditable2,
+      };
+    case GET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
       };
     default:
       return { ...state };
