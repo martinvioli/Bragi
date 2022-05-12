@@ -32,10 +32,11 @@ class Follow{
 
             const userFollower = await Follower.findOne({ //busco a el user1 dentro de los seguidores
                 where:{
-                    userProfileFollower: userFwer.idUser,
-                    userNameFollower: userFwer.userName,
+                    userProfileFollower: userFwed.idUser,
+                    userNameFollower: userFwed.userName,
                 }
             })
+            if(userFollower) return res.status(404).json({ msgE: "You already follow this user" })
             // console.log(userFollower)
             // if(userFollower.userProfileFollower && userFollower.UserIdUser){
             //     if(userFollower.userProfileFollower === userFwer.idUser && userFollower.UserIdUser === userFwed.idUser) return res.status(406).json({ msgE: "You already follow this user" })
@@ -45,7 +46,7 @@ class Follow{
 
             const follower = await userFollowerCreate.setUser(userFwed.idUser)//vinculo a user1 con user2
             const followeded = await this.followed(userFwer.idUser, userFwed.userName, userFwed.idUser)
-            console.log(followeded)
+            // console.log(followeded)
 
             if(follower) return res.status(200).json({ msg: "User followed correctly"})
             return res.status(418).json({ msgE: "There was an error trying to follow the user"})
@@ -99,7 +100,7 @@ class Follow{
         if(!findFollowed)return 'asd'
 
         const newFollowed = await Followed.create({ userProfileFollowed: idFollowed, userNameFollowed: userNameFollowed })//le insertamos a user2. user1
-        const followed = await findFollowed.setFolloweds(newFollowed)
+        const followed = await newFollowed.setUser(findFollowed.idUser)
     }
 
     unFollowed = async(userNameFollowed, UserIdUser) => {
@@ -123,11 +124,12 @@ class Follow{
 
             const followers = await Follower.findAll({ where: { UserIdUser: idUser } })
             console.log(1, followers)
+            if(followers.length === 0) return res.status(200).json({ msg: "No one is following you 😥" })
             return res.status(200).json(followers)
         } catch (error) {
             console.log(error)
             return res.status(500).send(error)
-        } 
+        }
     }
 
     getFolloweds = async(req,res) => {
@@ -135,6 +137,7 @@ class Follow{
         try {
             const followeds = await Followed.findAll({ where: { UserIdUser: idUser } })
             console.log(1, followeds)
+            if(followeds.length === 0) return res.status(200).json({ msg: "You are not following anyone 🤔" })
             return res.status(200).json(followeds)
         } catch (error) {
             console.log(error)
