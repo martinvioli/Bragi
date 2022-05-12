@@ -31,6 +31,10 @@ class Admin{
         res.status(200).json(userArtist);
     }
 
+    //Reportes
+    
+
+
     //Banneo de usuarios
     baneoUser = async (req, res) => {
         
