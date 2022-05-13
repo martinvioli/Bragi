@@ -28,6 +28,8 @@ import {
   getAllComments,
   userNewComment,
   listFollowed,
+  falseAddComment,
+  falseAddComentProfile,
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
@@ -44,7 +46,7 @@ import {
 function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
-  const listFolloweds = useSelector((state) => state.listFollowed)
+  const listFolloweds = useSelector((state) => state.listFollowed);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -54,7 +56,7 @@ function Profile(props) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    console.log(user)
+    console.log(user);
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
@@ -184,8 +186,6 @@ function Profile(props) {
     },
   ];
 
-
-
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
   //// VER PERFIL AJENO
@@ -218,6 +218,8 @@ function Profile(props) {
   });
 
   const [slicer, setSlicer] = useState(3);
+
+  console.log(viewPost);
 
   return props.visitant ? (
     <div>
@@ -581,6 +583,16 @@ function Profile(props) {
                 }
                 onClick={() => {
                   dispatch(userNewComment(commentInput));
+                  dispatch(
+                    falseAddComment(
+                      posts.findIndex((e) => e.idPost === viewPost.idPost)
+                    )
+                  );
+                  dispatch(
+                    falseAddComentProfile(
+                      posts.findIndex((e) => e.idPost === viewPost.idPost)
+                    )
+                  );
                   setCommentInput({ ...commentInput, commentContent: "" });
                 }}
               >
@@ -600,8 +612,8 @@ function Profile(props) {
             <div>
               <Button
                 color="transparent"
-                onClick={function noRefCheck(){
-                  setShowModal(true)
+                onClick={function noRefCheck() {
+                  setShowModal(true);
                 }}
               >
                 Followeds
@@ -609,33 +621,35 @@ function Profile(props) {
               <Modal
                 isOpen={showModal}
                 fade={true}
-                toggle={function noRefCheck(){}}
+                toggle={function noRefCheck() {}}
               >
-                <ModalHeader toggle={function noRefCheck(){setShowModal(false)}}>
+                <ModalHeader
+                  toggle={function noRefCheck() {
+                    setShowModal(false);
+                  }}
+                >
                   Followeds
                 </ModalHeader>
                 <ModalBody>
                   {listFolloweds.map((e) => {
-                    console.log(e)
-                    return(
+                    console.log(e);
+                    return (
                       <Link
-                      to={`/profile/${e.userNameFollowed}`}
-                      style={{ color: "black", margin: "5px" }}
-                      onClick={() =>
-                        dispatch(
-                          getUseProfile(token, e.userNameFollowed)
-                        )
-                      }
+                        to={`/profile/${e.userNameFollowed}`}
+                        style={{ color: "black", margin: "5px" }}
+                        onClick={() =>
+                          dispatch(getUseProfile(token, e.userNameFollowed))
+                        }
                       >
-                      {e.userNameFollowed}
+                        {e.userNameFollowed}
                       </Link>
-                    )
+                    );
                   })}
                 </ModalBody>
               </Modal>
             </div>
-              {/* Followeds */}
-            { listFolloweds.length }
+            {/* Followeds */}
+            {listFolloweds.length}
           </div>
           {user.name ? (
             <div>
