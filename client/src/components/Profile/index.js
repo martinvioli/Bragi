@@ -670,24 +670,20 @@ function Profile(props) {
               }}
             >
               Followers
-            </Button>
-            <Modal
-              isOpen={showModal}
-              fade={true}
-              toggle={function noRefCheck() {}}
-            >
-              <ModalHeader
-                toggle={function noRefCheck() {
-                  setShowModal(false);
-                }}
+              </Button>
+              <Modal
+                isOpen={showModal}
+                fade={true}
+                toggle={function noRefCheck(){}}
               >
-                Followers
-              </ModalHeader>
-              <ModalBody>
-                {listFollowerss.map((e) => {
-                  console.log(e);
-                  return (
-                    <Link
+                <ModalHeader toggle={function noRefCheck(){setShowModal(false)}}>
+                  Followers
+                </ModalHeader>
+                <ModalBody>
+                  {listFollowerss.map((e) => {
+                    console.log(e)
+                    return(
+                      <Link
                       to={`/profile/${e.userNameFollower}`}
                       style={{ color: "black", margin: "5px" }}
                       onClick={() =>
