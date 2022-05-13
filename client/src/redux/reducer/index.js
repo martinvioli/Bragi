@@ -35,6 +35,7 @@ import {
   BAN_USER,
   DIS_BAN_USER,
   GET_REPORTS,
+  FALSE_ADDCOMENT,
 } from "../actions";
 
 // STATE CREATION
@@ -185,6 +186,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: action.payload,
       };
+    case FALSE_ADDCOMENT:
+      var addComment = [...state.posts];
+      addComment.splice(action.payload, 1, {
+        ...state.posts[action.payload],
+        Comments: [...state.posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        posts: addComment,
+      };
     case USER_UPDATE_COMMENT:
       return {
         ...state,
@@ -209,8 +222,8 @@ function rootReducer(state = initialState, action) {
     case LIST_FOLLOWED:
       return {
         ...state,
-        listFollowed: action.payload
-      }
+        listFollowed: action.payload,
+      };
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({
@@ -243,7 +256,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.userProfile.Posts,
-      }
+      };
     case GET_STATISTICS:
       return {
         ...state,
