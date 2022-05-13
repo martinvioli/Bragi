@@ -16,6 +16,7 @@ import {
   userNewComment,
   userNewPost,
   getPhotoUser,
+  falseAddComment,
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
@@ -117,6 +118,11 @@ export default function Feed() {
     }
   }, []);
 
+
+  // posts.forEach((e) => {
+  //   // console.log(e)
+  //   dispatch(getPhotoUser(e.User.userName));
+  // });
 
 
   const handleSearchImage = (e) => {
@@ -337,15 +343,6 @@ export default function Feed() {
                             </div>
                           )}
                           <div className={styles.icons}>
-                            <CardLink href={e.linkContent}>
-                              <FcLink
-                                style={{
-                                  marginBottom: "0.4em",
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                              ></FcLink>
-                            </CardLink>
                             <div
                               style={{
                                 marginBottom: "0.4em",
@@ -362,10 +359,6 @@ export default function Feed() {
                                 <br />
                               </span>
                             </div>
-                            <CardSubtitle className="mb-2 text-muted" tag="h6">
-                              {e.contentPost}
-                            </CardSubtitle>
-
                             {e.imagePost && (
                               <div className={styles.img}>
                                 <img
@@ -424,26 +417,6 @@ export default function Feed() {
                                 />
                               </div>
                             </div>
-                            <FcRedo
-                              style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2em",
-                                marginRight: "1em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                              onClick={() => {
-                                setViewPost({ ...e });
-                                dispatch(getAllComments(e.idPost));
-                                handleShowModalComments();
-                                setCommentInput({
-                                  ...commentInput,
-                                  idPost: e.idPost,
-                                  token: token,
-                                });
-                                setSlicer(3);
-                              }}
-                            />
                           </div>
                         </Card>
                       );
@@ -808,6 +781,11 @@ export default function Feed() {
                 }
                 onClick={() => {
                   dispatch(userNewComment(commentInput));
+                  dispatch(
+                    falseAddComment(
+                      posts.findIndex((e) => e.idPost === viewPost.idPost)
+                    )
+                  );
                   setCommentInput({ ...commentInput, commentContent: "" });
                 }}
               >

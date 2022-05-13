@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   CardBody,
@@ -53,6 +53,7 @@ function Profile(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(3);
   const [token, setToken] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     console.log(user)
@@ -598,19 +599,82 @@ function Profile(props) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
+          <div className={styles.followeds}>
             <div>
-              <div>Followeds <div>{listFolloweds.map(e => {
-                return (<div>{e.userNameFollowed}</div>)
-              })}</div></div>
-
-              <div><div>Followers {listFollowerss.map(e => {
-                return (<div>{e.userNameFollower}</div>)
-              })}
-              </div></div>
+              <Button
+                color="transparent"
+                onClick={function noRefCheck(){
+                  setShowModal(true)
+                }}
+              >
+                Followeds
+              </Button>
+              <Modal
+                isOpen={showModal}
+                fade={true}
+                toggle={function noRefCheck(){}}
+              >
+                <ModalHeader toggle={function noRefCheck(){setShowModal(false)}}>
+                  Followeds
+                </ModalHeader>
+                <ModalBody>
+                  {listFolloweds.map((e) => {
+                    console.log(e)
+                    return(
+                      <Link
+                      to={`/profile/${e.userNameFollowed}`}
+                      style={{ color: "black", margin: "5px" }}
+                      onClick={() =>
+                        dispatch(
+                          getUseProfile(token, e.userNameFollowed)
+                        )
+                      }
+                      >
+                      {e.userNameFollowed}
+                      </Link>
+                    )
+                  })}
+                </ModalBody>
+              </Modal>
             </div>
-          
-          
-          
+            
+             <div>
+              <Button
+                color="transparent"
+                onClick={function noRefCheck(){
+                  setShowModal(true)
+                }}
+              >
+                Followers
+              </Button>
+              <Modal
+                isOpen={showModal}
+                fade={true}
+                toggle={function noRefCheck(){}}
+              >
+                <ModalHeader toggle={function noRefCheck(){setShowModal(false)}}>
+                  Followers
+                </ModalHeader>
+                <ModalBody>
+                  {listFollowers.map((e) => {
+                    console.log(e)
+                    return(
+                      <Link
+                      to={`/profile/${e.userNameFollower}`}
+                      style={{ color: "black", margin: "5px" }}
+                      onClick={() =>
+                        dispatch(
+                          getUseProfile(token, e.userNameFollower)
+                        )
+                      }
+                      >
+                      {e.userNameFollower}
+                      </Link>
+                    )
+                  })}
+                </ModalBody>
+              </Modal>
+            </div>
           {user.name ? (
             <div>
               <div>

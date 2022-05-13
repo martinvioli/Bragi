@@ -39,6 +39,7 @@ import {
   GET_STATISTICS,
   GET_REPORTS,
   MODIFY_PLANS_PREMIUMS,
+  FALSE_ADDCOMENT,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -355,6 +356,10 @@ export const deleteComment = function (idComment) {
   };
 };
 
+export const falseAddComment = function (payload) {
+  return { type: FALSE_ADDCOMENT, payload };
+};
+
 /////////////////////////////////////
 ////////////////////////////////////
 //               DETAILS OPTIONS
@@ -432,8 +437,11 @@ export const unfollowUser = (obj) => {
 export const listFollowed = (userName) => {
   return async (dispatch) => {
     try {
-      console.log(userName)
-      const response = await axios.post('http://localhost:3001/follow/followeds', { userName: userName });
+      console.log(userName);
+      const response = await axios.post(
+        "http://localhost:3001/follow/followeds",
+        { userName: userName }
+      );
       console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
