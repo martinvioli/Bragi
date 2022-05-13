@@ -1,11 +1,22 @@
 const { Router } = require('express');
-const User = require('../Controllers/User');
+const Admin = require('../Controllers/Admin');
 const { verifyToken } = require('../middlewares/authjwt')
 
 
 const router = Router();
-const user = new User();
+const admin = new Admin()
 
-router.get('/', user.getAllUsers);
+//Estadisticas
+router.get('/getUserStandar', admin.getUserStandar);
+router.get('/getUserPremium', admin.getUserPremium);
+router.get('/getUserArtist', admin.getUserArtist);
+
+//Reports
+router.get('/reports/reportsUser', admin.getUserReport);
+router.get('/reports/reportsPost', admin.getPostReport);
+router.get('/reports/reportsComment', admin.getCommentReport);
+router.get('/reports/:idReport', admin.getReport);
+router.get('/reports', admin.allReport);
+
 
 module.exports = router;

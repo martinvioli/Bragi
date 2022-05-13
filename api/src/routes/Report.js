@@ -1,13 +1,13 @@
 const {Router} = require('express');
-const RowReport = require('../Controllers/RowReport');
+const ReportPCU = require('../Controllers/ReportPCU');
 const { verifyToken } = require('../middlewares/authjwt')
 
 
 const router = Router();
-const rowReport = new RowReport();
+const reportPCU = new ReportPCU();
 
-router.post('/comment', rowReport.reportComment)
-router.post('/post', rowReport.reportPost)
-router.post('/user', rowReport.reportUser)
+router.post('/comment', reportPCU.reportComment);
+router.post('/post', reportPCU.reportPost);
+router.post('/user', reportPCU.reportUser);
 
 module.exports = router;
