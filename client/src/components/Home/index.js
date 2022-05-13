@@ -105,6 +105,7 @@ function Home() {
         alert("No hay busqueda por genero.");
         break;
       case "user":
+        dispatch(clearData());
         dispatch(getUserByName(input.search));
         break;
       default:

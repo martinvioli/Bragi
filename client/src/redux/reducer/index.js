@@ -121,6 +121,7 @@ function rootReducer(state = initialState, action) {
         song: [],
         artist: [],
         album: [],
+        usersList: [],
       };
     case GET_TOP_10_ALBUMS:
       return {
