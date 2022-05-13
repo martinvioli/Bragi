@@ -20,6 +20,6 @@ router.put("/comment/edit/:idComment", postComment.editComment);
 router.delete("/comment/:idComment", postComment.deleteComment);
 router.get("/comments/:idPost", post.getAllComments);
 
-router.get("/:id/posts", user.getUserPosts);
+router.get("/:userName/posts", user.getUserPosts);
 
 module.exports = router;
