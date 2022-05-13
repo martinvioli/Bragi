@@ -36,7 +36,7 @@ function LandingPage() {
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
     if (userToken) {
-      navigate("/home");
+      navigate("/feed");
     }
   }, []);
 

@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-bottom: 2px;
+  margin-top: -10px;
 }
 .premiumSector {
   /* height: 70em;
@@ -40,6 +40,7 @@
 .newPost {
   height: 100%;
   margin-left: 10em;
+  margin-top: -100px;
   /* border: 1px solid black; */
   width: 100%;
 }
@@ -104,6 +105,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 }
 .backgroundPost {
   background-color: white;
@@ -133,7 +135,66 @@
   width: 45%;
 }
 
-.date{
+.loadMoreComments {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.loadMoreComments:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.date {
   opacity: 30%;
   margin-left: 5px;
+  color: black;
 }
+
+.profileImg {
+  /*padding-top: 2px;*/
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  /* align-items: center;
+  justify-content: center; */
+  /* border-radius: 50%;
+  margin-top: 15px; */
+  /* display: block; */
+  margin-left: -170px;
+  height: 45px;
+  width: 45px;
+  border: 1px solid black;
+}
+.userName{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.profileImgArt {
+  /*padding-top: 2px;*/
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  /* align-items: center;
+  justify-content: center; */
+  /* border-radius: 50%;*/
+  /* margin-top: -50px; */
+  /* display: block; */
+  margin-left: -170px;
+  height: 45px;
+  width: 45px;
+  border: 1px solid black;
+}
+
+/* .userNameArt {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.dateArt {
+  display: inline-block;
+  opacity: 30%;
+  margin-left: 5px;
+  color: black;
+} */

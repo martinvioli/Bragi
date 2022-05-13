@@ -127,6 +127,7 @@ function EditProfile({ showModal, handleShowModal }) {
   const handleShowPassword = (e) => setShowPassword(!showPassword);
 
   const handleSubmitBasicData = async (e) => {
+    e.preventDefault();
     console.log(photoProfile);
     const fd = new FormData();
     fd.append("photoProfile", photoProfile);
@@ -196,6 +197,7 @@ function EditProfile({ showModal, handleShowModal }) {
       description: "",
     });
     handleShowModal();
+    navigate("/profile");
   };
 
   const handleTabs = (tab) => {

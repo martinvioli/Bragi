@@ -7,4 +7,4 @@ conn.sync({ force: false }).then(() => {
   server.listen(process.env.PORT || 3001, () => {
     console.log("Connected successfully to the PORT."); // eslint-disable-line no-console
   });
-});
+}); 

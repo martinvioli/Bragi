@@ -93,13 +93,15 @@ class Follow{
         }
     }
 
+
 //foolowed cuando siga a alguien va a invocar a follwAction
     followed = async(idFollower, userNameFollowed, idFollowed) => { //follower: user1, followed: user2
         const findFollowed = await User.findOne({ where: { idUser: idFollower }}) //findfollowed === user2
+        console.log(findFollowed)
         if(!findFollowed)return 'asd'
 
         const newFollowed = await Followed.create({ userProfileFollowed: idFollowed, userNameFollowed: userNameFollowed })//le insertamos a user2. user1
-        const followed = await findFollowed.setFolloweds(newFollowed)
+        const followed = await newFollowed.setUser(findFollowed.idUser)
     }
 
     unFollowed = async(userNameFollowed, UserIdUser) => {
@@ -115,6 +117,36 @@ class Follow{
 
         const deleteFollowed = await findFollowedInDb.destroy()
         return { msg: "Unfollowed correctly" }
+    }
+
+    getFollowers = async(req,res) => {
+        const { idUser } = req.body;
+        try {
+
+            const followers = await Follower.findAll({ where: { UserIdUser: idUser } })
+            console.log(1, followers)
+            return res.status(200).json(followers)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error)
+        } 
+    }
+
+    getFolloweds = async(req,res) => {
+        const {userName} = req.body;
+        try {
+            const user = await User.findOne({ //busco a user2
+                where: {
+                    userName: userName
+                }
+            })
+            const followeds = await Followed.findAll({ where: { UserIdUser: user.idUser } })
+            console.log(1, followeds)
+            return res.status(200).json(followeds)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error)
+        }
     }
 }
 

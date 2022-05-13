@@ -9,6 +9,7 @@ const apiHeroku = {
   searchGenreUrl: "https://bragiproject.herokuapp.com/genre",
   searchUrl: "https://bragiproject.herokuapp.com/searh",
   getUser: "https://bragiproject.herokuapp.com/profileUser/getData",
+  getUserProfile: "https://bragiproject.herokuapp.com/profileUser/profile",
   searchSongByName: "https://bragiproject.herokuapp.com/search/song",
   searchAlbumByName: "https://bragiproject.herokuapp.com/search/album",
   searchArtistByName: "https://bragiproject.herokuapp.com/artist",
@@ -34,12 +35,20 @@ const apiHeroku = {
   updateSensitiveData:
     "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
   getAllComments: "https://bragiproject.herokuapp.com/post/comments",
-  userNewComment: "https://bragiproject.herokuapp.com/post/comments",
-  userUpdateComment: "https://bragiproject.herokuapp.com/post/comments/edit",
-  deleteComment: "https://bragiproject.herokuapp.com/post/comments",
+  userNewComment: "https://bragiproject.herokuapp.com/post/comment",
+  userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
+  deleteComment: "https://bragiproject.herokuapp.com/post/comment",
   reportComment: "https://bragiproject.herokuapp.com/report/comment",
   reportPost: "https://bragiproject.herokuapp.com/report/post",
   reportUser: "https://bragiproject.herokuapp.com/report/user",
+  followUser: "https://bragiproject.herokuapp.com/follow",
+  unfollowUser: "https://bragiproject.herokuapp.com/unfollow",
+  likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
+  dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
+  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
+  disBanUser: "https://bragiproject.herokuapp.com/admin/allowUser",
+  getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
+  getAllReports: "https://bragiproject.herokuapp.com/admin/getAllReports",
 };
 
 const api = {
@@ -53,6 +62,7 @@ const api = {
   searchGenreUrl: "http://localhost:3001/genre",
   searchUrl: "http://localhost:3001/searh",
   getUser: "http://localhost:3001/profileUser/getData",
+  getUserProfile: "http://localhost:3001/profileUser/profile",
   searchSongByName: "http://localhost:3001/search/song",
   searchAlbumByName: "http://localhost:3001/search/album",
   searchArtistByName: "http://localhost:3001/artist",
@@ -74,12 +84,20 @@ const api = {
   updateSensitiveData:
     "http://localhost:3001/profileUser/editionSensitiveProfile",
   getAllComments: "http://localhost:3001/post/comments",
-  userNewComment: "http://localhost:3001/post/comments",
-  userUpdateComment: "http://localhost:3001/post/comments/edit",
-  deleteComment: "http://localhost:3001/post/comments",
+  userNewComment: "http://localhost:3001/post/comment",
+  userUpdateComment: "http://localhost:3001/post/comment/edit",
+  deleteComment: "http://localhost:3001/post/comment",
   reportComment: "http://localhost:3001/report/comment",
   reportPost: "http://localhost:3001/report/post",
   reportUser: "http://localhost:3001/report/user",
+  followUser: "http://localhost:3001/follow",
+  unfollowUser: "http://localhost:3001/unfollow",
+  likePost: "http://localhost:3001/reactionHeart/likePost",
+  dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
+  banUser: "http://localhost:3001/admin/banUser",
+  disBanUser: "http://localhost:3001/admin/allowUser",
+  getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
+  getAllReports: "http://localhost:3001/admin/getAllReports",
 };
 
 export default api;
