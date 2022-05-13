@@ -117,10 +117,7 @@ export default function Feed() {
     }
   }, []);
 
-  posts.forEach((e) => {
-    // console.log(e)
-    dispatch(getPhotoUser(e.User.userName));
-  });
+
 
   const handleSearchImage = (e) => {
     setInput({
