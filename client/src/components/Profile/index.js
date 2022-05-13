@@ -30,6 +30,7 @@ import {
   listFollowed,
   falseAddComment,
   falseAddComentProfile,
+  listFollowers,
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
@@ -46,7 +47,8 @@ import {
 function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
-  const listFolloweds = useSelector((state) => state.listFollowed);
+  const listFolloweds = useSelector((state) => state.listFollowed)
+  const listFollowerss = useSelector((state) => state.listFollowers)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -63,6 +65,7 @@ function Profile(props) {
     dispatch(getUser(userToken));
     dispatch(getPhotoUser(user.userName));
     dispatch(listFollowed(user.userName));
+    dispatch(listFollowers(user.userName));
     if (!user.name) {
       navigate("/");
     }
@@ -651,6 +654,44 @@ function Profile(props) {
             {/* Followeds */}
             {listFolloweds.length}
           </div>
+             <div>
+              <Button
+                color="transparent"
+                onClick={function noRefCheck(){
+                  setShowModal(true)
+                }}
+              >
+                Followers
+              </Button>
+              <Modal
+                isOpen={showModal}
+                fade={true}
+                toggle={function noRefCheck(){}}
+              >
+                <ModalHeader toggle={function noRefCheck(){setShowModal(false)}}>
+                  Followers
+                </ModalHeader>
+                <ModalBody>
+                  {listFollowers.map((e) => {
+                    console.log(e)
+                    return(
+                      <Link
+                      to={`/profile/${e.userNameFollower}`}
+                      style={{ color: "black", margin: "5px" }}
+                      onClick={() =>
+                        dispatch(
+                          getUseProfile(token, e.userNameFollower)
+                        )
+                      }
+                      >
+                      {e.userNameFollower}
+                      </Link>
+                    )
+                  })}
+                </ModalBody>
+              </Modal>
+            </div>
+
           {user.name ? (
             <div>
               <div>

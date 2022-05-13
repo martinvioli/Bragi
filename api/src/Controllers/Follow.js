@@ -120,10 +120,16 @@ class Follow{
     }
 
     getFollowers = async(req,res) => {
-        const { idUser } = req.body;
+        const { userName } = req.body;
         try {
 
-            const followers = await Follower.findAll({ where: { UserIdUser: idUser } })
+            const user = await User.findOne({ //busco a user2
+                where: {
+                    userName: userName
+                }
+            })
+
+            const followers = await Follower.findAll({ where: { UserIdUser: user.idUser } })
             console.log(1, followers)
             return res.status(200).json(followers)
         } catch (error) {
