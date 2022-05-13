@@ -21,7 +21,7 @@ function Top10() {
   return (
     <>
       <div className={`${styles.divContainer}`} style={{ color: "white" }}>
-        <div className="row aling-items-start">
+        <div>
           <h3>Top 10 Artists</h3>
           <div class={`col ${styles.columnArtists}`}>
               <hr/>
@@ -35,7 +35,7 @@ function Top10() {
                         <div class={styles.overlay}>
                           <div class={styles.text}>
                             <p>{e.position}</p>
-                            <a href={e.link}>{e.name}</a>
+                            <a style={{ color: "white" }} href={e.link}>{e.name}</a>
                           </div>
                         </div>
                       </div>

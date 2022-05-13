@@ -1,3 +1,11 @@
+.divContainer {
+  margin-top: 0px;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  /* max-width: 250px; */
+  /* flex-direction: column; */
+}
 .audio {
   height: 35px;
   width: 150px;
@@ -7,6 +15,7 @@
   margin: auto;
 }
 
+
 .columnArtists {
   background-color: rgba(66, 66, 66, 0.651);
   border: 1px solid rgb(28, 28, 28);
@@ -14,12 +23,6 @@
   flex-direction: row;
   overflow: hidden;
   text-align: center;
-
-  /* max-width: 250px; */
-  /*rgba(2, 2, 53, 0.507);*/
-  /* margin-right: 2px; */
-  /*rgba(2, 2, 53, 0.507);*/
-  /* width: 100px; */
 }
 
 .columnSongs {
@@ -29,8 +32,8 @@
   flex-direction: row;
   overflow: hidden;
   text-align: center;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 
   /* max-width: 250px; */
   /*rgba(2, 2, 53, 0.507);*/
@@ -46,8 +49,9 @@
   flex-direction: row;
   overflow: hidden;
   text-align: center;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 25px;
 
   /* max-width: 250px; */
   /*rgba(2, 2, 53, 0.507);*/
@@ -56,14 +60,8 @@
   /* width: 100px; */
 }
 
-.divContainer {
-  margin-top: 100px;
-  height: auto;
-  display: flex;
-  justify-content: space-around;
-  /* max-width: 250px; */
-  /* flex-direction: column; */
-}
+
+
 
 a {
   display: inline-block;
@@ -79,9 +77,9 @@ div {
 }
 
 img{
-  width: 90%;
-  height: auto;
-  border-radius: 100px;
+  width: 150px;
+  height: 250px;
+  border-radius: 0px;
 }
 
 label {
@@ -118,8 +116,7 @@ h3{
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #dd9202;
-  border-radius: 100px;
+  background-color: #1c1c1cd9;
   overflow: hidden;
 }
 
@@ -128,7 +125,7 @@ h3{
 }
 
 .text {
-  color: white;
+  color: #dd9202;
   font-size: 20px;
   top: 50%;
   left: 50%;
