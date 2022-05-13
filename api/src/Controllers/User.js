@@ -1,4 +1,4 @@
-const { User, Post, Like, Comment, Followed, Follower } = require("../db.js");
+const { User, Post, Like, Comment, Followed, Follower , MembershipUser, PlanPremium} = require("../db.js");
 const validation = require("../Validations/auths.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -135,6 +135,11 @@ class UserClass {
     );
     if (valid) return res.status(400).send(valid);
 
+    const planPremium = await PlanPremium.create({
+      priceMembership: 2.0,
+      namePlanPremium: 'Standar',
+      numberOfMonths: 3
+    })
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
@@ -169,6 +174,14 @@ class UserClass {
         validationCode: codeNum,
         token,
       });
+      const today = new Date();
+      const membershipUser = await MembershipUser.create({
+        statePlan:'Inactive',
+        dateStart: today.getDate()+'-'+(today.getMonth()+1)+'-'+(today.getFullYear()),
+        dateExpiry: today.getDate()+'-'+(today.getMonth()+(3))
+      })
+      planPremium.addMembershipUser(membershipUser);
+      membershipUser.addUser(user);
       return res.status(200).json({ msg: "User created successfully", token }); //Prueba para el front
     } catch (error) {
       console.log(error);
