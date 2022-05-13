@@ -1,4 +1,4 @@
-const apiHeroku = {
+const api = {
   baseUrl: "https://bragiproject.herokuapp.com/",
   registerUrl: "https://bragiproject.herokuapp.com/register/",
   registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
@@ -51,7 +51,7 @@ const apiHeroku = {
   getAllReports: "https://bragiproject.herokuapp.com/admin/getAllReports",
 };
 
-const api = {
+const apiLocal = {
   baseUrl: "http://localhost:3001/",
   registerUrl: "http://localhost:3001/register/",
   registerValidateUrl: "http://localhost:3001/register/validate",
