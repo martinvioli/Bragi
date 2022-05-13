@@ -28,6 +28,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
@@ -444,6 +445,22 @@ export const listFollowed = (userName) => {
       console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const listFollowers = (userName) => {
+  return async (dispatch) => {
+    try {
+      console.log(userName)
+      const response = await axios.post('http://localhost:3001/follow/followers', { userName: userName });
+      console.log(response.data);
+      return dispatch({
+        type: LIST_FOLLOWERS,
         payload: response.data,
       });
     } catch (error) {

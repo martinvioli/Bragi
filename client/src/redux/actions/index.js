@@ -41,6 +41,7 @@ export const FALSE_ADDCOMENT = "FALSE_ADDCOMENT";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const LIST_FOLLOWED = "LIST_FOLLOWED";
+export const LIST_FOLLOWERS = "LIST_FOLLOWERS";
 // LIKES
 export const FALSE_LIKE = "FALSE_LIKE";
 export const FALSE_DISLIKE = "FALSE_DISLIKE";
