@@ -118,12 +118,10 @@ export default function Feed() {
     }
   }, []);
 
-
   // posts.forEach((e) => {
   //   // console.log(e)
   //   dispatch(getPhotoUser(e.User.userName));
   // });
-
 
   const handleSearchImage = (e) => {
     setInput({
@@ -731,7 +729,15 @@ export default function Feed() {
                 {comments.slice(0, slicer).map((e) => (
                   <Card key={e.idComment} style={{ marginBottom: "0.5em" }}>
                     <CardBody>
-                      <CardTitle tag="h5">{e.userNameComment}</CardTitle>
+                      <CardTitle tag="h5">
+                        {user.userName === e.userNameComment ? (
+                          e.userNameComment
+                        ) : (
+                          <Link to={`/profile/${e.userNameComment}`}>
+                            {e.userNameComment}
+                          </Link>
+                        )}
+                      </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"
                         style={{ fontSize: "small" }}
