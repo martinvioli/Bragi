@@ -18,5 +18,9 @@ router.get('/reports/reportsComment', admin.getCommentReport);
 router.get('/reports/:idReport', admin.getReport);
 router.get('/reports', admin.allReport);
 
+//User Management
+
+
+
 
 module.exports = router;

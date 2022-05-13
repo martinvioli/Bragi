@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
         default: 'Inactive'
         },
         dateStart: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         dateExpiry: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         
