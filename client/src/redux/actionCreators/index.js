@@ -27,6 +27,7 @@ import {
   DELETE_COMMENT,
   FOLLOW_USER,
   UNFOLLOW_USER,
+  LIST_FOLLOWED,
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
@@ -399,6 +400,22 @@ export const unfollowUser = (obj) => {
       console.log(response.data);
       return dispatch({
         type: UNFOLLOW_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const listFollowed = (userName) => {
+  return async (dispatch) => {
+    try {
+      console.log(userName)
+      const response = await axios.post('http://localhost:3001/follow/followeds', { userName: userName });
+      console.log(response.data);
+      return dispatch({
+        type: LIST_FOLLOWED,
         payload: response.data,
       });
     } catch (error) {

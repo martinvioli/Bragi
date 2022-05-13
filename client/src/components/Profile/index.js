@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import { getPhotoUser, getUser } from "../../redux/actionCreators";
+import { getPhotoUser, getUser, listFollowed } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 
 function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
+  const listFolloweds = useSelector((state) => state.listFollowed)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -16,10 +17,12 @@ function Profile(props) {
   const [perPage] = useState(3);
 
   useEffect(() => {
+    console.log(user)
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
     dispatch(getUser(userToken));
     dispatch(getPhotoUser(user.userName));
+    dispatch(listFollowed(user.userName));
     if (!user.name) {
       navigate("/");
     }
@@ -143,6 +146,8 @@ function Profile(props) {
     },
   ];
 
+
+
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
   //// VER PERFIL AJENO
@@ -263,6 +268,10 @@ function Profile(props) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
+          {  listFolloweds.map(e => {
+            return (<div>{e.userNameFollowed}</div>)
+            
+          })}
           {user.name ? (
             <div>
               <div>

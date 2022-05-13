@@ -37,7 +37,7 @@ export const DELETE_COMMENT = "DELETE_COMMENT";
 //FOLLOW
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
-
+export const LIST_FOLLOWED = "LIST_FOLLOWED";
 // LIKES
 export const FALSE_LIKE = "FALSE_LIKE";
 export const FALSE_DISLIKE = "FALSE_DISLIKE";
