@@ -27,6 +27,7 @@ import {
   falseLike,
   getAllComments,
   userNewComment,
+  listFollowed,
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
@@ -43,6 +44,7 @@ import {
 function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
+  const listFolloweds = useSelector((state) => state.listFollowed)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -51,11 +53,13 @@ function Profile(props) {
   const [token, setToken] = useState();
 
   useEffect(() => {
+    console.log(user)
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
     dispatch(getUser(userToken));
     dispatch(getPhotoUser(user.userName));
+    dispatch(listFollowed(user.userName));
     if (!user.name) {
       navigate("/");
     }
@@ -178,6 +182,8 @@ function Profile(props) {
       date: "09/12/1970",
     },
   ];
+
+
 
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
@@ -589,6 +595,10 @@ function Profile(props) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
+          {  listFolloweds.map(e => {
+            return (<div>{e.userNameFollowed}</div>)
+            
+          })}
           {user.name ? (
             <div>
               <div>
