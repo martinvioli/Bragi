@@ -28,6 +28,7 @@ import {
   FALSE_DISLIKE,
   GET_USER_PROFILE,
   UNFOLLOW_USER,
+  LIST_FOLLOWED,
   GET_OWN_POSTS,
   POST_REEPLACER,
   GET_STATISTICS,
@@ -57,6 +58,7 @@ const initialState = {
   comments: [],
   followed: [],
   unfollowed: [],
+  listFollowed: [],
   userProfile: {},
   ownPosts: [],
   statistics: {},
@@ -203,6 +205,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         unfollowed: action.payload,
       };
+
+    case LIST_FOLLOWED:
+      return {
+        ...state,
+        listFollowed: action.payload
+      }
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({
