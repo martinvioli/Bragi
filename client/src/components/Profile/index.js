@@ -28,6 +28,7 @@ import {
   getAllComments,
   userNewComment,
   listFollowed,
+  listFollowers,
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
@@ -45,6 +46,7 @@ function Profile(props) {
   var user = useSelector((state) => state.user);
   const profileImage = useSelector((state) => state.profileImage);
   const listFolloweds = useSelector((state) => state.listFollowed)
+  const listFollowerss = useSelector((state) => state.listFollowers)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -60,6 +62,7 @@ function Profile(props) {
     dispatch(getUser(userToken));
     dispatch(getPhotoUser(user.userName));
     dispatch(listFollowed(user.userName));
+    dispatch(listFollowers(user.userName));
     if (!user.name) {
       navigate("/");
     }
@@ -595,10 +598,19 @@ function Profile(props) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
-          {  listFolloweds.map(e => {
-            return (<div>{e.userNameFollowed}</div>)
-            
-          })}
+            <div>
+              <div>Followeds <div>{listFolloweds.map(e => {
+                return (<div>{e.userNameFollowed}</div>)
+              })}</div></div>
+
+              <div><div>Followers {listFollowerss.map(e => {
+                return (<div>{e.userNameFollower}</div>)
+              })}
+              </div></div>
+            </div>
+          
+          
+          
           {user.name ? (
             <div>
               <div>

@@ -29,6 +29,7 @@ import {
   GET_USER_PROFILE,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   GET_OWN_POSTS,
   POST_REEPLACER,
   GET_STATISTICS,
@@ -59,6 +60,7 @@ const initialState = {
   followed: [],
   unfollowed: [],
   listFollowed: [],
+  listFollowers: [],
   userProfile: {},
   ownPosts: [],
   statistics: {},
@@ -210,6 +212,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         listFollowed: action.payload
+      }
+    case LIST_FOLLOWERS:
+      return {
+        ...state,
+        listFollowers: action.payload
       }
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
