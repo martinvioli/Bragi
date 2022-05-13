@@ -69,7 +69,9 @@ const {
   BlockedUser,
   Like,
   RowReport,
-  ReportPostCommentUser
+  ReportPostCommentUser,
+  MembershipUser,
+  PlanPremium
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -87,6 +89,12 @@ BlockedUser.belongsTo(User);
 User.hasMany(Post);
 Post.belongsTo(User);
 
+MembershipUser.hasMany(User);
+User.belongsTo(MembershipUser);
+
+PlanPremium.hasMany(MembershipUser);
+MembershipUser.belongsTo(PlanPremium);
+
 Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
@@ -95,6 +103,15 @@ Like.belongsTo(Post);
 
 Comment.hasMany(Like);
 Like.belongsTo(Comment);
+
+Comment.hasMany(ReportPostCommentUser);
+ReportPostCommentUser.belongsTo(Comment);
+
+Post.hasMany(ReportPostCommentUser);
+ReportPostCommentUser.belongsTo(Post);
+
+User.hasMany(ReportPostCommentUser);
+ReportPostCommentUser.belongsTo(User);
 
 ReportPostCommentUser.belongsToMany(RowReport, { through: "ReportPostCommentUser_RowReport"});
 RowReport.belongsToMany(ReportPostCommentUser, { through: "ReportPostCommentUser_RowReport"});
