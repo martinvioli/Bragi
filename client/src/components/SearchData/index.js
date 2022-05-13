@@ -32,7 +32,7 @@ function SearchData({ data }) {
     );
     console.log(userToken);
     // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    let obj = { token: userToken, tokenFollowed: data.token };
     console.log(obj);
     dispatch(followUser(obj));
   };
@@ -42,7 +42,7 @@ function SearchData({ data }) {
     );
     console.log(userToken);
     // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    let obj = { token: userToken, tokenFollowed: data.token };
     console.log(obj);
     dispatch(unfollowUser(obj));
   };

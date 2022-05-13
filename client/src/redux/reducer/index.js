@@ -29,12 +29,15 @@ import {
   GET_USER_PROFILE,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   GET_OWN_POSTS,
   POST_REEPLACER,
   GET_STATISTICS,
   BAN_USER,
   DIS_BAN_USER,
   GET_REPORTS,
+  FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
 } from "../actions";
 
 // STATE CREATION
@@ -59,6 +62,7 @@ const initialState = {
   followed: [],
   unfollowed: [],
   listFollowed: [],
+  listFollowers: [],
   userProfile: {},
   ownPosts: [],
   statistics: {},
@@ -185,6 +189,30 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: action.payload,
       };
+    case FALSE_ADDCOMENT:
+      var addComment = [...state.posts];
+      addComment.splice(action.payload, 1, {
+        ...state.posts[action.payload],
+        Comments: [...state.posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        posts: addComment,
+      };
+    case FALSE_ADDCOMENTPROFILE:
+      var addCommentProfile = [...state.userProfile.Posts];
+      addCommentProfile.splice(action.payload, 1, {
+        ...state.userProfile.Posts[action.payload],
+        Comments: [...state.userProfile.Posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        userProfile: { ...state.userProfile, Posts: addCommentProfile },
+      };
     case USER_UPDATE_COMMENT:
       return {
         ...state,
@@ -209,7 +237,12 @@ function rootReducer(state = initialState, action) {
     case LIST_FOLLOWED:
       return {
         ...state,
-        listFollowed: action.payload
+        listFollowed: action.payload,
+      };
+    case LIST_FOLLOWERS:
+      return {
+        ...state,
+        listFollowers: action.payload
       }
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
@@ -243,7 +276,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.userProfile.Posts,
-      }
+      };
     case GET_STATISTICS:
       return {
         ...state,

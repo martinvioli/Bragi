@@ -227,3 +227,32 @@
 .assistedConcert > p:nth-child(3) {
   font-size: small;
 }
+
+.followeds{
+  display: grid;
+  text-align: center;
+  margin-right: -100px;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: large;
+}
+
+.followers {
+  text-align: center;
+  margin-right: 100px;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: large;
+}
+
+.followList{
+    margin-top: 1em;
+      overflow-y: auto;
+      display: grid;
+      gap: -12px;
+      grid-template-columns: repeat(2, 1fr);
+      /* display: flex;*/
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+}

@@ -28,6 +28,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
@@ -38,6 +39,8 @@ import {
   GET_STATISTICS,
   GET_REPORTS,
   MODIFY_PLANS_PREMIUMS,
+  FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -354,6 +357,14 @@ export const deleteComment = function (idComment) {
   };
 };
 
+export const falseAddComment = function (payload) {
+  return { type: FALSE_ADDCOMENT, payload };
+};
+
+export const falseAddComentProfile = function (payload) {
+  return { type: FALSE_ADDCOMENTPROFILE, payload };
+};
+
 /////////////////////////////////////
 ////////////////////////////////////
 //               DETAILS OPTIONS
@@ -431,11 +442,30 @@ export const unfollowUser = (obj) => {
 export const listFollowed = (userName) => {
   return async (dispatch) => {
     try {
-      console.log(userName)
-      const response = await axios.post('http://localhost:3001/follow/followeds', { userName: userName });
+      console.log(userName);
+      const response = await axios.post(
+        "http://localhost:3001/follow/followeds",
+        { userName: userName }
+      );
       console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const listFollowers = (userName) => {
+  return async (dispatch) => {
+    try {
+      console.log(userName)
+      const response = await axios.post('http://localhost:3001/follow/followers', { userName: userName });
+      console.log(response.data);
+      return dispatch({
+        type: LIST_FOLLOWERS,
         payload: response.data,
       });
     } catch (error) {
