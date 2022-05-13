@@ -40,6 +40,7 @@ import {
   GET_REPORTS,
   MODIFY_PLANS_PREMIUMS,
   FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -358,6 +359,10 @@ export const deleteComment = function (idComment) {
 
 export const falseAddComment = function (payload) {
   return { type: FALSE_ADDCOMENT, payload };
+};
+
+export const falseAddComentProfile = function (payload) {
+  return { type: FALSE_ADDCOMENTPROFILE, payload };
 };
 
 /////////////////////////////////////

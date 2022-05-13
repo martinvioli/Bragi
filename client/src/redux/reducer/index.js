@@ -37,6 +37,7 @@ import {
   DIS_BAN_USER,
   GET_REPORTS,
   FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
 } from "../actions";
 
 // STATE CREATION
@@ -199,6 +200,18 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: addComment,
+      };
+    case FALSE_ADDCOMENTPROFILE:
+      var addCommentProfile = [...state.userProfile.Posts];
+      addCommentProfile.splice(action.payload, 1, {
+        ...state.userProfile.Posts[action.payload],
+        Comments: [...state.userProfile.Posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        userProfile: { ...state.userProfile, Posts: addCommentProfile },
       };
     case USER_UPDATE_COMMENT:
       return {
