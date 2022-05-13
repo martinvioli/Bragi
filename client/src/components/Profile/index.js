@@ -672,7 +672,7 @@ function Profile(props) {
                   Followers
                 </ModalHeader>
                 <ModalBody>
-                  {listFollowers.map((e) => {
+                  {listFollowerss.map((e) => {
                     console.log(e)
                     return(
                       <Link
