@@ -147,7 +147,7 @@ function Home() {
       {show ? (
         <div className={`${styles.divContainer}`}>
           <div className={`${styles.inputContainer}`}>
-            <div className="container" style={{ marginTop: "100px" }}>
+            <div className="container" style={{ marginTop: "100px", width: "50%" }}>
               <Form onSubmit={handleSubmitInput}>
                 <Input
                   type="select"
@@ -173,13 +173,13 @@ function Home() {
                 <Input type="submit" value="Search" />
               </Form>
             </div>
-            <div style={{ color: "white" }}>
+            <div className="searchData" style={{ color: "white", backgroundColor: "transparent" }}>
               {song &&
                 song.map((e) => {
                   return (
                     <Link
                       to={`/song/${e.id}`}
-                      style={{ display: "inline-block" }}
+                      style={{ display: "inline-block", color: "#f5f5f5" }}
                     >
                       <div
                         className={`${styles.searchData}`}
@@ -196,7 +196,7 @@ function Home() {
               {album &&
                 album.map((e) => {
                   return (
-                    <Link to={`/album/${e.id}`}>
+                    <Link style={{ color: "white", backgroundColor: "transparent" }} to={`/album/${e.id}`}>
                       <div key={e.id} style={{ display: "inline-block" }}>
                         <SearchData data={e} />
                       </div>
