@@ -21,9 +21,14 @@ import {
 } from "reactstrap";
 import {
   getAllReports,
-  getAllStatistics,
   getUserByName,
   getAllPost,
+  getStandarUsers,
+  getPremiumUsers,
+  getArtistUsers,
+  getUserReports,
+  getCommentReports,
+  getPostReports,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -38,9 +43,16 @@ import api from "../../Utils";
 import { Link } from "react-router-dom";
 function Admin() {
   const user = useSelector((state) => state.user);
-  const userSearch = useSelector((state) => state.usersList);
-  const dispatch = useDispatch();
+  const premiumUsers = useSelector((state) => state.premiumUsers);
+  const standardUsers = useSelector((state) => state.artistUsers);
+  const artistUsers = useSelector((state) => state.standardUsers);
+  const commentReports = useSelector((state) => state.commentReports);
+  const postReports = useSelector((state) => state.postReports);
+  const userReports = useSelector((state) => state.userReports);
   const posts = useSelector((state) => state.posts);
+  const userSearch = useSelector((state) => state.usersList);
+
+  const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState("1");
 
@@ -54,6 +66,13 @@ function Admin() {
 
   useEffect(() => {
     dispatch(getAllPost());
+    dispatch(getStandarUsers());
+    dispatch(getPremiumUsers());
+    dispatch(getArtistUsers());
+    // dispatch(getAllReports());
+    dispatch(getUserReports());
+    dispatch(getCommentReports());
+    dispatch(getPostReports());
   }, []);
 
   const handleSubmitInput = (e) => {
@@ -73,10 +92,6 @@ function Admin() {
     alert("Banear");
     //dispatch(banUser(id))
   };
-
-  const getStatistics = () => dispatch(getAllStatistics());
-
-  const getReports = () => dispatch(getAllReports());
 
   const modifyPlan = (e) => {
     e.preventDefault();
