@@ -67,11 +67,9 @@ export default function validate(input) {
   }
   if (!input.userName) {
     errors.userName = "Username is required";
-  } else if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(input.userName)
-  ) {
+  } else if (!/^([A-Za-z]){8,15}$/.test(input.userName)) {
     errors.userName =
-      "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
+      "Username must be only letters and must have a length of 8 as minimum and 15 as maximum.";
   }
   if (!input.birthday) {
     errors.birthday = "Birthday is required";
@@ -118,9 +116,7 @@ export function validateEdit(input) {
     errors.password =
       "Password must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
-  if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(input.userName)
-  ) {
+  if (!/^([A-Za-z]){8,15}$/.test(input.userName)) {
     errors.userName =
       "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }

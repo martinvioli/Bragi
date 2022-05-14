@@ -26,6 +26,7 @@ import {
   getToken,
   clearData,
   getPhotoUser,
+  getTop10Songs,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
 import { Link, useNavigate } from "react-router-dom";
@@ -87,6 +88,14 @@ function Home() {
 
   const handleSubmitInput = (e) => {
     e.preventDefault();
+    if (!input.search) {
+      dispatch(clearData());
+      Swal.fire({
+        title: "We were unable to perform your search 😪",
+        confirmButtonColor: "#dd9202",
+      });
+      dispatch(getTop10Songs());
+    }
     switch (input.searchOption) {
       case "album":
         dispatch(clearData());
@@ -100,17 +109,22 @@ function Home() {
         dispatch(clearData());
         dispatch(getSongByName(input.search));
         break;
-      case "genre":
-        dispatch(clearData());
-        alert("No hay busqueda por genero.");
-        break;
+      // case "genre":
+      //   dispatch(clearData());
+      //   alert("No hay busqueda por genero.");
+      //   break;
       case "user":
         dispatch(clearData());
         dispatch(getUserByName(input.search));
         break;
       default:
         dispatch(clearData());
-        alert("El parametro ingresado no es valido.");
+        Swal.fire({
+          title: "We were unable to perform your search 😪",
+          confirmButtonColor: "#dd9202",
+        });
+        dispatch(getTop10Songs());
+      // alert("El parametro ingresado no es valido.");
     }
     setInput({
       search: "",
@@ -160,7 +174,7 @@ function Home() {
                   <option value="album">Search for Albums</option>
                   <option value="song">Search for Songs</option>
                   <option value="artist">Search for Artists</option>
-                  <option value="genre">Search for Genre</option>
+                  {/* <option value="genre">Search for Genre</option> */}
                   <option value="user">Search for Users</option>
                 </Input>
                 <Input
