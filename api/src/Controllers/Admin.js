@@ -1,5 +1,6 @@
-const {User, ReportPostCommentUser, RowReport} = require('../db.js');
+const {User, Post, Comment, ReportPostCommentUser, RowReport, PlanPremium} = require('../db.js');
 const {Op} = require('sequelize');
+const validation = require('../Validations/auths');
 class Admin{
     constructor(){};
 
@@ -30,7 +31,6 @@ class Admin{
             if(!userArtist) return res.status(404).json({msgE: "There aren't Artist users"});
             res.status(200).json(userArtist);
         }
-
     //Reportes
         allReport = async (req, res) => {
             try{
@@ -108,14 +108,272 @@ class Admin{
                 res.status(200).json({msgE: "Report not found"})
             }
         }
-
+        deletePostReport = async (req, res) => {
+            try{
+                const {idReport, idPost} = req.body;
+                //Valido si existe el reporte y el post
+                let deleteReport, deleteRowReport;
+                const reportFound = await ReportPostCommentUser.findOne({
+                    where: {idReport},
+                    include: {
+                        model: RowReport
+                    }
+                });
+                if(!reportFound) return res.status(404).json({msgE: "Report not found"});
+                const postFound = await Post.findOne({
+                    where: {idPost}
+                });
+                if(!postFound) return res.status(404).json({msgE: "Post not found"});
+                //Elimino el reporte
+                deleteReport = await ReportPostCommentUser.destroy({
+                    where: {idReport},
+                    include:{
+                        model: RowReport
+                    }
+                })
+                //Elimino el reporte de cada persona vinculado con el reporte original
+                deleteRowReport = await RowReport.destroy({
+                    where: {idPostCommentUser: idPost},
+                })
+                //Valido si existen comentarios del post
+                const commentPostReport = await Comment.findAll({where: {PostIdPost: idPost}});
+                //Si existen comentarios del post, los borro
+                if(commentPostReport.length){await Comment.destroy({where: {PostIdPost: idPost}})};
+                //Elimino el post reportado
+                await Post.destroy({where: {idPost}});  
+                if(deleteReport && deleteRowReport){
+                    return res.status(200).json({msg: "Deleted post"});
+                }
+                else{
+                    return res.status(404).json({msgE: "could not delete report"});
+                }
+            }catch(e){
+                console.log(e)
+                res.status(404).json({msgE: "Post deletion failed"});
+            }
+        }
+        allowPostReport = async (req, res) => {
+            try{
+                const {idReport, idPost} = req.body;
+                //Valido si existe el reporte y el post
+                let deleteReport, deleteRowReport;
+                const reportFound = await ReportPostCommentUser.findOne({
+                    where: {idReport},
+                    include: {
+                        model: RowReport
+                    }
+                });
+                if(!reportFound) return res.status(404).json({msgE: "Report not found"});
+                const postFound = await Post.findOne({
+                    where: {idPost}
+                });
+                if(!postFound) return res.status(404).json({msgE: "Post not found"});
+                //Elimino el reporte
+                deleteReport = await ReportPostCommentUser.destroy({
+                    where: {idReport},
+                    include:{
+                        model: RowReport
+                    }
+                })
+                //Elimino el reporte de cada persona vinculado con el reporte original
+                deleteRowReport = await RowReport.destroy({
+                    where: {idPostCommentUser: idPost},
+                });  
+                if(deleteReport && deleteRowReport){
+                    return res.status(200).json({msg: "Post allowed"});
+                }
+                else{
+                    return res.status(404).json({msgE: "could not delete report"});
+                }
+            }catch(e){
+                console.log(e)
+                res.status(404).json({msgE: "allow failed post"});
+            }
+        }
+        deleteCommentReport = async (req, res) => {
+            try{
+                const {idReport, idPost, idComment} = req.body;
+                //Valido si existe el reporte, el post y el comentario
+                let deleteReport, deleteRowReport;
+                const reportFound = await ReportPostCommentUser.findOne({
+                    where: {idReport},
+                    include: {
+                        model: RowReport
+                    }
+                });
+                if(!reportFound) return res.status(404).json({msgE: "Report not found"});
+                const postFound = await Post.findOne({
+                    where: {idPost}
+                });
+                if(!postFound) return res.status(404).json({msgE: "Post not found"});
+                const commentFound = await Comment.findOne({
+                    where: {idComment}
+                });
+                if(!commentFound) return res.status(404).json({msgE: "Comment not found"});
+                //Elimino el reporte
+                deleteReport = await ReportPostCommentUser.destroy({
+                    where: {idReport},
+                    include:{
+                        model: RowReport
+                    }
+                })
+                //Elimino el reporte de cada persona vinculado con el reporte original
+                deleteRowReport = await RowReport.destroy({
+                    where: {idPostCommentUser: idComment},
+                })
+                //Elimino el comentario reportado
+                const commentDeleted = await Comment.destroy({where: {idComment}});
+                if(deleteReport && deleteRowReport && commentDeleted){
+                    return res.status(200).json({msg: "Deleted post"});
+                }
+                else{
+                    return res.status(404).json({msgE: "Could not delete report"});
+                }
+            }catch(e){
+                console.log(e)
+                res.status(404).json({msgE: "Comment deletion failed"});
+            }
+        }
+        allowCommentReport = async (req, res) => {
+            try{
+                const {idReport, idPost, idComment} = req.body;
+                //Valido si existe el reporte, el post y el comentario
+                let deleteReport, deleteRowReport;
+                const reportFound = await ReportPostCommentUser.findOne({
+                    where: {idReport},
+                    include: {
+                        model: RowReport
+                    }
+                });
+                if(!reportFound) return res.status(404).json({msgE: "Report not found"});
+                const postFound = await Post.findOne({
+                    where: {idPost}
+                });
+                if(!postFound) return res.status(404).json({msgE: "Post not found"});
+                const commentFound = await Comment.findOne({
+                    where: {idComment}
+                });
+                if(!commentFound) return res.status(404).json({msgE: "Comment not found"});
+                //Elimino el reporte
+                deleteReport = await ReportPostCommentUser.destroy({
+                    where: {idReport},
+                    include:{
+                        model: RowReport
+                    }
+                });
+                //Elimino el reporte de cada persona vinculado con el reporte original
+                deleteRowReport = await RowReport.destroy({
+                    where: {idPostCommentUser: idComment},
+                });
+                if(deleteReport && deleteRowReport){
+                    return res.status(200).json({msg: "Comment allowed"});
+                }
+                else{
+                    return res.status(404).json({msgE: "Could not delete report"});
+                }
+            }catch(e){
+                console.log(e);
+                res.status(404).json({msgE: "Allow failed comment"});
+            }
+        }
+    //Plan Premium
+        creatPremiumPlan = async (req, res) => {
+            let {priceMembership, namePlanPremium, numberOfMonths, discount} = req.body;
+            try{
+                if(discount) priceMembership =  parseFloat(priceMembership)-(Math.imul(parseFloat(discount),parseFloat(priceMembership))/100);
+                const existPlan = await PlanPremium.findOrCreate({
+                    where: {
+                        [Op.or]: [{priceMembership},{namePlanPremium},{numberOfMonths}]
+                    },
+                    defaults: {
+                        priceMembership,
+                        namePlanPremium,
+                        numberOfMonths
+                    }
+                })
+                return !existPlan[1]? res.status(400).json({msgE: "existing premium plan"}):
+                res.status(200).json({msg: "successful premium plan creation"})
+            }catch(e){
+                console.log(e)
+                res.status(400).json({msgE: "Error creating premium plan"})
+            }
+        }
+        editPremiumPlan = async (req, res) => {
+            let {idPlanPremium, priceMembership, namePlanPremium, numberOfMonths, discount} = req.body;
+            try{
+                if(!idPlanPremium) return res.status(404).json({msgE: "no premium plan id passed"});
+                if(discount) priceMembership =  parseFloat(priceMembership)-(Math.imul(parseFloat(discount),parseFloat(priceMembership))/100);
+                let premiumPlanFound;
+                try{
+                    premiumPlanFound = await PlanPremium.findOne({where: {idPlanPremium}});
+                }catch{return res.status(404).json({msgE: "Premium plan not found"})}
+                await PlanPremium.update({
+                        priceMembership: (priceMembership && premiumPlanFound.dataValues.priceMembership !== priceMembership)? priceMembership: premiumPlanFound.dataValues.priceMembership,
+                        namePlanPremium: (namePlanPremium && premiumPlanFound.dataValues.namePlanPremium !== namePlanPremium)? namePlanPremium: premiumPlanFound.dataValues.namePlanPremium,
+                        numberOfMonths: (numberOfMonths && premiumPlanFound.dataValues.numberOfMonths !== numberOfMonths)? numberOfMonths: premiumPlanFound.dataValues.numberOfMonths
+                    },{
+                        where: {idPlanPremium}
+                    }
+                )
+                return res.status(200).json({msg: "successful premium plan edition"})
+            }catch(e){
+                console.log(e)
+                res.status(400).json({msgE: "Error editing premium plan"})
+            }
+        }
+        cancelPremiumPlan = async (req, res) => {
+            const {idPlanPremium} = req.body;
+            try{
+                if(!idPlanPremium) return res.status(404).json({msgE: "no premium plan id passed"});
+                let premiumPlanFound;
+                try{
+                    premiumPlanFound = await PlanPremium.findOne({where: {idPlanPremium}});
+                    if(!premiumPlanFound) return res.status(404).json({msgE: "Premium plan not found"})
+                }catch{return res.status(404).json({msgE: "Premium plan not found"})}
+                await PlanPremium.destroy({
+                        where: {idPlanPremium}
+                })
+                return res.status(200).json({msg: "premium plan successfully canceled"})
+            }catch(e){
+                console.log(e)
+                res.status(400).json({msgE: "Error canceling premium plan"})
+            }
+        }
     //Banneo de usuarios
-        baneoUser = async (req, res) => {
-            
+        banUser = async (req, res) => {
+           const {idUser, causeBan} = req.body;
+           try {
+                let userFound;
+                try{
+                    userFound = await User.findOne({where: {idUser}});
+                }catch{return res.status(404).json({msgE: "User not found"})}
+                if(userFound.dataValues.nameStateUser === 'Banned') return res.status(400).json({msgE: 'Already banned user'});
+                if(userFound.dataValues.nameStateUser === 'Inactive') return res.status(400).json({msgE: 'User inactive'});
+                await User.update({nameStateUser: 'Banned'}, {where: {idUser}});
+                await validation.userBanned(userFound.dataValues.name, userFound.dataValues.lastName, userFound.dataValues.email, causeBan);
+                res.status(200).json({msg: "Banned user"});
+            } catch (error) {
+                console.log(error)
+                res.status(500).json({msgE: "User ban error"});
+            }       
         }
-        disbaneoUser = async (req, res) => {
-
+        unbanUser = async (req, res) => {
+            const {idUser} = req.body;
+            try {
+                 let userFound;
+                 try{
+                     userFound = await User.findOne({where: {idUser}});
+                 }catch{return res.status(404).json({msgE: "User not found"})}
+                 if(userFound.dataValues.nameStateUser !== 'Banned') return res.status(400).json({msgE: 'User account not banned'});
+                 await User.update({nameStateUser: 'Active'}, {where: {idUser}});
+                 await validation.userUnbanned(userFound.dataValues.name, userFound.dataValues.lastName, userFound.dataValues.email);
+                 res.status(200).json({msg: "Unbanned user"});
+             } catch (error) {
+                 console.log(error)
+                 res.status(500).json({msgE: "User unbanned error"});
+             }  
         }
+    //Posteos para premium hechos por el administrador
 
 }
 
