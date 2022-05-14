@@ -29,6 +29,9 @@ import {
   getUserReports,
   getCommentReports,
   getPostReports,
+  banUser,
+  UnbanUser,
+  modifyPlansPremiums,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -44,8 +47,8 @@ import { Link } from "react-router-dom";
 function Admin() {
   const user = useSelector((state) => state.user);
   const premiumUsers = useSelector((state) => state.premiumUsers);
-  const standardUsers = useSelector((state) => state.artistUsers);
-  const artistUsers = useSelector((state) => state.standardUsers);
+  const artistUsers = useSelector((state) => state.artistUsers);
+  const standardUsers = useSelector((state) => state.standardUsers);
   const commentReports = useSelector((state) => state.commentReports);
   const postReports = useSelector((state) => state.postReports);
   const userReports = useSelector((state) => state.userReports);
@@ -78,7 +81,15 @@ function Admin() {
   const handleSubmitInput = (e) => {
     e.preventDefault();
     dispatch(getUserByName(input.user));
-    setInput("");
+    setInput({
+      plan: "",
+      user: "",
+      posts: posts,
+      price: "",
+      discount: "",
+      months: 1,
+      causeBan: "",
+    });
   };
 
   const handleInput = (e) => {
@@ -88,19 +99,58 @@ function Admin() {
     });
   };
 
-  const handleBan = async () => {
+  const handleBan = async (e) => {
+    //hay que obtener el id del user y el causeBan
+    const ban = {
+      idUser: "",
+      causeBan: input.causeBan ? input.causeBan : "For multiple Reasons",
+    };
+    dispatch(banUser(ban));
     alert("Banear");
-    //dispatch(banUser(id))
   };
 
   const modifyPlan = (e) => {
     e.preventDefault();
-    alert("Plan Modificado");
+    switch (input.plan) {
+      case "silver":
+        setInput({
+          ...input,
+          numberOfMonths: 1,
+        });
+        break;
+      case "gold":
+        setInput({
+          ...input,
+          numberOfMonths: 3,
+        });
+        break;
+      case "platinum":
+        setInput({
+          ...input,
+          numberOfMonths: 6,
+        });
+        break;
+
+      default:
+        return { ...input };
+    }
+    const newPlan = {
+      idPlanPremium: "", //falta como obtener el id
+      priceMembership: input.price,
+      namePlanPremium: input.plan,
+      numberOfMonths: input.months,
+      discount: input.discount,
+    };
+    dispatch(modifyPlansPremiums(newPlan));
   };
 
-  const handleUnban = async () => {
+  const handleUnban = async (e) => {
+    //hay que obtener el id del usuario
+    const id = {
+      idUser: "",
+    };
+    dispatch(UnbanUser(id));
     alert("Desbaneado");
-    //dispatch()
   };
 
   const handleActiveTab = (tab) => setActiveTab(tab);
@@ -167,14 +217,36 @@ function Admin() {
           <TabContent activeTab={activeTab} style={{ color: "white" }}>
             <TabPane tabId="1">
               <Row>
-                <Col sm="4">Users</Col>
-                <Col sm="4">Posts</Col>
-                <Col sm="4">Comments</Col>
+                <Col sm="4">
+                  <h5>Users</h5>
+                  {userReports.length &&
+                    userReports.map((e) => {
+                      return <div key={e.idReport}>{e.idReport}</div>;
+                    })}
+                </Col>
+                <Col sm="4">
+                  {" "}
+                  <h5>Posts</h5>
+                  {postReports &&
+                    postReports.map((e) => {
+                      return <div key={e.idReport}>{e.idReport}</div>;
+                    })}
+                </Col>
+                <Col sm="4">
+                  {" "}
+                  <h5>Comments</h5>
+                  {commentReports &&
+                    commentReports.map((e) => {
+                      return <div key={e.idReport}>{e.idReport}</div>;
+                    })}
+                </Col>
               </Row>
             </TabPane>
             <TabPane tabId="2">
               <Row>
-                <Col sm="6">User Name</Col>
+                <Col sm="6">
+                  <h6>NO HAY RUTA PARA OBTENER LOS USUARIOS BANEADOS</h6>
+                </Col>
               </Row>
             </TabPane>
             <TabPane tabId="3">
@@ -239,9 +311,27 @@ function Admin() {
             </TabPane>
             <TabPane tabId="4">
               <Row>
-                <Col sm="4">Premium Users</Col>
-                <Col sm="4">Standards Users</Col>
-                <Col sm="4">Artists Users</Col>
+                <Col sm="4">
+                  <h6>Premium Users</h6>
+                  {premiumUsers &&
+                    premiumUsers.map((e) => {
+                      return <div key={e.id}>{e.userName}</div>;
+                    })}
+                </Col>
+                <Col sm="4">
+                  <h6>Standards Users</h6>
+                  {standardUsers &&
+                    standardUsers.map((e) => {
+                      return <div key={e.id}>{e.userName}</div>;
+                    })}
+                </Col>
+                <Col sm="4">
+                  <h6>Artists Users </h6>
+                  {artistUsers &&
+                    artistUsers.map((e) => {
+                      return <div key={e.id}>{e.userName}</div>;
+                    })}
+                </Col>
               </Row>
             </TabPane>
             <TabPane tabId="5">
@@ -259,6 +349,26 @@ function Admin() {
                     />
                     <Input type="submit" value="Search" />
                   </Form>
+                  {userSearch[0] &&
+                    userSearch[0].map((e) => {
+                      return (
+                        <div
+                          key={e.idUser}
+                          style={{
+                            display: "inline-block",
+                            border: "1px solid orange",
+                            borderRadius: "20px",
+                            margin: "5px",
+                          }}
+                        >
+                          <h5 style={{ color: "white", marginTop: "1em" }}>
+                            @{e.userName}
+                          </h5>
+                          <Button onClick={handleBan}>❌</Button>
+                          <Button onClick={handleUnban}>✔️</Button>
+                        </div>
+                      );
+                    })}
                 </div>
               </Row>
             </TabPane>
@@ -422,27 +532,6 @@ function Admin() {
             </TabPane>
           </TabContent>
         </div>
-
-        {userSearch[0] &&
-          userSearch[0].map((e) => {
-            return (
-              <div
-                key={e.idUser}
-                style={{
-                  display: "inline-block",
-                  border: "1px solid orange",
-                  borderRadius: "20px",
-                  margin: "5px",
-                }}
-              >
-                <h5 style={{ color: "white", marginTop: "1em" }}>
-                  @{e.userName}
-                </h5>
-                <Button onClick={handleBan}>❌</Button>
-                <Button onClick={handleUnban}>✔️</Button>
-              </div>
-            );
-          })}
       </div>
     </>
   );

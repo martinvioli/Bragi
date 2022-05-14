@@ -5,6 +5,7 @@ const apiHeroku = {
   authenticateUrl: "https://bragiproject.herokuapp.com/validationUser/",
   loginUrl: "https://bragiproject.herokuapp.com/login",
   logoutUrl: "https://bragiproject.herokuapp.com/closeSessionUser",
+  getUserByName: "https://bragiproject.herokuapp.com/search/",
   searchSongUrl: "https://bragiproject.herokuapp.com/song",
   searchGenreUrl: "https://bragiproject.herokuapp.com/genre",
   searchUrl: "https://bragiproject.herokuapp.com/searh",
