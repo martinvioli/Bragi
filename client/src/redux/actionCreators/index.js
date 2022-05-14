@@ -41,6 +41,7 @@ import {
   MODIFY_PLANS_PREMIUMS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
+  CLEAN_DETAIL_TOP10
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -165,11 +166,7 @@ export const getUserByName = function (nameUser) {
   };
 };
 
-export const clearData = function () {
-  return {
-    type: CLEAR_DATA,
-  };
-};
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ TOP 10 OPTIONS
@@ -219,6 +216,13 @@ export const getTop10albums = function () {
     }
   };
 };
+
+export const clearData = function () {
+  return {
+    type: CLEAR_DATA,
+  };
+};
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ CRUD - POST

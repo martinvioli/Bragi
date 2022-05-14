@@ -3,9 +3,10 @@ import {
   getTop10Songs,
   getTop10artist,
   getTop10albums,
+  clearData
 } from "../../redux/actionCreators";
 import { useSelector, useDispatch } from "react-redux";
-import { Table } from "reactstrap";
+import { Table, Button, ButtonGroup } from "reactstrap";
 import styles from "./Top10.module.css";
 function Top10() {
   const songs = useSelector((state) => state.topSongs);
@@ -13,25 +14,52 @@ function Top10() {
   const albums = useSelector((state) => state.topAlbums);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getTop10Songs());
-    dispatch(getTop10artist());
-    dispatch(getTop10albums());
+    // dispatch(getTop10Songs());
+    // dispatch(getTop10artist());
+    // dispatch(getTop10albums());
   }, []);
-
+  const handle10Songs = ()=>{
+    //e.preventDefault()
+    dispatch(clearData());
+    dispatch(getTop10Songs());
+  }
+  const handle10Albums = ()=>{
+    //e.preventDefault()
+    dispatch(clearData());
+    dispatch(getTop10albums());
+  }
+  const handle10Artists = ()=>{
+  //e.preventDefault()
+  dispatch(clearData());
+  dispatch(getTop10artist());
+}
   return (
     <>
       <div className={`${styles.divContainer}`} style={{ color: "white" }}>
         <div>
-          <h3>Top 10 Artists</h3>
-          <div class={`col ${styles.columnArtists}`}>
+        <div>
+        <ButtonGroup>
+          <Button className={styles.top10button} color= "dark" onClick={()=>handle10Songs()}>
+            Top 10 songs
+          </Button>
+          <Button className={styles.top10button} color= "dark" onClick={()=>handle10Artists()}>
+            Top 10 artists
+          </Button>
+          <Button className={styles.top10button} color= "dark" onClick={()=>handle10Albums()}>
+            Top 10 albums
+          </Button>
+        </ButtonGroup>
+      </div>
+      <div class={`col ${styles.columnArtists}`}>
               <hr/>
               {artists &&
                 artists.map((e) => {
                   return (
-                    <div key={e.id}>
+                    
+                  <div key={e.id}>
                       <br/>
                       <div class={styles.container}>
-                        <img src={e.picture_medium} alt="Avatar" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <img src={e.picture_xl} alt="Avatar" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
                         <div class={styles.overlay}>
                           <div class={styles.text}>
                             <p>{e.position}</p>
@@ -53,19 +81,16 @@ function Top10() {
                     </div>
                   );
                 })}
-            </div>
-            <br></br>
+                                      </div>
 
-            <h3>Top 10 Songs</h3>
-            <br></br>
-            <div class={`col ${styles.columnSongs}`}>
+            <div class={`col ${styles.columnSongs}`}> 
               <hr/>
             {songs &&
               songs.map((e, i) => {
                 return (
                    <div key={e.id}>
                       <div class={styles.container}>
-                        <img src={e.album.cover_medium} alt="Song Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <img src={e.album.cover_xl} alt="Song Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
                         <div class={styles.overlay}>
                           <div class={styles.text}>
                             <p>{e.position}</p>
@@ -98,10 +123,8 @@ function Top10() {
                   // </div>
                 );
               })}
-          </div>
+           </div> 
           <br></br>
-
-          <h3>Top 10 Albums</h3>
           <div className={`col ${styles.columnAlbums}`}>
             <hr />
           {albums &&
@@ -109,7 +132,7 @@ function Top10() {
                 return (
                   <div key={e.id}>
                       <div class={styles.container}>
-                        <img src={e.cover_medium} alt="Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
+                        <img src={e.cover_xl} alt="Album" class="img-fluid|thumbnail rounded-top|rounded-end|rounded-bottom|rounded-start|rounded-circle|"/>
                         <div class={styles.overlay}>
                           <div class={styles.text}>
                             <p>{e.position}</p>
