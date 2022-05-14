@@ -43,6 +43,7 @@ import {
   FcComments,
   FcLikePlaceholder,
 } from "react-icons/fc";
+import { BiEdit} from "react-icons/bi";
 
 function Profile(props) {
   var user = useSelector((state) => state.user);
@@ -78,6 +79,8 @@ function Profile(props) {
     ...user,
     description: null,
   };
+
+  console.log(listFollowed)
 
   const postsTruchos = [
     {
@@ -617,9 +620,39 @@ function Profile(props) {
     </div>
   ) : (
     <div>
+      {user.name ? (
+        <div className={styles.nameNData}>
+          <div>
+            <div className={styles.name}>
+              {user.name + " " + user.lastName}
+            </div>
+            <div className={styles.userName}>@{user.userName}</div>
+          </div>
+        </div>
+      ) : null}
       <div className={styles.container}>
         <div className={styles.profile}>
-          <img className={styles.profileImg} src={profileImage} alt=""></img>
+          <div className={styles.top}>
+            <img className={styles.profileImg} src={profileImage} alt=""></img>
+            <div>
+              {showEditProfile ? (
+                  <EditProfile
+                    showModal={showEditProfile}
+                    handleShowModal={handleShowEditProfile}
+                  />
+                ) : (
+                  <div className={styles.editButton}>
+                    <BiEdit
+                    style={{ width: "25px", height:"25px" }}
+                      className="secondary"
+                      onClick={handleShowEditProfile}
+                    >
+                      Wanna Edit Your Profile
+                    </BiEdit>
+                  </div>
+                )}
+            </div>
+          </div>
           {/* Followeds */}
           <div className={styles.followList}>
             <div className={styles.followeds}>
@@ -648,15 +681,19 @@ function Profile(props) {
                     {listFolloweds.map((e) => {
                       console.log(e);
                       return (
-                        <Link
-                          to={`/profile/${e.userNameFollowed}`}
-                          style={{ color: "black", margin: "5px" }}
-                          onClick={() =>
-                            dispatch(getUseProfile(token, e.userNameFollowed))
-                          }
-                        >
-                          {e.userNameFollowed}
-                        </Link>
+                        <div>
+                          <Link
+                            to={`/profile/${e.userNameFollowed}`}
+                            style={{ color: "black", margin: "10px" }}
+                            onClick={() =>
+                              dispatch(getUseProfile(token, e.userNameFollowed))
+                            }
+                          >
+                            {e.userNameFollowed}
+                          </Link>
+                          <br></br>
+                        </div>
+                        
                       );
                     })}
                   </ModalBody>
@@ -686,15 +723,18 @@ function Profile(props) {
                   {listFollowerss.map((e) => {
                     console.log(e)
                     return(
-                      <Link
-                      to={`/profile/${e.userNameFollower}`}
-                      style={{ color: "black", margin: "5px" }}
-                      onClick={() =>
-                        dispatch(getUseProfile(token, e.userNameFollower))
-                      }
-                    >
-                      {e.userNameFollower}
-                    </Link>
+                      <div>
+                        <img style={{ width: "40px", height: "40px" }} src={profileImage} alt="img"/>
+                        <Link
+                          to={`/profile/${e.userNameFollower}`}
+                          style={{ color: "black", margin: "10px" }}
+                          onClick={() =>
+                            dispatch(getUseProfile(token, e.userNameFollower))
+                          }
+                        >
+                          {e.userNameFollower}
+                        </Link>
+                      </div>
                   );
                 })}
               </ModalBody>
@@ -705,36 +745,13 @@ function Profile(props) {
           </div>
           {user.name ? (
             <div>
-              <div>
-                <div className={styles.name}>
-                  {user.name + " " + user.lastName}
-                </div>
-                <div className={styles.name}>@{user.userName}</div>
-                <h3>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
+              <h3>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
                 <div className={styles.description}>
                   {user.description
                     ? user.description
                     : "Hey there! I'm using Bragi"}
                 </div>
               </div>
-              <div>
-                {showEditProfile ? (
-                  <EditProfile
-                    showModal={showEditProfile}
-                    handleShowModal={handleShowEditProfile}
-                  />
-                ) : (
-                  <div className={styles.editButton}>
-                    <Button
-                      className="secondary"
-                      onClick={handleShowEditProfile}
-                    >
-                      Wanna Edit Your Profile
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
           ) : null}
         </div>
         <br></br>
@@ -794,7 +811,7 @@ function Profile(props) {
           </>
         ) : (
           <div className={styles.fan}>
-            <h1>FOLLOWING</h1>
+            <h1>Artist Following</h1>
             <div className={styles.followed}>
               {followed.map((e) => (
                 <div className={styles.followedArtist}>
