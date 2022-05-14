@@ -47,32 +47,32 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-// const posts = [
-//   {
-//     content:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-// ];
+const fakePosts = [
+  {
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+];
 
 export default function Feed() {
   const user = useSelector((state) => state.user);
@@ -220,7 +220,53 @@ export default function Feed() {
   return (
     <div className="container-fluid">
       <div className={styles.container}>
-        <div className={styles.premiumSector}>Sector Premium</div>
+        <div className={styles.glowOnHover}>
+          <Link
+          to="/profile"
+          style={{   
+            display: "flex",
+            textAlign: "center",
+            fontSize: "large",
+            fontWeight: "bold",
+            marginTop: "5%",
+            marginBottom: "5%",
+          }}
+          >Get premium now so you don't miss out on anything!</Link>
+          <div>
+            {fakePosts.map((e) =>{
+              return (
+                <Card
+                  style={{
+                    width: "90%",
+                    height: "90%"
+                  }}
+                  color="bg-light"
+                  className={styles.backgroundPostPremium}
+                  key={e.token}
+                >
+                  <CardBody>
+                    <CardTitle tag="h5">{user.username}</CardTitle>
+                    <CardSubtitle className="mb-2 text-muted" tag="h6">
+                      {e.content}
+                    </CardSubtitle>
+                  </CardBody>
+                  <div className={styles.img}>
+                    <img
+                      alt="img"
+                      src={e.image}
+                      height="250px"
+                      width="300px"
+                    />
+                  </div>
+                  <CardLink
+                    href={e.link}
+                  >{`LINK DEL POST : ${e.link}`}</CardLink>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
         <div className={styles.center}>
           {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>

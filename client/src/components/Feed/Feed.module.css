@@ -18,18 +18,83 @@
   width: 10em; */
   height: 63em;
   width: 500px;
-  background-color: rgba(255, 255, 255, 0.749);
+  background-color: #dd9202;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
   border-radius: 25px;
 }
+.glowOnHover {
+  height: 63em;
+  width: 60em;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #dd9202;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.glowOnHover:before {
+  content: 'asdasd';
+  background: linear-gradient(45deg, #795300, #b28405, #efb810, #f9db5c, #ffff94, #dd9202);
+  position: absolute;
+  top: -2px;
+  left:-2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.glowOnHover:hover:before {
+  opacity: 1;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+.postsPremium {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.479);
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #dd9202;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.backgroundPostPremium {
+  overflow: scroll;
+  background-color: white;
+  filter: blur(5px);
+  margin: 1em;
+}
 
 .postSector {
   width: 70%;
   height: 100vh;
-  background-color: rgba(101, 193, 255, 0.609);
+  background-color: #dd9202;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
