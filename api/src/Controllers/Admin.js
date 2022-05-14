@@ -1,6 +1,7 @@
 const {User, Post, Comment, ReportPostCommentUser, RowReport, PlanPremium} = require('../db.js');
 const {Op} = require('sequelize');
 const validation = require('../Validations/auths');
+const jwt = require("jsonwebtoken");
 class Admin{
     constructor(){};
 
@@ -31,6 +32,112 @@ class Admin{
             if(!userArtist) return res.status(404).json({msgE: "There aren't Artist users"});
             res.status(200).json(userArtist);
         }
+    //Posteos para premium hechos por el administrador
+        getPostsAdmin = async (req, res) => {
+            try{
+                const allPostAdmin = await Post.findAll({where: {isAdmin: true}});
+                return res.status(200).json(allPostAdmin);
+            }catch(e){
+                return res.status(404).json({msgE: "There aren't admin post"});
+            }
+        }
+        createPostAdmin = async (req, res) => {
+            const { contentPost, linkContent, imagePost, token } = req.body;
+            try {
+                let tokenDecode;
+                try{
+                    tokenDecode = jwt.decode(token);
+                }catch{
+                    return res.status(404).json({ msgE: "Could not find your user" })
+                };
+                const user = await User.findOne({
+                    where: { userName: tokenDecode.userName },
+                });
+                if(!user) return res.status(404).json({ msgE: "Could not find your user" });
+                if(user.dataValues.nameTypeUser !== 'Admin') return res.status(404).json({ msgE: "You are not admin" });
+                const newPost = await Post.create({
+                    contentPost,
+                    linkContent,
+                    imagePost,
+                    isAdmin: true
+                });
+                await newPost.setUser(user.idUser);
+                return res.status(201).json({
+                    msg: "Admin post created successfully",
+                    newPost,
+                    userName: user.userName,
+                });
+            } catch (error) {
+            res.status(500).json({ message: error.message });
+            }
+        };
+        updatePostAdmin = async (req, res) => {
+            const {idPost, token, contentPost, linkContent, imagePost} = req.body;
+            try {
+                let tokenDecode;
+                try{
+                    tokenDecode = jwt.decode(token);
+                }catch{
+                    return res.status(404).json({ msgE: "Could not find your user" })
+                };
+                const user = await User.findOne({
+                    where: { userName: tokenDecode.userName },
+                });
+                if(!user) return res.status(404).json({ msgE: "Could not find your user" });
+                if(user.dataValues.nameTypeUser !== 'Admin') return res.status(404).json({ msgE: "You are not admin" });
+                let postFound;
+                try{
+                    postFound = await Post.findByPk(idPost);
+                }catch{
+                    return res.status(404).json({msgE: "Admin post not found"});
+                };
+                await Post.update({
+                    contentPost: (contentPost && contentPost !== postFound.dataValues.contentPost)? contentPost: postFound.dataValues.contentPost,
+                    linkContent: (linkContent && linkContent !== postFound.dataValues.linkContent)? linkContent: postFound.dataValues.linkContent,
+                    imagePost: (imagePost && imagePost !== postFound.dataValues.imagePost)? imagePost: postFound.dataValues.imagePost,
+                    nameStatusPost: 'Edited'
+                    },
+                    {where: {idPost}}
+                );
+                const postEdited = await Post.findByPk(idPost);
+                return res.status(200).json({
+                    msg: "Admin post edited successfully",
+                    postEdited
+                });
+            } catch (e) {
+                console.log(e)
+                return res.status(500).json({ msgE: "Could not edit post admin" });
+            }
+        }
+        deletePostAdmin = async (req, res) => {
+            const {token, idPost} = req.body;
+            try {
+                let tokenDecode;
+                try{
+                    tokenDecode = jwt.decode(token);
+                }catch{
+                    return res.status(404).json({ msgE: "Could not find your user" })
+                };
+                const user = await User.findOne({
+                    where: {userName: tokenDecode.userName},
+                });
+                if(!user) return res.status(404).json({ msgE: "Could not find your user" });
+                if(user.dataValues.nameTypeUser !== 'Admin') return res.status(404).json({ msgE: "You are not admin" });
+                const post = await Post.findByPk(idPost);
+                if (!post)
+                    return res
+                    .status(404)
+                    .json({ msgE: "The post with that id doest not exist" });
+                if (!post.dataValues.isAdmin)
+                    return res
+                    .status(404)
+                    .json({ msgE: "The post with that id doest not admin" });
+                await post.destroy();
+                return res.status(200).json({ msg: "Admin post deleted succesfully" });
+            } catch (error) {
+                return res.status(500).json({ msgE: "Post admin could not be deleted" });
+            }
+        };
     //Reportes
         allReport = async (req, res) => {
             try{
@@ -277,6 +384,14 @@ class Admin{
             }
         }
     //Plan Premium
+        getPremiumPlan = async (req, res) => {
+            try{
+                const premiumPlans = await PlanPremium.findAll();
+                return res.status(200).json(premiumPlans);
+            }catch(e){
+                return res.status(404).json({msgE: "There aren't premium plan"});
+            }
+        }
         creatPremiumPlan = async (req, res) => {
             let {priceMembership, namePlanPremium, numberOfMonths, discount} = req.body;
             try{
@@ -288,7 +403,8 @@ class Admin{
                     defaults: {
                         priceMembership,
                         namePlanPremium,
-                        numberOfMonths
+                        numberOfMonths,
+                        discount: (discount)? true: false
                     }
                 })
                 return !existPlan[1]? res.status(400).json({msgE: "existing premium plan"}):
@@ -310,7 +426,8 @@ class Admin{
                 await PlanPremium.update({
                         priceMembership: (priceMembership && premiumPlanFound.dataValues.priceMembership !== priceMembership)? priceMembership: premiumPlanFound.dataValues.priceMembership,
                         namePlanPremium: (namePlanPremium && premiumPlanFound.dataValues.namePlanPremium !== namePlanPremium)? namePlanPremium: premiumPlanFound.dataValues.namePlanPremium,
-                        numberOfMonths: (numberOfMonths && premiumPlanFound.dataValues.numberOfMonths !== numberOfMonths)? numberOfMonths: premiumPlanFound.dataValues.numberOfMonths
+                        numberOfMonths: (numberOfMonths && premiumPlanFound.dataValues.numberOfMonths !== numberOfMonths)? numberOfMonths: premiumPlanFound.dataValues.numberOfMonths,
+                        discount: (discount)? true: false
                     },{
                         where: {idPlanPremium}
                     }
@@ -340,6 +457,29 @@ class Admin{
             }
         }
     //Banneo de usuarios
+        getAllBannedUser = async (req, res) => {
+            try{
+                const allBannedUser = await User.findAll({
+                    where: {nameStateUser: 'Banned'},
+                    attributes: [
+                        "idUser",
+                        "name",
+                        "lastName",
+                        "email",
+                        "gender",
+                        "telephone",
+                        "description",
+                        "birthday",
+                        "userName",
+                        "nameTypeUser",
+                        "MembershipUserIdMembershipUser"
+                    ] 
+                });
+                return res.status(200).json(allBannedUser);
+            }catch(e){
+                return res.status(404).json({msgE: "There are no banned users"});
+            }
+        }
         banUser = async (req, res) => {
            const {idUser, causeBan} = req.body;
            try {
@@ -373,8 +513,6 @@ class Admin{
                  res.status(500).json({msgE: "User unbanned error"});
              }  
         }
-    //Posteos para premium hechos por el administrador
-
 }
 
 module.exports = Admin;
