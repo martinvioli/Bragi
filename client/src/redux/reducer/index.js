@@ -38,6 +38,7 @@ import {
   GET_REPORTS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
+  CLEAN_DETAIL_TOP10
 } from "../actions";
 
 // STATE CREATION
@@ -119,8 +120,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         song: [],
+        album:[],
         artist: [],
-        album: [],
+        topSongs: [],
+        topArtists: [],
+        topAlbums: [],
+        usersList: [],
       };
     case GET_TOP_10_ALBUMS:
       return {
