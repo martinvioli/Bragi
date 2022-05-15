@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: 'Posted'
         },
+        typeOfPost: {
+            type: DataTypes.ENUM('Standard', 'Premium'),
+            allowNull: true,
+            defaultValue: 'Standard'
+        },
         imagePost: {
             type: DataTypes.TEXT,
             allowNull: true,
