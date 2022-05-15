@@ -11,9 +11,14 @@ import DetailsAlbum from "./components/Details/DetailsAlbum";
 import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
+
+import PayForm from "./components/PayForm";
+
+
 import Admin from "./components/Admin";
 import SubmitEmail from "./components/ForgottenPassword"
 import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost"
+
 
 function App() {
   const location = useLocation();
@@ -28,7 +33,12 @@ function App() {
             path="/register/authenticate"
             element={<Authenticate />}
           />
+
+          <Route exact path="/pay" element={<PayForm />} />
+
+
           <Route exact path="/admin" element={<Admin />} />
+
            <Route exact path="/submitEmail" element={<SubmitEmail/>} />
           <Route path="/" element={<NavBar />}>
             <Route exact path="/home" element={<Home />} />
