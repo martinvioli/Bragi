@@ -41,7 +41,9 @@ import {
   MODIFY_PLANS_PREMIUMS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
-  CLEAN_DETAIL_TOP10
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE,
+  FORGOTTEN_PASSWORD_POST
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -587,5 +589,36 @@ export const modifyPlansPremiums = () => {
       type: MODIFY_PLANS_PREMIUMS,
       payload: response.data,
     });
+  };
+};
+
+// recuperar contraseña
+export const forgottenPasswordPre = function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.forgottenPasswordPre, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_PRE,
+        payload: response.data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const forgottenPasswordPost= function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(api.forgottenPassword, userName, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_POST,
+        payload: response.data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

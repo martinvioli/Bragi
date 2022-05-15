@@ -38,7 +38,8 @@ import {
   GET_REPORTS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
-  CLEAN_DETAIL_TOP10
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE
 } from "../actions";
 
 // STATE CREATION
@@ -70,6 +71,8 @@ const initialState = {
   banned: [],
   disbanned: [],
   reports: [],
+  email:"",
+  code:""
 };
 
 function rootReducer(state = initialState, action) {
@@ -301,6 +304,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         reports: action.payload,
+      };
+    case FORGOTTEN_PASSWORD_PRE:
+      return{
+        ...state,
+        email: action.payload
       };
     default:
       return { ...state };
