@@ -12,6 +12,8 @@ import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
 import Admin from "./components/Admin";
+import SubmitEmail from "./components/ForgottenPassword"
+import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost"
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
             <Route exact path="/artist/:id" element={<DetailsArtist />} />
             <Route exact path="/album/:id" element={<DetailsAlbum />} />
             <Route exact path="/:id/comments" element={<Comment />} />
+            <Route exact path="/submitEmail" element={<SubmitEmail/>} />
+            <Route exact path="/resetPassword" element={<ForgottenPassword/>} />
           </Route>
         </Routes>
       </AnimatePresence>

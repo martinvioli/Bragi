@@ -189,6 +189,44 @@ class UserClass {
     }
   };
 
+  resetPasswordPost = async(req, res) => {
+    let { code, password, repeatPassword } = req.body;
+    try {
+      const findUser = await User.findOne({ where: { validationCode: code } })
+      if(!findUser)return res.status(404).json({ msgE: "We have trouble findind your user" })
+      if(findUser){
+      password = bcrypt.hashSync(
+        req.body.password,
+        Number.parseInt(authConfig.rounds)
+      );
+      if (!bcrypt.compareSync(repeatPassword, password)) return res.status(409).json({ msgE: "Passwords do not match" });
+      await findUser.update({ password, repeatPassword })
+      return res.status(200).json({ msg: "Password changed succesfully" })
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ msgE: "Something went wrong", error })
+    }
+  }
+
+  resetPasswordPre = async(req, res) => {
+    const { email, code } = req.body;
+    const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
+    console.log(codeNum)
+    try {
+        const findUser = await User.findOne({ where: { email } })
+        if(!findUser) return res.status(404).json({ msgE: "We have trouble findind your user" })
+        if (findUser){
+          await findUser.update({validationCode: codeNum})
+          const emailVerify = await validation.recoverEmail(email, codeNum)
+          return res.status(200).json({ msg: "Mail send", findUser, codeNum });
+        }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ msgE: "Something went wrong", error })
+    }
+  }
+
   loginUser = async (req, res) => {
     //User login validation function
     const { email, userName, password } = req.body;

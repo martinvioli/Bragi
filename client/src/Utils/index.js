@@ -49,6 +49,8 @@ const apiHeroku = {
   disBanUser: "https://bragiproject.herokuapp.com/admin/allowUser",
   getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
   getAllReports: "https://bragiproject.herokuapp.com/admin/getAllReports",
+  forgottenPasswordPre: "http://bragiproject.herokuapp.com/recoverPassword/pre",
+  forgottenPasswordPost: "http://bragiproject.herokuapp.com/recoverPassword"
 };
 
 const api = {
@@ -98,6 +100,8 @@ const api = {
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   getAllReports: "http://localhost:3001/admin/getAllReports",
+  forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
+  forgottenPasswordPost: "http://localhost:3001/recoverPassword"
 };
 
 export default api;

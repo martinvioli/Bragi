@@ -208,6 +208,11 @@ function LandingPage() {
               Don't have an account? Sign up!
             </Button>
           </Link>
+          <Link to="/submitEmail" style={{ textDecoration: "none" }}>
+            <Button color="success" block outline style={{ marginTop: "2em" }}>
+              Did you forget your password? Reset it!
+            </Button>
+          </Link>
         </div>
       </motion.div>
     </div>
