@@ -1,51 +1,43 @@
 /* general container */
 .container {
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 25%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 1em 5em 1em 5em;
-  padding-top: 125px;
+  box-shadow: 0px 9px 25px rgba(0, 0, 0, .7);
+  margin-top: 125px;
+  margin-left: 40px;
   /* border: 5px solid black; */
   /* margin-left: 100px; */
 }
 
 /* Profile */
 .profile {
-  height: 50em;
-  min-width: 30em;
-  margin-left: 1em;
-  border-radius: 1em;
-  background-color: #dd9202;
-  margin-right: 150px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 570px;
+  width: 600px;
   border: 5px transparent black;
-  margin-top: -100px;
+  box-shadow: 0px 0px 0px #1c1c1c;
 }
 
 /* Description text */
 .description {
   /* height: auto;
   width: auto; */
-  border: 1px solid orange;
-  border-radius: 25px;
-  background-color: #b87903;
+  display: flex;
+  color: #f5f5f5;
   /* text-align: center; */
   /* overflow: hidden */
   /* padding: 100px; */
-  box-shadow: 0px 9px 25px rgba(0, 0, 0, .7);
-  margin-left: 100px
   /* display: flex; */
   /* padding-left: 250px; */
 }
 
-.profile > div > h3 {
-  margin-left: 10px
+/* .profile > div > h3 {
 }
 .profile > div > div {
-  margin-left: 10px
-}
+} */
 
 /* Imagen de perfil */
 .profileImg {
@@ -54,117 +46,35 @@
   margin-left: 5px; */
   /* align-items: center;
   justify-content: center; */
-  /* border-radius: 50%; */
-  margin-top: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 10em;
-  width: 10em;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  margin-top: 35px;
   border: 1px solid black;
-  margin-right: 75px;
+  box-shadow: 0px 0px 5px #f5f5f5;
 }
 .top{
   display: flex;
-  margin-top: 15px;
 }
 
 .top > div{
   height: 15px;
   width: 15px;
-  margin-right: 50px;
 }
 
 /* Posteos */
-.posts {
-  width: 100%;
-  height: 50em;
-  overflow-y: auto;
-  background-color: rgba(255, 255, 255, 0.274);
-  display: flex;
-  /* flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-}
 
-.post {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.fan {
-  /* display: flex; */
-  /* width: 100%;
-  max-width: 60em; */
-  /* justify-content: center; */
-  /* border: 1px solid white; */
-  margin-top: -12em;
-  text-align: center;
-}
-
-.fan > h1{
-  text-align: center;
-  color: white;
-}
-
-.followed {
-  margin-top: 1em;
-  overflow-y: auto;
-  width: auto;
-  height: 25em;
-  display: grid;
-  gap: 3px;
-  grid-template-columns: repeat(3, 1fr);
-  /* display: flex;*/
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.followedArtist {
-  display: flex;
-  border-radius: 0.5em;
-  margin-bottom: 1em;
-  width: 15em;
-  height: 7em;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: rgba(240, 248, 255, 0.484);
-
-}
-
-.followedArtist > section {
-  width: 6em;
-  font-size: large;
-}
-
-.followedArtist > section > p:nth-child(1) {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-.followedArtist > section > p:nth-child(2) {
-  font-style: italic;
-  margin: 0;
-  padding: 0;
-}
 
 .followeds{
-  display: grid;
+  color: #f5f5f5;
   text-align: center;
-  margin-right: -100px;
-  margin-top: 15px;
   font-weight: bold;
   font-size: large;
 }
 
 .followers {
+  color: #f5f5f5;
   text-align: center;
-  margin-right: 100px;
-  margin-top: 15px;
   font-weight: bold;
   font-size: large;
 }
@@ -183,9 +93,8 @@
   flex-direction: column;
 }
 
-.followList > h3 {
-  margin-left: 100px;
-}
+/* .followList > h3 {
+} */
 
 .imgFollower > img{
   display: flex;
@@ -193,35 +102,40 @@
   width: 50px;
 }
 .editButton {
-  margin-left: 1em;
+  margin-top: 9px;
+  margin-left: 74px;
+  color:#dd9202;
 }
 
-.description {
-  margin-bottom: 2em;
-  margin-left: 8em;
-  margin-right: 20px;
-  text-align: center;
+.editButton:hover {
+  color: #f5f5f5;  
 }
+
 
 /* NOMBRE */
 .name {
+  font-size: 20px;
   text-align: center;
-  font-size: 50px;
-  text-transform: capitalize;
+  color:#dd9202;
   font-weight: bold;
-  /* color: #1c1c1c; */
-  margin-top: 100px;
 }
 
 .userName{
+  font-size: 15px;
   text-align: center;
-  font-size: 50px;
-  text-transform: capitalize;
-  font-weight: bold;
 }
 
 .nameNData{
-  color: white;
+  margin-top: 10px;
+  display: flex;
+  color: #f5f5f5;
+}
+
+.userStatus{  
+}
+
+.description {
+  margin-top: -10px;
 }
 
 /* .profile > div > div > p {

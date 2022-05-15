@@ -3,6 +3,10 @@ const jwt = require('jsonwebtoken');
 const {Op} = require('sequelize')
 class ReportPCUClass {
     constructor(){}
+    
+    getCauseReport = (req, res) => {
+        res.status(200).json({causesRepor: RowReport.rawAttributes.causeReport.values});
+    }
 
     reportComment = async (req,res) => {
         const {token, idComment, causeReport} = req.body;

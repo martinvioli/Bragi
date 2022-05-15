@@ -178,7 +178,7 @@ class UserClass {
       const membershipUser = await MembershipUser.create({
         statePlan:'Inactive',
         dateStart: today.getDate()+'-'+(today.getMonth()+1)+'-'+(today.getFullYear()),
-        dateExpiry: today.getDate()+'-'+(today.getMonth()+(3))
+        dateExpiry: today.getDate()+'-'+(today.getMonth()+(3))+'-'+(today.getFullYear())
       })
       planPremium.addMembershipUser(membershipUser);
       membershipUser.addUser(user);

@@ -172,6 +172,101 @@ validateEmailReset = async(req,res) => {
     }
 }
 
+async function userBanned (name, lastName, email, causeBan){
+    try{const transporter = nodemailer.createTransport({
+        // host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        service: 'Gmail',
+        auth: {
+          user: 'BragiSystem@gmail.com', // generated ethereal user
+          pass: 'clcnvcwtptmsaqnq', // generated ethereal password
+        },tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    transporter.verify().then(() => {
+        console.log("Ready for send emails")
+    });
+
+    await transporter.sendMail({
+        from: '"Bragi" <BragiSystem@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: "your account 'BRAGI' was banned", // Subject line
+        text: `Hello! \n\n We're sorry to send you an email to notify you that your account was "BANNED" by the "BRAGI" team for not meeting community standards. \n The cause of the ban is ${causeBan}. \nPlease contact the "BRAGI" administrative team to recover your account. \n\n BRAGI administrators email: \n\n BragiSystem@gmail.com`,
+        html: `
+        <div style="width: 400px; border: 5px solid cyan; padding: 50px; margin: auto;">
+            <header style="border-bottom: 5px solid cyan">
+                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -50px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
+            </header>
+            <h2 style="margin-top:px">Hello, ${name} ${lastName}!</h2>
+                <br/><br/>
+                We're sorry to send you an email to notify you that your account was "<b>BANNED</b>" by the "BRAGI" team for not meeting community standards. The cause of the ban is "<b>${causeBan}</b>".
+                <br/>
+                Please contact the "BRAGI" administrative team to recover your account. \n\n BRAGI administrators email:
+                <br/><br/>
+                BragiSystem@gmail.com
+                <br/>
+                <br/>
+                <br/>
+                
+                <h4>Bragi administrative team</h4>
+        </div>
+        `, // html body
+    });}
+    catch(e){
+        console.log(e)
+    }
+};
+async function userUnbanned (name, lastName, email){
+    try{const transporter = nodemailer.createTransport({
+        // host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        service: 'Gmail',
+        auth: {
+          user: 'BragiSystem@gmail.com', // generated ethereal user
+          pass: 'clcnvcwtptmsaqnq', // generated ethereal password
+        },tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    transporter.verify().then(() => {
+        console.log("Ready for send emails")
+    });
+
+    await transporter.sendMail({
+        from: '"Bragi" <BragiSystem@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: "your account 'BRAGI' was unbanned", // Subject line
+        text: `Hello! \n\n We have sent you an email to notify you that the team "BRAGI" is ACTIVE. \n We ask you to respect the community in the future so as not to repeat this episode. \n Welcome and thank you for being part of the "Bragi" community again.`,
+        html: `
+        <div style="width: 400px; border: 5px solid cyan; padding: 50px; margin: auto;">
+            <header style="border-bottom: 5px solid cyan">
+                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -50px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
+            </header>
+            <h2 style="margin-top:px">Hello, ${name} ${lastName}!</h2>
+                <br/><br/>
+                We have sent you an email to notify you that the team "BRAGI" is "<b>ACTIVE</b>".
+                <br/>
+                We ask you to respect the community in the future so as not to repeat this episode.
+                <br/><br/>
+                Welcome and thank you for being part of the "Bragi" community again.
+                <br/>
+                <br/>
+                <br/>
+                
+                <h4>Bragi administrative team</h4>
+        </div>
+        `, // html body
+    });}
+    catch(e){
+        console.log(e)
+    }
+};
+
 validateCodeReset = async(req,res) => {
     const {email, code} = req.body;
     try {
@@ -190,6 +285,8 @@ validateCodeReset = async(req,res) => {
         console.log(error)
     }
 }
+
+
 
 validateUserCode = async (req,res) => {
     //Decodificar token y buscar el id del usuario.
@@ -227,5 +324,4 @@ comparePasswords = async (req, res) => {
     }
 }
 
-
-module.exports = {validationLoginUser, validationRegisterEmailUsername, verifactionEmail, validateUserCode, comparePasswords,  recoverEmail, validateCodeReset, validateEmailReset }
+module.exports = {validationLoginUser, userBanned ,userUnbanned , validationRegisterEmailUsername, verifactionEmail, validateUserCode, comparePasswords, recoverEmail, validateCodeReset, validateEmailReset}
