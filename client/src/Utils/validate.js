@@ -124,7 +124,7 @@ export function validateEdit(input) {
     errors.password =
       "Password must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
-  if (!/^([A-Za-z]){8,15}$/.test(input.userName) && input.userName) {
+  if (!/^([A-Za-z0-9]){8,15}$/.test(input.userName) && input.userName) {
     errors.userName =
       "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }

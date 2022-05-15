@@ -24,6 +24,7 @@ export const USER_NEW_POST = "USER_NEW_POST";
 export const USER_UPDATE_POST = "USER_UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 export const GET_OWN_POSTS = "GET_OWN_POSTS";
+export const CHANGE_TYPE_OF_POST = "CHANGE_TYPE_OF_POST"
 
 //DETAILS BY ID
 export const GET_SONG_BY_ID = "GET_SONG_BY_ID";

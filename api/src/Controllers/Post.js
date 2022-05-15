@@ -69,7 +69,7 @@ class PostClass {
   };
 
   createPost = async (req, res) => {
-    const { contentPost, linkContent, imagePost, token } = req.body;
+    const { contentPost, linkContent, imagePost, token, postIsPremium } = req.body;
     const tokenDecode = jwt.decode(token);
 
     try {
@@ -78,7 +78,22 @@ class PostClass {
       });
       if (!user)
         return res.status(404).json({ msgE: "Could not find your user" });
-
+        if(postIsPremium === true) {
+          console.log("entra al if")
+          const newPost = await Post.create({
+            contentPost,
+            linkContent,
+            imagePost,
+            typeOfPost: "Premium"
+          });
+          await newPost.setUser(user.idUser);
+    
+          return res.status(201).json({
+            msg: "Post created successfully",
+            newPost,
+            userName: user.userName,
+          });
+        }
       const newPost = await Post.create({
         contentPost,
         linkContent,

@@ -60,6 +60,7 @@ import {
   CREATE_ADMIN_POST,
   EDIT_ADMIN_POST,
   DELETE_ADMIN_POST,
+  CHANGE_TYPE_OF_POST
 } from "../actions";
 
 // STATE CREATION
@@ -109,6 +110,8 @@ const initialState = {
   bannedUsers: [],
   adminPosts: [],
   editedPost: {},
+  postPremium: [],
+  //updatePosts: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -189,18 +192,22 @@ function rootReducer(state = initialState, action) {
     case USER_NEW_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: [...state.posts, action.payload]
       };
     case USER_UPDATE_POST:
       return {
         ...state,
-        posts: action.payload,
       };
     case DELETE_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: action.payload
       };
+      case CHANGE_TYPE_OF_POST:
+        return {
+          ...state,
+          postPremium: action.payload
+        }
     case GET_SONG_BY_ID:
       return {
         ...state,
