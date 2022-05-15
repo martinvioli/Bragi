@@ -11,6 +11,7 @@ const user = new User();
 
 router.get("/", post.getAllPosts);
 router.post("/", post.createPost);
+router.post("/changePostType", post.changeTypeOfPost)
 router.get("/:idPost", post.getPost);
 router.put("/:idPost", post.updatePost);
 router.delete("/:idPost", post.deletePost);
