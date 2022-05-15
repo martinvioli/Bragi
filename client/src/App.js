@@ -10,7 +10,9 @@ import Feed from "./components/Feed";
 import DetailsAlbum from "./components/Details/DetailsAlbum";
 import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
-import Comment from "./components/Comment"
+import Comment from "./components/Comment";
+import PayForm from "./components/PayForm";
+
 
 function App() {
   const location = useLocation();
@@ -25,6 +27,8 @@ function App() {
             path="/register/authenticate"
             element={<Authenticate />}
           />
+          <Route exact path="/pay" element={<PayForm />} />
+
           <Route path="/" element={<NavBar />}>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/feed" element={<Feed />} />
