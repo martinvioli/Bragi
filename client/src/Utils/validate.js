@@ -67,7 +67,8 @@ export default function validate(input) {
   }
   if (!input.userName) {
     errors.userName = "Username is required";
-  } else if (!/^([A-Za-z]){8,15}$/.test(input.userName)) {
+  } else if (!/^([A-Za-z0-9]){8,15}$/.test(input.userName)) {
+    ///^[A-Za-z0-9]{8,15}+$/g
     errors.userName =
       "Username must be only letters and must have a length of 8 as minimum and 15 as maximum.";
   }
