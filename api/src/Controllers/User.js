@@ -1,4 +1,13 @@
-const { User, Post, Like, Comment, Followed, Follower , MembershipUser, PlanPremium} = require("../db.js");
+const {
+  User,
+  Post,
+  Like,
+  Comment,
+  Followed,
+  Follower,
+  MembershipUser,
+  PlanPremium,
+} = require("../db.js");
 const validation = require("../Validations/auths.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -66,7 +75,7 @@ class UserClass {
             gender: userFind.gender,
             tel: userFind.telephone,
             description: userFind.description,
-            bithday: userFind.Bithday,
+            birthday: userFind.birthday,
             userName: userFind.userName,
             lastName: userFind.lastName,
             stateUser: userFind.nameStateUser,
@@ -137,9 +146,9 @@ class UserClass {
 
     const planPremium = await PlanPremium.create({
       priceMembership: 2.0,
-      namePlanPremium: 'Standar',
-      numberOfMonths: 3
-    })
+      namePlanPremium: "Standar",
+      numberOfMonths: 3,
+    });
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     const nameMinus = name.charAt(0).toLowerCase() + name.slice(1);
     const lastNameMinus = lastName.charAt(0).toLowerCase() + lastName.slice(1);
@@ -176,10 +185,20 @@ class UserClass {
       });
       const today = new Date();
       const membershipUser = await MembershipUser.create({
-        statePlan:'Inactive',
-        dateStart: today.getDate()+'-'+(today.getMonth()+1)+'-'+(today.getFullYear()),
-        dateExpiry: today.getDate()+'-'+(today.getMonth()+(3))+'-'+(today.getFullYear())
-      })
+        statePlan: "Inactive",
+        dateStart:
+          today.getDate() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getFullYear(),
+        dateExpiry:
+          today.getDate() +
+          "-" +
+          (today.getMonth() + 3) +
+          "-" +
+          today.getFullYear(),
+      });
       planPremium.addMembershipUser(membershipUser);
       membershipUser.addUser(user);
       return res.status(200).json({ msg: "User created successfully", token }); //Prueba para el front
@@ -189,43 +208,50 @@ class UserClass {
     }
   };
 
-  resetPasswordPost = async(req, res) => {
+  resetPasswordPost = async (req, res) => {
     let { code, password, repeatPassword } = req.body;
     try {
-      const findUser = await User.findOne({ where: { validationCode: code } })
-      if(!findUser)return res.status(404).json({ msgE: "We have trouble findind your user" })
-      if(findUser){
-      password = bcrypt.hashSync(
-        req.body.password,
-        Number.parseInt(authConfig.rounds)
-      );
-      if (!bcrypt.compareSync(repeatPassword, password)) return res.status(409).json({ msgE: "Passwords do not match" });
-      await findUser.update({ password, repeatPassword })
-      return res.status(200).json({ msg: "Password changed succesfully" })
+      const findUser = await User.findOne({ where: { validationCode: code } });
+      if (!findUser)
+        return res
+          .status(404)
+          .json({ msgE: "We have trouble findind your user" });
+      if (findUser) {
+        password = bcrypt.hashSync(
+          req.body.password,
+          Number.parseInt(authConfig.rounds)
+        );
+        if (!bcrypt.compareSync(repeatPassword, password))
+          return res.status(409).json({ msgE: "Passwords do not match" });
+        await findUser.update({ password, repeatPassword });
+        return res.status(200).json({ msg: "Password changed succesfully" });
       }
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ msgE: "Something went wrong", error })
+      console.log(error);
+      res.status(500).json({ msgE: "Something went wrong", error });
     }
-  }
+  };
 
-  resetPasswordPre = async(req, res) => {
+  resetPasswordPre = async (req, res) => {
     const { email, code } = req.body;
     const codeNum = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
-    console.log(codeNum)
+    console.log(codeNum);
     try {
-        const findUser = await User.findOne({ where: { email } })
-        if(!findUser) return res.status(404).json({ msgE: "We have trouble findind your user" })
-        if (findUser){
-          await findUser.update({validationCode: codeNum})
-          const emailVerify = await validation.recoverEmail(email, codeNum)
-          return res.status(200).json({ msg: "Mail send", findUser, codeNum });
-        }
+      const findUser = await User.findOne({ where: { email } });
+      if (!findUser)
+        return res
+          .status(404)
+          .json({ msgE: "We have trouble findind your user" });
+      if (findUser) {
+        await findUser.update({ validationCode: codeNum });
+        const emailVerify = await validation.recoverEmail(email, codeNum);
+        return res.status(200).json({ msg: "Mail send", findUser, codeNum });
+      }
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ msgE: "Something went wrong", error })
+      console.log(error);
+      res.status(500).json({ msgE: "Something went wrong", error });
     }
-  }
+  };
 
   loginUser = async (req, res) => {
     //User login validation function

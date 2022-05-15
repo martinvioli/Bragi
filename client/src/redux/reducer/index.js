@@ -34,12 +34,32 @@ import {
   POST_REEPLACER,
   GET_STATISTICS,
   BAN_USER,
-  DIS_BAN_USER,
   GET_REPORTS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
+  // CLEAN_DETAIL_TOP10,
+  UNBAN_USER,
+  GET_COMMENT_REPORTS,
+  GET_POST_REPORTS,
+  GET_USER_REPORTS,
+  GET_REPORT_BY_ID,
+  GET_ARTIST_USERS,
+  GET_PREMIUM_USERS,
+  GET_STANDARD_USERS,
+  ADMIN_DELETE_POST,
+  ADMIN_ALLOW_POST,
+  ADMIN_DELETE_COMMENT,
+  ADMIN_ALLOW_COMMENT,
+  MODIFY_PLANS_PREMIUMS,
+  CREATE_PLANS_PREMIUMS,
+  DELETE_PLANS_PREMIUMS,
   CLEAN_DETAIL_TOP10,
-  FORGOTTEN_PASSWORD_PRE
+  FORGOTTEN_PASSWORD_PRE,
+  GET_ALL_BANNED_USERS,
+  GET_ALL_ADMIN_POSTS,
+  CREATE_ADMIN_POST,
+  EDIT_ADMIN_POST,
+  DELETE_ADMIN_POST,
 } from "../actions";
 
 // STATE CREATION
@@ -52,13 +72,13 @@ const initialState = {
   album: [],
   artist: [],
   songs: [],
+  usersList: [],
   topSongs: [],
   topArtists: [],
   topAlbums: [],
   songById: {},
   albumById: {},
   artistById: {},
-  usersList: [],
   profileImage: "",
   comments: [],
   followed: [],
@@ -67,12 +87,28 @@ const initialState = {
   listFollowers: [],
   userProfile: {},
   ownPosts: [],
-  statistics: {},
   banned: [],
-  disbanned: [],
+  unbanned: [],
+  standardUsers: [],
+  premiumUsers: [],
+  artistUsers: [],
   reports: [],
-  email:"",
-  code:""
+  userReports: [],
+  postReports: [],
+  commentReports: [],
+  report: {},
+  adminDeletePost: {},
+  adminAllowPost: {},
+  adminDeleteComment: {},
+  adminAllowComment: {},
+  createPremiumPlan: {},
+  modifyPremiumPlan: {},
+  deletePremiumPlan: {},
+  email: "",
+  code: "",
+  bannedUsers: [],
+  adminPosts: [],
+  editedPost: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -123,7 +159,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         song: [],
-        album:[],
+        album: [],
         artist: [],
         topSongs: [],
         topArtists: [],
@@ -250,8 +286,8 @@ function rootReducer(state = initialState, action) {
     case LIST_FOLLOWERS:
       return {
         ...state,
-        listFollowers: action.payload
-      }
+        listFollowers: action.payload,
+      };
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({
@@ -285,30 +321,125 @@ function rootReducer(state = initialState, action) {
         ...state,
         posts: state.userProfile.Posts,
       };
-    case GET_STATISTICS:
-      return {
-        ...state,
-        statistics: action.payload,
-      };
     case BAN_USER:
       return {
         ...state,
         banned: action.payload,
       };
-    case DIS_BAN_USER:
+    case UNBAN_USER:
       return {
         ...state,
-        disbanned: action.payload,
+        unbanned: action.payload,
       };
     case GET_REPORTS:
       return {
         ...state,
         reports: action.payload,
       };
-    case FORGOTTEN_PASSWORD_PRE:
-      return{
+    case GET_COMMENT_REPORTS:
+      return {
         ...state,
-        email: action.payload
+        commentReports: action.payload,
+      };
+    case GET_POST_REPORTS:
+      return {
+        ...state,
+        postReports: action.payload,
+      };
+    case GET_USER_REPORTS:
+      return {
+        ...state,
+        userReports: action.payload,
+      };
+    case GET_REPORT_BY_ID:
+      return {
+        ...state,
+        report: action.payload,
+      };
+    case GET_ARTIST_USERS:
+      return {
+        ...state,
+        artistUsers: action.payload,
+      };
+    case GET_PREMIUM_USERS:
+      return {
+        ...state,
+        premiumUsers: action.payload,
+      };
+    case GET_STANDARD_USERS:
+      return {
+        ...state,
+        standardUsers: action.payload,
+      };
+    case ADMIN_DELETE_POST:
+      return {
+        ...state,
+        adminDeletePost: action.payload,
+      };
+
+    case ADMIN_ALLOW_POST:
+      return {
+        ...state,
+        adminAllowPost: action.payload,
+      };
+
+    case ADMIN_DELETE_COMMENT:
+      return {
+        ...state,
+        adminDeleteComment: action.payload,
+      };
+
+    case ADMIN_ALLOW_COMMENT:
+      return {
+        ...state,
+        adminAllowComment: action.payload,
+      };
+    case MODIFY_PLANS_PREMIUMS:
+      return {
+        ...state,
+        modifyPremiumPlan: action.payload,
+      };
+
+    case CREATE_PLANS_PREMIUMS:
+      return {
+        ...state,
+        createPremiumPlan: action.payload,
+      };
+
+    case DELETE_PLANS_PREMIUMS:
+      return {
+        ...state,
+        deletePremiumPlan: action.payload,
+      };
+
+    case FORGOTTEN_PASSWORD_PRE:
+      return {
+        ...state,
+        email: action.payload,
+      };
+    case GET_ALL_BANNED_USERS:
+      return {
+        ...state,
+        bannedUsers: action.payload,
+      };
+    case GET_ALL_ADMIN_POSTS:
+      return {
+        ...state,
+        adminPosts: action.payload,
+      };
+    case CREATE_ADMIN_POST:
+      return {
+        ...state,
+        adminPosts: [...state.adminPosts, action.payload],
+      };
+    case EDIT_ADMIN_POST:
+      return {
+        ...state,
+        editedPost: {},
+      };
+    case DELETE_ADMIN_POST:
+      return {
+        ...state,
       };
     default:
       return { ...state };

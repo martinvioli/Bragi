@@ -5,6 +5,7 @@ const apiHeroku = {
   authenticateUrl: "https://bragiproject.herokuapp.com/validationUser/",
   loginUrl: "https://bragiproject.herokuapp.com/login",
   logoutUrl: "https://bragiproject.herokuapp.com/closeSessionUser",
+  getUserByName: "https://bragiproject.herokuapp.com/search/",
   searchSongUrl: "https://bragiproject.herokuapp.com/song",
   searchGenreUrl: "https://bragiproject.herokuapp.com/genre",
   searchUrl: "https://bragiproject.herokuapp.com/searh",
@@ -46,11 +47,39 @@ const apiHeroku = {
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
   banUser: "https://bragiproject.herokuapp.com/admin/banUser",
-  disBanUser: "https://bragiproject.herokuapp.com/admin/allowUser",
   getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
-  getAllReports: "https://bragiproject.herokuapp.com/admin/getAllReports",
-  forgottenPasswordPre: "http://bragiproject.herokuapp.com/recoverPassword/pre",
-  forgottenPasswordPost: "http://bragiproject.herokuapp.com/recoverPassword"
+  unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
+  getAllStandarUsers: "https://bragiproject.herokuapp.com/admin/getUserStandar",
+  getAllPremiumUsers: "https://bragiproject.herokuapp.com/admin/getUserPremium",
+  getAllArtistUsers: "https://bragiproject.herokuapp.com/admin/getUserArtist",
+  getAllReports: "https://bragiproject.herokuapp.com/admin/reports",
+  getUserReports: "https://bragiproject.herokuapp.com/admin/reports/reportUser",
+  getPostReports:
+    "https://bragiproject.herokuapp.com/admin/reports/reportsPost",
+  getCommentsReports:
+    "https://bragiproject.herokuapp.com/admin/reports/reportsComment",
+  getReportByID: "https://bragiproject.herokuapp.com/admin/reports/",
+  adminDeletePost:
+    "https://bragiproject.herokuapp.com/admin/reports/deletePost",
+  adminAllowPost: "https://bragiproject.herokuapp.com/admin/reports/allowPost",
+  adminDeleteComment:
+    "https://bragiproject.herokuapp.com/admin/reports/deleteComment",
+  adminAllowComment:
+    "https://bragiproject.herokuapp.com/admin/reports/allowComment",
+  createPremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/create",
+  editPremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/edition",
+  deletePremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/delete",
+  getAllAdminPosts: "https://bragiproject.herokuapp.com/admin/allPostAdmin",
+  createAdminPost: "https://bragiproject.herokuapp.com/admin/createPostAdmin",
+  editAdminPost: "https://bragiproject.herokuapp.com/admin/editPostAdmin",
+  deleteAdminPost: "https://bragiproject.herokuapp.com/admin/deletePostAdmin",
+  getAllBannedUsers: "https://bragiproject.herokuapp.com/admin/allBannedUser",
+  forgottenPasswordPre:
+    "https://bragiproject.herokuapp.com/recoverPassword/pre",
+  forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
 };
 
 const api = {
@@ -60,6 +89,7 @@ const api = {
   authenticateUrl: "http://localhost:3001/validationUser/",
   loginUrl: "http://localhost:3001/login",
   logoutUrl: "http://localhost:3001/closeSessionUser",
+  getUserByName: "http://localhost:3001/search/",
   searchSongUrl: "http://localhost:3001/song",
   searchGenreUrl: "http://localhost:3001/genre",
   searchUrl: "http://localhost:3001/searh",
@@ -96,12 +126,33 @@ const api = {
   unfollowUser: "http://localhost:3001/unfollow",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
-  banUser: "http://localhost:3001/admin/banUser",
+  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
+  unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
+  getAllStandarUsers: "http://localhost:3001/admin/getUserStandar",
+  getAllPremiumUsers: "http://localhost:3001/admin/getUserPremium",
+  getAllArtistUsers: "http://localhost:3001/admin/getUserArtist",
+  getAllReports: "http://localhost:3001/admin/reports",
+  getUserReports: "http://localhost:3001/admin/reports/reportUser",
+  getPostReports: "http://localhost:3001/admin/reports/reportsPost",
+  getCommentsReports: "http://localhost:3001/admin/reports/reportsComment",
+  getReportByID: "http://localhost:3001/admin/reports/",
+  adminDeletePost: "http://localhost:3001/admin/reports/deletePost",
+  adminAllowPost: "http://localhost:3001/admin/reports/allowPost",
+  adminDeleteComment: "http://localhost:3001/admin/reports/deleteComment",
+  adminAllowComment: "http://localhost:3001/admin/reports/allowComment",
+  createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
+  editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
+  deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
+
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
-  getAllReports: "http://localhost:3001/admin/getAllReports",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
-  forgottenPasswordPost: "http://localhost:3001/recoverPassword"
+  forgottenPasswordPost: "http://localhost:3001/recoverPassword",
+  getAllAdminPosts: "http://localhost:3001/admin/allPostAdmin",
+  createAdminPost: "http://localhost:3001/admin/createPostAdmin",
+  editAdminPost: "http://localhost:3001/admin/editPostAdmin",
+  deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
+  getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
 };
 
 export default api;

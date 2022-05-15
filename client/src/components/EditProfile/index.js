@@ -139,7 +139,7 @@ function EditProfile({ showModal, handleShowModal }) {
       "description",
       input.description ? input.description : user.description
     );
-    fd.append("birthday", input.birthday ? input.birthday : user.birthday);
+    fd.append("birthday", input.birthday ? input.birthday : user.birthday); //Necesitamos user.birthday para que funcione.
     fd.append("tel", input.tel ? input.tel : user.tel);
 
     const response = await axios.put(api.updateBasicData, fd);
