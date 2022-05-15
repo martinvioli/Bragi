@@ -8,7 +8,6 @@ import {
   GET_ARTIST_BY_NAME,
   GET_USER_BY_NAME,
   CLEAR_DATA,
-  SONGS_MORE_PLAYED,
   GET_TOP_10_SONGS,
   GET_TOP_10_ARTISTS,
   GET_TOP_10_ALBUMS,
@@ -21,14 +20,24 @@ import {
   GET_ARTIST_BY_ID,
   CLEAR_DETAILS,
   GET_PHOTO_USER,
-  POST_FOLLOW_NOTIFICATION,
+  //POST_FOLLOW_NOTIFICATION,
   GET_ALL_COMMENT,
-  USER_NEW_COMMENT,
+  //USER_NEW_COMMENT,
   USER_UPDATE_COMMENT,
   DELETE_COMMENT,
   FOLLOW_USER,
+  UNFOLLOW_USER,
+  LIST_FOLLOWED,
   FALSE_DISLIKE,
   FALSE_LIKE,
+  GET_USER_PROFILE,
+  GET_OWN_POSTS,
+  POST_REEPLACER,
+  BAN_USER,
+  DIS_BAN_USER,
+  GET_STATISTICS,
+  GET_REPORTS,
+  MODIFY_PLANS_PREMIUMS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -268,6 +277,24 @@ export const deletePost = function (idPost) {
   };
 };
 
+export const getOwnPosts = function (userName) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${api.getAllPost}/${userName}/posts`);
+      return dispatch({
+        type: GET_OWN_POSTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const postReeplacer = function () {
+  return { type: POST_REEPLACER };
+};
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ COMMENTS
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -369,13 +396,13 @@ export const clearDetails = () => {
 };
 
 //-----------------------------------------------------------------------------
-//_ FOLLOW
+//_ FOLLOW AND UNFOLLOW
 //-----------------------------------------------------------------------------
 
-export const followUser = (token, idFollowed) => {
+export const followUser = (obj) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(api.followUser, { token, idFollowed });
+      const response = await axios.post(api.followUser, obj);
       console.log(response.data);
       return dispatch({
         type: FOLLOW_USER,
@@ -386,7 +413,36 @@ export const followUser = (token, idFollowed) => {
     }
   };
 };
+export const unfollowUser = (obj) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.unfollowUser, obj);
+      console.log(response.data);
+      return dispatch({
+        type: UNFOLLOW_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
+export const listFollowed = (userName) => {
+  return async (dispatch) => {
+    try {
+      console.log(userName)
+      const response = await axios.post('http://localhost:3001/follow/followeds', { userName: userName });
+      console.log(response.data);
+      return dispatch({
+        type: LIST_FOLLOWED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 //////////////////////////////////////
 // == LIKES == //
 /////////////////////////////////////
@@ -418,5 +474,84 @@ export const dislike = function (payload) {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+//////////////////////
+// == VER PERFIL DE OTRO USER == //
+//////////////////////
+
+export const getUseProfile = (token, userName) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.getUserProfile, {
+        token,
+        userName,
+      });
+      console.log(response.data);
+      return dispatch({
+        type: GET_USER_PROFILE,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//-----------------------------------------------------------------------------
+//_ ADMIN
+//-----------------------------------------------------------------------------
+
+export const banUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.banUser, id);
+      console.log(response.data);
+      return dispatch({ type: BAN_USER, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const disBanUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.disBanUser, id);
+      console.log(response.data);
+      return dispatch({ type: DIS_BAN_USER, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAllStatistics = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllStatistics);
+    return dispatch({
+      type: GET_STATISTICS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllReports = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllReports);
+    return dispatch({
+      type: GET_REPORTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const modifyPlansPremiums = () => {
+  return async (dispatch) => {
+    const response = await axios.put("");
+    return dispatch({
+      type: MODIFY_PLANS_PREMIUMS,
+      payload: response.data,
+    });
   };
 };

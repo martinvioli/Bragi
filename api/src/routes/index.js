@@ -1,7 +1,7 @@
 const { Router } = require("express");
-const register = require('./Register.js');
-const validation = require('./Validation');
-const login = require('./Login.js');
+const register = require("./Register.js");
+const validation = require("./Validation");
+const login = require("./Login.js");
 const { User } = require("../db");
 const songById = require('./Song');
 const artistById = require('./ArtistById');
@@ -19,6 +19,7 @@ const changeUserType = require('./ChangeUserType');
 const report = require('./Report');
 const reactionHeart = require('./ReactionHeart');
 const pay = require("./Pay");
+const admin = require('./Admin');
 
 
 
@@ -46,5 +47,6 @@ router.use('/report', report );
 router.use('/reactionHeart', reactionHeart);
 router.use("/pay", pay);
 
+router.use('/admin', admin);
 
 module.exports = router;
