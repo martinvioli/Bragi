@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
+  changeTypeOfPost,
   deletePost,
   dislike,
   falseDislike,
@@ -88,9 +89,10 @@ export default function Feed() {
     token: "",
     linkContent: "",
     imagePost: "",
+    postIsPremium: false,
   });
   const [showModal, setShowModal] = useState(false);
-
+  //const [inputSelect, setInSelect] = useState({select:""})
   useEffect(() => {
     setInput({ ...input, token: token });
   }, [token]);
@@ -118,7 +120,7 @@ export default function Feed() {
     }
   }, []);
 
-  // posts.forEach((e) => {
+  // posts && posts.forEach((e) => {
   //   // console.log(e)
   //   dispatch(getPhotoUser(e.User.userName));
   // });
@@ -207,7 +209,26 @@ export default function Feed() {
 
   const [slicer, setSlicer] = useState(3);
 
-  console.log(posts);
+  //console.log(posts);
+
+  const handlePremiumPost = (e) => {
+    e.preventDefault()
+    // setInput({
+    //   ...input,
+    //   select : e.target.value
+    // })
+    if(e.target.value === "Premium") {
+      setInput({
+        ...input,
+        postIsPremium: true
+      }) 
+    } else {
+      setInput({
+        ...input,
+        postIsPremium : false
+      })
+    }
+  }
 
   // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
 
@@ -292,13 +313,22 @@ export default function Feed() {
                     onChange={handleSearchImage}
                   /> */}
                   <Input
-                    style={{ width: "45em", height: "2.5em" }}
+                    style={{ width: "38em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
                     value={input.linkContent}
                     placeholder="Insert URL 🔗"
                   />
+                  <Input  style={{ width: "7em", height: "2.5em" }} type="select"
+              name="select"
+              value={input.select}
+              onChange={(e)=>handlePremiumPost(e)}
+              >
+                  <option value="Standard">Standard Post</option>
+                  <option value="Premium">Premium Post</option>
+                  </Input>
+               
                   <Button
                     style={{ width: "5em", height: "2.5em" }}
                     color="primary"

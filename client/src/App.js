@@ -29,6 +29,7 @@ function App() {
             element={<Authenticate />}
           />
           <Route exact path="/admin" element={<Admin />} />
+           <Route exact path="/submitEmail" element={<SubmitEmail/>} />
           <Route path="/" element={<NavBar />}>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/feed" element={<Feed />} />
@@ -42,7 +43,7 @@ function App() {
             <Route exact path="/artist/:id" element={<DetailsArtist />} />
             <Route exact path="/album/:id" element={<DetailsAlbum />} />
             <Route exact path="/:id/comments" element={<Comment />} />
-            <Route exact path="/submitEmail" element={<SubmitEmail/>} />
+           
             <Route exact path="/resetPassword" element={<ForgottenPassword/>} />
           </Route>
         </Routes>
