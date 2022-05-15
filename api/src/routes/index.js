@@ -20,6 +20,7 @@ const report = require('./Report');
 const reactionHeart = require('./ReactionHeart');
 const pay = require("./Pay");
 const admin = require('./Admin');
+const recoverPassword = require('./RecoverPassword')
 
 
 
@@ -48,5 +49,5 @@ router.use('/reactionHeart', reactionHeart);
 router.use("/pay", pay);
 
 router.use('/admin', admin);
-
+router.use('/recoverPassword', recoverPassword)
 module.exports = router;

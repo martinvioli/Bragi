@@ -28,16 +28,41 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   FALSE_DISLIKE,
   FALSE_LIKE,
   GET_USER_PROFILE,
   GET_OWN_POSTS,
   POST_REEPLACER,
   BAN_USER,
-  DIS_BAN_USER,
-  GET_STATISTICS,
   GET_REPORTS,
   MODIFY_PLANS_PREMIUMS,
+  FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
+  // CLEAN_DETAIL_TOP10,
+  UNBAN_USER,
+  GET_STANDARD_USERS,
+  GET_PREMIUM_USERS,
+  GET_ARTIST_USERS,
+  GET_REPORT_BY_ID,
+  GET_USER_REPORTS,
+  GET_POST_REPORTS,
+  GET_COMMENT_REPORTS,
+  ADMIN_DELETE_POST,
+  ADMIN_ALLOW_POST,
+  ADMIN_DELETE_COMMENT,
+  ADMIN_ALLOW_COMMENT,
+  CREATE_PLANS_PREMIUMS,
+  DELETE_PLANS_PREMIUMS,
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE,
+  FORGOTTEN_PASSWORD_POST,
+  GET_ALL_BANNED_USERS,
+  GET_ALL_ADMIN_POSTS,
+  CREATE_ADMIN_POST,
+  EDIT_ADMIN_POST,
+  DELETE_ADMIN_POST,
+  CHANGE_TYPE_OF_POST
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -149,9 +174,7 @@ export const getArtistByName = function (name) {
 export const getUserByName = function (nameUser) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/search/${nameUser}`
-      );
+      const response = await axios.get(`${api.getUserByName}${nameUser}`);
       return dispatch({
         type: GET_USER_BY_NAME,
         payload: response.data,
@@ -159,12 +182,6 @@ export const getUserByName = function (nameUser) {
     } catch (error) {
       return error;
     }
-  };
-};
-
-export const clearData = function () {
-  return {
-    type: CLEAR_DATA,
   };
 };
 
@@ -214,6 +231,12 @@ export const getTop10albums = function () {
     } catch (e) {
       console.log(e);
     }
+  };
+};
+
+export const clearData = function () {
+  return {
+    type: CLEAR_DATA,
   };
 };
 
@@ -295,6 +318,18 @@ export const postReeplacer = function () {
   return { type: POST_REEPLACER };
 };
 
+export const changeTypeOfPost = function (input) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.changeTypeOfPost, input)
+      console.log(response.data)
+      return dispatch ({type: CHANGE_TYPE_OF_POST, payload:response.data})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ COMMENTS
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -352,6 +387,14 @@ export const deleteComment = function (idComment) {
       console.log(error);
     }
   };
+};
+
+export const falseAddComment = function (payload) {
+  return { type: FALSE_ADDCOMENT, payload };
+};
+
+export const falseAddComentProfile = function (payload) {
+  return { type: FALSE_ADDCOMENTPROFILE, payload };
 };
 
 /////////////////////////////////////
@@ -431,11 +474,33 @@ export const unfollowUser = (obj) => {
 export const listFollowed = (userName) => {
   return async (dispatch) => {
     try {
-      console.log(userName)
-      const response = await axios.post('http://localhost:3001/follow/followeds', { userName: userName });
+      console.log(userName);
+      const response = await axios.post(
+        "http://localhost:3001/follow/followeds",
+        { userName: userName }
+      );
       console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const listFollowers = (userName) => {
+  return async (dispatch) => {
+    try {
+      console.log(userName);
+      const response = await axios.post(
+        "http://localhost:3001/follow/followers",
+        { userName: userName }
+      );
+      console.log(response.data);
+      return dispatch({
+        type: LIST_FOLLOWERS,
         payload: response.data,
       });
     } catch (error) {
@@ -514,23 +579,46 @@ export const banUser = (id) => {
     }
   };
 };
-export const disBanUser = (id) => {
+export const UnbanUser = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(api.disBanUser, id);
       console.log(response.data);
-      return dispatch({ type: DIS_BAN_USER, payload: response.data });
+      return dispatch({ type: UNBAN_USER, payload: response.data });
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export const getAllStatistics = () => {
+export const getStandarUsers = () => {
   return async (dispatch) => {
-    const response = await axios.get(api.getAllStatistics);
+    const response = await axios.get(api.getAllStandarUsers);
+    console.log(response.data);
     return dispatch({
-      type: GET_STATISTICS,
+      type: GET_STANDARD_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getPremiumUsers = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllPremiumUsers);
+    console.log(response.data);
+    return dispatch({
+      type: GET_PREMIUM_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getArtistUsers = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllArtistUsers);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ARTIST_USERS,
       payload: response.data,
     });
   };
@@ -546,12 +634,207 @@ export const getAllReports = () => {
   };
 };
 
-export const modifyPlansPremiums = () => {
+export const getUserReports = () => {
   return async (dispatch) => {
-    const response = await axios.put("");
+    const response = await axios.get(api.getUserReports);
+    console.log(response.data);
+    return dispatch({
+      type: GET_USER_REPORTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getPostReports = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getPostReports);
+    console.log(response.data);
+    return dispatch({
+      type: GET_POST_REPORTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getReportByID = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`${api.getReportByID}${id}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_REPORT_BY_ID,
+      payload: response.data,
+    });
+  };
+};
+
+export const getCommentReports = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getCommentsReports);
+    console.log(response.data);
+    return dispatch({
+      type: GET_COMMENT_REPORTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const adminDeletePost = (id) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.adminDeletePost, id);
+    console.log(response.data);
+    return dispatch({
+      type: ADMIN_DELETE_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const adminAllowPost = (id) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.adminAllowPost, id);
+    console.log(response.data);
+    return dispatch({
+      type: ADMIN_ALLOW_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const adminDeleteComment = (id) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.adminDeleteComment, id);
+    console.log(response.data);
+    return dispatch({
+      type: ADMIN_DELETE_COMMENT,
+      payload: response.data,
+    });
+  };
+};
+
+export const adminAllowComment = (id) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.adminAllowComment, id);
+    console.log(response.data);
+    return dispatch({
+      type: ADMIN_ALLOW_COMMENT,
+      payload: response.data,
+    });
+  };
+};
+
+export const modifyPlansPremiums = (plan) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.editPremiumPlan, plan);
     return dispatch({
       type: MODIFY_PLANS_PREMIUMS,
       payload: response.data,
     });
+  };
+};
+
+export const createPlansPremiums = (plan) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.editPremiumPlan, plan);
+    return dispatch({
+      type: CREATE_PLANS_PREMIUMS,
+      payload: response.data,
+    });
+  };
+};
+
+export const deletePlansPremiums = (plan) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.editPremiumPlan, plan);
+    return dispatch({
+      type: DELETE_PLANS_PREMIUMS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllBannedUsers = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllBannedUsers);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ALL_BANNED_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllAdminPosts = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllAdminPosts);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ALL_ADMIN_POSTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const createAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.createAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: CREATE_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const editAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.editAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: EDIT_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const deleteAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.deleteAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: DELETE_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
+// recuperar contraseña
+
+export const forgottenPasswordPre = function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.forgottenPasswordPre, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_PRE,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const forgottenPasswordPost = function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(api.forgottenPassword, userName, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

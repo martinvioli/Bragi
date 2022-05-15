@@ -9,5 +9,6 @@ const reportPCU = new ReportPCU();
 router.post('/comment', reportPCU.reportComment);
 router.post('/post', reportPCU.reportPost);
 router.post('/user', reportPCU.reportUser);
+router.get('/getCausesReport', reportPCU.getCauseReport);
 
 module.exports = router;

@@ -27,22 +27,26 @@ function SearchData({ data }) {
   console.log(data);
   const handleClickFollow = (data) => {
     //e.preventDefault()
+    document.getElementById("followBtn").disabled = true;
+    document.getElementById("unFollowBtn").disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
     console.log(userToken);
     // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    let obj = { token: userToken, tokenFollowed: data.token };
     console.log(obj);
     dispatch(followUser(obj));
   };
   const handleClickUnfollow = (data) => {
+    document.getElementById("unFollowBtn").disabled = true;
+    document.getElementById("followBtn").disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
     console.log(userToken);
     // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
+    let obj = { token: userToken, tokenFollowed: data.token };
     console.log(obj);
     dispatch(unfollowUser(obj));
   };
@@ -55,8 +59,8 @@ function SearchData({ data }) {
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
-        {data.album && <img src={data.album.cover} alt="Imagen" />}
-        {data.cover && <img src={data.cover} alt="Imagen" />}
+        {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
+        {data.cover && <img src={data.cover_xl} alt="Imagen" />}
         {data.name && !data.userName && <h1>{data.name}</h1>}
         {data.picture && <img src={data.picture} alt="img" />}
         {data.userName && (
@@ -66,14 +70,8 @@ function SearchData({ data }) {
         )}
         {data.userName && (
           <div>
-            <Button onClick={() => handleClickFollow(data)}>
-              <FcPlus style={{ width: "3em", height: "3em" }}></FcPlus>
-            </Button>{" "}
-            <Button onClick={() => handleClickUnfollow(data)}>
-              <FaMinusCircle
-                style={{ width: "3em", height: "3em" }}
-              ></FaMinusCircle>
-            </Button>
+            <Button id="followBtn" className="followBtn" onClick={() => handleClickFollow(data)}>Follow</Button>{" "}
+            <Button id="unFollowBtn" className="unFollowBtn" onClick={() => handleClickUnfollow(data)}>Unfollow</Button>
           </div>
         )}
       </div>

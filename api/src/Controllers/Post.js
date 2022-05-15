@@ -69,7 +69,7 @@ class PostClass {
   };
 
   createPost = async (req, res) => {
-    const { contentPost, linkContent, imagePost, token } = req.body;
+    const { contentPost, linkContent, imagePost, token, postIsPremium } = req.body;
     const tokenDecode = jwt.decode(token);
 
     try {
@@ -78,7 +78,22 @@ class PostClass {
       });
       if (!user)
         return res.status(404).json({ msgE: "Could not find your user" });
-
+        if(postIsPremium === true) {
+          console.log("entra al if")
+          const newPost = await Post.create({
+            contentPost,
+            linkContent,
+            imagePost,
+            typeOfPost: "Premium"
+          });
+          await newPost.setUser(user.idUser);
+    
+          return res.status(201).json({
+            msg: "Post created successfully",
+            newPost,
+            userName: user.userName,
+          });
+        }
       const newPost = await Post.create({
         contentPost,
         linkContent,
@@ -127,6 +142,26 @@ class PostClass {
     }
   };
 
+changeTypeOfPost = async (req, res) => {
+  const { idPost, changeTo } = req.body;
+  try {
+    const post = await Post.findOne({ where: { idPost } })
+    if(!post) return res.status(404).json({ msgE: "The post with that id doest not exist" });
+    if(changeTo === "Premium") {
+      if(post.dataValues.typeOfPost === "Premium") return res.status(400).json({ msgE: "The post was already Premium" });
+      await post.update({typeOfPost: "Premium"});
+      res.sendStatus(200).json({msgE: "Post changed to premium"});
+    }
+    if(changeTo === "Standard") {
+      if(post.dataValues.typeOfPost === "Standard") return res.status(400).json({ msgE: "The post was already Standard" });
+      await post.update({typeOfPost: "Standard"});
+      res.sendStatus(200).json({msgE: "Post changed to standard"});
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
   deletePost = async (req, res) => {
     const { idPost } = req.params;
     try {
@@ -134,7 +169,7 @@ class PostClass {
       if (!post)
         return res
           .status(404)
-          .json({ msgE: "The post with that id doest not exist" });
+          .json
       await post.destroy();
 
       return res.status(200).json({ msg: "Post deleted succesfully" });

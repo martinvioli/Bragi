@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
+  changeTypeOfPost,
   deletePost,
   dislike,
   falseDislike,
@@ -16,6 +17,7 @@ import {
   userNewComment,
   userNewPost,
   getPhotoUser,
+  falseAddComment,
 } from "../../redux/actionCreators";
 import styles from "./Feed.module.css";
 import { getAllPost } from "../../redux/actionCreators";
@@ -46,32 +48,32 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-// const posts = [
-//   {
-//     content:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-//   {
-//     content:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
-//     link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
-//     image: "https://picsum.photos/318/180",
-//   },
-// ];
+const fakePosts = [
+  {
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+  {
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi, voluptates ut dolorem a ea aut perferendis dolor iste nemo doloribus nulla animi fuga, reiciendis quis tempora quia, explicabo",
+    link: "https://www.youtube.com/watch?v=SAUvlkTDMM4",
+    image: "https://picsum.photos/318/180",
+  },
+];
 
 export default function Feed() {
   const user = useSelector((state) => state.user);
@@ -87,9 +89,10 @@ export default function Feed() {
     token: "",
     linkContent: "",
     imagePost: "",
+    postIsPremium: false,
   });
   const [showModal, setShowModal] = useState(false);
-
+  //const [inputSelect, setInSelect] = useState({select:""})
   useEffect(() => {
     setInput({ ...input, token: token });
   }, [token]);
@@ -117,10 +120,10 @@ export default function Feed() {
     }
   }, []);
 
-  posts.forEach((e) => {
-    // console.log(e)
-    dispatch(getPhotoUser(e.User.userName));
-  });
+  // posts && posts.forEach((e) => {
+  //   // console.log(e)
+  //   dispatch(getPhotoUser(e.User.userName));
+  // });
 
   const handleSearchImage = (e) => {
     setInput({
@@ -206,7 +209,26 @@ export default function Feed() {
 
   const [slicer, setSlicer] = useState(3);
 
-  console.log(posts);
+  //console.log(posts);
+
+  const handlePremiumPost = (e) => {
+    e.preventDefault()
+    // setInput({
+    //   ...input,
+    //   select : e.target.value
+    // })
+    if(e.target.value === "Premium") {
+      setInput({
+        ...input,
+        postIsPremium: true
+      }) 
+    } else {
+      setInput({
+        ...input,
+        postIsPremium : false
+      })
+    }
+  }
 
   // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
 
@@ -219,7 +241,53 @@ export default function Feed() {
   return (
     <div className="container-fluid">
       <div className={styles.container}>
-        <div className={styles.premiumSector}>Sector Premium</div>
+        <div className={styles.glowOnHover}>
+          <Link
+          to="/profile"
+          style={{   
+            display: "flex",
+            textAlign: "center",
+            fontSize: "large",
+            fontWeight: "bold",
+            marginTop: "5%",
+            marginBottom: "5%",
+          }}
+          >Get premium now so you don't miss out on anything!</Link>
+          <div>
+            {fakePosts.map((e) =>{
+              return (
+                <Card
+                  style={{
+                    width: "90%",
+                    height: "90%"
+                  }}
+                  color="bg-light"
+                  className={styles.backgroundPostPremium}
+                  key={e.token}
+                >
+                  <CardBody>
+                    <CardTitle tag="h5">{user.username}</CardTitle>
+                    <CardSubtitle className="mb-2 text-muted" tag="h6">
+                      {e.content}
+                    </CardSubtitle>
+                  </CardBody>
+                  <div className={styles.img}>
+                    <img
+                      alt="img"
+                      src={e.image}
+                      height="250px"
+                      width="300px"
+                    />
+                  </div>
+                  <CardLink
+                    href={e.link}
+                  >{`LINK DEL POST : ${e.link}`}</CardLink>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
         <div className={styles.center}>
           {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
@@ -245,13 +313,22 @@ export default function Feed() {
                     onChange={handleSearchImage}
                   /> */}
                   <Input
-                    style={{ width: "45em", height: "2.5em" }}
+                    style={{ width: "38em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
                     value={input.linkContent}
                     placeholder="Insert URL 🔗"
                   />
+                  <Input  style={{ width: "7em", height: "2.5em" }} type="select"
+              name="select"
+              value={input.select}
+              onChange={(e)=>handlePremiumPost(e)}
+              >
+                  <option value="Standard">Standard Post</option>
+                  <option value="Premium">Premium Post</option>
+                  </Input>
+               
                   <Button
                     style={{ width: "5em", height: "2.5em" }}
                     color="primary"
@@ -340,15 +417,6 @@ export default function Feed() {
                             </div>
                           )}
                           <div className={styles.icons}>
-                            <CardLink href={e.linkContent}>
-                              <FcLink
-                                style={{
-                                  marginBottom: "0.4em",
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                              ></FcLink>
-                            </CardLink>
                             <div
                               style={{
                                 marginBottom: "0.4em",
@@ -365,10 +433,6 @@ export default function Feed() {
                                 <br />
                               </span>
                             </div>
-                            <CardSubtitle className="mb-2 text-muted" tag="h6">
-                              {e.contentPost}
-                            </CardSubtitle>
-
                             {e.imagePost && (
                               <div className={styles.img}>
                                 <img
@@ -427,26 +491,6 @@ export default function Feed() {
                                 />
                               </div>
                             </div>
-                            <FcRedo
-                              style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2em",
-                                marginRight: "1em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                              onClick={() => {
-                                setViewPost({ ...e });
-                                dispatch(getAllComments(e.idPost));
-                                handleShowModalComments();
-                                setCommentInput({
-                                  ...commentInput,
-                                  idPost: e.idPost,
-                                  token: token,
-                                });
-                                setSlicer(3);
-                              }}
-                            />
                           </div>
                         </Card>
                       );
@@ -761,7 +805,15 @@ export default function Feed() {
                 {comments.slice(0, slicer).map((e) => (
                   <Card key={e.idComment} style={{ marginBottom: "0.5em" }}>
                     <CardBody>
-                      <CardTitle tag="h5">{e.userNameComment}</CardTitle>
+                      <CardTitle tag="h5">
+                        {user.userName === e.userNameComment ? (
+                          e.userNameComment
+                        ) : (
+                          <Link to={`/profile/${e.userNameComment}`}>
+                            {e.userNameComment}
+                          </Link>
+                        )}
+                      </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"
                         style={{ fontSize: "small" }}
@@ -811,6 +863,11 @@ export default function Feed() {
                 }
                 onClick={() => {
                   dispatch(userNewComment(commentInput));
+                  dispatch(
+                    falseAddComment(
+                      posts.findIndex((e) => e.idPost === viewPost.idPost)
+                    )
+                  );
                   setCommentInput({ ...commentInput, commentContent: "" });
                 }}
               >

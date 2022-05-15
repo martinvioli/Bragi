@@ -58,6 +58,7 @@ function EditProfile({ showModal, handleShowModal }) {
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const history = useHistory();
 
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
@@ -139,7 +140,7 @@ function EditProfile({ showModal, handleShowModal }) {
       "description",
       input.description ? input.description : user.description
     );
-    fd.append("birthday", input.birthday ? input.birthday : user.birthday);
+    fd.append("birthday", input.birthday ? input.birthday : user.birthday); //Necesitamos user.birthday para que funcione.
     fd.append("tel", input.tel ? input.tel : user.tel);
 
     const response = await axios.put(api.updateBasicData, fd);
@@ -164,7 +165,7 @@ function EditProfile({ showModal, handleShowModal }) {
       description: "",
     });
     handleShowModal();
-    navigate("/profile");
+    // history.push("/profile");
   };
 
   const handleSubmitSenstiveData = async (e) => {
@@ -454,12 +455,23 @@ function EditProfile({ showModal, handleShowModal }) {
                   errors.tel ||
                   errors.birthday ||
                   errors.description ? (
-                    <Input type="submit" disabled value="Send" />
+                    <Input type="submit" disabled value="Send"       style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }} />
                   ) : (
                     <Input
                       type="submit"
                       className="btn-primary btn"
                       value="Send"
+                            style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}
                     />
                   )}
                 </Form>
@@ -597,22 +609,45 @@ function EditProfile({ showModal, handleShowModal }) {
                     )}
                   </FormGroup>
                   {errors.userName || errors.password || errors.email ? (
-                    <Input type="submit" disabled value="Send" />
+                    <Input type="submit" disabled value="Send"       style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}/>
                   ) : (
                     <Input
                       type="submit"
                       className="btn-primary btn"
                       value="Send"
+                            style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}
                     />
                   )}
                 </Form>
               </TabPane>
               <TabPane tabId="3">
-                <Button style={{ marginRight: "20px" }} onClick={handlePremium}>
+                <Button onClick={handlePremium}       style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+                marginRight: "20px"
+              }}>
                   Became Premium
                 </Button>
 
-                <Button onClick={handleArtist}>Became Artist</Button>
+                <Button onClick={handleArtist}  style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+                marginRight: "20px"
+              }}>Became Artist</Button>
               </TabPane>
             </TabContent>
           </div>
@@ -620,7 +655,11 @@ function EditProfile({ showModal, handleShowModal }) {
         <ModalFooter>
           <Button
             color="primary"
-            style={{ marginTop: "2em" }}
+            style={{ marginTop: "2em",
+           background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+                marginRight: "20px" }}
             onClick={handleShowModal}
           >
             Back
