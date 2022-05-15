@@ -57,6 +57,11 @@ import {
   CLEAN_DETAIL_TOP10,
   FORGOTTEN_PASSWORD_PRE,
   FORGOTTEN_PASSWORD_POST,
+  GET_ALL_BANNED_USERS,
+  GET_ALL_ADMIN_POSTS,
+  CREATE_ADMIN_POST,
+  EDIT_ADMIN_POST,
+  DELETE_ADMIN_POST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -733,6 +738,62 @@ export const deletePlansPremiums = (plan) => {
     });
   };
 };
+
+export const getAllBannedUsers = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllBannedUsers);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ALL_BANNED_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllAdminPosts = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllAdminPosts);
+    console.log(response.data);
+    return dispatch({
+      type: GET_ALL_ADMIN_POSTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const createAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.createAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: CREATE_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const editAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.editAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: EDIT_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
+export const deleteAdminPost = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.deleteAdminPost);
+    console.log(response.data);
+    return dispatch({
+      type: DELETE_ADMIN_POST,
+      payload: response.data,
+    });
+  };
+};
+
 // recuperar contraseña
 
 export const forgottenPasswordPre = function (userName, email) {

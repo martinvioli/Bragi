@@ -91,41 +91,48 @@ export default function validate(input) {
 
 export function validateEdit(input) {
   const errors = {};
-  if (!/^[a-zA-Z\s]{3,25}$/.test(input.name)) {
+  if (!/^[a-zA-Z\s]{3,25}$/.test(input.name) && input.name) {
     errors.name =
       "The First Name must be a valid name with only 3 to 15 letters.";
   }
-  if (!/^[a-zA-Z\s]{3,25}$/.test(input.lastName)) {
+  if (!/^[a-zA-Z\s]{3,25}$/.test(input.lastName) && input.lastName) {
     errors.lastName =
       "The Last Name must be a valid name with only 3 to 15 letters.";
   }
   if (
     !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
       input.email
-    )
+    ) &&
+    input.email
   ) {
     errors.email = "Email is invalid";
   }
-  if (!/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/.test(input.tel)) {
+  if (
+    !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/.test(input.tel) &&
+    input.tel
+  ) {
     errors.tel = "Tel is invalid";
-  } else if (input.tel.length > 15 || input.tel.length < 5) {
+  } else if (input.tel.length > 15 || (input.tel.length < 5 && input.tel)) {
     errors.tel = "Tel is invalid";
   }
   if (
-    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(input.password)
+    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,15}$/.test(
+      input.password
+    ) &&
+    input.password
   ) {
     errors.password =
       "Password must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
-  if (!/^([A-Za-z]){8,15}$/.test(input.userName)) {
+  if (!/^([A-Za-z]){8,15}$/.test(input.userName) && input.userName) {
     errors.userName =
       "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
   }
-  if (!underAgeValidate(input.birthday)) {
+  if (!underAgeValidate(input.birthday) && input.birthday) {
     errors.birthday =
       "You need to be 18 or older, but you can't be older than 100 years old.";
   }
-  if (!input.repeatPassword) {
+  if (!input.repeatPassword && input.password) {
     errors.repeatPassword = "Password is required";
   } else if (input.repeatPassword !== input.password) {
     errors.repeatPassword = "Passwords don't match";

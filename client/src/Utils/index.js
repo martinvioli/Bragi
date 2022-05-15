@@ -72,6 +72,11 @@ const apiHeroku = {
     "https://bragiproject.herokuapp.com/admin/premiumPlan/edition",
   deletePremiumPlan:
     "https://bragiproject.herokuapp.com/admin/premiumPlan/delete",
+  getAllAdminPosts: "https://bragiproject.herokuapp.com/admin/allPostAdmin",
+  createAdminPost: "https://bragiproject.herokuapp.com/admin/createPostAdmin",
+  editAdminPost: "https://bragiproject.herokuapp.com/admin/editPostAdmin",
+  deleteAdminPost: "https://bragiproject.herokuapp.com/admin/deletePostAdmin",
+  getAllBannedUsers: "https://bragiproject.herokuapp.com/admin/allBannedUser",
   forgottenPasswordPre:
     "https://bragiproject.herokuapp.com/recoverPassword/pre",
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
@@ -143,6 +148,11 @@ const api = {
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
   forgottenPasswordPost: "http://localhost:3001/recoverPassword",
+  getAllAdminPosts: "http://localhost:3001/admin/allPostAdmin",
+  createAdminPost: "http://localhost:3001/admin/createPostAdmin",
+  editAdminPost: "http://localhost:3001/admin/editPostAdmin",
+  deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
+  getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
 };
 
 export default api;

@@ -55,6 +55,11 @@ import {
   DELETE_PLANS_PREMIUMS,
   CLEAN_DETAIL_TOP10,
   FORGOTTEN_PASSWORD_PRE,
+  GET_ALL_BANNED_USERS,
+  GET_ALL_ADMIN_POSTS,
+  CREATE_ADMIN_POST,
+  EDIT_ADMIN_POST,
+  DELETE_ADMIN_POST,
 } from "../actions";
 
 // STATE CREATION
@@ -101,6 +106,9 @@ const initialState = {
   deletePremiumPlan: {},
   email: "",
   code: "",
+  bannedUsers: [],
+  adminPosts: [],
+  editedPost: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -408,6 +416,30 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         email: action.payload,
+      };
+    case GET_ALL_BANNED_USERS:
+      return {
+        ...state,
+        bannedUsers: action.payload,
+      };
+    case GET_ALL_ADMIN_POSTS:
+      return {
+        ...state,
+        adminPosts: action.payload,
+      };
+    case CREATE_ADMIN_POST:
+      return {
+        ...state,
+        adminPosts: [...state.adminPosts, action.payload],
+      };
+    case EDIT_ADMIN_POST:
+      return {
+        ...state,
+        editedPost: {},
+      };
+    case DELETE_ADMIN_POST:
+      return {
+        ...state,
       };
     default:
       return { ...state };

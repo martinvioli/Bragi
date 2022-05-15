@@ -32,6 +32,7 @@ import {
   banUser,
   UnbanUser,
   modifyPlansPremiums,
+  getAllBannedUsers,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -54,6 +55,7 @@ function Admin() {
   const userReports = useSelector((state) => state.userReports);
   const posts = useSelector((state) => state.posts);
   const userSearch = useSelector((state) => state.usersList);
+  const bannedUsers = useSelector((state) => state.bannedUsers);
 
   const dispatch = useDispatch();
 
@@ -76,6 +78,7 @@ function Admin() {
     dispatch(getUserReports());
     dispatch(getCommentReports());
     dispatch(getPostReports());
+    dispatch(getAllBannedUsers());
   }, []);
 
   const handleSubmitInput = (e) => {
@@ -245,7 +248,15 @@ function Admin() {
             <TabPane tabId="2">
               <Row>
                 <Col sm="6">
-                  <h6>NO HAY RUTA PARA OBTENER LOS USUARIOS BANEADOS</h6>
+                  <h6>LIST OF BANNED USERS</h6>
+                  {bannedUsers &&
+                    bannedUsers.map((e) => {
+                      return (
+                        <div key={e.idUser}>
+                          {e.name} {e.lastName}
+                        </div>
+                      );
+                    })}
                 </Col>
               </Row>
             </TabPane>
