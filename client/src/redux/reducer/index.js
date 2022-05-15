@@ -37,6 +37,7 @@ import {
   GET_REPORTS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
+<<<<<<< HEAD
   // CLEAN_DETAIL_TOP10,
   UNBAN_USER,
   GET_COMMENT_REPORTS,
@@ -53,6 +54,10 @@ import {
   MODIFY_PLANS_PREMIUMS,
   CREATE_PLANS_PREMIUMS,
   DELETE_PLANS_PREMIUMS,
+=======
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE
+>>>>>>> ab93d21db11d124c02968adead5133b76b314bf3
 } from "../actions";
 
 // STATE CREATION
@@ -86,6 +91,7 @@ const initialState = {
   premiumUsers: [],
   artistUsers: [],
   reports: [],
+<<<<<<< HEAD
   userReports: [],
   postReports: [],
   commentReports: [],
@@ -97,6 +103,10 @@ const initialState = {
   createPremiumPlan: {},
   modifyPremiumPlan: {},
   deletePremiumPlan: {},
+=======
+  email:"",
+  code:""
+>>>>>>> ab93d21db11d124c02968adead5133b76b314bf3
 };
 
 function rootReducer(state = initialState, action) {
@@ -400,6 +410,11 @@ function rootReducer(state = initialState, action) {
         deletePremiumPlan: action.payload,
       };
 
+    case FORGOTTEN_PASSWORD_PRE:
+      return{
+        ...state,
+        email: action.payload
+      };
     default:
       return { ...state };
   }

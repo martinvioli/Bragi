@@ -26,6 +26,7 @@ import {
   getToken,
   clearData,
   getPhotoUser,
+  getTop10Songs,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
 import { Link, useNavigate } from "react-router-dom";
@@ -87,6 +88,14 @@ function Home() {
 
   const handleSubmitInput = (e) => {
     e.preventDefault();
+    if (!input.search) {
+      dispatch(clearData());
+      Swal.fire({
+        title: "We were unable to perform your search 😪",
+        confirmButtonColor: "#dd9202",
+      });
+      dispatch(getTop10Songs());
+    }
     switch (input.searchOption) {
       case "album":
         dispatch(clearData());
@@ -100,17 +109,22 @@ function Home() {
         dispatch(clearData());
         dispatch(getSongByName(input.search));
         break;
-      case "genre":
-        dispatch(clearData());
-        alert("No hay busqueda por genero.");
-        break;
+      // case "genre":
+      //   dispatch(clearData());
+      //   alert("No hay busqueda por genero.");
+      //   break;
       case "user":
         dispatch(clearData());
         dispatch(getUserByName(input.search));
         break;
       default:
         dispatch(clearData());
-        alert("El parametro ingresado no es valido.");
+        Swal.fire({
+          title: "We were unable to perform your search 😪",
+          confirmButtonColor: "#dd9202",
+        });
+        dispatch(getTop10Songs());
+      // alert("El parametro ingresado no es valido.");
     }
     setInput({
       search: "",
@@ -147,7 +161,7 @@ function Home() {
       {show ? (
         <div className={`${styles.divContainer}`}>
           <div className={`${styles.inputContainer}`}>
-            <div className="container" style={{ marginTop: "100px" }}>
+            <div className="container" style={{ marginTop: "100px", width: "50%" }}>
               <Form onSubmit={handleSubmitInput}>
                 <Input
                   type="select"
@@ -160,7 +174,7 @@ function Home() {
                   <option value="album">Search for Albums</option>
                   <option value="song">Search for Songs</option>
                   <option value="artist">Search for Artists</option>
-                  <option value="genre">Search for Genre</option>
+                  {/* <option value="genre">Search for Genre</option> */}
                   <option value="user">Search for Users</option>
                 </Input>
                 <Input
@@ -173,13 +187,13 @@ function Home() {
                 <Input type="submit" value="Search" />
               </Form>
             </div>
-            <div style={{ color: "white" }}>
+            <div className="searchData" style={{ color: "white", backgroundColor: "transparent" }}>
               {song &&
                 song.map((e) => {
                   return (
                     <Link
                       to={`/song/${e.id}`}
-                      style={{ display: "inline-block" }}
+                      style={{ display: "inline-block", color: "#f5f5f5" }}
                     >
                       <div
                         className={`${styles.searchData}`}
@@ -196,7 +210,7 @@ function Home() {
               {album &&
                 album.map((e) => {
                   return (
-                    <Link to={`/album/${e.id}`}>
+                    <Link style={{ color: "white", backgroundColor: "transparent" }} to={`/album/${e.id}`}>
                       <div key={e.id} style={{ display: "inline-block" }}>
                         <SearchData data={e} />
                       </div>

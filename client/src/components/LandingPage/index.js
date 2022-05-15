@@ -139,7 +139,7 @@ function LandingPage() {
             onSubmit={(e) => handleSubmit(e)}
             style={{ marginBottom: "2em" }}
           >
-            <FormGroup className="position-relative">
+            {/* <FormGroup className="position-relative">
               <Label for="userName">Username</Label>
               <Input
                 type="text"
@@ -154,7 +154,7 @@ function LandingPage() {
               ) : (
                 <FormFeedback tooltip></FormFeedback>
               )}
-            </FormGroup>
+            </FormGroup> */}
             <FormGroup className="position-relative">
               <Label for="email">Email</Label>
               <Input
@@ -189,8 +189,8 @@ function LandingPage() {
             </FormGroup>
             {errors.email ||
             errors.password ||
-            errors.userName ||
-            !input.userName ||
+            // errors.userName ||
+            // !input.userName ||
             !input.email ||
             !input.password ? (
               <Input type="submit" disabled value="Sign in" />
@@ -199,13 +199,32 @@ function LandingPage() {
                 type="submit"
                 value="Sign in"
                 className="btn-primary btn"
+                style={{
+                  background: "rgba(1, 1, 1, 0.3)",
+                  color: "black",
+                  border: "2px solid rgba(1, 1, 1, 0.3)",
+                }}
               />
             )}
           </Form>
           <hr></hr>
           <Link to="/register" style={{ textDecoration: "none" }}>
-            <Button color="success" block outline style={{ marginTop: "2em" }}>
+            <Button
+              block
+              outline
+              style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}
+            >
               Don't have an account? Sign up!
+            </Button>
+          </Link>
+          <Link to="/submitEmail" style={{ textDecoration: "none" }}>
+            <Button color="success" block outline style={{ marginTop: "2em" }}>
+              Did you forget your password? Reset it!
             </Button>
           </Link>
         </div>

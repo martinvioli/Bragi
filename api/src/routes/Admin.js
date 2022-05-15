@@ -10,6 +10,12 @@ router.get("/getUserStandar", admin.getUserStandar);
 router.get("/getUserPremium", admin.getUserPremium);
 router.get("/getUserArtist", admin.getUserArtist);
 
+//Posteos Admin
+router.get("/allPostAdmin", admin.getPostsAdmin);
+router.post("/createPostAdmin", admin.createPostAdmin);
+router.post("/editPostAdmin", admin.updatePostAdmin);
+router.post("/deletePostAdmin", admin.deletePostAdmin);
+
 //Reports
 router.get("/reports/reportsUser", admin.getUserReport);
 router.get("/reports/reportsPost", admin.getPostReport);
@@ -22,6 +28,7 @@ router.post("/reports/allowComment", admin.allowCommentReport);
 router.get("/reports", admin.allReport);
 
 //User Management
+router.get("/allBannedUser", admin.getAllBannedUser);
 router.post("/banUser", admin.banUser);
 router.post("/unbanUser", admin.unbanUser);
 
@@ -29,5 +36,6 @@ router.post("/unbanUser", admin.unbanUser);
 router.post("/premiumPlan/create", admin.creatPremiumPlan);
 router.post("/premiumPlan/edition", admin.editPremiumPlan);
 router.post("/premiumPlan/delete", admin.cancelPremiumPlan);
+router.get("/premiumPlan/premiumPlans", admin.getPremiumPlan);
 
 module.exports = router;

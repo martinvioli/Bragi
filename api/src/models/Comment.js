@@ -25,6 +25,11 @@ module.exports = (sequelize) => {
         userNameComment: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     });
 }

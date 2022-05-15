@@ -39,6 +39,7 @@ import {
   MODIFY_PLANS_PREMIUMS,
   FALSE_ADDCOMENT,
   FALSE_ADDCOMENTPROFILE,
+<<<<<<< HEAD
   // CLEAN_DETAIL_TOP10,
   UNBAN_USER,
   GET_STANDARD_USERS,
@@ -54,6 +55,11 @@ import {
   ADMIN_ALLOW_COMMENT,
   CREATE_PLANS_PREMIUMS,
   DELETE_PLANS_PREMIUMS,
+=======
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE,
+  FORGOTTEN_PASSWORD_POST
+>>>>>>> ab93d21db11d124c02968adead5133b76b314bf3
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -728,5 +734,33 @@ export const deletePlansPremiums = (plan) => {
       type: DELETE_PLANS_PREMIUMS,
       payload: response.data,
     });
+// recuperar contraseña
+export const forgottenPasswordPre = function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(api.forgottenPasswordPre, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_PRE,
+        payload: response.data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const forgottenPasswordPost= function (userName, email) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(api.forgottenPassword, userName, email);
+      console.log(response.data);
+      return dispatch({
+        type: FORGOTTEN_PASSWORD_POST,
+        payload: response.data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

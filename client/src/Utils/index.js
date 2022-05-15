@@ -47,6 +47,7 @@ const apiHeroku = {
   likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
   dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
   banUser: "https://bragiproject.herokuapp.com/admin/banUser",
+  getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
   unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
   getAllStandarUsers: "https://bragiproject.herokuapp.com/admin/getUserStandar",
   getAllPremiumUsers: "https://bragiproject.herokuapp.com/admin/getUserPremium",
@@ -71,6 +72,9 @@ const apiHeroku = {
     "https://bragiproject.herokuapp.com/admin/premiumPlan/edition",
   deletePremiumPlan:
     "https://bragiproject.herokuapp.com/admin/premiumPlan/delete",
+  forgottenPasswordPre:
+    "https://bragiproject.herokuapp.com/recoverPassword/pre",
+  forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
 };
 
 const api = {
@@ -134,6 +138,11 @@ const api = {
   createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
   editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
   deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
+
+  disBanUser: "http://localhost:3001/admin/allowUser",
+  getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
+  forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
+  forgottenPasswordPost: "http://localhost:3001/recoverPassword",
 };
 
 export default api;
