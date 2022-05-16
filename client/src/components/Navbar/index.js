@@ -85,12 +85,12 @@ return(
           </LinkContainer>
           <h2 className={styles.search}>Search</h2>
           </div>
-        <div>
+        {/* <div>
           <FaUserFriends
           className={styles.logoFriends}
           />
           <h2 className={styles.social}>Social</h2>
-        </div>
+        </div> */}
         <div>
           <LinkContainer
           to="/profile"
