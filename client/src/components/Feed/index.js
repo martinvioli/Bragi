@@ -313,9 +313,10 @@ export default function Feed() {
                   <Input
                     style={{ width: "50em", height: "6em" }}
                     color="bg-light"
-                    placeholder="tell us about something that has happened to you with music..."
+                    placeholder="Tell your fans something new in no more than 200 characters!."
                     //className={styles.textarea}
                     name="contentPost"
+                    maxlength="200"
                     value={input.contentPost}
                     type="textarea"
                     onChange={(e) => handleChange(e)}
@@ -329,7 +330,7 @@ export default function Feed() {
                     onChange={handleSearchImage}
                   /> */}
                   <Input
-                    style={{ width: "45em", height: "2.5em" }}
+                    style={{ width: "38em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
@@ -367,8 +368,9 @@ export default function Feed() {
                         <Card
                           style={{
                             //marginLeft: "4em",
-                            width: "50%",
+                            width: "100%",
                             height: "50%",
+                            minHeight: "10em",
                             minWidth: "25em",
                           }}
                           color="bg-light"
@@ -580,15 +582,13 @@ export default function Feed() {
             </div>
           ) : (
             <div className={styles.posts}>
-              <p>See Alls Posts</p>
-              <div className={styles.post}>
+              <div className={styles.post} style={{ marginTop: "1.5em" }}>
                 {posts &&
                   posts.map((e) => {
                     return (
                       <Card
                         style={{
-                          marginLeft: "20em",
-                          width: "50%",
+                          width: "100%",
                           height: "43%",
                           minWidth: "25em",
                         }}

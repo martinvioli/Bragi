@@ -53,8 +53,16 @@
 }
 
 .glowOnHover:before {
-  content: 'asdasd';
-  background: linear-gradient(45deg, #795300, #b28405, #efb810, #f9db5c, #ffff94, #dd9202);
+  content: "asdasd";
+  background: linear-gradient(
+    45deg,
+    #795300,
+    #b28405,
+    #efb810,
+    #f9db5c,
+    #ffff94,
+    #dd9202
+  );
   position: absolute;
   top: -2px;
   left: -2px;
@@ -65,7 +73,7 @@
   height: calc(100% + 4px);
   animation: glowing 20s linear infinite;
   opacity: 0;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   border-radius: 10px;
 }
 
@@ -153,7 +161,6 @@
   /* margin-left: 50px; */
   box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.479);
   border-radius: 50px;
-  overflow-y: scroll;
 }
 
 .posts:-moz-scrollbars-none {
@@ -176,7 +183,7 @@
   border-radius: 50px;
 }
 
-.posts>p {
+.posts > p {
   justify-self: start;
   font-size: 25px;
   margin-top: 25px;
@@ -188,9 +195,13 @@
   justify-content: flex-start;
   align-items: center;
   min-height: 250px;
-  width: 1750px;
+  width: 97%;
+  height: max-content;
+  max-height: 58em;
+  overflow-y: auto;
   /* height:1050px; */
-  margin-left: -550px;
+  margin-left: 15px;
+  overflow-x: hidden;
   /* border: 1px solid black; */
 }
 
@@ -233,7 +244,6 @@
 
 .backgroundOwnPost {
   background-color: white;
-  margin-left: 120%;
   margin-top: 3em;
 }
 
@@ -300,7 +310,6 @@
   justify-content: flex-start;
   margin-left: 5px;
   margin-right: 5px;
-  
 }
 
 .profileImgArt {
