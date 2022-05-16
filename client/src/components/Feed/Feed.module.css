@@ -18,13 +18,6 @@
   padding-top: 60px;
 }
 
-.icons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: -10px;
-}
-
 .premiumSector {
   /* height: 70em;
   width: 10em; */
@@ -123,6 +116,29 @@
   border: 1px solid black;
 }
 
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: -10px;
+}
+
+.iconsTop {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: -10px;
+}
+
+.topArtist {
+  /* display: inline-flex; */
+  flex-direction: row;
+}
+.top {
+  /* display: inline-flex; */
+  flex-direction: row;
+}
+
 .newPost {
   height: 100%;
   /* margin-left: 10em; */
@@ -136,7 +152,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center; */
-  margin-right: 700px;
   height: fit-content;
 }
 
@@ -174,6 +189,7 @@
   /* margin-left: 250px; */
   box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.479);
   border-radius: 50px;
+  overflow-y: scroll;
 }
 
 .posts>p {
@@ -183,7 +199,7 @@
 }
 
 .post {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -217,11 +233,13 @@
 }
 
 .buttons {
+  width: 800px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+  margin-left: 100px;
 }
 
 .backgroundPost {
@@ -233,7 +251,7 @@
 
 .backgroundOwnPost {
   background-color: white;
-  margin-left: 120%;
+  margin-left: 20%;
   margin-top: 3em;
 }
 
@@ -300,7 +318,12 @@
   justify-content: flex-start;
   margin-left: 5px;
   margin-right: 5px;
-  
+}
+.userNameArtist {
+  justify-content: flex-start;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 100px;
 }
 
 .profileImgArt {
@@ -330,3 +353,54 @@
   margin-left: 5px;
   color: black;
 } */
+
+/* .noPremium{
+  background-color: #dd9202;
+  margin: 1em;
+  filter: blur(5px);
+} */
+
+.noPremium > *{
+  color: #fff;
+  background: #dd9202;
+  z-index: 0;
+  border-radius: 10px;
+  filter: blur(5px);
+  -webkit-filter: blur(3px);
+  background: linear-gradient(45deg, #795300, #b28405, #efb810, #f9db5c, #ffff94, #dd9202);
+}
+
+.noPremium:before > * {
+  content: 'asdasd';
+  background: linear-gradient(45deg, #795300, #b28405, #efb810, #f9db5c, #ffff94, #dd9202);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.noPremium:hover:before {
+  opacity: 1;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}

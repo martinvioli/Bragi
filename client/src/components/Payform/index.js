@@ -6,9 +6,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-
+import styles from "./Payform.module.css";
 import axios from "axios";
 import { useState } from "react";
+import {
+  FiDollarSign
+} from "react-icons/fi";
 
 const stripePromise = loadStripe(
   "pk_test_51KyQ9pE8TxQAl8Y82fJm1D0MB9ECZTRMoCzivFanYuiJDBbRDAY0ObUh0zKEZ4diN9PeZeJ3D0j3AtF1a3kBJ10H005WnwH2qT"
@@ -54,11 +57,11 @@ const CheckoutForm = () => {
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
       {/* User Card Input */}
-      <div className="form-group">
+      <div className={styles.form}>
         <CardElement />
       </div>
 
-      <button disabled={!stripe} className="btn btn-success">
+      <button disabled={!stripe} className="btn" style={{ backgroundColor: "#dd9202"}}>
         {loading ? (
           <div className="spinner-border text-light" role="status">
             <span className="sr-only">Loading...</span>
@@ -74,15 +77,32 @@ const CheckoutForm = () => {
 function PayForm() {
   return (
     <>
-      <Elements stripe={stripePromise}>
-        <div>
+    {/* <div style={{ height: "500px", width: "500px"}}className={styles.payment}>
+      <FiDollarSign/>
+    </div> */}
+      <div className={styles.box}>
+        <div className={styles.dollarSign}>
+          <FiDollarSign style={{
+            width: "2em",
+            height: "2em",
+            marginLeft: "45%",
+            marginTop: "10px",
+            marginBottom: "50px"
+            // width: "50%",
+            // border: "3px solid green",
+            // padding: "10px",
+          }}/>
+        </div>
+        <Elements stripe={stripePromise}>
           <div>
             <div>
-              <CheckoutForm />
+              <div>
+                <CheckoutForm />
+              </div>
             </div>
           </div>
-        </div>
-      </Elements>
+        </Elements>
+      </div>
     </>
   );
 }
