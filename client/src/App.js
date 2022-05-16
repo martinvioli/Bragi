@@ -12,7 +12,8 @@ import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
 
-//import PayForm from "./components/Payform/index";
+
+import PayForm from "./components/Payform/index";
 
 import Admin from "./components/Admin";
 import SubmitEmail from "./components/ForgottenPassword";
@@ -32,7 +33,7 @@ function App() {
             element={<Authenticate />}
           />
 
-          {/* <Route exact path="/pay" element={<PayForm />} /> */}
+          <Route exact path="/pay" element={<PayForm />} /> 
 
           <Route exact path="/admin" element={<Admin />} />
 
