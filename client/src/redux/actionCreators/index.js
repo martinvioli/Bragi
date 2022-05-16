@@ -62,7 +62,7 @@ import {
   CREATE_ADMIN_POST,
   EDIT_ADMIN_POST,
   DELETE_ADMIN_POST,
-  CHANGE_TYPE_OF_POST
+  CHANGE_TYPE_OF_POST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -321,14 +321,14 @@ export const postReeplacer = function () {
 export const changeTypeOfPost = function (input) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(api.changeTypeOfPost, input)
-      console.log(response.data)
-      return dispatch ({type: CHANGE_TYPE_OF_POST, payload:response.data})
+      const response = await axios.post(api.changeTypeOfPost, input);
+      console.log(response.data);
+      return dispatch({ type: CHANGE_TYPE_OF_POST, payload: response.data });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ COMMENTS

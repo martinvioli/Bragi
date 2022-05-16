@@ -152,9 +152,9 @@ export default function Feed() {
     });
   }
 
-  const onClickContent = (e) => { 
+  const onClickContent = (e) => {
     // console.log(e)
-    if(e === "" || e === null || e === undefined){
+    if (e === "" || e === null || e === undefined) {
       Swal.fire({
         title: "Oops...",
         text: "The artist did not provide a link to this post",
@@ -164,11 +164,10 @@ export default function Feed() {
         showCancelButton: true,
         showConfirmButton: false,
       });
+    } else {
+      window.location.href = e;
     }
-    else{
-      window.location.href = e
-    }
-  }
+  };
 
   const handleDelete = (e) => {
     console.log(e.idPost);
@@ -231,23 +230,23 @@ export default function Feed() {
   //console.log(posts);
 
   const handlePremiumPost = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // setInput({
     //   ...input,
     //   select : e.target.value
     // })
-    if(e.target.value === "Premium") {
+    if (e.target.value === "Premium") {
       setInput({
         ...input,
-        postIsPremium: true
-      })
+        postIsPremium: true,
+      });
     } else {
       setInput({
         ...input,
-        postIsPremium : false
-      })
+        postIsPremium: false,
+      });
     }
-  }
+  };
 
   // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
 
@@ -262,24 +261,26 @@ export default function Feed() {
       <div className={styles.containerArtist}>
         <div className={styles.glowOnHover}>
           <Link
-          to="/pay"
-          style={{
-            display: "flex",
-            textAlign: "center",
-            fontSize: "large",
-            fontWeight: "bold",
-            marginTop: "5%",
-            marginBottom: "5%",
-            marginLeft:"5%"
-          }}
-          >Get premium now so you don't miss out on anything!</Link>
+            to="/profile"
+            style={{
+              display: "flex",
+              textAlign: "center",
+              fontSize: "large",
+              fontWeight: "bold",
+              marginTop: "5%",
+              marginBottom: "5%",
+              marginLeft: "5%",
+            }}
+          >
+            Get premium now so you don't miss out on anything!
+          </Link>
           <div>
-            {fakePosts.map((e) =>{
+            {fakePosts.map((e) => {
               return (
                 <Card
                   style={{
                     width: "90%",
-                    height: "90%"
+                    height: "90%",
                   }}
                   color="bg-light"
                   className={styles.backgroundPostPremium}
@@ -292,12 +293,7 @@ export default function Feed() {
                     </CardSubtitle>
                   </CardBody>
                   <div className={styles.img}>
-                    <img
-                      alt="img"
-                      src={e.image}
-                      height="250px"
-                      width="300px"
-                    />
+                    <img alt="img" src={e.image} height="250px" width="300px" />
                   </div>
                   <CardLink
                     href={e.link}
@@ -317,9 +313,10 @@ export default function Feed() {
                   <Input
                     style={{ width: "50em", height: "6em" }}
                     color="bg-light"
-                    placeholder="tell us about something that has happened to you with music..."
+                    placeholder="Tell your fans something new in no more than 200 characters!."
                     //className={styles.textarea}
                     name="contentPost"
+                    maxlength="200"
                     value={input.contentPost}
                     type="textarea"
                     onChange={(e) => handleChange(e)}
@@ -333,17 +330,19 @@ export default function Feed() {
                     onChange={handleSearchImage}
                   /> */}
                   <Input
-                    style={{ width: "45em", height: "2.5em" }}
+                    style={{ width: "38em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
                     value={input.linkContent}
                     placeholder="Insert URL 🔗"
                   />
-                  <Input  style={{ width: "7em", height: "2.5em" }} type="select"
+                  <Input
+                    style={{ width: "7em", height: "2.5em" }}
+                    type="select"
                     name="select"
                     value={input.select}
-                    onChange={(e)=>handlePremiumPost(e)}
+                    onChange={(e) => handlePremiumPost(e)}
                   >
                     <option value="Standard">Standard Post</option>
                     <option value="Premium">Premium Post</option>
@@ -369,8 +368,9 @@ export default function Feed() {
                         <Card
                           style={{
                             //marginLeft: "4em",
-                            width: "50%",
+                            width: "100%",
                             height: "50%",
+                            minHeight: "10em",
                             minWidth: "25em",
                           }}
                           color="bg-light"
@@ -622,8 +622,7 @@ export default function Feed() {
             </div>
           ) : (
             <div className={styles.posts}>
-              <p>See Alls Posts</p>
-              <div className={styles.post}>
+              <div className={styles.post} style={{ marginTop: "1.5em" }}>
                 {posts &&
                   posts.map((e) => {
                     // console.log(e)
@@ -632,8 +631,7 @@ export default function Feed() {
                     return (
                       <Card
                         style={{
-                          marginLeft: "20em",
-                          width: "50%",
+                          width: "100%",
                           height: "43%",
                           minWidth: "25em",
                         }}
@@ -785,7 +783,7 @@ export default function Feed() {
                           <CardTitle
                             style={{
                               color: "black",
-                              marginLeft: "-450px"
+                              marginLeft: "-450px",
                             }}
                             tag="h7"
                             className={styles.top}
@@ -832,14 +830,14 @@ export default function Feed() {
                         )}
                         <div className={styles.icons}>
                           {/* <CardLink href={e.linkContent}> */}
-                            <FcLink
-                              onClick={() => onClickContent(e.linkContent)}
-                              style={{
-                                marginBottom: "0.4em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                            ></FcLink>
+                          <FcLink
+                            onClick={() => onClickContent(e.linkContent)}
+                            style={{
+                              marginBottom: "0.4em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          ></FcLink>
                           {/* </CardLink> */}
                           <div
                             style={{

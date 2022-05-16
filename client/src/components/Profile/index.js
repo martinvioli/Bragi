@@ -80,7 +80,7 @@ function Profile(props) {
     description: null,
   };
 
-  console.log(listFollowed)
+  console.log(listFollowed);
 
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
@@ -430,13 +430,13 @@ function Profile(props) {
                 ))}
                 {comments.slice(0, slicer + 3).length !==
                   comments.slice(0, slicer).length && (
-                    <p
-                      className={styles.loadMoreComments}
-                      onClick={() => setSlicer(slicer + 3)}
-                    >
-                      🖱 Click me to load more comments...
-                    </p>
-                  )}
+                  <p
+                    className={styles.loadMoreComments}
+                    onClick={() => setSlicer(slicer + 3)}
+                  >
+                    🖱 Click me to load more comments...
+                  </p>
+                )}
               </>
             ) : (
               <p style={{ textAlign: "center" }}>No comments yet... ☹</p>
@@ -488,7 +488,7 @@ function Profile(props) {
       )}
     </div>
   ) : (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <div className={styles.container}>
         <div className={styles.profile}>
           <div className={styles.top}>
@@ -514,19 +514,24 @@ function Profile(props) {
           </div>
           {/* Followeds */}
           {user.name ? (
-              <div className={styles.nameNData}>
-                <div>
-                  <div className={styles.name}>
-                    {user.name + " " + user.lastName}
-                  </div>
-                  <div className={styles.userName}>@{user.userName}</div>
+            <div className={styles.nameNData}>
+              <div>
+                <div className={styles.name}>
+                  {user.name + " " + user.lastName}
                 </div>
+                <div className={styles.userName}>@{user.userName}</div>
               </div>
-            ) : null}
+            </div>
+          ) : null}
           <div className={styles.followList}>
             <div className={styles.followeds}>
               <div>
-                <Button style={{ color: "white", background: "transparent", border: "transparent" }}
+                <Button
+                  style={{
+                    color: "white",
+                    background: "transparent",
+                    border: "transparent",
+                  }}
                   onClick={function noRefCheck() {
                     setShowModalFollowed(true);
                   }}
@@ -536,7 +541,7 @@ function Profile(props) {
                 <Modal
                   isOpen={showModalFollowed}
                   fade={true}
-                  toggle={function noRefCheck() { }}
+                  toggle={function noRefCheck() {}}
                 >
                   <ModalHeader
                     toggle={function noRefCheck() {
@@ -561,7 +566,6 @@ function Profile(props) {
                           </Link>
                           <br></br>
                         </div>
-
                       );
                     })}
                   </ModalBody>
@@ -571,7 +575,12 @@ function Profile(props) {
             </div>
             {/* Followers */}
             <div className={styles.followers}>
-              <Button style={{ color: "white", background: "transparent", border: "transparent" }}
+              <Button
+                style={{
+                  color: "white",
+                  background: "transparent",
+                  border: "transparent",
+                }}
                 onClick={function noRefCheck() {
                   setShowModalFollower(true);
                 }}
@@ -581,20 +590,28 @@ function Profile(props) {
               <Modal
                 isOpen={showModalFollower}
                 fade={true}
-                toggle={function noRefCheck() { }}
+                toggle={function noRefCheck() {}}
               >
-                <ModalHeader toggle={function noRefCheck() { setShowModalFollower(false) }}>
+                <ModalHeader
+                  toggle={function noRefCheck() {
+                    setShowModalFollower(false);
+                  }}
+                >
                   Followers
                 </ModalHeader>
                 <ModalBody>
                   {listFollowerss.map((e) => {
-                    console.log(e)
+                    console.log(e);
                     return (
                       <div>
-                        <img style={{ width: "40px", height: "40px" }} src={profileImage} alt="img" />
+                        <img
+                          style={{ width: "40px", height: "40px" }}
+                          src={profileImage}
+                          alt="img"
+                        />
                         <Link
                           to={`/profile/${e.userNameFollower}`}
-                          style={{ color: "black"}}
+                          style={{ color: "black" }}
                           onClick={() =>
                             dispatch(getUseProfile(token, e.userNameFollower))
                           }
@@ -612,7 +629,9 @@ function Profile(props) {
           </div>
           {user.name ? (
             <div>
-              <h3 style={{color: "#dd9202",marginTop: "-30px"}}>{user.typeUser === "Standard" ? "Fan" : user.typeUser}</h3>
+              <h3 style={{ color: "#dd9202", marginTop: "-30px" }}>
+                {user.typeUser === "Standard" ? "Fan" : user.typeUser}
+              </h3>
               <div className={styles.description}>
                 {user.description
                   ? user.description
@@ -622,16 +641,14 @@ function Profile(props) {
           ) : null}
         </div>
         <br></br>
-        {user.typeUser === "Artist" ? (
-          <>
-            <div className={styles.artist}>
-            </div>
-          </>
-        ) : (
-          <div className={styles.fan}>
-          </div>
-        )}
       </div>
+      {user.typeUser === "Artist" ? (
+        <>
+          <div className={styles.artist}></div>
+        </>
+      ) : (
+        <div className={styles.fan}></div>
+      )}
     </div>
   );
 }

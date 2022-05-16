@@ -12,13 +12,12 @@ import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
 
+
 import PayForm from "./components/Payform/index";
 
-
 import Admin from "./components/Admin";
-import SubmitEmail from "./components/ForgottenPassword"
-import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost"
-
+import SubmitEmail from "./components/ForgottenPassword";
+import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost";
 
 function App() {
   const location = useLocation();
@@ -34,12 +33,11 @@ function App() {
             element={<Authenticate />}
           />
 
-          <Route exact path="/pay" element={<PayForm />} />
-
+          <Route exact path="/pay" element={<PayForm />} /> 
 
           <Route exact path="/admin" element={<Admin />} />
 
-           <Route exact path="/submitEmail" element={<SubmitEmail/>} />
+          <Route exact path="/submitEmail" element={<SubmitEmail />} />
           <Route path="/" element={<NavBar />}>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/feed" element={<Feed />} />
@@ -53,8 +51,12 @@ function App() {
             <Route exact path="/artist/:id" element={<DetailsArtist />} />
             <Route exact path="/album/:id" element={<DetailsAlbum />} />
             <Route exact path="/:id/comments" element={<Comment />} />
-           
-            <Route exact path="/resetPassword" element={<ForgottenPassword/>} />
+
+            <Route
+              exact
+              path="/resetPassword"
+              element={<ForgottenPassword />}
+            />
           </Route>
         </Routes>
       </AnimatePresence>
