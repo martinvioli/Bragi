@@ -151,6 +151,25 @@ export default function Feed() {
       imagePost: "",
     });
   }
+
+  const onClickContent = (e) => { 
+    // console.log(e)
+    if(e === "" || e === null || e === undefined){
+      Swal.fire({
+        title: "Oops...",
+        text: "The artist did not provide a link to this post",
+        icon: "error",
+        cancelButtonText: "Close",
+        cancelButtonColor: "#E74C3C ",
+        showCancelButton: true,
+        showConfirmButton: false,
+      });
+    }
+    else{
+      window.location.href = e
+    }
+  }
+
   const handleDelete = (e) => {
     console.log(e.idPost);
     //console.log(e.target.value);
@@ -221,7 +240,7 @@ export default function Feed() {
       setInput({
         ...input,
         postIsPremium: true
-      }) 
+      })
     } else {
       setInput({
         ...input,
@@ -240,17 +259,18 @@ export default function Feed() {
 
   return (
     <div className="container-fluid">
-      <div className={styles.container}>
+      <div className={styles.containerArtist}>
         <div className={styles.glowOnHover}>
           <Link
           to="/profile"
-          style={{   
+          style={{
             display: "flex",
             textAlign: "center",
             fontSize: "large",
             fontWeight: "bold",
             marginTop: "5%",
             marginBottom: "5%",
+            marginLeft:"5%"
           }}
           >Get premium now so you don't miss out on anything!</Link>
           <div>
@@ -313,7 +333,7 @@ export default function Feed() {
                     onChange={handleSearchImage}
                   /> */}
                   <Input
-                    style={{ width: "38em", height: "2.5em" }}
+                    style={{ width: "45em", height: "2.5em" }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
@@ -321,14 +341,14 @@ export default function Feed() {
                     placeholder="Insert URL 🔗"
                   />
                   <Input  style={{ width: "7em", height: "2.5em" }} type="select"
-              name="select"
-              value={input.select}
-              onChange={(e)=>handlePremiumPost(e)}
-              >
+                name="select"
+                value={input.select}
+                onChange={(e)=>handlePremiumPost(e)}
+                >
                   <option value="Standard">Standard Post</option>
                   <option value="Premium">Premium Post</option>
                   </Input>
-               
+
                   <Button
                     style={{ width: "5em", height: "2.5em" }}
                     color="primary"
@@ -340,7 +360,7 @@ export default function Feed() {
                   </Button>
                 </div>
               </form>
-              <div className={styles.posts}>
+              <div className={styles.postsArtist}>
                 YOUR POSTS
                 <div className={styles.post}>
                   {ownPosts.length > 0 &&
@@ -354,7 +374,7 @@ export default function Feed() {
                             minWidth: "25em",
                           }}
                           color="bg-light"
-                          className={styles.backgroundPost}
+                          className={styles.backgroundOwnPost}
                           key={e.idPost}
                         >
                           <CardBody>
@@ -582,6 +602,7 @@ export default function Feed() {
                           <CardTitle
                             style={{
                               color: "black",
+                              marginLeft: "-450px"
                             }}
                             tag="h7"
                           >
@@ -591,7 +612,7 @@ export default function Feed() {
                               alt=""
                             ></img>
                             {e.User.userName === user.userName ? (
-                              e.User.userName
+                              `@${e.User.userName}`
                             ) : (
                               <Link
                                 className={styles.userName}
@@ -625,7 +646,7 @@ export default function Feed() {
                           </CardSubtitle>
                         </CardBody>
                         {e.imagePost && (
-                          <div className={styles.img}>
+                          <div className={styles.imgPost}>
                             <img
                               src={e.imagePost}
                               class="img-fluid"
@@ -634,15 +655,16 @@ export default function Feed() {
                           </div>
                         )}
                         <div className={styles.icons}>
-                          <CardLink href={e.linkContent}>
+                          {/* <CardLink href={e.linkContent}> */}
                             <FcLink
+                              onClick={() => onClickContent(e.linkContent)}
                               style={{
                                 marginBottom: "0.4em",
                                 width: "2em",
                                 height: "2em",
                               }}
                             ></FcLink>
-                          </CardLink>
+                          {/* </CardLink> */}
                           <div
                             style={{
                               marginBottom: "0.4em",
@@ -736,14 +758,14 @@ export default function Feed() {
         <Modal centered isOpen={showModalComments} scrollable>
           <ModalHeader>
             <Button
-              color="danger"
+              color="transparent"
               onClick={() => {
                 handleShowModalComments();
                 setViewPost(null);
                 setCommentInput({ ...commentInput, commentContent: "" });
               }}
               size="sm"
-              style={{ marginLeft: "94%" }}
+              style={{ marginLeft: "425px" }}
             >
               X
             </Button>

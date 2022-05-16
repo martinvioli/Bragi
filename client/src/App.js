@@ -12,7 +12,7 @@ import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
 
-import PayForm from "./components/PayForm";
+import PayForm from "./components/Payform/index";
 
 
 import Admin from "./components/Admin";

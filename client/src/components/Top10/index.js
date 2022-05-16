@@ -79,7 +79,7 @@ function Top10() {
                       <div class={styles.overlay}>
                         <div class={styles.text}>
                           <p>{e.position}</p>
-                          <a style={{ color: "white" }} href={e.link}>
+                          <a style={{ color: "#dd9202" }} href={e.link}>
                             {e.name}
                           </a>
                         </div>
