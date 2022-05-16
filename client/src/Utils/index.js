@@ -144,7 +144,6 @@ const api = {
   createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
   editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
   deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
-  changeTypeOfPost: "http://localhost:3001/post/changePostType",
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
@@ -154,6 +153,7 @@ const api = {
   editAdminPost: "http://localhost:3001/admin/editPostAdmin",
   deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
   getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
+  getAllCausesOfBan: "http://localhost:3001/report/getCausesReport",
 };
 
 export default api;

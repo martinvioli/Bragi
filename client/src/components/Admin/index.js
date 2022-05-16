@@ -18,6 +18,9 @@ import {
   CardTitle,
   CardSubtitle,
   CardLink,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import {
   getAllReports,
@@ -33,6 +36,7 @@ import {
   UnbanUser,
   modifyPlansPremiums,
   getAllBannedUsers,
+  getAllCausesofReport,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -56,10 +60,13 @@ function Admin() {
   const posts = useSelector((state) => state.posts);
   const userSearch = useSelector((state) => state.usersList);
   const bannedUsers = useSelector((state) => state.bannedUsers);
+  const causesOfReport = useSelector((state) => state.causesOfReport);
 
   const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState("1");
+  const [userId, setUserId] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const [input, setInput] = useState({
     plan: "",
@@ -79,6 +86,7 @@ function Admin() {
     dispatch(getCommentReports());
     dispatch(getPostReports());
     dispatch(getAllBannedUsers());
+    dispatch(getAllCausesofReport());
   }, []);
 
   const handleSubmitInput = (e) => {
@@ -103,7 +111,8 @@ function Admin() {
   };
 
   const handleBan = async (e) => {
-    //hay que obtener el id del user y el causeBan
+    setShowModal(true);
+    setUserId(e.target.value);
     const ban = {
       idUser: "",
       causeBan: input.causeBan ? input.causeBan : "For multiple Reasons",
@@ -326,7 +335,14 @@ function Admin() {
                   <h6>Premium Users</h6>
                   {premiumUsers &&
                     premiumUsers.map((e) => {
-                      return <div key={e.id}>{e.userName}</div>;
+                      return (
+                        <div key={e.id}>
+                          <h6>{e.userName}</h6>
+                          <Button value={e.id} onClick={handleBan}>
+                            🔨
+                          </Button>
+                        </div>
+                      );
                     })}
                 </Col>
                 <Col sm="4">
@@ -542,10 +558,64 @@ function Admin() {
               </Row>
             </TabPane>
           </TabContent>
+          <HandleBan
+            showModal={showModal}
+            handleShowModal={() => setShowModal(false)}
+            idUser={userId}
+          />
         </div>
       </div>
     </>
   );
 }
+
+const HandleBan = ({ showModal, handleShowModal, idUser }) => {
+  const [input, setInput] = useState({
+    idUser: idUser,
+    causeBan: "",
+  });
+  const causesOfReport = useSelector((state) => state.causesOfReport);
+  const handleSubmit = () => {
+    console.log(input);
+  };
+  const handleClick = () => {
+    handleShowModal();
+  };
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+  return (
+    <>
+      <Modal isOpen={showModal}>
+        <ModalBody>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              type="select"
+              value={input}
+              name="causeBan"
+              onChange={handleChange}
+            >
+              {causesOfReport &&
+                causesOfReport.map((e) => {
+                  return (
+                    <>
+                      <option value={e}>{e}</option>
+                    </>
+                  );
+                })}
+            </Input>
+            <Input type="submit" />
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={handleClick}>Back</Button>
+        </ModalFooter>
+      </Modal>
+    </>
+  );
+};
 
 export default Admin;
