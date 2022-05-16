@@ -8,14 +8,21 @@ class ProfileUser {
 
   editionBasicDataProfile = async (req, res) => {
     let dataPhoto;
+    const {token, name, lastName, gender, description, birthday, tel} = req.body;
     console.log(req.body);
     const { token, name, lastName, gender, description, birthday, tel } =
       req.body;
+
     //Si no se pasa el token, devolvemos un error
     if (!token) {
       return res.status(400).json({ msgE: "Token doesn't exist" });
     }
     //Valida si pasaron una foto
+    try{
+      dataPhoto = req.files.photoProfile.data;   
+    }catch(e){
+      console.log(e)
+    }       
     if (req.files) {
       dataPhoto = req.files.photoProfile.data;
     }
@@ -65,11 +72,13 @@ class ProfileUser {
         },
         { where: { idUser: userFound.dataValues.idUser } }
       );
+      const userUpdatedSend = await User.findOne({where: {[Op.or]: [{ userName: tokenDecode.userName },{ email: tokenDecode.email }]}});
       return !userUpdate.length
         ? res.status(404).json({ msgE: "Fail Edit profile" })
+        : res.status(200).json({ msg: "Successful edit", token, userUpdatedSend});
         : res.status(200).json({ msg: "Successful edit", token });
     } catch (error) {
-      console.log(error);
+      return res.status(404).json({ msgE: "Fail Edit profile" });
     }
   };
 
@@ -77,6 +86,25 @@ class ProfileUser {
     //Recibe doble password por la validación efectiva.
     const { token, email, userName, password, repeatPassword } = req.body;
     const tokenDecode = jwt.decode(token, authConfig.secret);
+    try{
+        const userFound = await User.findOne({where: {[Op.or]: [{ userName: tokenDecode.userName },{ email: tokenDecode.email }]}});
+        if(!userFound) return res.status(404).json({ msgE: "User not found" }); 
+        if(password && repeatPassword && password !== repeatPassword) return res.status(409).json({msgE: 'Passwords do not match'});
+        let passwordHash;
+        if(password && repeatPassword){passwordHash = bcrypt.hashSync(password, Number.parseInt(authConfig.rounds));}
+        const token = jwt.sign({ userName, email, TypeUser: userFound.dataValues.nameTypeUser}, authConfig.secret, { expiresIn: authConfig.expires });
+        const userEditSensitiveData = await User.update({
+            email: (email !== userFound.dataValues.email)? email: userFound.dataValues.email,
+            userName: (userName !== userFound.dataValues.userName)? userName: userFound.dataValues.userName,
+            password: (passwordHash !== userFound.dataValues.password)? passwordHash: userFound.dataValues.password,
+            token
+        },{where: {idUser: userFound.dataValues.idUser}});
+        const userUpdatedSend = await User.findOne({where: {[Op.or]: [{userName},{email}]}});
+        return !userEditSensitiveData.length
+        ? res.status(404).json({ msgE: "Fail Edit profile" })
+        : res.status(200).json({ msg: "Successful edit", token, userUpdatedSend});
+    }catch(error){
+      return res.status(404).json({ msgE: "Fail Edit profile" });
     try {
       const userFound = await User.findOne({
         where: {

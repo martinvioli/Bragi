@@ -9,6 +9,9 @@ const admin = new Admin();
 router.get("/getUserStandar", admin.getUserStandar);
 router.get("/getUserPremium", admin.getUserPremium);
 router.get("/getUserArtist", admin.getUserArtist);
+router.get("/getActiveMembership", admin.getPremiumActiveAccounts);
+router.get("/getInactiveMembership", admin.getPremiumInactiveAccounts);
+router.get("/getDebtorMembership", admin.getPremiumDebtorAccounts);
 
 //Posteos Admin
 router.get("/allPostAdmin", admin.getPostsAdmin);
