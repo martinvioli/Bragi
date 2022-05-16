@@ -475,8 +475,12 @@ function CreateUser() {
               />
             </FormGroup>
           </ModalBody>
-          <ModalFooter className="bg-light rounded-1">
-            <Button color="primary" onClick={handleClickAuth}>
+          <ModalFooter className={styles.buttonSend}>
+            <Button
+              // className={styles.buttonSend}
+              color="primary"
+              onClick={handleClickAuth}
+            >
               Send
             </Button>
           </ModalFooter>
