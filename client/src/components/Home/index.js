@@ -12,6 +12,7 @@ import {
   Input,
   Form,
   Button,
+  ButtonGroup,
 } from "reactstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import styles from "./Home.module.css";
@@ -73,11 +74,18 @@ function Home() {
     searchOption: "",
   });
 
+  // const handleClickSearchOption = (e) => {
+  //   setInput(([e.target.name] = e.target.value));
+  //   console.log(input);
+  // };
+
   const handleInput = (e) => {
+    /// console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    console.log(input);
   };
 
   const [toggle, setToggle] = useState(false);
@@ -161,9 +169,65 @@ function Home() {
       {show ? (
         <div className={`${styles.divContainer}`}>
           <div className={`${styles.inputContainer}`}>
-            <div className="container" style={{ marginTop: "100px", width: "50%" }}>
-              <Form onSubmit={handleSubmitInput}>
+            <div
+              className="container"
+              style={{ marginTop: "100px", width: "50%" }}
+            >
+              {/* <div>
+                <h5>Radio Buttons</h5>
+                <ButtonGroup>
+                  <Button
+                    name="album"
+                    value={input.searchOption}
+                    color="primary"
+                    onClick={(e) => handleClickSearchOption(e)}
+                  >
+                    Albums
+                  </Button>
+                  <Button
+                    name="artist"
+                    value="artist"
+                    color="primary"
+                    //   onClick={handleInput}
+                  >
+                    Artists
+                  </Button>
+                  <Button
+                    name="song"
+                    value="song"
+                    color="primary"
+                    // onClick={handleInput}
+                  >
+                    Songs
+                  </Button>
+                  <Button
+                    name="user"
+                    value="user"
+                    color="primary"
+                    // onClick={handleInput}
+                  >
+                    Users
+                  </Button>
+                </ButtonGroup>
+              </div> */}
+              <Form
+                onSubmit={handleSubmitInput}
+                className={styles.searchBar}
+                // style={{
+                //   display: "flex",
+                //   flexDirection: "row",
+                //   justifyContent: "spaceAround",
+                //   alignContent: "center",
+                // }}
+              >
                 <Input
+                  style={{
+                    width: "50em",
+                    height: "3em",
+                    margin: "2em",
+                    border: "3px solid #dd9202",
+                    borderRadius: "8px",
+                  }}
                   type="select"
                   name="searchOption"
                   value={input.searchOption}
@@ -178,16 +242,38 @@ function Home() {
                   <option value="user">Search for Users</option>
                 </Input>
                 <Input
+                  style={{
+                    width: "80em",
+                    height: "3em",
+                    margin: "2em",
+                    border: "3px solid #dd9202",
+                    borderRadius: "8px",
+                  }}
                   onChange={handleInput}
                   type="text"
                   value={input.search}
                   name="search"
                   placeholder="Search ..."
                 />
-                <Input type="submit" value="Search" />
+                <Input
+                  style={{
+                    width: "7em",
+                    height: "3em",
+                    margin: "2em",
+                    border: "3px solid #dd9202",
+                    borderRadius: "8px",
+                    color: "#dd9202",
+                    backgroundColor: "black",
+                  }}
+                  type="submit"
+                  value="Search"
+                />
               </Form>
             </div>
-            <div className="searchData" style={{ color: "white", backgroundColor: "transparent" }}>
+            <div
+              className="searchData"
+              style={{ color: "white", backgroundColor: "transparent" }}
+            >
               {song &&
                 song.map((e) => {
                   return (
@@ -210,7 +296,10 @@ function Home() {
               {album &&
                 album.map((e) => {
                   return (
-                    <Link style={{ color: "white", backgroundColor: "transparent" }} to={`/album/${e.id}`}>
+                    <Link
+                      style={{ color: "white", backgroundColor: "transparent" }}
+                      to={`/album/${e.id}`}
+                    >
                       <div key={e.id} style={{ display: "inline-block" }}>
                         <SearchData data={e} />
                       </div>
