@@ -32,6 +32,54 @@ class Admin{
             if(!userArtist) return res.status(404).json({msgE: "There aren't Artist users"});
             res.status(200).json(userArtist);
         }
+        getPremiumActiveAccounts = async (req, res) => {
+            try {
+                const accounts = await MembershipUser.findAll({where: {statePlan: 'Active'},
+                    include: {
+                        model: PlanPremium, attributes: ["namePlanPremium", "priceMembership"]
+                    } 
+                });
+                if(accounts.length){
+                    res.status(200).json(accounts);
+                }else{
+                    res.status(200).json({msg: "There are no users with Active premium plans"});
+                }
+            } catch (error) {
+                return res.status(404).json(error.message)
+            }
+        }
+        getPremiumInactiveAccounts = async (req, res) => {
+            try {
+                const accounts = await MembershipUser.findAll({where: {statePlan: 'Inactive'},
+                    include: {
+                        model: PlanPremium, attributes: ["namePlanPremium", "priceMembership"]
+                    }
+                });
+                if(accounts.length){
+                    res.status(200).json(accounts);
+                }else{
+                    res.status(200).json({msg: "There are no users with inactive premium plans"});
+                }
+            } catch (error) {
+                return res.status(404).json(error.message)
+            }
+        }
+        getPremiumDebtorAccounts = async (req, res) => {
+            try {
+                const accounts = await MembershipUser.findAll({where: {statePlan: 'Debtor'},
+                    include: {
+                        model: PlanPremium, attributes: ["namePlanPremium", "priceMembership"]
+                    } 
+                });
+                if(accounts.length){
+                    res.status(200).json(accounts);
+                }else{
+                    res.status(200).json({msg: "There are no users with Debtor premium plans"});
+                }
+            } catch (error) {
+                return res.status(404).json(error.message)
+            }
+        }
     //Posteos para premium hechos por el administrador
         getPostsAdmin = async (req, res) => {
             try{

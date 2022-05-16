@@ -1,13 +1,27 @@
 const { Post, Like } = require("../db.js");
-const { Comment } = require("../db");
+const { Comment, Followed} = require("../db");
 const { User } = require("../db");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 class PostClass {
   constructor() {}
 
-  getAllPosts = async (req, res) => {
+  getAllPosts = async (req, res) => { //EN PROCESO. NO TOCAR
     try {
+      const {token} = req.body; 
+      const tokenDecode = jwt.decode(token);
+      let userFound;
+      try{
+        userFound = await User.findOne({where: {userName: tokenDecode.userName}});
+      }catch{return res.status(200).json({msgE: "User not found"})}
+      const followedsFound = Followed.findAll({
+        where: {UserIdUser: userFound.dataValues.idUser},
+        include: {
+          model: Post
+        }
+      });
+      if(!followedsFound.length){return res.status(200).json({msg: "The user has no following"})};
+      console.log(followedsFound);
       const posts = await Post.findAll({
         atributes: [
           "idPost",

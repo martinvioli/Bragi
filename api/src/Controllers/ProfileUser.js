@@ -9,12 +9,15 @@ class ProfileUser {
  
   editionBasicDataProfile = async (req, res) => {
     let dataPhoto;
-    console.log(req.body)
     const {token, name, lastName, gender, description, birthday, tel} = req.body;
     //Si no se pasa el token, devolvemos un error
     if(!token){return res.status(400).json({msgE: "Token doesn't exist"})}
     //Valida si pasaron una foto
-    dataPhoto = req.files.photoProfile.data;      
+    try{
+      dataPhoto = req.files.photoProfile.data;   
+    }catch(e){
+      console.log(e)
+    }       
     const tokenDecode = jwt.decode(token, authConfig.secret);
     try {
       /*-Primero busco el usuario para luego buscarlo cuando quiero actualizar los datos por el id*/
@@ -40,11 +43,12 @@ class ProfileUser {
         },
         { where: {idUser: userFound.dataValues.idUser}}
       );
+      const userUpdatedSend = await User.findOne({where: {[Op.or]: [{ userName: tokenDecode.userName },{ email: tokenDecode.email }]}});
       return !userUpdate.length
         ? res.status(404).json({ msgE: "Fail Edit profile" })
-        : res.status(200).json({ msg: "Successful edit", token});
+        : res.status(200).json({ msg: "Successful edit", token, userUpdatedSend});
     } catch (error) {
-      console.log(error);
+      return res.status(404).json({ msgE: "Fail Edit profile" });
     }
   };
 
@@ -64,12 +68,13 @@ class ProfileUser {
             userName: (userName !== userFound.dataValues.userName)? userName: userFound.dataValues.userName,
             password: (passwordHash !== userFound.dataValues.password)? passwordHash: userFound.dataValues.password,
             token
-        },{where: {idUser: userFound.dataValues.idUser}})
+        },{where: {idUser: userFound.dataValues.idUser}});
+        const userUpdatedSend = await User.findOne({where: {[Op.or]: [{userName},{email}]}});
         return !userEditSensitiveData.length
         ? res.status(404).json({ msgE: "Fail Edit profile" })
-        : res.status(200).json({ msg: "Successful edit", token});
+        : res.status(200).json({ msg: "Successful edit", token, userUpdatedSend});
     }catch(error){
-        console.log(error)
+      return res.status(404).json({ msgE: "Fail Edit profile" });
     }
   }
 }
