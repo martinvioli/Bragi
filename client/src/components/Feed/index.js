@@ -152,9 +152,9 @@ export default function Feed() {
     });
   }
 
-  const onClickContent = (e) => { 
+  const onClickContent = (e) => {
     // console.log(e)
-    if(e === "" || e === null || e === undefined){
+    if (e === "" || e === null || e === undefined) {
       Swal.fire({
         title: "Oops...",
         text: "The artist did not provide a link to this post",
@@ -164,11 +164,10 @@ export default function Feed() {
         showCancelButton: true,
         showConfirmButton: false,
       });
+    } else {
+      window.location.href = e;
     }
-    else{
-      window.location.href = e
-    }
-  }
+  };
 
   const handleDelete = (e) => {
     console.log(e.idPost);
@@ -231,23 +230,23 @@ export default function Feed() {
   //console.log(posts);
 
   const handlePremiumPost = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // setInput({
     //   ...input,
     //   select : e.target.value
     // })
-    if(e.target.value === "Premium") {
+    if (e.target.value === "Premium") {
       setInput({
         ...input,
-        postIsPremium: true
-      })
+        postIsPremium: true,
+      });
     } else {
       setInput({
         ...input,
-        postIsPremium : false
-      })
+        postIsPremium: false,
+      });
     }
-  }
+  };
 
   // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
 
@@ -262,24 +261,26 @@ export default function Feed() {
       <div className={styles.containerArtist}>
         <div className={styles.glowOnHover}>
           <Link
-          to="/profile"
-          style={{
-            display: "flex",
-            textAlign: "center",
-            fontSize: "large",
-            fontWeight: "bold",
-            marginTop: "5%",
-            marginBottom: "5%",
-            marginLeft:"5%"
-          }}
-          >Get premium now so you don't miss out on anything!</Link>
+            to="/profile"
+            style={{
+              display: "flex",
+              textAlign: "center",
+              fontSize: "large",
+              fontWeight: "bold",
+              marginTop: "5%",
+              marginBottom: "5%",
+              marginLeft: "5%",
+            }}
+          >
+            Get premium now so you don't miss out on anything!
+          </Link>
           <div>
-            {fakePosts.map((e) =>{
+            {fakePosts.map((e) => {
               return (
                 <Card
                   style={{
                     width: "90%",
-                    height: "90%"
+                    height: "90%",
                   }}
                   color="bg-light"
                   className={styles.backgroundPostPremium}
@@ -292,12 +293,7 @@ export default function Feed() {
                     </CardSubtitle>
                   </CardBody>
                   <div className={styles.img}>
-                    <img
-                      alt="img"
-                      src={e.image}
-                      height="250px"
-                      width="300px"
-                    />
+                    <img alt="img" src={e.image} height="250px" width="300px" />
                   </div>
                   <CardLink
                     href={e.link}
@@ -340,13 +336,15 @@ export default function Feed() {
                     value={input.linkContent}
                     placeholder="Insert URL 🔗"
                   />
-                  <Input  style={{ width: "7em", height: "2.5em" }} type="select"
-                name="select"
-                value={input.select}
-                onChange={(e)=>handlePremiumPost(e)}
-                >
-                  <option value="Standard">Standard Post</option>
-                  <option value="Premium">Premium Post</option>
+                  <Input
+                    style={{ width: "7em", height: "2.5em" }}
+                    type="select"
+                    name="select"
+                    value={input.select}
+                    onChange={(e) => handlePremiumPost(e)}
+                  >
+                    <option value="Standard">Standard Post</option>
+                    <option value="Premium">Premium Post</option>
                   </Input>
 
                   <Button
@@ -602,7 +600,7 @@ export default function Feed() {
                           <CardTitle
                             style={{
                               color: "black",
-                              marginLeft: "-450px"
+                              marginLeft: "-450px",
                             }}
                             tag="h7"
                           >
@@ -656,14 +654,14 @@ export default function Feed() {
                         )}
                         <div className={styles.icons}>
                           {/* <CardLink href={e.linkContent}> */}
-                            <FcLink
-                              onClick={() => onClickContent(e.linkContent)}
-                              style={{
-                                marginBottom: "0.4em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                            ></FcLink>
+                          <FcLink
+                            onClick={() => onClickContent(e.linkContent)}
+                            style={{
+                              marginBottom: "0.4em",
+                              width: "2em",
+                              height: "2em",
+                            }}
+                          ></FcLink>
                           {/* </CardLink> */}
                           <div
                             style={{

@@ -1,4 +1,4 @@
-const api = {
+const apiHeroku = {
   baseUrl: "https://bragiproject.herokuapp.com/",
   registerUrl: "https://bragiproject.herokuapp.com/register/",
   registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
@@ -82,7 +82,7 @@ const api = {
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
 };
 
-const apiLocal = {
+const api = {
   baseUrl: "http://localhost:3001/",
   registerUrl: "http://localhost:3001/register/",
   registerValidateUrl: "http://localhost:3001/register/validate",
