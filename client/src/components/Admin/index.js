@@ -22,6 +22,8 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
+import Swal from "sweetalert2";
+
 import {
   getAllReports,
   getUserByName,
@@ -37,6 +39,7 @@ import {
   modifyPlansPremiums,
   getAllBannedUsers,
   getAllCausesofReport,
+  deletePost,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -80,7 +83,7 @@ function Admin() {
   });
 
   useEffect(() => {
-    // dispatch(getAllPostToAdmin());
+    dispatch(getAllPostToAdmin());
     dispatch(getStandarUsers());
     dispatch(getPremiumUsers());
     dispatch(getArtistUsers());
@@ -92,6 +95,31 @@ function Admin() {
     dispatch(getAllCausesofReport());
   }, []);
 
+  const handleDelete = (e) => {
+    //console.log(e.idPost);
+    //console.log(e.target.value);
+    Swal.fire({
+      title: "Are you sure you want to delete this post?",
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then((result) => {
+      if (result.isDenied) {
+        dispatch(deletePost(e.idPost));
+        setTimeout(function () {
+          dispatch(getAllPostToAdmin());
+        }, 1000);
+      }
+    });
+  };
   const handleSubmitInput = (e) => {
     e.preventDefault();
     dispatch(getUserByName(input.user));
@@ -477,27 +505,6 @@ function Admin() {
                           <CardBody>
                             <CardTitle
                               style={{
-                                color: "orange",
-                              }}
-                              tag="h7"
-                            >
-                              {e.User.userName === user.userName ? (
-                                e.User.userName
-                              ) : (
-                                <Link
-                                  to={`/profile/${e.User.userName}`}
-                                  // onClick={() =>
-                                  //   dispatch(
-                                  //     getUseProfile(token, e.User.userName)
-                                  //   )
-                                  // }
-                                >
-                                  {e.User.userName}
-                                </Link>
-                              )}
-                            </CardTitle>
-                            <CardTitle
-                              style={{
                                 color: "blue",
                                 display: "flex",
                                 justifyContent: "flex-start",
@@ -529,75 +536,24 @@ function Admin() {
                                 }}
                               ></FcLink>
                             </CardLink>
-                            <div
+
+                            <Button
                               style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2.5em",
+                                background: "white",
+                                border: "0px",
+                                marginLeft: "100px",
                               }}
+                              onClick={() => handleDelete(e)}
                             >
-                              <span
+                              <FcFullTrash
                                 style={{
-                                  color: "black",
-                                  paddingRight: "0.5em",
+                                  marginBottom: "0.5em",
+                                  marginLeft: "1em",
+                                  width: "1.5em",
+                                  height: "1.5em",
                                 }}
-                              >
-                                {e.Likes.length}
-                              </span>
-                              {e.Likes.some(
-                                (e) => e.userName === user.userName
-                              ) ? (
-                                <FcLike
-                                  style={{
-                                    width: "2em",
-                                    height: "2em",
-                                  }}
-                                  // onClick={() => {
-                                  //   dispatch(
-                                  //     falseDislike({ index: posts.indexOf(e) })
-                                  //   );
-                                  //   dispatch(
-                                  //     dislike({ token, idPost: e.idPost })
-                                  //   );
-                                  // }}
-                                />
-                              ) : (
-                                <FcLikePlaceholder
-                                  style={{
-                                    width: "2em",
-                                    height: "2em",
-                                  }}
-                                  // onClick={() => {
-                                  //   dispatch(
-                                  //     falseLike({
-                                  //       index: posts.indexOf(e),
-                                  //       userName: user.userName,
-                                  //     })
-                                  //   );
-                                  //   dispatch(like({ token, idPost: e.idPost }));
-                                  // }}
-                                />
-                              )}
-                            </div>
-                            <FcRedo
-                              style={{
-                                marginBottom: "0.4em",
-                                marginLeft: "2em",
-                                marginRight: "1em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                              // onClick={() => {
-                              //   setViewPost({ ...e });
-                              //   dispatch(getAllComments(e.idPost));
-                              //   handleShowModalComments();
-                              //   setCommentInput({
-                              //     ...commentInput,
-                              //     idPost: e.idPost,
-                              //     token: token,
-                              //   });
-                              //   setSlicer(3);
-                              // }}
-                            />
+                              />
+                            </Button>
                           </div>
                         </Card>
                       );
