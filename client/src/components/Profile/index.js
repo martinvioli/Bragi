@@ -152,11 +152,7 @@ function Profile(props) {
                     ? "Fan"
                     : profile.nameTypeUser}
                 </h3>
-                <div className={styles.description}>
-                  {profile.description
-                    ? profile.description
-                    : "Hey there! I'm using Bragi"}
-                </div>
+                <div className={styles.description}>{profile.description}</div>
               </div>
             </div>
           ) : null}
@@ -620,11 +616,7 @@ function Profile(props) {
               <h3 style={{ color: "#dd9202", marginTop: "-30px" }}>
                 {user.typeUser === "Standard" ? "Fan" : user.typeUser}
               </h3>
-              <div className={styles.description}>
-                {user.description
-                  ? user.description
-                  : "Hey there! I'm using Bragi!"}
-              </div>
+              <div className={styles.description}>{user.description}</div>
             </div>
           ) : null}
         </div>
