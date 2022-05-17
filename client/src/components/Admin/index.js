@@ -49,6 +49,9 @@ import {
 } from "react-icons/fc";
 import api from "../../Utils";
 import { Link } from "react-router-dom";
+
+let idUser = "";
+
 function Admin() {
   const user = useSelector((state) => state.user);
   const premiumUsers = useSelector((state) => state.premiumUsers);
@@ -111,14 +114,10 @@ function Admin() {
   };
 
   const handleBan = async (e) => {
-    setShowModal(true);
-    setUserId(e.target.value);
-    const ban = {
-      idUser: "",
-      causeBan: input.causeBan ? input.causeBan : "For multiple Reasons",
-    };
-    dispatch(banUser(ban));
-    alert("Banear");
+    setUserId(e.target.name);
+    idUser = e.target.name;
+    setShowModal(!showModal);
+    console.log(e.target.name);
   };
 
   const modifyPlan = (e) => {
@@ -262,7 +261,19 @@ function Admin() {
                     bannedUsers.map((e) => {
                       return (
                         <div key={e.idUser}>
-                          {e.name} {e.lastName}
+                          <h6 style={{ display: "inline-block" }}>
+                            {e.userName}
+                          </h6>
+                          <Input
+                            name={e.idUser}
+                            type="button"
+                            onClick={handleBan}
+                            value={"🔨"}
+                            style={{
+                              width: "fit-content",
+                              display: "inline-block",
+                            }}
+                          />
                         </div>
                       );
                     })}
@@ -336,11 +347,20 @@ function Admin() {
                   {premiumUsers &&
                     premiumUsers.map((e) => {
                       return (
-                        <div key={e.id}>
-                          <h6>{e.userName}</h6>
-                          <Button value={e.id} onClick={handleBan}>
-                            🔨
-                          </Button>
+                        <div key={e.idUser}>
+                          <h6 style={{ display: "inline-block" }}>
+                            {e.userName}
+                          </h6>
+                          <Input
+                            name={e.idUser}
+                            type="button"
+                            onClick={handleBan}
+                            value={"🔨"}
+                            style={{
+                              width: "fit-content",
+                              display: "inline-block",
+                            }}
+                          />
                         </div>
                       );
                     })}
@@ -349,14 +369,46 @@ function Admin() {
                   <h6>Standards Users</h6>
                   {standardUsers &&
                     standardUsers.map((e) => {
-                      return <div key={e.id}>{e.userName}</div>;
+                      return (
+                        <div key={e.idUser}>
+                          <h6 style={{ display: "inline-block" }}>
+                            {e.userName}
+                          </h6>
+                          <Input
+                            name={e.idUser}
+                            type="button"
+                            onClick={handleBan}
+                            value={"🔨"}
+                            style={{
+                              width: "fit-content",
+                              display: "inline-block",
+                            }}
+                          />
+                        </div>
+                      );
                     })}
                 </Col>
                 <Col sm="4">
                   <h6>Artists Users </h6>
                   {artistUsers &&
                     artistUsers.map((e) => {
-                      return <div key={e.id}>{e.userName}</div>;
+                      return (
+                        <div key={e.idUser}>
+                          <h6 style={{ display: "inline-block" }}>
+                            {e.userName}
+                          </h6>
+                          <Input
+                            name={e.idUser}
+                            type="button"
+                            onClick={handleBan}
+                            value={"🔨"}
+                            style={{
+                              width: "fit-content",
+                              display: "inline-block",
+                            }}
+                          />
+                        </div>
+                      );
                     })}
                 </Col>
               </Row>
@@ -561,7 +613,6 @@ function Admin() {
           <HandleBan
             showModal={showModal}
             handleShowModal={() => setShowModal(false)}
-            idUser={userId}
           />
         </div>
       </div>
@@ -569,19 +620,31 @@ function Admin() {
   );
 }
 
-const HandleBan = ({ showModal, handleShowModal, idUser }) => {
+const HandleBan = ({ showModal, handleShowModal }) => {
   const [input, setInput] = useState({
-    idUser: idUser,
-    causeBan: "",
+    idUser: "",
+    causeBan: "Discrimnation",
   });
+  const dispatch = useDispatch();
   const causesOfReport = useSelector((state) => state.causesOfReport);
-  const handleSubmit = () => {
-    console.log(input);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const ban = {
+      idUser: idUser,
+      causeBan: input.causeBan,
+    };
+    console.log(ban);
+    dispatch(banUser(ban));
   };
   const handleClick = () => {
     handleShowModal();
   };
   const handleChange = (e) => {
+    setInput({
+      ...input,
+      idUser: idUser,
+    });
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -594,7 +657,7 @@ const HandleBan = ({ showModal, handleShowModal, idUser }) => {
           <Form onSubmit={handleSubmit}>
             <Input
               type="select"
-              value={input}
+              value={input.causeBan}
               name="causeBan"
               onChange={handleChange}
             >
@@ -607,6 +670,7 @@ const HandleBan = ({ showModal, handleShowModal, idUser }) => {
                   );
                 })}
             </Input>
+            <Input type="text" value={idUser} name="idUser" />
             <Input type="submit" />
           </Form>
         </ModalBody>
