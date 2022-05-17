@@ -48,7 +48,7 @@ function Home() {
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     if (userCredentials) {
-      console.log(userSearch);
+      //console.log(userSearch);
       setShow(true);
       const userToken = JSON.parse(userCredentials);
       dispatch(getUser(userToken));
@@ -56,11 +56,11 @@ function Home() {
       dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
-      console.log(user);
+      //console.log(user);
       navigate("/");
     }
 
-    console.log(user);
+    //console.log(user);
   }, []);
 
   // useEffect(() => {
@@ -85,7 +85,7 @@ function Home() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    console.log(input);
+    //console.log(input);
   };
 
   const [toggle, setToggle] = useState(false);

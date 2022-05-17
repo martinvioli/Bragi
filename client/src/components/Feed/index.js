@@ -122,7 +122,7 @@ export default function Feed() {
   }, []);
 
   // posts && posts.forEach((e) => {
-  //   // console.log(e)
+  //    console.log(e)
   //   dispatch(getPhotoUser(e.User.userName));
   // });
 
@@ -139,7 +139,7 @@ export default function Feed() {
   }
   function handleClick(e) {
     e.preventDefault();
-    console.log(input);
+    //console.log(input);
     dispatch(userNewPost({ ...input, contentPost: input.contentPost.trim() }));
 
     setTimeout(function () {
@@ -171,7 +171,7 @@ export default function Feed() {
   };
 
   const handleDelete = (e) => {
-    console.log(e.idPost);
+    //console.log(e.idPost);
     //console.log(e.target.value);
     Swal.fire({
       title: "Are you sure you want to delete this post?",
@@ -675,7 +675,7 @@ export default function Feed() {
                 {posts &&
                   posts.map((e) => {
                     // console.log(e)
-                    // console.log(user)
+                    //console.log(user)
                     if (
                       e.typeOfPost === "Premium" &&
                       user.typeUser !== "Premium"
