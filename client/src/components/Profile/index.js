@@ -172,6 +172,16 @@ function Profile(props) {
                         minWidth: "25em",
                         marginBottom: "1em",
                         marginRight: "1em",
+                        filter:
+                          e.typeOfPost === "Premium" &&
+                          user.typeUser !== "Premium"
+                            ? "blur(0.1rem)"
+                            : "blur(0)",
+                        background:
+                          e.typeOfPost === "Premium" &&
+                          user.typeUser !== "Premium"
+                            ? "linear-gradient(45deg, #795300, #b28405, #efb810, #f9db5c, #ffff94, #dd9202)"
+                            : null,
                       }}
                       color="bg-light"
                       className={styles.backgroundPost}
@@ -196,8 +206,21 @@ function Profile(props) {
                         >
                           {e.datePost}
                         </CardTitle>
-                        <CardSubtitle className="mb-2 text-muted" tag="h6">
-                          {e.contentPost}
+                        <CardSubtitle
+                          className="mb-2 text-muted"
+                          tag="h6"
+                          style={{
+                            textAlign:
+                              e.typeOfPost === "Premium" &&
+                              user.typeUser !== "Premium"
+                                ? "center"
+                                : null,
+                          }}
+                        >
+                          {e.typeOfPost === "Premium" &&
+                          user.typeUser !== "Premium"
+                            ? "BECAME PREMIUM TO SEE THIS POST!"
+                            : e.contentPost}
                         </CardSubtitle>
                       </CardBody>
                       {e.imagePost && (
@@ -210,15 +233,18 @@ function Profile(props) {
                         </div>
                       )}
                       <div className={styles.icons}>
-                        <CardLink href={e.linkContent}>
-                          <FcLink
-                            style={{
-                              marginBottom: "0.4em",
-                              width: "2em",
-                              height: "2em",
-                            }}
-                          ></FcLink>
-                        </CardLink>
+                        {e.typeOfPost === "Premium" &&
+                        user.typeUser !== "Premium" ? null : e.linkContent ? (
+                          <CardLink href={e.linkContent}>
+                            <FcLink
+                              style={{
+                                marginBottom: "0.4em",
+                                width: "2em",
+                                height: "2em",
+                              }}
+                            ></FcLink>
+                          </CardLink>
+                        ) : null}
                         <div
                           style={{
                             marginBottom: "0.4em",
@@ -237,15 +263,21 @@ function Profile(props) {
                                 height: "2em",
                               }}
                               onClick={() => {
-                                dispatch(
-                                  falseDislike({
-                                    index: posts.indexOf(e),
-                                    userName: user.userName,
-                                  })
-                                );
-                                dispatch(
-                                  dislike({ token: token, idPost: e.idPost })
-                                );
+                                if (
+                                  e.typeOfPost === "Premium" &&
+                                  user.typeUser !== "Premium"
+                                ) {
+                                } else {
+                                  dispatch(
+                                    falseDislike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
+                                  );
+                                  dispatch(
+                                    dislike({ token: token, idPost: e.idPost })
+                                  );
+                                }
                               }}
                             />
                           ) : (
@@ -255,15 +287,21 @@ function Profile(props) {
                                 height: "2em",
                               }}
                               onClick={() => {
-                                dispatch(
-                                  falseLike({
-                                    index: posts.indexOf(e),
-                                    userName: user.userName,
-                                  })
-                                );
-                                dispatch(
-                                  like({ token: token, idPost: e.idPost })
-                                );
+                                if (
+                                  e.typeOfPost === "Premium" &&
+                                  user.typeUser !== "Premium"
+                                ) {
+                                } else {
+                                  dispatch(
+                                    falseLike({
+                                      index: posts.indexOf(e),
+                                      userName: user.userName,
+                                    })
+                                  );
+                                  dispatch(
+                                    like({ token: token, idPost: e.idPost })
+                                  );
+                                }
                               }}
                             />
                           )}
@@ -286,15 +324,21 @@ function Profile(props) {
                               height: "2em",
                             }}
                             onClick={() => {
-                              setViewPost({ ...e });
-                              dispatch(getAllComments(e.idPost));
-                              handleShowModalComments();
-                              setCommentInput({
-                                ...commentInput,
-                                idPost: e.idPost,
-                                token: token,
-                              });
-                              setSlicer(3);
+                              if (
+                                e.typeOfPost === "Premium" &&
+                                user.typeUser !== "Premium"
+                              ) {
+                              } else {
+                                setViewPost({ ...e });
+                                dispatch(getAllComments(e.idPost));
+                                handleShowModalComments();
+                                setCommentInput({
+                                  ...commentInput,
+                                  idPost: e.idPost,
+                                  token: token,
+                                });
+                                setSlicer(3);
+                              }
                             }}
                           />
                         </div>
