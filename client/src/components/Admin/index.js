@@ -80,7 +80,7 @@ function Admin() {
   });
 
   useEffect(() => {
-    dispatch(getAllPostToAdmin());
+    // dispatch(getAllPostToAdmin());
     dispatch(getStandarUsers());
     dispatch(getPremiumUsers());
     dispatch(getArtistUsers());
@@ -156,12 +156,8 @@ function Admin() {
   };
 
   const handleUnban = async (e) => {
-    //hay que obtener el id del usuario
-    const id = {
-      idUser: "",
-    };
-    dispatch(UnbanUser(id));
-    alert("Desbaneado");
+    console.log(e.target.name);
+    dispatch(UnbanUser({ idUser: e.target.name }));
   };
 
   const handleActiveTab = (tab) => setActiveTab(tab);
@@ -267,8 +263,8 @@ function Admin() {
                           <Input
                             name={e.idUser}
                             type="button"
-                            onClick={handleBan}
-                            value={"🔨"}
+                            onClick={handleUnban}
+                            value={"Unban"}
                             style={{
                               width: "fit-content",
                               display: "inline-block",

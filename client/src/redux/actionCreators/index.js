@@ -604,7 +604,7 @@ export const banUser = (id) => {
 export const UnbanUser = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(api.disBanUser, id);
+      const response = await axios.post(api.unbanUser, id);
       console.log(response.data);
       return dispatch({ type: UNBAN_USER, payload: response.data });
     } catch (error) {
