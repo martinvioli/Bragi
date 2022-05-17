@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 class Admin{
     constructor(){};
 
-    //Estadísticas de cada perfil
+    //Estadísticas de cada perfil.
         getUserStandar = async (req, res) => {
             try{
             const userStandars = await User.findAll({
