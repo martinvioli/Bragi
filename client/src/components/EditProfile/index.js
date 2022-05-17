@@ -191,6 +191,7 @@ function EditProfile({ showModal, handleShowModal }) {
     if (response.data.msg) {
       alert(response.data.msg);
     }
+    window.localStorage.removeItem("userCredentials");
     setInput({
       name: "",
       lastName: "",
@@ -204,7 +205,7 @@ function EditProfile({ showModal, handleShowModal }) {
       description: "",
     });
     handleShowModal();
-    navigate("/profile");
+    navigate("/");
   };
 
   const handleTabs = (tab) => {
@@ -219,6 +220,7 @@ function EditProfile({ showModal, handleShowModal }) {
 
       alert(response.data);
     } catch (error) {
+      //console.log(error.response.data.msgE);
       //console.log(error.response.data.msgE)
     }
   };
