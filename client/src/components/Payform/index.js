@@ -58,6 +58,7 @@ const CheckoutForm = () => {
     <form className="card card-body" onSubmit={handleSubmit}>
       {/* User Card Input */}
       <div className={styles.form}>
+        <h2>Insert your card details </h2>
         <CardElement />
       </div>
 
@@ -81,18 +82,22 @@ function PayForm() {
       <FiDollarSign/>
     </div> */}
       <div className={styles.box}>
+        <div className={styles.dollarNLogo}>
+          <img style={{ height: "100px", width:"100px", display: "inline-flex" }} src="https://i.imgur.com/4UBgUvv.png" alt="BragiLogo" />
         <div className={styles.dollarSign}>
           <FiDollarSign style={{
             width: "2em",
             height: "2em",
-            marginLeft: "45%",
-            marginTop: "10px",
+            marginLeft: "300px",
+            marginTop: "25px",
             marginBottom: "50px"
             // width: "50%",
             // border: "3px solid green",
             // padding: "10px",
           }}/>
         </div>
+        </div>
+        <h1>Became Premium</h1>
         <Elements stripe={stripePromise}>
           <div>
             <div>

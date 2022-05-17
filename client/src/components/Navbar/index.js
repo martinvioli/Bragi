@@ -10,6 +10,9 @@ import {
   NavbarText,
   Button,
 } from "reactstrap";
+import {
+  FiDollarSign
+} from "react-icons/fi";
 import { LinkContainer } from "react-router-bootstrap";
 import styles from "./Navbar.module.css";
 import { IoShareSocialSharp } from "react-icons/io";
@@ -79,12 +82,12 @@ export default function NavBar() {
           </LinkContainer>
           <h2 className={styles.search}>Search</h2>
         </div>
-        {/* <div>
-          <FaUserFriends
-          className={styles.logoFriends}
-          />
-          <h2 className={styles.social}>Social</h2>
-        </div> */}
+        <div>
+          <LinkContainer to="/pay">
+            <FiDollarSign className={styles.logoPremium}/>
+          </LinkContainer>
+          <h2 className={styles.premium}>Get premium</h2>
+        </div>
         <div>
           <LinkContainer to="/profile" className={styles.logoProfile}>
             <FaUserAlt />

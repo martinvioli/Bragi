@@ -60,9 +60,22 @@
   padding-right: 10px;
 }
 
+.logoPremium{
+  width: 2em;
+    height: 2em;
+    color: white;
+    margin-left: 40%;
+    /* padding-right: 10px; */
+}
 
-.logoBragi:hover, .logoFriends:hover, .logoHome:hover, .logoOut:hover, .logoProfile:hover, .logoSearch:hover{
+.logoBragi:hover, .logoFriends:hover, .logoHome:hover, .logoOut:hover, .logoProfile:hover, .logoSearch:hover, .logoPremium:hover{
   color: #dd9202;
+}
+
+.premium{
+    color: white;
+    margin-right: 0px;
+    padding-right: 10px;
 }
 .home{
   margin-left: 13px;
