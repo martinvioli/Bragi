@@ -18,7 +18,7 @@ class Admin{
         }
         getUserPremium = async (req, res) => {
             const userPremium = await User.findAll({
-                where: {nameTypeUser: 'Premium'},
+                where: {nameTypeUser: 'Premium'}, 
                 attributes: ['idUser', 'email', 'userName', 'nameStateUser']
             });
             if(!userPremium) return res.status(404).json({msgE: "There aren't Premium users"});
