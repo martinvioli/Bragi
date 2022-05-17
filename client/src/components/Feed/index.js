@@ -47,6 +47,7 @@ import {
   ModalBody,
 } from "reactstrap";
 import Swal from "sweetalert2";
+import api from "../../Utils";
 
 const fakePosts = [
   {
@@ -196,9 +197,6 @@ export default function Feed() {
     });
   };
 
-  const handleEdit = (e) => {
-    setShowModal(true);
-  };
   // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
   // //   onUploadProgress: (progressEvent) => {
   // //     console.log(
@@ -258,6 +256,29 @@ export default function Feed() {
   useEffect(() => {
     token && user.typeUser !== "Artist" && dispatch(getAllPost(token));
   }, [token]);
+
+  // EDITAR POST
+
+  const handleEdit = (e) => {
+    setEditPost({ ...editPost, [e.target.name]: e.target.value });
+  };
+
+  const [editPost, setEditPost] = useState({
+    contentPost: null,
+    idPost: null,
+    linkContent: null,
+    typeOfPost: null,
+  });
+
+  async function sendPost() {
+    await axios.post(api.userUpdatePost, {
+      ...editPost,
+      contentPost: editPost.contentPost.trim(),
+    });
+    setTimeout(function () {
+      dispatch(getOwnPosts(user.userName));
+    }, 1000);
+  }
 
   return (
     <div className="container-fluid">
@@ -407,12 +428,19 @@ export default function Feed() {
                                   background: "white",
                                   border: "0px",
                                 }}
-                                onClick={() => handleEdit(e)}
+                                onClick={() => {
+                                  setShowModal(!showModal);
+                                  setEditPost({
+                                    contentPost: e.contentPost,
+                                    idPost: e.idPost,
+                                    linkContent: e.linkContent,
+                                    typeOfPost: e.typeOfPost,
+                                  });
+                                }}
                               >
                                 <FcEditImage
                                   style={{
                                     marginBottom: "0.5em",
-
                                     marginLeft: "0.5em",
                                     width: "1.5em",
                                     height: "1.5em",
@@ -546,24 +574,56 @@ export default function Feed() {
                     })}
                 </div>
                 <Modal isOpen={showModal}>
-                  <ModalHeader toggle={function noRefCheck() {}}>
-                    Edit your post
+                  <ModalHeader toggle={() => setShowModal(!showModal)}>
+                    ✏ Edit your post
                   </ModalHeader>
                   <ModalBody>
-                    aca van los inputs a editar
+                    Edit the content:
                     <Input
-                      style={{ width: "20em", height: "3em" }}
-                      color="bg-light"
-                      //className={styles.textarea}
-                      name="contentPost"
-                      value={input.contentPost}
                       type="textarea"
-                      onChange={(e) => handleChange(e)}
-                    />
+                      defaultValue={editPost.contentPost}
+                      name="contentPost"
+                      onChange={(e) => handleEdit(e)}
+                    ></Input>
+                    <br></br>
+                    Edit the embedded link:
+                    <Input
+                      type="text"
+                      name="linkContent"
+                      defaultValue={editPost.linkContent}
+                      onChange={(e) => handleEdit(e)}
+                    ></Input>
+                    <br></br>
+                    Change the post type:
+                    <Input
+                      type="select"
+                      name="typeOfPost"
+                      defaultValue={editPost.typeOfPost}
+                      onChange={(e) => handleEdit(e)}
+                    >
+                      <option value="Premium">Premium</option>
+                      <option value="Standard">Standard</option>
+                    </Input>
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="primary">Do Something</Button>{" "}
-                    <Button>Cancel</Button>
+                    <Button
+                      color="primary"
+                      disabled={
+                        editPost.contentPost &&
+                        editPost.contentPost.trim().length > 0
+                          ? false
+                          : true
+                      }
+                      onClick={() => {
+                        sendPost();
+                        setShowModal(!showModal);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button onClick={() => setShowModal(!showModal)}>
+                      Cancel
+                    </Button>
                   </ModalFooter>
                 </Modal>
               </div>
