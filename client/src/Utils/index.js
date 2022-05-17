@@ -20,7 +20,7 @@ const apiHeroku = {
   getTop10songs: "https://bragiproject.herokuapp.com/getTop10/songs",
   getAllPost: "https://bragiproject.herokuapp.com/post",
   userNewPost: "https://bragiproject.herokuapp.com/post",
-  userUpdatePost: "https://bragiproject.herokuapp.com/post",
+  userUpdatePost: "https://bragiproject.herokuapp.com/post/updatepost",
   deletePost: "https://bragiproject.herokuapp.com/post",
   getSongByID: "https://bragiproject.herokuapp.com/song/",
   getAlbumByID: "https://bragiproject.herokuapp.com/album/",
@@ -80,6 +80,7 @@ const apiHeroku = {
   forgottenPasswordPre:
     "https://bragiproject.herokuapp.com/recoverPassword/pre",
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
+  getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
 };
 
 const api = {
@@ -105,7 +106,7 @@ const api = {
   getAllPost: "http://localhost:3001/post",
   changeTypeOfPost: "http://localhost:3001/post/changePostType",
   userNewPost: "http://localhost:3001/post",
-  userUpdatePost: "http://localhost:3001/post",
+  userUpdatePost: "http://localhost:3001/post/updatepost",
   deletePost: "http://localhost:3001/post",
   getSongByID: "http://localhost:3001/song/",
   getAlbumByID: "http://localhost:3001/album/",
@@ -127,8 +128,8 @@ const api = {
   unfollowUser: "http://localhost:3001/unfollow",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
-  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
-  unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
+  banUser: "http://localhost:3001/admin/banUser",
+  unbanUser: "http://localhost:3001/admin/unbanUser",
   getAllStandarUsers: "http://localhost:3001/admin/getUserStandar",
   getAllPremiumUsers: "http://localhost:3001/admin/getUserPremium",
   getAllArtistUsers: "http://localhost:3001/admin/getUserArtist",
@@ -144,7 +145,7 @@ const api = {
   createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
   editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
   deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
-  changeTypeOfPost: "http://localhost:3001/post/changePostType",
+  //changeTypeOfPost: "http://localhost:3001/post/changePostType",
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
@@ -154,6 +155,8 @@ const api = {
   editAdminPost: "http://localhost:3001/admin/editPostAdmin",
   deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
   getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
+  getAllCausesOfBan: "http://localhost:3001/report/getCausesReport",
+  getAllPostToAdmin: "http://localhost:3001/admin/getAllPostUsers",
 };
 
 export default api;

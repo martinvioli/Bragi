@@ -63,6 +63,8 @@ import {
   EDIT_ADMIN_POST,
   DELETE_ADMIN_POST,
   CHANGE_TYPE_OF_POST,
+  GET_ALL_CAUSES_OF_REPORT,
+  GET_ALL_POSTS_USERS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -575,6 +577,19 @@ export const getUseProfile = (token, userName) => {
 //_ ADMIN
 //-----------------------------------------------------------------------------
 
+export const getAllPostToAdmin = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getAllPostToAdmin);
+      console.group("post");
+      console.log(response.data);
+      return dispatch({ type: GET_ALL_POSTS_USERS, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const banUser = (id) => {
   return async (dispatch) => {
     try {
@@ -589,7 +604,7 @@ export const banUser = (id) => {
 export const UnbanUser = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(api.disBanUser, id);
+      const response = await axios.post(api.unbanUser, id);
       console.log(response.data);
       return dispatch({ type: UNBAN_USER, payload: response.data });
     } catch (error) {
@@ -810,6 +825,17 @@ export const deleteAdminPost = () => {
     return dispatch({
       type: DELETE_ADMIN_POST,
       payload: response.data,
+    });
+  };
+};
+
+export const getAllCausesofReport = () => {
+  return async (dispatch) => {
+    const response = await axios.get(api.getAllCausesOfBan);
+    console.log(response.data.causesRepor);
+    return dispatch({
+      type: GET_ALL_CAUSES_OF_REPORT,
+      payload: response.data.causesRepor,
     });
   };
 };
