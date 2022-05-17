@@ -5,7 +5,6 @@ import {
   Button,
   CardBody,
   Card,
-  CardFooter,
   CardText,
   CardTitle,
   CardSubtitle,
@@ -34,15 +33,7 @@ import {
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
-import {
-  FcEditImage,
-  FcFullTrash,
-  FcLike,
-  FcRedo,
-  FcLink,
-  FcComments,
-  FcLikePlaceholder,
-} from "react-icons/fc";
+import { FcLike, FcLink, FcComments, FcLikePlaceholder } from "react-icons/fc";
 import { BiEdit } from "react-icons/bi";
 
 function Profile(props) {
@@ -60,7 +51,7 @@ function Profile(props) {
   const [showModalFollowed, setShowModalFollowed] = useState(false);
 
   useEffect(() => {
-    console.log(user);
+    //console.log(user);
     const userCredentials = window.localStorage.getItem("userCredentials");
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
@@ -80,11 +71,11 @@ function Profile(props) {
     description: null,
   };
 
-  console.log(listFollowed);
+  //console.log(listFollowed);
 
   const handleShowEditProfile = (e) => setShowEditProfile(!showEditProfile);
 
-  //// VER PERFIL AJENO
+  // VER PERFIL AJENO
 
   const { userName } = useParams();
 
@@ -115,7 +106,7 @@ function Profile(props) {
 
   const [slicer, setSlicer] = useState(3);
 
-  console.log(viewPost);
+  //console.log(viewPost);
 
   return props.visitant ? (
     <div>
@@ -536,7 +527,7 @@ function Profile(props) {
                   </ModalHeader>
                   <ModalBody>
                     {listFolloweds.map((e) => {
-                      console.log(e);
+                      ////console.log(e);
                       return (
                         <div>
                           <Link
@@ -585,7 +576,7 @@ function Profile(props) {
                 </ModalHeader>
                 <ModalBody>
                   {listFollowerss.map((e) => {
-                    console.log(e);
+                    //console.log(e);
                     return (
                       <div>
                         <img
