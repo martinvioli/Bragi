@@ -139,7 +139,7 @@ export default function Feed() {
   function handleClick(e) {
     e.preventDefault();
     console.log(input);
-    dispatch(userNewPost(input));
+    dispatch(userNewPost({ ...input, contentPost: input.contentPost.trim() }));
 
     setTimeout(function () {
       dispatch(getOwnPosts(user.userName));
@@ -352,6 +352,9 @@ export default function Feed() {
                   </Input>
 
                   <Button
+                    disabled={
+                      input.contentPost.trim().length > 0 ? false : true
+                    }
                     style={{ width: "5em", height: "2.5em" }}
                     color="primary"
                     onClick={(e) => {
@@ -497,43 +500,12 @@ export default function Feed() {
                               >
                                 {e.Likes.length}
                               </span>
-                              {e.Likes.some(
-                                (e) => e.userName === user.userName
-                              ) ? (
-                                <FcLike
-                                  style={{
-                                    width: "2em",
-                                    height: "2em",
-                                  }}
-                                  onClick={() => {
-                                    dispatch(
-                                      falseDislike({
-                                        index: posts.indexOf(e),
-                                        userName: user.userName,
-                                      })
-                                    );
-                                    dispatch(
-                                      dislike({ token, idPost: e.idPost })
-                                    );
-                                  }}
-                                />
-                              ) : (
-                                <FcLikePlaceholder
-                                  style={{
-                                    width: "2em",
-                                    height: "2em",
-                                  }}
-                                  onClick={() => {
-                                    dispatch(
-                                      falseLike({
-                                        index: posts.indexOf(e),
-                                        userName: user.userName,
-                                      })
-                                    );
-                                    dispatch(like({ token, idPost: e.idPost }));
-                                  }}
-                                />
-                              )}
+                              <FcLike
+                                style={{
+                                  width: "2em",
+                                  height: "2em",
+                                }}
+                              />
                             </div>
                             <div
                               style={{
