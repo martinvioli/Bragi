@@ -58,7 +58,7 @@ function SubmitEmail() {
     setInput({
       email: response.data.findUser.email ? response.data.findUser.email : "",
     });
-    console.log(response);
+    //console.log(response);
 
     // if(response.status === 200) setInput({ email: "" });navigate('/recoverpost')
   };
@@ -73,20 +73,20 @@ function SubmitEmail() {
 
   const handleClickAuth = async (e) => {
     e.preventDefault();
-    console.log(input);
+    //console.log(input);
     try {
       if (input.email && input.code) {
-        console.log("me ejecute");
+        //console.log("me ejecute");
         const response = await axios.post(`${api.authenticateUrl}reset`, input); //encontrar el email
         // console.log("handleClick ok", response.status)
         if (response.status === 200) {
-          console.log("yo si el resto no");
+          //console.log("yo si el resto no");
           const emailSend = await axios.post(
             `${api.authenticateUrl}codeValidation`,
             input
           );
           if (emailSend.status === 200) navigate("/resetPassword");
-          console.log(emailSend);
+          //console.log(emailSend);
         }
       }
       setInput({ email: "", code: "" });
