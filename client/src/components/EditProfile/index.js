@@ -69,7 +69,7 @@ function EditProfile({ showModal, handleShowModal }) {
       dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
-      console.log(user);
+      //console.log(user);
       navigate("/");
     }
   }, []);
@@ -135,7 +135,7 @@ function EditProfile({ showModal, handleShowModal }) {
 
   const handleSubmitBasicData = async (e) => {
     e.preventDefault();
-    console.log(photoProfile);
+    //console.log(photoProfile);
     const fd = new FormData();
     fd.append("photoProfile", photoProfile);
     fd.append("token", token);
@@ -220,7 +220,8 @@ function EditProfile({ showModal, handleShowModal }) {
 
       alert(response.data);
     } catch (error) {
-      console.log(error.response.data.msgE);
+      //console.log(error.response.data.msgE);
+      //console.log(error.response.data.msgE)
     }
   };
 
@@ -248,7 +249,7 @@ function EditProfile({ showModal, handleShowModal }) {
   };
 
   const handleImage = (e) => {
-    console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
     setPhotoProfile(e.target.files[0]);
   };
 

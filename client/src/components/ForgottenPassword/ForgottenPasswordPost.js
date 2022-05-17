@@ -59,9 +59,9 @@ function ForgottenPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
+    //console.log(input);
     const response = await axios.put(api.forgottenPasswordPost, input);
-    console.log(response);
+    //console.log(response);
 
     if (response.data.msg) {
       Swal.fire({

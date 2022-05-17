@@ -6,13 +6,7 @@ const sequelize = require("sequelize");
 class PostClass {
   constructor() {}
 
-  // async createAdminDefault(){
-  //   try{
-  //     await User.create({})
-  //   }catch(e){
-  //     Console.log("No se pudo crear el admin")
-  //   }
-  // }
+  
   async aux(user) {
     let userPosts = await User.findOne({
       where: { userName: user },
@@ -49,7 +43,6 @@ class PostClass {
   }
   getAllPosts = async (req, res) => {
     try {
-      await this.createAdminDefault();
       const { token } = req.query;
       const tokenDecode = jwt.decode(token);
       let userFound;
@@ -180,31 +173,18 @@ class PostClass {
   };
 
   updatePost = async (req, res) => {
-    const { idPost } = req.params;
-    const id = req.body.idPost;
-    const { datePost, nameStatusPost, createdAt, updatedAt, UserIdUser } =
-      req.body;
+    const { contentPost, idPost, linkContent, typeOfPost } = await req.body;
     try {
-      if (
-        id ||
-        datePost ||
-        nameStatusPost ||
-        createdAt ||
-        updatedAt ||
-        UserIdUser
-      )
-        return res
-          .status(500)
-          .json({ error: "You cannot change this properties" });
       const post = await Post.findByPk(idPost);
       if (!post)
         return res
           .status(404)
           .json({ msgE: "The post with that id doest not exist" });
-
-      post.set(req.body);
-      await post.save();
-      return res.status(200).json(post);
+      var postUpdate = await Post.update(
+        { contentPost, linkContent, typeOfPost },
+        { where: { idPost } }
+      );
+      return res.status(200).json(postUpdate);
     } catch (error) {
       return res.status(500).json({ msgE: error.message });
     }

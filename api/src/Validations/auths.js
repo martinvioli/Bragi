@@ -219,6 +219,7 @@ async function userBanned (name, lastName, email, causeBan){
         console.log(e)
     }
 };
+
 async function userUnbanned (name, lastName, email){
     try{const transporter = nodemailer.createTransport({
         // host: "smtp.gmail.com",
@@ -285,8 +286,6 @@ validateCodeReset = async(req,res) => {
         console.log(error)
     }
 }
-
-
 
 validateUserCode = async (req,res) => {
     //Decodificar token y buscar el id del usuario.

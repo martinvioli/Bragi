@@ -19,12 +19,12 @@ function SearchData({ data }) {
     );
     // dispatch(getToken(userToken));
     // dispatch(getUser(userToken));
-    console.log(userToken);
-    // console.log(data.userName);
+    //console.log(userToken);
+    //console.log(data.userName);
     let userNameOtherProfile = data.userName;
-    console.log(userNameOtherProfile);
+    //console.log(userNameOtherProfile);
   }, []);
-  console.log(data);
+  //console.log(data);
   const handleClickFollow = (data) => {
     //e.preventDefault()
     document.getElementById("followBtn").disabled = true;
@@ -32,10 +32,10 @@ function SearchData({ data }) {
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
-    console.log(userToken);
-    // console.log(data.token);
+    //console.log(userToken);
+    //console.log(data.token);
     let obj = { token: userToken, tokenFollowed: data.token };
-    console.log(obj);
+    //console.log(obj);
     dispatch(followUser(obj));
   };
   const handleClickUnfollow = (data) => {
@@ -44,10 +44,10 @@ function SearchData({ data }) {
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
-    console.log(userToken);
-    // console.log(data.token);
+    //console.log(userToken);
+    //console.log(data.token);
     let obj = { token: userToken, tokenFollowed: data.token };
-    console.log(obj);
+    //console.log(obj);
     dispatch(unfollowUser(obj));
   };
 
@@ -70,8 +70,20 @@ function SearchData({ data }) {
         )}
         {data.userName && (
           <div>
-            <Button id="followBtn" className="followBtn" onClick={() => handleClickFollow(data)}>Follow</Button>{" "}
-            <Button id="unFollowBtn" className="unFollowBtn" onClick={() => handleClickUnfollow(data)}>Unfollow</Button>
+            <Button
+              id="followBtn"
+              className="followBtn"
+              onClick={() => handleClickFollow(data)}
+            >
+              Follow
+            </Button>{" "}
+            <Button
+              id="unFollowBtn"
+              className="unFollowBtn"
+              onClick={() => handleClickUnfollow(data)}
+            >
+              Unfollow
+            </Button>
           </div>
         )}
       </div>

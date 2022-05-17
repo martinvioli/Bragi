@@ -19,6 +19,34 @@ const fs = require("fs");
 class UserClass {
   constructor() {}
 
+  async createSuperAdminDefault(){
+    try{
+      const tokenAdmin = jwt.sign(
+        { userName:"BragiSystem" , email: "BragiSystem@gmail.com", TypeUser: "Admin" },authConfig.secret,
+        { expiresIn: authConfig.expires,}
+      );
+      let password = bcrypt.hashSync("BragiSystem77", Number.parseInt(authConfig.rounds));
+      const adminExist = await User.findAll({where: {userName: "BragiSystem"}})
+      if(adminExist.length && !adminExist[0].dataValues.token){
+        await User.update({token: tokenAdmin},{where: {userName: "BragiSystem"}});
+      }else if(!adminExist.length){
+        await User.create({
+          name: "BragiAdmin",
+          lastName: "Admin",
+          userName: "BragiSystem",
+          email: "BragiSystem@gmail.com",
+          password: password,
+          nameTypeUser: "Admin",
+          gender: "Non binary",
+          nameStateUser: "Active",
+          token: tokenAdmin
+        })
+      }
+    }catch(e){
+      console.log(e)
+      console.log("No se pudo crear el superAdmin")
+    }
+  }
   getAllUsers = async (req, res) => {
     try {
       const users = await User.findAll({
@@ -131,10 +159,7 @@ class UserClass {
       userName,
       repeatPassword,
     } = req.body;
-    password = bcrypt.hashSync(
-      req.body.password,
-      Number.parseInt(authConfig.rounds)
-    );
+    password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
     if (!bcrypt.compareSync(repeatPassword, password))
       return res.status(409).json({ msgE: "Passwords do not match" });
 
@@ -393,6 +418,7 @@ class UserClass {
           { model: Like, attributes: ["userName"] },
           { model: Comment, attributes: ["userNameComment"] },
         ],
+        order: [["updatedAt", "DESC"]],
         where: { UserIdUser: user.idUser },
       });
       return res.status(200).json(posts);
