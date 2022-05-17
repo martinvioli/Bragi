@@ -95,7 +95,7 @@ export const userLogin = function (user) {
 //   };
 // };
 
-export const getPhotoUser = (userName) => {
+export const getPhotoUser = (userName, refresh) => {
   return {
     type: GET_PHOTO_USER,
     payload: userName,

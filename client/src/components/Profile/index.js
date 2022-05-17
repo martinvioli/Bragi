@@ -97,14 +97,11 @@ function Profile(props) {
     setShowModalComments(!showModalComments);
   }
 
-  console.log(profileImage)
+  console.log(profileImage);
 
   // useEffect(() => {
-    
+
   // },[profileImage])
-    useEffect(()=>{
-    dispatch(getPhotoUser(user.userName));
-  },[refresh])
 
   const comments = useSelector((state) => state.comments);
 
@@ -117,6 +114,8 @@ function Profile(props) {
   const [slicer, setSlicer] = useState(3);
 
   //console.log(viewPost);
+
+  //// test
 
   return props.visitant ? (
     <div>
@@ -140,7 +139,7 @@ function Profile(props) {
             marginRight: "0em",
           }}
         >
-          <img className={styles.profileImg} src={profileImage} alt="" refresh={refresh}></img>
+          <img className={styles.profileImg} src={profileImage} alt=""></img>
           {profile.name ? (
             <div>
               <div>

@@ -7,16 +7,24 @@ function WhyBragi() {
       <NavBar2 />
       <div className={styles.container}>
         <h1 className={styles.firstSubtitle}>HOW IS BRAGI?</h1>
-        <h3 className={styles.firstText}>
-          Bragi is the god of poetry in Norse mythology. He is the personal poet
-          of his father, Odin, lives in Asgard and is considered one of the
-          wisest gods, recognised as the god in charge of reciting poems. He is
-          also in charge of composing songs and verses in honour of the gods and
-          heroes who arrive at Valhalla, where he was sent by his father to
-          receive them and offer the toast of welcome. <br />
-          He married the goddess Idun (Iðunn), the goddess of youth, who guards
-          the fruit consumed by the gods so that they do not grow old. <br />
-        </h3>
+        <div className={styles.textAndImg}>
+          <h3 className={styles.firstText}>
+            Bragi is the god of poetry in Norse mythology. He is the personal
+            poet of his father, Odin, lives in Asgard and is considered one of
+            the wisest gods, recognised as the god in charge of reciting poems.
+            He is also in charge of composing songs and verses in honour of the
+            gods and heroes who arrive at Valhalla, where he was sent by his
+            father to receive them and offer the toast of welcome. <br />
+            He married the goddess Idun (Iðunn), the goddess of youth, who
+            guards the fruit consumed by the gods so that they do not grow old.{" "}
+            <br />
+          </h3>
+          <img
+            className={styles.img}
+            src="https://3.bp.blogspot.com/-sT-lhhVDWw8/UkpjfCrseOI/AAAAAAAAEYU/x9K4KvFZeE0/s1600/Bragi_by_Asfodelo.jpg"
+            alt="img"
+          />
+        </div>
       </div>
       <div>
         <h1 className={styles.secondSubtitle}>
@@ -31,7 +39,6 @@ function WhyBragi() {
           always depicted with a golden harp in his hands. <br />
         </h3>
       </div>
-
       <div>
         <h1 className={styles.thirdSubtitle}>
           {" "}
