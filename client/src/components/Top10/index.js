@@ -117,7 +117,7 @@ function Top10() {
                         <div class={styles.text}>
                           <p>{e.position}</p>
                           <p>{e.artist.name}</p>
-                          <a href={e.link}>{e.title}</a>
+                          <a style={{ color: "#dd9202" }} href={e.link}>{e.title}</a>
                         </div>
                       </div>
                     </div>
@@ -162,7 +162,7 @@ function Top10() {
                       <div class={styles.overlay}>
                         <div class={styles.text}>
                           <p>{e.position}</p>
-                          <a href={e.link}>{e.title}</a>
+                          <a style={{ color: "#dd9202" }} href={e.link}>{e.title}</a>
                         </div>
                       </div>
                     </div>

@@ -12,12 +12,12 @@ import DetailsSong from "./components/Details/DetailsSong";
 import DetailsArtist from "./components/Details/DetailsArtist";
 import Comment from "./components/Comment";
 
-
 import PayForm from "./components/Payform/index";
 
 import Admin from "./components/Admin";
 import SubmitEmail from "./components/ForgottenPassword";
 import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost";
+import WhyBragi from "./components/WhyBragi";
 
 function App() {
   const location = useLocation();
@@ -25,6 +25,8 @@ function App() {
     <>
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
+          <Route exact path="/bragi" element={<WhyBragi />} />
+
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/register" element={<CreateUser />} />
           <Route
@@ -33,7 +35,7 @@ function App() {
             element={<Authenticate />}
           />
 
-          <Route exact path="/pay" element={<PayForm />} /> 
+          <Route exact path="/pay" element={<PayForm />} />
 
           <Route exact path="/admin" element={<Admin />} />
 

@@ -123,7 +123,7 @@ const api = {
   reportComment: "http://localhost:3001/report/comment",
   reportPost: "http://localhost:3001/report/post",
   reportUser: "http://localhost:3001/report/user",
-  followUser: "http://localhost:3001/follow",
+  followUser: "http://localhost:3001/follow/",
   unfollowUser: "http://localhost:3001/unfollow",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",

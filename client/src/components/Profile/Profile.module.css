@@ -21,6 +21,11 @@
   box-shadow: 0px 0px 0px #1c1c1c;
 }
 
+.icons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 /* Description text */
 .description {
   /* height: auto;

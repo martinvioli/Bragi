@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { getToken } from "../../redux/actionCreators";
 import { validate } from "../../Utils/validateLogin";
 import Swal from "sweetalert2";
+import NavBar2 from "../NavBar2";
 
 function LandingPage() {
   const [input, setInput] = useState({
@@ -112,6 +113,7 @@ function LandingPage() {
 
   return (
     <div className={styles.container}>
+      <NavBar2></NavBar2>
       <motion.div
         className={styles.background}
         initial={{ opacity: 0 }}

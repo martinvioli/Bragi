@@ -244,15 +244,22 @@ export const clearData = function () {
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //_ CRUD - POST
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-export const getAllPost = function () {
+export const getAllPost = function (token) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(api.getAllPost);
+      const response = await axios.get(api.getAllPost, { params: { token } });
       console.log(response.data);
-      return dispatch({
-        type: GET_ALL_POST,
-        payload: response.data,
-      });
+      if (Array.isArray(response.data)) {
+        return dispatch({
+          type: GET_ALL_POST,
+          payload: response.data,
+        });
+      } else {
+        return dispatch({
+          type: GET_ALL_POST,
+          payload: [],
+        });
+      }
     } catch (error) {
       console.log(error);
     }

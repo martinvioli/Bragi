@@ -389,6 +389,7 @@ class UserClass {
           "imagePost",
         ],
         include: [
+          { model: User, attributes: ["userName"] },
           { model: Like, attributes: ["userName"] },
           { model: Comment, attributes: ["userNameComment"] },
         ],

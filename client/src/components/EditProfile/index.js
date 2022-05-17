@@ -211,13 +211,24 @@ function EditProfile({ showModal, handleShowModal }) {
     setActiveTab(tab);
   };
 
-  const handlePremium = async () => {
+  const handleStandard = async() => {
     try {
-      const response = await axios.post(api.changeUserToPremium, {
+      const response = await axios.post(api.changeUserToStandard, {
         userName: user.userName,
       });
 
       alert(response.data);
+    } catch (error) {
+      console.log(error.response.data.msgE)
+    }
+  }
+
+  const handlePremium = async () => {
+    try {
+      // const response = await axios.post(api.changeUserToPremium, {
+      //   userName: user.userName,
+      // });
+      navigate("/pay")
     } catch (e) {
       alert(e.response.data.msgE);
     }
@@ -671,6 +682,19 @@ function EditProfile({ showModal, handleShowModal }) {
                   }}
                 >
                   Became Artist
+                </Button>
+
+                <Button
+                  onClick={handleStandard}
+                  style={{
+                    marginTop: "2em",
+                    background: "#dd9202",
+                    color: "black",
+                    border: "2px solid #dd9202",
+                    marginRight: "20px",
+                  }}
+                >
+                  Became Standard User
                 </Button>
               </TabPane>
             </TabContent>
