@@ -54,6 +54,7 @@ function EditProfile({ showModal, handleShowModal }) {
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
   const [responseEdit, setResponseEdit] = useState("");
+  const [refresh, setRefresh] = useState(false)
 
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
@@ -158,6 +159,7 @@ function EditProfile({ showModal, handleShowModal }) {
       setResponseEdit(response.data.msg);
       alert(response.data.msg);
     }
+    setRefresh(!refresh);
     setInput({
       name: "",
       lastName: "",
@@ -173,6 +175,10 @@ function EditProfile({ showModal, handleShowModal }) {
     handleShowModal();
     // history.push("/profile");
   };
+
+  useEffect(()=>{
+    dispatch(getPhotoUser(user.userName));
+  },[refresh])
 
   const handleSubmitSenstiveData = async (e) => {
     e.preventDefault();
@@ -478,8 +484,8 @@ function EditProfile({ showModal, handleShowModal }) {
                       value="Send"
                       style={{
                         marginTop: "2em",
-                        background: "#dd9202",
-                        color: "black",
+                        backgroundColor: "black",
+                        color: "#dd9202",
                         border: "2px solid #dd9202",
                       }}
                     />

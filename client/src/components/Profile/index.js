@@ -49,6 +49,7 @@ function Profile(props) {
   const [token, setToken] = useState();
   const [showModalFollower, setShowModalFollower] = useState(false);
   const [showModalFollowed, setShowModalFollowed] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     //console.log(user);
@@ -96,6 +97,15 @@ function Profile(props) {
     setShowModalComments(!showModalComments);
   }
 
+  console.log(profileImage)
+
+  // useEffect(() => {
+    
+  // },[profileImage])
+    useEffect(()=>{
+    dispatch(getPhotoUser(user.userName));
+  },[refresh])
+
   const comments = useSelector((state) => state.comments);
 
   const [commentInput, setCommentInput] = useState({
@@ -130,7 +140,7 @@ function Profile(props) {
             marginRight: "0em",
           }}
         >
-          <img className={styles.profileImg} src={profileImage} alt=""></img>
+          <img className={styles.profileImg} src={profileImage} alt="" refresh={refresh}></img>
           {profile.name ? (
             <div>
               <div>
@@ -537,7 +547,7 @@ function Profile(props) {
                               dispatch(getUseProfile(token, e.userNameFollowed))
                             }
                           >
-                            {e.userNameFollowed}
+                            @{e.userNameFollowed}
                           </Link>
                           <br></br>
                         </div>
@@ -579,19 +589,14 @@ function Profile(props) {
                     //console.log(e);
                     return (
                       <div>
-                        <img
-                          style={{ width: "40px", height: "40px" }}
-                          src={profileImage}
-                          alt="img"
-                        />
                         <Link
                           to={`/profile/${e.userNameFollower}`}
-                          style={{ color: "black" }}
+                          style={{ color: "black", margin: "1px" }}
                           onClick={() =>
                             dispatch(getUseProfile(token, e.userNameFollower))
                           }
                         >
-                          {e.userNameFollower}
+                          @{e.userNameFollower}
                         </Link>
                       </div>
                     );
