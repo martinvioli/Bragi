@@ -1,0 +1,41 @@
+.container{
+    margin-top: 9em;
+}
+.firstSubtitle{
+    text-align: left;
+    color: #ffff94;
+    margin-left: 1em;
+}
+.firstText{
+    text-align: left;
+    color: #efb810;
+    margin-left: 0.5em;
+}
+
+.secondSubtitle{
+    text-align: center;
+    color: #ffff94
+    
+}
+.secondText{
+    text-align: left;
+    color: #efb810;
+    margin-left: 0.5em;
+}
+
+.thirdSubtitle{
+    text-align: end;
+    color: #ffff94;
+    margin-right: 1em;
+}
+.thirdText{
+    text-align: left;
+    color: #efb810;
+    margin-left: 0.5em;
+}
+/* #795300,
+#b28405,
+#efb810,
+#f9db5c,
+#ffff94,
+#dd9202 */
