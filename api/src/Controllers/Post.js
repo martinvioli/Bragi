@@ -6,7 +6,25 @@ const sequelize = require("sequelize");
 class PostClass {
   constructor() {}
 
-  getAllPosts = async (req, res) => { //EN PROCESO. NO TOCAR
+  async aux(user){ 
+      let userPosts = await User.findOne({
+        where: {userName: user},
+        include: [{
+          model: Post,
+          attributes: ["idPost", "datePost", "contentPost", "linkContent", "nameStatusPost", "typeOfPost", "isAdmin", "UserIdUser", "imagePost", "createdAt"],
+          include: {
+            model: Comment
+          } 
+        }]
+      });
+      return {
+        idUser: userPosts.dataValues.idUser,
+        userName: userPosts.dataValues.userName,
+        // profileImage: userPosts.dataValues.profileImage,
+        posts: userPosts.dataValues.Posts,
+      };
+  }
+  getAllPosts = async (req, res) => {
     try {
       const {token} = req.body; 
       const tokenDecode = jwt.decode(token);
@@ -14,41 +32,36 @@ class PostClass {
       try{
         userFound = await User.findOne({where: {userName: tokenDecode.userName}});
       }catch{return res.status(200).json({msgE: "User not found"})}
-      const followedsFound = Followed.findAll({
+      const followedsFound = await Followed.findAll({
         where: {UserIdUser: userFound.dataValues.idUser},
-        include: {
-          model: Post
+        attributes: ["userProfileFollowed", "userNameFollowed"]
+      });
+      let users = [];
+      for (let userFollowed = 0; userFollowed < followedsFound.length; userFollowed++) {
+        users.push(followedsFound[userFollowed].dataValues.userNameFollowed) ; 
+      } 
+      let usersPost = await Promise.all(users.map(user => this.aux(user)));
+      let posts_aux1 = [];
+      let posts_disorderly = [];
+      let posts_orderly = [];
+      for(let userPost in usersPost)  {
+        posts_aux1.push(usersPost[userPost]);    
+      }
+      for (const i in posts_aux1) {
+        for(let postn in posts_aux1[i].posts){
+          posts_aux1[i].posts[postn].dataValues['idUser'] = posts_aux1[i].idUser;
+          posts_aux1[i].posts[postn].dataValues['nameUser'] = posts_aux1[i].userName;
+          posts_disorderly.push(posts_aux1[i].posts[postn].dataValues);
         }
-      });
-      if(!followedsFound.length){return res.status(200).json({msg: "The user has no following"})};
-      console.log(followedsFound);
-      const posts = await Post.findAll({
-        atributes: [
-          "idPost",
-          "datePost",
-          "contentPost",
-          "linkContent",
-          "nameStatusPost",
-          "imagePost",
-          "UserIdUser",
-        ],
-        include: [
-          {
-            model: User,
-            attributes: ["userName"],
-          },
-          {
-            model: Like,
-            attributes: ["userName"],
-          },
-          {
-            model: Comment,
-            attributes: ["userNameComment"],
-          },
-        ],
-      });
-      const reverse = posts.reverse();
-      return res.status(200).json(reverse);
+      }
+      posts_orderly = posts_disorderly.sort((dateA, dateB) => {
+        if (dateA.createdAt < dateB.createdAt) {return 1}
+        if (dateA.createdAt > dateB.createdAt) {return -1}
+        return 0;
+      })
+      if(posts_orderly.length){
+      res.status(200).json(posts_orderly);
+      }else{res.status(200).json({msg: "There are no posts to show"})};
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error.message });
