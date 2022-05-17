@@ -485,6 +485,19 @@ export default function Feed() {
                               >
                                 {e.datePost}
                               </div>
+                              <div
+                                style={{
+                                  display: "inline-block",
+                                  color: "white",
+                                  background: "grey",
+                                  borderRadius: "0.5em",
+                                  fontSize: "11px",
+                                  marginLeft: "5px",
+                                  padding: "2px",
+                                }}
+                              >
+                                {e.typeOfPost}
+                              </div>
                             </CardTitle>
                             <CardSubtitle
                               style={{ marginTop: "10px" }}
@@ -718,7 +731,7 @@ export default function Feed() {
                               className="mb-2 text-muted"
                               tag="h6"
                             >
-                              {e.contentPost}
+                              BECAME PREMIUM TO SEE THIS POST!
                             </CardSubtitle>
                           </CardBody>
                           {e.imagePost && (
@@ -833,8 +846,7 @@ export default function Feed() {
                       return (
                         <Card
                           style={{
-                            marginLeft: "20em",
-                            width: "50%",
+                            width: "100%",
                             height: "43%",
                             minWidth: "25em",
                           }}

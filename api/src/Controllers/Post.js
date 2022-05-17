@@ -49,7 +49,6 @@ class PostClass {
   }
   getAllPosts = async (req, res) => {
     try {
-      await this.createAdminDefault();
       const { token } = req.query;
       const tokenDecode = jwt.decode(token);
       let userFound;

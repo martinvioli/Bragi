@@ -393,6 +393,7 @@ class UserClass {
           { model: Like, attributes: ["userName"] },
           { model: Comment, attributes: ["userNameComment"] },
         ],
+        order: [["updatedAt", "DESC"]],
         where: { UserIdUser: user.idUser },
       });
       return res.status(200).json(posts);
