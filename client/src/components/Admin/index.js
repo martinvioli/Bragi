@@ -25,7 +25,7 @@ import {
 import {
   getAllReports,
   getUserByName,
-  getAllPost,
+  getAllPostToAdmin,
   getStandarUsers,
   getPremiumUsers,
   getArtistUsers,
@@ -60,7 +60,7 @@ function Admin() {
   const commentReports = useSelector((state) => state.commentReports);
   const postReports = useSelector((state) => state.postReports);
   const userReports = useSelector((state) => state.userReports);
-  const posts = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.allPostToAdmin);
   const userSearch = useSelector((state) => state.usersList);
   const bannedUsers = useSelector((state) => state.bannedUsers);
   const causesOfReport = useSelector((state) => state.causesOfReport);
@@ -80,7 +80,7 @@ function Admin() {
   });
 
   useEffect(() => {
-    dispatch(getAllPost());
+    dispatch(getAllPostToAdmin());
     dispatch(getStandarUsers());
     dispatch(getPremiumUsers());
     dispatch(getArtistUsers());

@@ -62,6 +62,7 @@ import {
   DELETE_ADMIN_POST,
   CHANGE_TYPE_OF_POST,
   GET_ALL_CAUSES_OF_REPORT,
+  GET_ALL_POSTS_USERS,
 } from "../actions";
 
 // STATE CREATION
@@ -114,6 +115,7 @@ const initialState = {
   postPremium: [],
   causesOfReport: [],
   //updatePosts: {}
+  allPostToAdmin: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -454,6 +456,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         causesOfReport: action.payload,
+      };
+    case GET_ALL_POSTS_USERS:
+      return {
+        ...state,
+        allPostToAdmin: action.payload,
       };
     default:
       return { ...state };

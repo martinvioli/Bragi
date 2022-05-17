@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 class Admin{
     constructor(){};
 
-    //Estadísticas de cada perfil
+    //Estadísticas de cada perfil.
         getUserStandar = async (req, res) => {
             try{
             const userStandars = await User.findAll({
@@ -79,6 +79,15 @@ class Admin{
             } catch (error) {
                 return res.status(404).json(error.message)
             }
+        }
+        getAllPosts = async (req, res) => {
+            try{
+                const allPostAdmin = await Post.findAll({where: {isAdmin: false}});
+                return res.status(200).json(allPostAdmin);
+                //PROBAR
+            }catch(e){
+                return res.status(404).json({msgE: "There aren't post"});
+            } 
         }
     //Posteos para premium hechos por el administrador
         getPostsAdmin = async (req, res) => {
