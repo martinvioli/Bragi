@@ -464,15 +464,20 @@ class Admin{
                         discount: (discount)? true: false
                     }
                 })
-                return !existPlan[1]? res.status(400).json({msgE: "existing premium plan"}):
-                res.status(200).json({msg: "successful premium plan creation"})
+                if(!existPlan[1]){
+                    if(existPlan[0].dataValues.namePlanPremium === namePlanPremium){return res.status(400).json({msgE: "premium plan with that existing name"})}
+                    else if(existPlan[0].dataValues.priceMembership === priceMembership){return res.status(400).json({msgE: "premium plan with that existing price"})}
+                    else if(existPlan[0].dataValues.numberOfMonths === numberOfMonths){return res.status(400).json({msgE: "premium plan with that number of existing months"})}
+                }else{
+                    res.status(200).json({msg: "successful premium plan creation"})
+                }
             }catch(e){
                 console.log(e)
-                res.status(400).json({msgE: "Error creating premium plan"})
+                return res.status(400).json({msgE: "Error creating premium plan"})
             }
         }
         editPremiumPlan = async (req, res) => {
-            let {idPlanPremium, priceMembership, namePlanPremium, numberOfMonths, discount} = req.body;
+            let {idPlanPremium, priceMembership, numberOfMonths, discount} = req.body;
             try{
                 if(!idPlanPremium) return res.status(404).json({msgE: "no premium plan id passed"});
                 if(discount) priceMembership =  parseFloat(priceMembership)-(Math.imul(parseFloat(discount),parseFloat(priceMembership))/100);
@@ -480,9 +485,11 @@ class Admin{
                 try{
                     premiumPlanFound = await PlanPremium.findOne({where: {idPlanPremium}});
                 }catch{return res.status(404).json({msgE: "Premium plan not found"})}
+                if(premiumPlanFound){
+                    if(premiumPlanFound.dataValues.priceMembership === priceMembership && premiumPlanFound.dataValues.numberOfMonths === numberOfMonths){return res.status(400).json({msgE: "Premium plan with that price and existing number of months"})}
+                }
                 await PlanPremium.update({
                         priceMembership: (priceMembership && premiumPlanFound.dataValues.priceMembership !== priceMembership)? priceMembership: premiumPlanFound.dataValues.priceMembership,
-                        namePlanPremium: (namePlanPremium && premiumPlanFound.dataValues.namePlanPremium !== namePlanPremium)? namePlanPremium: premiumPlanFound.dataValues.namePlanPremium,
                         numberOfMonths: (numberOfMonths && premiumPlanFound.dataValues.numberOfMonths !== numberOfMonths)? numberOfMonths: premiumPlanFound.dataValues.numberOfMonths,
                         discount: (discount)? true: false
                     },{
@@ -492,7 +499,7 @@ class Admin{
                 return res.status(200).json({msg: "successful premium plan edition"})
             }catch(e){
                 console.log(e)
-                res.status(400).json({msgE: "Error editing premium plan"})
+                return res.status(400).json({msgE: "Error editing premium plan"})
             }
         }
         cancelPremiumPlan = async (req, res) => {
@@ -510,7 +517,7 @@ class Admin{
                 return res.status(200).json({msg: "premium plan successfully canceled"})
             }catch(e){
                 console.log(e)
-                res.status(400).json({msgE: "Error canceling premium plan"})
+                return res.status(400).json({msgE: "Error canceling premium plan"})
             }
         }
     //Banneo de usuarios
