@@ -1,9 +1,11 @@
 const { Router } = require("express");
 const Admin = require("../Controllers/Admin");
-const { verifyToken } = require("../middlewares/authjwt");
+const { verifyToken , verifyAdmin} = require("../middlewares/authjwt");
 
 const router = Router();
 const admin = new Admin();
+
+router.post('/verify', verifyAdmin);
 
 //Estadisticas
 router.get("/getUserStandar", admin.getUserStandar);
@@ -12,6 +14,7 @@ router.get("/getUserArtist", admin.getUserArtist);
 router.get("/getActiveMembership", admin.getPremiumActiveAccounts);
 router.get("/getInactiveMembership", admin.getPremiumInactiveAccounts);
 router.get("/getDebtorMembership", admin.getPremiumDebtorAccounts);
+router.get("/getAllPostUsers", admin.getAllPosts);
 
 //Posteos Admin
 router.get("/allPostAdmin", admin.getPostsAdmin);
