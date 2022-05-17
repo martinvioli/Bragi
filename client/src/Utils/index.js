@@ -80,6 +80,7 @@ const apiHeroku = {
   forgottenPasswordPre:
     "https://bragiproject.herokuapp.com/recoverPassword/pre",
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
+  getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
 };
 
 const api = {
@@ -144,7 +145,7 @@ const api = {
   createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
   editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
   deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
-  changeTypeOfPost: "http://localhost:3001/post/changePostType",
+  //changeTypeOfPost: "http://localhost:3001/post/changePostType",
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
@@ -154,6 +155,7 @@ const api = {
   editAdminPost: "http://localhost:3001/admin/editPostAdmin",
   deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
   getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
+  getAllPostToAdmin: "http://localhost:3001/admin/getAllPostUsers",
 };
 
 export default api;

@@ -308,7 +308,7 @@ export default function Feed() {
         </div>
 
         <div className={styles.center}>
-          {user.typeUser === "Artist" ? (
+          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
             <div className={styles.newPost}>
               <form>
                 <div className={styles.divTextarea}>
