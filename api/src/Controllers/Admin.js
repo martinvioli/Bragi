@@ -80,6 +80,14 @@ class Admin{
                 return res.status(404).json(error.message)
             }
         }
+        getAllPosts = async (req, res) => {
+            try{
+                const allPostAdmin = await Post.findAll({where: {isAdmin: false}});
+                return res.status(200).json(allPostAdmin);
+            }catch(e){
+                return res.status(404).json({msgE: "There aren't post"});
+            } 
+        }
     //Posteos para premium hechos por el administrador
         getPostsAdmin = async (req, res) => {
             try{

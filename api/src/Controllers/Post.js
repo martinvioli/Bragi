@@ -6,6 +6,13 @@ const sequelize = require("sequelize");
 class PostClass {
   constructor() {}
 
+  // async createAdminDefault(){
+  //   try{
+  //     await User.create({})
+  //   }catch(e){
+  //     Console.log("No se pudo crear el admin")
+  //   }
+  // }
   async aux(user) {
     let userPosts = await User.findOne({
       where: { userName: user },
@@ -42,6 +49,7 @@ class PostClass {
   }
   getAllPosts = async (req, res) => {
     try {
+      await this.createAdminDefault();
       const { token } = req.query;
       const tokenDecode = jwt.decode(token);
       let userFound;

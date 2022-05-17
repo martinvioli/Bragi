@@ -37,7 +37,8 @@ module.exports = (sequelize) => {
         },
         description: {
             type: DataTypes.TEXT,
-            allowNull: true
+            allowNull: false,
+            defaultValue: "Hey there! I'm using Bragi!"
         },
         birthday: {
             type: DataTypes.DATEONLY,
