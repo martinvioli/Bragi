@@ -191,6 +191,7 @@ function EditProfile({ showModal, handleShowModal }) {
     if (response.data.msg) {
       alert(response.data.msg);
     }
+    window.localStorage.removeItem("userCredentials");
     setInput({
       name: "",
       lastName: "",
@@ -204,14 +205,14 @@ function EditProfile({ showModal, handleShowModal }) {
       description: "",
     });
     handleShowModal();
-    navigate("/profile");
+    navigate("/");
   };
 
   const handleTabs = (tab) => {
     setActiveTab(tab);
   };
 
-  const handleStandard = async() => {
+  const handleStandard = async () => {
     try {
       const response = await axios.post(api.changeUserToStandard, {
         userName: user.userName,
@@ -219,16 +220,16 @@ function EditProfile({ showModal, handleShowModal }) {
 
       alert(response.data);
     } catch (error) {
-      console.log(error.response.data.msgE)
+      console.log(error.response.data.msgE);
     }
-  }
+  };
 
   const handlePremium = async () => {
     try {
       // const response = await axios.post(api.changeUserToPremium, {
       //   userName: user.userName,
       // });
-      navigate("/pay")
+      navigate("/pay");
     } catch (e) {
       alert(e.response.data.msgE);
     }

@@ -433,14 +433,26 @@ function Admin() {
                             display: "inline-block",
                             border: "1px solid orange",
                             borderRadius: "20px",
-                            margin: "5px",
+                            margin: "10px",
+                            width: "150px",
+                            height: "50px",
+                            textAlign: "center",
+                            alignContent: "center",
                           }}
                         >
-                          <h5 style={{ color: "white", marginTop: "1em" }}>
-                            @{e.userName}
-                          </h5>
-                          <Button onClick={handleBan}>❌</Button>
-                          <Button onClick={handleUnban}>✔️</Button>
+                          <h6 style={{ display: "inline-block" }}>
+                            {e.userName}
+                          </h6>
+                          <Input
+                            name={e.idUser}
+                            type="button"
+                            onClick={handleBan}
+                            value={"🔨"}
+                            style={{
+                              width: "fit-content",
+                              display: "inline-block",
+                            }}
+                          />
                         </div>
                       );
                     })}
