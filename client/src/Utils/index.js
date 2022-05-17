@@ -128,8 +128,8 @@ const api = {
   unfollowUser: "http://localhost:3001/unfollow",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
-  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
-  unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
+  banUser: "http://localhost:3001/admin/banUser",
+  unbanUser: "http://localhost:3001/admin/unbanUser",
   getAllStandarUsers: "http://localhost:3001/admin/getUserStandar",
   getAllPremiumUsers: "http://localhost:3001/admin/getUserPremium",
   getAllArtistUsers: "http://localhost:3001/admin/getUserArtist",
@@ -155,6 +155,7 @@ const api = {
   editAdminPost: "http://localhost:3001/admin/editPostAdmin",
   deleteAdminPost: "http://localhost:3001/admin/deletePostAdmin",
   getAllBannedUsers: "http://localhost:3001/admin/allBannedUser",
+  getAllCausesOfBan: "http://localhost:3001/report/getCausesReport",
   getAllPostToAdmin: "http://localhost:3001/admin/getAllPostUsers",
 };
 

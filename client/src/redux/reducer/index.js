@@ -61,6 +61,7 @@ import {
   EDIT_ADMIN_POST,
   DELETE_ADMIN_POST,
   CHANGE_TYPE_OF_POST,
+  GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
 } from "../actions";
 
@@ -112,6 +113,7 @@ const initialState = {
   adminPosts: [],
   editedPost: {},
   postPremium: [],
+  causesOfReport: [],
   //updatePosts: {}
   allPostToAdmin: [],
 };
@@ -449,6 +451,11 @@ function rootReducer(state = initialState, action) {
     case DELETE_ADMIN_POST:
       return {
         ...state,
+      };
+    case GET_ALL_CAUSES_OF_REPORT:
+      return {
+        ...state,
+        causesOfReport: action.payload,
       };
     case GET_ALL_POSTS_USERS:
       return {
