@@ -5,33 +5,49 @@
     text-align: left;
     color: #ffff94;
     margin-left: 1em;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .firstText{
     text-align: left;
-    color: #efb810;
+    color: #d0d0c3;
     margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .secondSubtitle{
     text-align: center;
-    color: #ffff94
-    
+    color: #ffff94;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 .secondText{
     text-align: left;
-    color: #efb810;
+    color: #d0d0c3;
     margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .thirdSubtitle{
     text-align: end;
     color: #ffff94;
     margin-right: 1em;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 .thirdText{
     text-align: left;
-    color: #efb810;
+    color: #d0d0c3;
     margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 /* #795300,
 #b28405,

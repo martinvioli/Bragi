@@ -21,7 +21,7 @@ function WhyBragi() {
       <div>
         <h1 className={styles.secondSubtitle}>
           <br />
-          WHY IS ALWAYS REPRESENTED BY A GOLD HARP?
+          WHY IS HE ALWAYS DEPICTED BY A GOLD HARP?
         </h1>
         <h3 className={styles.secondText}>
           He began making Norse poems and music at a very early age; in fact,
