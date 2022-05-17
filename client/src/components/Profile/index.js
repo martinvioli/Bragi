@@ -119,8 +119,26 @@ function Profile(props) {
 
   return props.visitant ? (
     <div>
-      <div className={styles.container}>
-        <div className={styles.profile}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1em",
+          marginTop: "8em",
+        }}
+      >
+        <div
+          style={{
+            background: "#2c292a",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            maxHeight: "35em",
+            width: "20em",
+            marginRight: "0em",
+          }}
+        >
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           {profile.name ? (
             <div>
@@ -146,187 +164,157 @@ function Profile(props) {
         <br></br>
         {profile.nameTypeUser === "Artist" ? (
           <>
-            <div className={styles.artist}>
-              {/*               <div className={styles.events}>
-                <h1>EVENTS</h1>
-                {events.map((e) => (
-                  <div className={styles.event}>
-                    <p>
-                      DATE:<span>{e.date}</span>
-                    </p>
-                    <p>
-                      COUNTRY: <span>{e.country}</span>
-                    </p>
-                    <p>
-                      PLACE:<span>{e.place}</span>
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div className={styles.concerts}>
-                <h1>CONCERTS</h1>
-                {concerts.map((e) => (
-                  <div className={styles.concert}>
-                    <p>
-                      DATE:<span>{e.date}</span>
-                    </p>
-                    <p>
-                      TYPE:<span>{e.type}</span>
-                    </p>
-                    <p>
-                      COUNTRY: <span>{e.country}</span>
-                    </p>
-                    <p>
-                      PLACE:<span>{e.place}</span>
-                    </p>
-                  </div>
-                ))}
-              </div> */}
-            </div>
-            <div className={styles.posts}>
-              <div className={styles.post}>
-                {posts &&
-                  posts.map((e) => {
-                    return (
-                      <Card
-                        style={{
-                          marginLeft: "20em",
-                          width: "50%",
-                          height: "43%",
-                          minWidth: "25em",
-                        }}
-                        color="bg-light"
-                        className={styles.backgroundPost}
-                        key={e.idPost}
-                      >
-                        <CardBody>
-                          <CardTitle
-                            style={{
-                              color: "orange",
-                            }}
-                            tag="h7"
-                          >
-                            {e.User.userName}
-                          </CardTitle>
-                          <CardTitle
-                            style={{
-                              color: "blue",
-                              display: "flex",
-                              justifyContent: "flex-start",
-                            }}
-                            tag="h7"
-                          >
-                            {e.datePost}
-                          </CardTitle>
-                          <CardSubtitle className="mb-2 text-muted" tag="h6">
-                            {e.contentPost}
-                          </CardSubtitle>
-                        </CardBody>
-                        {e.imagePost && (
-                          <div className={styles.img}>
-                            <img
-                              src={e.imagePost}
-                              class="img-fluid"
-                              alt="Responsive"
-                            />
-                          </div>
-                        )}
-                        <div className={styles.icons}>
-                          <CardLink href={e.linkContent}>
-                            <FcLink
-                              style={{
-                                marginBottom: "0.4em",
-                                width: "2em",
-                                height: "2em",
-                              }}
-                            ></FcLink>
-                          </CardLink>
-                          <div
+            <div
+              className={styles.post}
+              style={{
+                width: "32em",
+                padding: 0,
+                margin: 0,
+                overflowY: "auto",
+                maxHeight: "30em",
+              }}
+            >
+              {posts &&
+                posts.map((e) => {
+                  return (
+                    <Card
+                      style={{
+                        width: "fitcontent",
+                        minHeight: "8em",
+                        maxHeight: "15em",
+                        minWidth: "25em",
+                        marginBottom: "1em",
+                        marginRight: "1em",
+                      }}
+                      color="bg-light"
+                      className={styles.backgroundPost}
+                      key={e.idPost}
+                    >
+                      <CardBody>
+                        <CardTitle
+                          style={{
+                            color: "orange",
+                          }}
+                          tag="h7"
+                        >
+                          {e.nameUser}
+                        </CardTitle>
+                        <CardTitle
+                          style={{
+                            color: "blue",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                          }}
+                          tag="h7"
+                        >
+                          {e.datePost}
+                        </CardTitle>
+                        <CardSubtitle className="mb-2 text-muted" tag="h6">
+                          {e.contentPost}
+                        </CardSubtitle>
+                      </CardBody>
+                      {e.imagePost && (
+                        <div className={styles.img}>
+                          <img
+                            src={e.imagePost}
+                            class="img-fluid"
+                            alt="Responsive"
+                          />
+                        </div>
+                      )}
+                      <div className={styles.icons}>
+                        <CardLink href={e.linkContent}>
+                          <FcLink
                             style={{
                               marginBottom: "0.4em",
-                              marginLeft: "2.5em",
+                              width: "2em",
+                              height: "2em",
                             }}
+                          ></FcLink>
+                        </CardLink>
+                        <div
+                          style={{
+                            marginBottom: "0.4em",
+                            marginLeft: "2.5em",
+                          }}
+                        >
+                          <span
+                            style={{ color: "black", paddingRight: "0.5em" }}
                           >
-                            <span
-                              style={{ color: "black", paddingRight: "0.5em" }}
-                            >
-                              {e.Likes ? e.Likes.length : "0"}
-                            </span>
-                            {e.Likes.some(
-                              (e) => e.userName === user.userName
-                            ) ? (
-                              <FcLike
-                                style={{
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                                onClick={() => {
-                                  dispatch(
-                                    falseDislike({
-                                      index: posts.indexOf(e),
-                                      userName: user.userName,
-                                    })
-                                  );
-                                  dispatch(
-                                    dislike({ token: token, idPost: e.idPost })
-                                  );
-                                }}
-                              />
-                            ) : (
-                              <FcLikePlaceholder
-                                style={{
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                                onClick={() => {
-                                  dispatch(
-                                    falseLike({
-                                      index: posts.indexOf(e),
-                                      userName: user.userName,
-                                    })
-                                  );
-                                  dispatch(
-                                    like({ token: token, idPost: e.idPost })
-                                  );
-                                }}
-                              />
-                            )}
-                          </div>
-                          <div
-                            style={{
-                              marginBottom: "0.4em",
-                              marginLeft: "2em",
-                              marginRight: "1em",
-                            }}
-                          >
-                            <span
-                              style={{ color: "black", paddingRight: "0.5em" }}
-                            >
-                              {e.Comments ? e.Comments.length : "0"}
-                            </span>
-                            <FcComments
+                            {e.Likes ? e.Likes.length : "0"}
+                          </span>
+                          {e.Likes.some((e) => e.userName === user.userName) ? (
+                            <FcLike
                               style={{
                                 width: "2em",
                                 height: "2em",
                               }}
                               onClick={() => {
-                                setViewPost({ ...e });
-                                dispatch(getAllComments(e.idPost));
-                                handleShowModalComments();
-                                setCommentInput({
-                                  ...commentInput,
-                                  idPost: e.idPost,
-                                  token: token,
-                                });
-                                setSlicer(3);
+                                dispatch(
+                                  falseDislike({
+                                    index: posts.indexOf(e),
+                                    userName: user.userName,
+                                  })
+                                );
+                                dispatch(
+                                  dislike({ token: token, idPost: e.idPost })
+                                );
                               }}
                             />
-                          </div>
+                          ) : (
+                            <FcLikePlaceholder
+                              style={{
+                                width: "2em",
+                                height: "2em",
+                              }}
+                              onClick={() => {
+                                dispatch(
+                                  falseLike({
+                                    index: posts.indexOf(e),
+                                    userName: user.userName,
+                                  })
+                                );
+                                dispatch(
+                                  like({ token: token, idPost: e.idPost })
+                                );
+                              }}
+                            />
+                          )}
                         </div>
-                      </Card>
-                    );
-                  })}
-              </div>
+                        <div
+                          style={{
+                            marginBottom: "0.4em",
+                            marginLeft: "2em",
+                            marginRight: "1em",
+                          }}
+                        >
+                          <span
+                            style={{ color: "black", paddingRight: "0.5em" }}
+                          >
+                            {e.Comments ? e.Comments.length : "0"}
+                          </span>
+                          <FcComments
+                            style={{
+                              width: "2em",
+                              height: "2em",
+                            }}
+                            onClick={() => {
+                              setViewPost({ ...e });
+                              dispatch(getAllComments(e.idPost));
+                              handleShowModalComments();
+                              setCommentInput({
+                                ...commentInput,
+                                idPost: e.idPost,
+                                token: token,
+                              });
+                              setSlicer(3);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
             </div>
           </>
         ) : (
