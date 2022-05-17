@@ -1,6 +1,19 @@
 .container{
     margin-top: 9em;
 }
+.textAndImg{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em;
+}
+.img{
+    margin-right: 1em;
+    width: 14em;
+    height: 15em;
+    border: 5px solid #efb810
+}
 .firstSubtitle{
     text-align: left;
     color: #ffff94;
