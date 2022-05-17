@@ -49,42 +49,36 @@ export default function NavBar() {
       },
     }).then(async (result) => {
       if (result.isDenied) {
-        const response = await axios.post(api.deleteToken, {
-          token: JSON.parse(window.localStorage.getItem("userCredentials")),
-        });
-        console.log(response.data);
         window.localStorage.removeItem("userCredentials");
         navigate("/");
       }
     });
   }
 
-return(
-  <>
-  <nav className={styles.nav}>
-    <div>
-      <LinkContainer to="/feed">
-        <FaHome
-          className={styles.logoHome}
-          // src="https://i.imgur.com/7DI9tsb.png"
-          // alt="HomeLogo"
-          />
-      </LinkContainer>
-      <h2 className={styles.home}>Home</h2>
-    </div>
-          <img
-            className={styles.logoBragi}
-            src="https://i.imgur.com/4UBgUvv.png"
-            alt="logo"
-          />
-          <div>
-          <LinkContainer to="/home">
-            <FaSearch
-            className={styles.logoSearch}
+  return (
+    <>
+      <nav className={styles.nav}>
+        <div>
+          <LinkContainer to="/feed">
+            <FaHome
+              className={styles.logoHome}
+              // src="https://i.imgur.com/7DI9tsb.png"
+              // alt="HomeLogo"
             />
           </LinkContainer>
+          <h2 className={styles.home}>Home</h2>
+        </div>
+        <img
+          className={styles.logoBragi}
+          src="https://i.imgur.com/4UBgUvv.png"
+          alt="logo"
+        />
+        <div>
+          <LinkContainer to="/home">
+            <FaSearch className={styles.logoSearch} />
+          </LinkContainer>
           <h2 className={styles.search}>Search</h2>
-          </div>
+        </div>
         {/* <div>
           <FaUserFriends
           className={styles.logoFriends}
@@ -92,23 +86,20 @@ return(
           <h2 className={styles.social}>Social</h2>
         </div> */}
         <div>
-          <LinkContainer
-          to="/profile"
-          className={styles.logoProfile}
-        >
-          <FaUserAlt />
-        </LinkContainer>
-        <h2 className={styles.profile}>Profile</h2>
+          <LinkContainer to="/profile" className={styles.logoProfile}>
+            <FaUserAlt />
+          </LinkContainer>
+          <h2 className={styles.profile}>Profile</h2>
         </div>
         <div>
           <HiLogout
-          onClick={(e) => handleClick(e)}
-          className={styles.logoOut}
-        />
-        <h2 className={styles.logout}>Log out</h2>
+            onClick={(e) => handleClick(e)}
+            className={styles.logoOut}
+          />
+          <h2 className={styles.logout}>Log out</h2>
         </div>
-  </nav>
-  <Outlet className={styles.outlet} />
-  </>
-)
+      </nav>
+      <Outlet className={styles.outlet} />
+    </>
+  );
 }
