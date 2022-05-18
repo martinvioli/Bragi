@@ -51,12 +51,15 @@ const WhyPay = () => {
 
   return (
     <>
-      <h2 style={{ color: "white", textAling: "center" }}>
+      <h2 style={{ color: "white", textAlign: "center" }}>
         Do you want to became an artist? Give us your reasons
       </h2>
       <div className="container">
         <Form onSubmit={handleSubmit}>
-          <Label htmlFor="userName" style={{ color: "white" }}>
+          <Label
+            htmlFor="userName"
+            style={{ color: "#dd9202", fontSize: "14px" }}
+          >
             Username :{" "}
           </Label>
           <Input
@@ -65,7 +68,7 @@ const WhyPay = () => {
             value={input.userName}
             onChange={handleChange}
           />
-          <Label htmlFor="email" style={{ color: "white" }}>
+          <Label htmlFor="email" style={{ color: "#dd9202", fontSize: "14px" }}>
             Email :{" "}
           </Label>
           <Input
@@ -74,7 +77,10 @@ const WhyPay = () => {
             value={input.email}
             onChange={handleChange}
           />
-          <Label htmlFor="reason" style={{ color: "white" }}>
+          <Label
+            htmlFor="reason"
+            style={{ color: "#dd9202", fontSize: "14px" }}
+          >
             Reason why. Please include a link to your music:{" "}
           </Label>
           <Input
@@ -83,7 +89,15 @@ const WhyPay = () => {
             value={input.reason}
             onChange={handleChange}
           />
-          <Input type="submit" />
+          <Input
+            type="submit"
+            style={{
+              marginTop: "2em",
+              background: "#dd9202",
+              color: "black",
+              border: "2px solid #dd9202",
+            }}
+          />
         </Form>
       </div>
     </>

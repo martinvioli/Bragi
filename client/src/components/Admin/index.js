@@ -46,17 +46,8 @@ import {
   deletePlansPremiums,
   getToken,
   getUser,
-  deleteAdminPost,
 } from "../../redux/actionCreators";
-import {
-  FcEditImage,
-  FcFullTrash,
-  FcLike,
-  FcRedo,
-  FcLink,
-  FcComments,
-  FcLikePlaceholder,
-} from "react-icons/fc";
+import { FcFullTrash, FcLink } from "react-icons/fc";
 import api from "../../Utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -246,15 +237,33 @@ function Admin() {
             plan.idPlanPremium = e.idPlanPremium;
           }
         });
-      let obj = {
-        idPlanPremium: plan.idPlanPremium,
-        priceMembership: parseInt(plan.priceMembership),
-        numberOfMonths: parseInt(plan.numberOfMonths),
-      };
-      dispatch(modifyPlansPremiums(plan));
-      setTimeout(function () {
-        dispatch(getPremiumPlan());
-      }, 2000);
+      if (!plan.idPlanPremium) {
+        Swal.fire({
+          title: "There is no plan to modify 😪. Try to create it",
+          confirmButtonColor: "#dd9202",
+        });
+      } else {
+        let checkModify =
+          premiumPlans &&
+          premiumPlans.map(
+            (e) =>
+              e.numberOfMonths === parseInt(plan.numberOfMonths) &&
+              e.priceMembership === parseInt(plan.priceMembership)
+          );
+        //console.log(checkModify);
+        if (checkModify.includes(true)) {
+          Swal.fire({
+            title:
+              "This plan already exists with these data 😪. Try to create or modify other plan",
+            confirmButtonColor: "#dd9202",
+          });
+        } else {
+          dispatch(modifyPlansPremiums(plan));
+          setTimeout(function () {
+            dispatch(getPremiumPlan());
+          }, 2000);
+        }
+      }
     }
   };
 
@@ -337,14 +346,14 @@ function Admin() {
     });
   }
 
-  const handleDeletePost = (e) => {
-    dispatch(
-      deleteAdminPost({
-        idPost: e.target.name,
-        idReport: e.target.key,
-      })
-    );
-  };
+  // const handleDeletePost = (e) => {
+  //   dispatch(
+  //     deleteAdminPost({
+  //       idPost: e.target.name,
+  //       idReport: e.target.key,
+  //     })
+  //   );
+  // };
 
   const handleActiveTab = (tab) => setActiveTab(tab);
   return (
@@ -427,7 +436,19 @@ function Admin() {
                     <h5>Users</h5>
                     {userReports.length &&
                       userReports.map((e) => {
-                        return <div key={e.idReport}>{e.idReport}</div>;
+                        return (
+                          <div key={e.idReport}>
+                            <h6>ID : {e.idReport}</h6>
+                            <h6>Cause : {e.RowReports[0].causeReport}</h6>
+                            {/* <Input
+                                key={e.idReport}
+                                type="button"
+                                name={e.PostIdPost}
+                                onChange={handleDeletePost}
+                                value={"Delete"}
+                              /> */}
+                          </div>
+                        );
                       })}
                   </Col>
                   <Col sm="4">
@@ -439,13 +460,13 @@ function Admin() {
                           <div key={e.idReport}>
                             <h6>ID : {e.idReport}</h6>
                             <h6>Cause : {e.RowReports[0].causeReport}</h6>
-                            <Input
+                            {/* <Input
                               key={e.idReport}
                               type="button"
                               name={e.PostIdPost}
                               onChange={handleDeletePost}
                               value={"Delete"}
-                            />
+                            /> */}
                           </div>
                         );
                       })}
@@ -455,7 +476,19 @@ function Admin() {
                     <h5>Comments</h5>
                     {commentReports &&
                       commentReports.map((e) => {
-                        return <div key={e.idReport}>{e.idReport}</div>;
+                        return (
+                          <div key={e.idReport}>
+                            <h6>ID : {e.idReport}</h6>
+                            <h6>Cause : {e.RowReports[0].causeReport}</h6>
+                            {/* <Input
+                              key={e.idReport}
+                              type="button"
+                              name={e.PostIdPost}
+                              onChange={handleDeletePost}
+                              value={"Delete"}
+                            /> */}
+                          </div>
+                        );
                       })}
                   </Col>
                 </Row>
