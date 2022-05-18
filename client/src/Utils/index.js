@@ -83,6 +83,7 @@ const apiHeroku = {
   getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
   getPremiumPlan:
     "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
+  whyArtist: "",
 };
 
 const api = {
@@ -160,6 +161,7 @@ const api = {
   getAllCausesOfBan: "http://localhost:3001/report/getCausesReport",
   getAllPostToAdmin: "http://localhost:3001/admin/getAllPostUsers",
   getPremiumPlan: "http://localhost:3001/admin/premiumPlan/premiumPlans",
+  whyArtist: "",
 };
 
 export default api;

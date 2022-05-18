@@ -64,6 +64,7 @@ import {
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
   GET_PREMIUM_PLANS,
+  WHY_ARTIST,
 } from "../actions";
 
 // STATE CREATION
@@ -468,6 +469,10 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         premiumPlans: action.payload,
+      };
+    case WHY_ARTIST:
+      return {
+        ...state,
       };
     default:
       return { ...state };
