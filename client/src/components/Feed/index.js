@@ -357,7 +357,7 @@ export default function Feed() {
     }, 1000);
   }
 
-  console.log(posts);
+  // console.log(posts);
 
   return (
     <div className="container-fluid">
