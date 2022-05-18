@@ -9,6 +9,26 @@
   flex-direction: flex-end;
 } */
 
+.linkHomeSong{
+  color:  #f5f5f5;
+  background-color: transparent !important;
+}
+
+.linkHomeSong:hover{
+  color: #dd9202 !important;
+  background-color: transparent !important;
+}
+
+.linkHomeAlbum{
+  color:  #f5f5f5;
+  background-color: transparent;
+}
+
+.linkHomeAlbum:hover{
+  color: #dd9202;
+  background-color: transparent !important;
+}
+
 .searchBar{
   display: flex;
   flex-direction: row;
@@ -33,4 +53,31 @@
   background-color: transparent;
   box-shadow: none ! important;
 }
+
+.inputTypeHome{
+  background-color: transparent !important;
+  border: 0px solid transparent;
+}
+
+
+.inputTypeHome::placeholder{
+  color: #dd9202 !important;
+  background-color: transparent
+
+}
+
+.buttonToSearchHome:hover{
+  color: #1c1c1c !important;
+  background-color: #dd9202 !important;
+}
+
+.artistDiv{
+  display: inline-block;
+  background-color: #1c1c1c !important;
+  }
+
+.artistDiv:hover{
+background-color: #1c1c1c !important;
+}
+
 
