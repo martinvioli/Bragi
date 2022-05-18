@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSongByID, clearDetails } from "../../redux/actionCreators";
+import styles from "./DetailsSong.css"
 
 const DetailsSong = () => {
   const id = useParams().id;
@@ -12,22 +13,30 @@ const DetailsSong = () => {
     dispatch(getSongByID(id));
     return dispatch(clearDetails());
   }, []);
-
   return (
     <>
       {song ? (
-        <div style={{ color: "white" }}>
-          <h2>NOMBRE DE LA CANCION : {song.title}</h2>
-          {/* <h3>ARTISTA QUE LA COMPUSO : {song.artist.name}</h3> */}
-          {/* <h3>ALBUM A LA QUE PERTENEZE : {song.album.title}</h3> */}
-          <p>
-            {/* Paises en la que esta disponible {song.available_countries.lenght} */}
-          </p>
-          <h3>Duracion : {song.duration} seconds</h3>
-          <label style={{ fontSize: "40px" }}>Preview :</label>
-          <audio src={song.preview} controls></audio>
-          <h3>RANKING : {song.rank}</h3>
-          <h3>FECHA DE LANZAMIENTO : {song.release_date}</h3>
+        <div className="containerDetailsSong">
+          <div className="audioAndImgDetailsSong">
+            <img className="imageDeezerDetailsSong" src="https://monday.com/static/uploads/CassandraFederbusz/3149e1a1-a01c-43d9-b3fd-9a1145929846_PngItem_28185882.png" alt="logo" />
+            <a href={song.link} className="textDetailsSong">Check out the full version in Deezer</a> 
+            <audio className="audioDetailsSong" src={song.preview} controls></audio>
+          </div>
+          <div className="textDetailsSongContainer">
+            <a className="titleDetailsSong">{song.title}</a>
+            <a className="durationDetailsSong">Length : {song.duration} seconds</a>
+            <a className="rankingDetailsSong">Ranking : {song.rank}</a>
+            <a className="releaseDetailsSong">Release Date : {song.release_date}</a>
+            <div className="songDetailAdsContainer"> Looking for more info?
+          <a className="trackListDetailAlbum" href={song.link} alt="">Check out the full track</a>
+            <div className="logosDetailAlbumContainer">
+              <img className="imageBragiAlbumDetails" src="https://i.imgur.com/4UBgUvv.png" alt="logo" />
+              <img className="imageDeezerAlbumDetails" src="https://play-lh.googleusercontent.com/r55K1eQcji3QMHRKERq6zE1-csoh_MTOHiKyHTuTOblhFi_rIz06_8GN5-DHUGJOpn79" alt="logo" />
+            </div>
+          <a className="premiumAdtDetailAlbum" alt="">Don´t miss any update from your favorite artist!</a>
+          <button className="premiumAdLinktDetailAlbum" alt="">Go premium now!</button>
+          </div>
+          </div>
         </div>
       ) : null}
     </>
