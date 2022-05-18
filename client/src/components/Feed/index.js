@@ -366,17 +366,9 @@ export default function Feed() {
           <div className={styles.glowOnHover}>
             <Link
               to="/pay"
-              style={{
-                display: "flex",
-                textAlign: "center",
-                fontSize: "large",
-                fontWeight: "bold",
-                marginTop: "5%",
-                marginBottom: "5%",
-                marginLeft: "5%",
-              }}
+              className={styles.linkPremium}
             >
-              Get premium now so you don't miss out on anything!
+              <h4>Get premium now so you don't miss out on anything!</h4>
             </Link>
             <div>
               {fakePosts.map((e) => {
