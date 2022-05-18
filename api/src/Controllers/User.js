@@ -337,29 +337,31 @@ class UserClass {
   };
 
   changeUserToArtist = async (req, res) => {
-    console.log("Route is legible");
     const { userName } = req.body;
     const userFoundDB = await User.findOne({
       where: { [Op.or]: [{ userName: userName }] },
     });
     try {
-      console.log(userFoundDB.dataValues.nameTypeUser);
-      if (!userFoundDB)
-        return res.status(404).json({ msgE: "Could not find the user" });
-      if (userFoundDB.dataValues.nameTypeUser === "Artist")
-        return res.status(400).json({ msgE: "The user was already Artist" });
+      if (!userFoundDB)return res.status(404).json({ msgE: "Could not find the user" });
+      if (userFoundDB.dataValues.nameTypeUser === "Artist")return res.status(400).json({ msgE: "The user was already Artist" });
+      const token = jwt.sign({
+        userName: userFoundDB.dataValues.userName,
+        email: userFoundDB.dataValues.email,
+        TypeUser: "Artist" 
+      },authConfig.secret,{expiresIn: authConfig.expires,});
       await User.update(
-        { nameTypeUser: "Artist" },
+        { nameTypeUser: "Artist" , token},
         { where: { [Op.or]: [{ userName: userName }] } }
       );
-      res.sendStatus(200).json({ msgE: "User updated to Artist" });
+      const userToArtist = await User.findOne({where: {userName: userName}})
+      console.log(userToArtist)
+      return res.status(200).json({ msgE: "User updated to Artist", token: userToArtist.dataValues.token});
     } catch (error) {
-      console.log(error);
+      return res.status(501).json(error.message);
     }
   };
 
   changeUserToPremium = async (req, res) => {
-    console.log("Route is legible");
     const { userName } = req.body;
     const userFoundDB = await User.findOne({
       where: { [Op.or]: [{ userName: userName }] },
@@ -369,18 +371,22 @@ class UserClass {
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Premium")
         return res.status(400).json({ msgE: "The user was already Premium" });
+      const token = jwt.sign({ 
+        userName: userFoundDB.dataValues.userName,
+        email: userFoundDB.dataValues.email,
+        TypeUser: "Premium" 
+      },authConfig.secret,{expiresIn: authConfig.expires,});
       await User.update(
-        { nameTypeUser: "Premium" },
+        { nameTypeUser: "Premium", token },
         { where: { [Op.or]: [{ userName: userName }] } }
       );
-      res.sendStatus(200).json({ msgE: "User updated to Premium" });
+      return res.status(200).json({ msgE: "User updated to Premium" , token});
     } catch (error) {
-      console.log(error);
+      return res.status(501).json(error.message);
     }
   };
 
   changeUserToStandard = async (req, res) => {
-    console.log("Route is legible");
     const { userName } = req.body;
     const userFoundDB = await User.findOne({
       where: { [Op.or]: [{ userName: userName }] },
@@ -390,13 +396,18 @@ class UserClass {
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Standard")
         return res.status(400).json({ msgE: "The user was already Standard" });
+      const token = jwt.sign({
+        userName: userFoundDB.dataValues.userName,
+        email: userFoundDB.dataValues.email,
+        TypeUser: "Standard" 
+      },authConfig.secret,{expiresIn: authConfig.expires,});
       await User.update(
-        { nameTypeUser: "Standard" },
+        { nameTypeUser: "Standard",token },
         { where: { [Op.or]: [{ userName: userName }] } }
       );
-      res.sendStatus(200).json({ msgE: "User updated to Standard" });
+      return res.status(200).json({ msgE: "User updated to Standard" , token});
     } catch (error) {
-      console.log(error);
+      return res.status(501).json(error.message);
     }
   };
 
