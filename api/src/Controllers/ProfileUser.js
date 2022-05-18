@@ -1,4 +1,4 @@
-const { User } = require("../db.js");
+const { User, Comment, Follower, Followed} = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
@@ -95,6 +95,37 @@ class ProfileUser {
             password: (passwordHash !== userFound.dataValues.password)? passwordHash: userFound.dataValues.password,
             token
         },{where: {idUser: userFound.dataValues.idUser}});
+        try{
+          const commentUser = await Comment.findAll({where: {idUserComment: userFound.dataValues.idUser}});
+          if(commentUser.length){
+            await Comment.update({userNameComment:userName},{where: {idUserComment: userFound.dataValues.idUser}})
+          }
+        }catch(error){
+          console.log(error);
+        }
+        //Modifico mi userName en la tabla de seguidores de la otra persona.
+        try{
+          const followerUser = await Follower.findAll({where: {userProfileFollower: userFound.dataValues.idUser}});
+          if(followerUser.length){
+            await Follower.update({userNameFollower:userName},{where: {userProfileFollower: userFound.dataValues.idUser}})
+          }else{
+            console.log(followerUser)
+          }
+
+        }catch(error){
+          console.log(error);
+        }
+        //Modifico mi userName en la tabla de seguidos de la otra persona que me sigue.
+        try{
+          const followedUser = await Followed.findAll({where: {userProfileFollowed: userFound.dataValues.idUser}});
+          if(followedUser.length){
+            await Followed.update({userNameFollowed:userName},{where: {userProfileFollowed: userFound.dataValues.idUser}})
+          }else{
+            console.log(followedUser)
+          }
+        }catch(error){
+          console.log(error);
+        }
         const userUpdatedSend = await User.findOne({where: {[Op.or]: [{userName},{email}]}});
         return !userEditSensitiveData.length
         ? res.status(404).json({ msgE: "Fail Edit profile" })

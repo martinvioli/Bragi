@@ -406,19 +406,21 @@ class UserClass {
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Standard")
         return res.status(400).json({ msgE: "The user was already Standard" });
-      console.log(userFoundDB.dataValues.MembershipUserIdMembershipUser);
-      
       const token = jwt.sign({
         userName: userFoundDB.dataValues.userName,
         email: userFoundDB.dataValues.email,
         TypeUser: "Standard" 
       },authConfig.secret,{expiresIn: authConfig.expires,});
       await User.update(
-        { nameTypeUser: "Standard",token },
+        { nameTypeUser: "Standard",token , MembershipUserIdMembershipUser: null},
         { where: { [Op.or]: [{ userName: userName }] } }
-      );
+        );
+      await MembershipUser.destroy({where: {
+        idMembershipUser: userFoundDB.dataValues.MembershipUserIdMembershipUser
+      }});
       return res.status(200).json({ msgE: "User updated to Standard" , token});
     } catch (error) {
+      console.log(error)
       return res.status(501).json(error.message);
     }
   };
