@@ -59,6 +59,11 @@ export default function NavBar() {
   return (
     <>
       <nav className={styles.nav}>
+        <img
+          className={styles.logoBragi}
+          src="https://i.imgur.com/4UBgUvv.png"
+          alt="logo"
+        />
         <div>
           <LinkContainer to="/feed">
             <FaHome
@@ -69,11 +74,7 @@ export default function NavBar() {
           </LinkContainer>
           <h2 className={styles.home}>Home</h2>
         </div>
-        <img
-          className={styles.logoBragi}
-          src="https://i.imgur.com/4UBgUvv.png"
-          alt="logo"
-        />
+
         <div>
           <LinkContainer to="/home">
             <FaSearch className={styles.logoSearch} />

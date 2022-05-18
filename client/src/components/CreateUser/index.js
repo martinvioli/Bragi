@@ -150,7 +150,7 @@ function CreateUser() {
             text: "Congratulations, you are now officially a member of this beatiful community!.",
             icon: "success",
             showConfirmButton: true,
-            confirmButtonColor: "#0d6efd",
+            confirmButtonColor: "#efb810",
             timer: 2000,
           });
           navigate("/home");
@@ -458,7 +458,7 @@ function CreateUser() {
             <FcApproval style={{ width: "2em", height: "2em" }} />
             <h2 className={styles.subtitle}>
               Thanks you for your registration on
-              <p className={"text-primary"}>BRAGI</p>
+              <p className={"text-warning"}>BRAGI</p>
               <hr />
             </h2>
             <p className={styles.text}>
@@ -476,11 +476,7 @@ function CreateUser() {
             </FormGroup>
           </ModalBody>
           <ModalFooter className={styles.buttonSend}>
-            <Button
-              // className={styles.buttonSend}
-              color="primary"
-              onClick={handleClickAuth}
-            >
+            <Button color="warning" onClick={handleClickAuth}>
               Send
             </Button>
           </ModalFooter>

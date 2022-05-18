@@ -209,24 +209,6 @@ class UserClass {
         token,
         MembershipUserIdMembershipUser: null
       });
-      // const today = new Date();
-      // const membershipUser = await MembershipUser.create({
-      //   statePlan: "Inactive",
-      //   dateStart:
-      //     today.getDate() +
-      //     "-" +
-      //     (today.getMonth() + 1) +
-      //     "-" +
-      //     today.getFullYear(),
-      //   dateExpiry:
-      //     today.getDate() +
-      //     "-" +
-      //     (today.getMonth() + 3) +
-      //     "-" +
-      //     today.getFullYear(),
-      // });
-      // planPremium.addMembershipUser(membershipUser);
-      // membershipUser.addUser(user);
       return res.status(200).json({ msg: "User created successfully", token }); //Prueba para el front
     } catch (error) {
       console.log(error);
@@ -363,15 +345,41 @@ class UserClass {
   };
 
   changeUserToPremium = async (req, res) => {
-    const { userName } = req.body;
-    const userFoundDB = await User.findOne({
-      where: { [Op.or]: [{ userName: userName }] },
-    });
+    const {userName, premiumPlan} = req.body;
+    let userFoundDB, premiumPlanFound;
     try {
+      userFoundDB = await User.findOne({
+        where: {userName},
+      });
       if (!userFoundDB)
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Premium")
         return res.status(400).json({ msgE: "The user was already Premium" });
+      try {
+        premiumPlanFound = await PlanPremium.findOne({where: {idPlanPremium: premiumPlan}});
+        if(!premiumPlanFound) return res.status(404).json({msgE: "Premium plan not found"});
+      } catch (error) {
+        console.log(error);
+        return res.status(404).json({msgE: "Premium plan not found"});
+      }
+      const today = new Date();
+      const membershipUser = await MembershipUser.create({
+        statePlan: "Active",
+        dateStart:
+          today.getDate() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getFullYear(),
+        dateExpiry:
+          today.getDate() +
+          "-" +
+          (today.getMonth() + premiumPlanFound.dataValues.numberOfMonths) +
+          "-" +
+          today.getFullYear(),
+      });
+      premiumPlanFound.addMembershipUser(membershipUser);
+      membershipUser.addUser(userFoundDB);
       const token = jwt.sign({ 
         userName: userFoundDB.dataValues.userName,
         email: userFoundDB.dataValues.email,
@@ -383,6 +391,7 @@ class UserClass {
       );
       return res.status(200).json({ msgE: "User updated to Premium" , token});
     } catch (error) {
+      console.log(error)
       return res.status(501).json(error.message);
     }
   };
@@ -397,6 +406,8 @@ class UserClass {
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Standard")
         return res.status(400).json({ msgE: "The user was already Standard" });
+      console.log(userFoundDB.dataValues.MembershipUserIdMembershipUser);
+      
       const token = jwt.sign({
         userName: userFoundDB.dataValues.userName,
         email: userFoundDB.dataValues.email,

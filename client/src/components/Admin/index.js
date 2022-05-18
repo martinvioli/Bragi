@@ -87,11 +87,6 @@ function Admin() {
     price: "",
     discount: "",
   });
-
-  // create precio, nombre, descuento(1-100)
-  // edit planId, precio, nombre, descuento(1-100)
-  // delete planId
-  // que no se creen dos planes con el mismo nombre
   const [plan, setPlan] = useState({
     idPlanPremium: "",
     namePlanPremium: "",
@@ -128,12 +123,6 @@ function Admin() {
     dispatch(getAllBannedUsers());
     dispatch(getAllCausesofReport());
     dispatch(getPremiumPlan());
-    // if (user && user.typeUser !== "Admin") {
-    //   Swal.fire({
-    //     title: "Sorry, You aren't Bragi administrator 😪 ",
-    //     confirmButtonColor: "#dd9202",
-    //   });
-    // }
   }, []);
 
   const handleDelete = (e) => {
@@ -161,7 +150,6 @@ function Admin() {
   };
 
   const handleSubmitInput = (e) => {
-    //console.log(input);
     e.preventDefault();
     if (!input.user) {
       Swal.fire({
@@ -194,30 +182,21 @@ function Admin() {
     setUserId(e.target.name);
     idUser = e.target.name;
     setShowModal(!showModal);
-    //console.log(e.target.name);
   };
   const handlePlan = (e) => {
-    //e.preventDefault();
     setPlan({
       ...plan,
       [e.target.name]: e.target.value,
     });
   };
   const handlePlan2 = (e) => {
-    //e.preventDefault();
     setPlan2({
       ...plan2,
       [e.target.name]: e.target.value,
     });
   };
-  const handleAlert = () => {
-    Swal.fire({
-      title: "Sorry, You aren't Bragi administrator 😪 ",
-      confirmButtonColor: "#dd9202",
-    });
-  };
+
   const handleDeletePlan = (e) => {
-    // e.preventDefault();
     Swal.fire({
       title: "Are you sure you want to delete this plan?",
       showDenyButton: true,
@@ -243,7 +222,6 @@ function Admin() {
   };
   const handleSubmitModifyPlans = (e) => {
     e.preventDefault();
-    //console.log(plan);
     if (!plan.priceMembership || !plan.numberOfMonths) {
       Swal.fire({
         title:
@@ -271,7 +249,6 @@ function Admin() {
         priceMembership: parseInt(plan.priceMembership),
         numberOfMonths: parseInt(plan.numberOfMonths),
       };
-      //console.log(obj);
       dispatch(modifyPlansPremiums(plan));
       setTimeout(function () {
         dispatch(getPremiumPlan());
@@ -281,7 +258,6 @@ function Admin() {
 
   const handleSubmitCreatePlans = (e) => {
     e.preventDefault();
-    //console.log(premiumPlans);
     let checkName =
       premiumPlans &&
       premiumPlans.map(
@@ -290,7 +266,6 @@ function Admin() {
           plan2.namePlanPremium.toLowerCase()
       );
 
-    //console.log(checkName);
     if (checkName.includes(true)) {
       Swal.fire({
         title:
@@ -326,7 +301,6 @@ function Admin() {
         numberOfMonths: parseInt(plan2.numberOfMonths),
         discount: parseInt(plan2.discount),
       };
-      //console.log(obj);
       dispatch(createPlansPremiums(obj));
       setTimeout(function () {
         dispatch(getPremiumPlan());
@@ -335,7 +309,6 @@ function Admin() {
   };
 
   const handleUnban = async (e) => {
-    //console.log(e.target.name);
     dispatch(UnbanUser({ idUser: e.target.name }));
   };
 
@@ -363,7 +336,6 @@ function Admin() {
   }
 
   const handleActiveTab = (tab) => setActiveTab(tab);
-  //console.log(user);
   return (
     <>
       {user && user.typeUser === "Admin" ? (
@@ -498,7 +470,6 @@ function Admin() {
                     <h6>Name:</h6> <hr className={styles.hr} width="600% " />
                     <h6>Price:</h6> <hr className={styles.hr} width="600% " />
                     <h6>Months:</h6> <hr className={styles.hr} width="600% " />
-                    {/* <h6>Discount:</h6> <hr className={styles.hr} width="600% " /> */}
                     <h6>Delete:</h6>
                   </Col>
                   {premiumPlans &&
@@ -513,17 +484,6 @@ function Admin() {
                         <hr className={styles.nohr} />
                         <h6> {e.numberOfMonths}</h6>
                         <hr className={styles.nohr} />
-                        {/* {e.discount ? (
-                        <div>
-                          <h6>{e.discount}</h6>
-                          <hr className={styles.nohr} />
-                        </div>
-                      ) : (
-                        <div>
-                          <h6>No Discount</h6>
-                          <hr className={styles.nohr} />
-                        </div>
-                      )} */}
                         <button
                           style={{
                             color: "white",
@@ -709,7 +669,6 @@ function Admin() {
                     <Form onSubmit={handleSubmitInput}>
                       <Label htmlFor="user">Search For Users</Label>
                       <Input
-                        //color="bg-danger"
                         onChange={handleInput}
                         type="text"
                         value={input.user}
@@ -919,7 +878,6 @@ const HandleBan = ({ showModal, handleShowModal }) => {
       idUser: idUser,
       causeBan: input.causeBan,
     };
-    //console.log(ban);
     dispatch(banUser(ban));
   };
   const handleClick = () => {
