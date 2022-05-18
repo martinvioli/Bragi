@@ -253,7 +253,14 @@ function Profile(props) {
           ></img>
           {profile.name ? (
             <div>
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <div className={styles.name}>
                   {profile.name + " " + profile.lastName}
                 </div>
