@@ -247,8 +247,8 @@ export default function Feed() {
     }
   };
 
-    //Reportes
-  function openReport(e, type){
+  //Reportes
+  function openReport(e, type) {
     // console.log({token, id: e.idComment})
     const swal = Swal.fire({
       title: "REPORT A POST",
@@ -258,36 +258,48 @@ export default function Feed() {
       cancelButtonText: "Cancel",
       confirmButtonColor: "#dc3741",
       icon: "warning",
-      input: 'select',
+      input: "select",
       inputOptions: {
-        'Discrimnation': 'Discrimination',
-        'Verbal Abuse': 'Verbal Abuse',
-        'Blasphemous Dialog': 'Blasphemous Dialog',
-        'Sexual Situations or Dialog':'Sexual Situations or Dialog'
+        Discrimnation: "Discrimination",
+        "Verbal Abuse": "Verbal Abuse",
+        "Blasphemous Dialog": "Blasphemous Dialog",
+        "Sexual Situations or Dialog": "Sexual Situations or Dialog",
       },
       inputPlaceholder: "Select One Report Cause",
-    })
-    if(type === "comment"){
-      swal.update({ title:"REPORT A COMMENT" })
+    });
+    if (type === "comment") {
+      swal.update({ title: "REPORT A COMMENT" });
     }
-    if(type === "user"){
-      swal.update({ title:"REPORT A USER" })
+    if (type === "user") {
+      swal.update({ title: "REPORT A USER" });
     }
-    swal.then(function (result){
-      if(result.isConfirmed){
-        (async function fafa(){
+    swal.then(function (result) {
+      if (result.isConfirmed) {
+        (async function fafa() {
           try {
-            if(type === "comment"){
+            if (type === "comment") {
               // console.log(token)
-              const responseComment = await axios.post(api.reportComment, {token, idComment: e.idComment, causeReport: swal.getInput().value})
-              return
+              const responseComment = await axios.post(api.reportComment, {
+                token,
+                idComment: e.idComment,
+                causeReport: swal.getInput().value,
+              });
+              return;
             }
-            if(type === "user"){
-              const responseUser = await axios.post(api.reportUser, {token, idUser: e.idUser, causeReport: swal.getInput().value})
-              return
-            }else{
-              const response = await axios.post(api.reportPost, {token, idPost: e.idPost, causeReport: swal.getInput().value})
-              return
+            if (type === "user") {
+              const responseUser = await axios.post(api.reportUser, {
+                token,
+                idUser: e.idUser,
+                causeReport: swal.getInput().value,
+              });
+              return;
+            } else {
+              const response = await axios.post(api.reportPost, {
+                token,
+                idPost: e.idPost,
+                causeReport: swal.getInput().value,
+              });
+              return;
             }
           } catch (error) {
             const swal2 = Swal.fire({
@@ -297,18 +309,18 @@ export default function Feed() {
               cancelButtonText: "Ok",
               confirmButtonColor: "#dc3741",
               icon: "info",
-              text: "You already reported this post"
-            })
-            if(type === "comment"){
-              swal2.update({ text: "You already reported this comment" })
+              text: "You already reported this post",
+            });
+            if (type === "comment") {
+              swal2.update({ text: "You already reported this comment" });
             }
-            if(type === "user"){
-              swal2.update({ text:"You already reported this user" })
+            if (type === "user") {
+              swal2.update({ text: "You already reported this user" });
             }
           }
         })();
       }
-    })
+    });
   }
 
   // VER SOLAMENTE SUS PROPIOS POSTS SI ES ARTISTA
@@ -952,10 +964,19 @@ export default function Feed() {
                               >
                                 {e.datePost}
                               </div>
-                              <div style={{ display: "inline-flex", marginRight:"-640px", marginLeft: "650px" }}>
+                              <div
+                                style={{
+                                  display: "inline-flex",
+                                  marginRight: "-640px",
+                                  marginLeft: "650px",
+                                }}
+                              >
                                 <GoReport
-                                  style={{ height: "25px", width: "50px",}}
-                                  onClick={()=>{setViewPost({...e});openReport(e);}}
+                                  style={{ height: "25px", width: "50px" }}
+                                  onClick={() => {
+                                    setViewPost({ ...e });
+                                    openReport(e);
+                                  }}
                                 />
                               </div>
                             </CardTitle>
@@ -1164,12 +1185,21 @@ export default function Feed() {
                             {e.userNameComment}
                           </Link>
                         )}
-                        <div style={{ display: "inline-flex", marginLeft: "300px" }}>
-                        <GoReport
-                          style={{ height: "25px", width: "50px",}}
-                          onClick={() => {openReport(e, "comment");}}
-                        />
-                      </div>
+                        {e.userNameComment === user.userName ? null : (
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              marginLeft: "300px",
+                            }}
+                          >
+                            <GoReport
+                              style={{ height: "25px", width: "50px" }}
+                              onClick={() => {
+                                openReport(e, "comment");
+                              }}
+                            />
+                          </div>
+                        )}
                       </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"

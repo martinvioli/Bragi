@@ -3,7 +3,6 @@ const stripe = new Stripe(
   "sk_test_51KyQ9pE8TxQAl8Y8ukGWushgskKk4y9FlZivJJPn22Kw9pZwfPNvrtAWcrV7FsAnrSagUUZgDEDXgPftkRzxSCvM00V5e32DGq"
 );
 
-
 class PayClass {
     constructor(){}
 
@@ -42,24 +41,24 @@ class PayClass {
           invoice_settings: {
         default_payment_method: payment_method,
         },
-        });
+      });
 
-        const subscription = await stripe.subscriptions.create({
-          customer: customer.id,
-          items: [{ plan: "price_1KzxhwE8TxQAl8Y88Ja6t1zo" }],
-          expand: ["latest_invoice.payment_intent"],
-        });
+      const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{ plan: "price_1KzxhwE8TxQAl8Y88Ja6t1zo" }],
+        expand: ["latest_invoice.payment_intent"],
+      });
 
-        const status = subscription["latest_invoice"]; //['payment_intent']//['status'] || "something failed" //['payment_intent']['status'];
-        const client_secret = subscription["latest_invoice"]; //['payment_intent']['client_secret'];
+      const status = subscription["latest_invoice"]; //['payment_intent']//['status'] || "something failed" //['payment_intent']['status'];
+      const client_secret = subscription["latest_invoice"]; //['payment_intent']['client_secret'];
 
-        res.json({
-          hola: subscription,
-        });
-      } catch (error) {
-          return res.json({ message: error.message });
-        }
+      res.json({
+        hola: subscription,
+      });
+    } catch (error) {
+      return res.json({ message: error.message });
     }
+  };
 }
 
 module.exports = PayClass;
