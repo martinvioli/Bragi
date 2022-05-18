@@ -49,7 +49,6 @@ function Home() {
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
     if (userCredentials) {
-      //console.log(userSearch);
       setShow(true);
       const userToken = JSON.parse(userCredentials);
       dispatch(getUser(userToken));
@@ -57,18 +56,9 @@ function Home() {
       dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
-      //console.log(user);
       navigate("/");
     }
-
-    //console.log(user);
   }, []);
-
-  // useEffect(() => {
-  //   dispatch(getAlbumByName("shakira"));
-  //   dispatch(getArtistByName("shakira"));
-  //   dispatch(getSongByName("shakira"));
-  // }, []);
 
   const [input, setInput] = useState({
     search: "",
@@ -118,10 +108,6 @@ function Home() {
         dispatch(clearData());
         dispatch(getSongByName(input.search));
         break;
-      // case "genre":
-      //   dispatch(clearData());
-      //   alert("No hay busqueda por genero.");
-      //   break;
       case "user":
         dispatch(clearData());
         dispatch(getUserByName(input.search));
@@ -133,7 +119,6 @@ function Home() {
           confirmButtonColor: "#dd9202",
         });
         dispatch(getTop10Songs());
-      // alert("El parametro ingresado no es valido.");
     }
     setInput({
       search: "",
@@ -167,7 +152,7 @@ function Home() {
   }
 
   var followed = useSelector((state) => state.listFollowed);
-  console.log(followed);
+  //console.log(followed);
 
   useEffect(() => {
     dispatch(listFollowed(user.userName));
@@ -182,53 +167,7 @@ function Home() {
               className="container"
               style={{ marginTop: "100px", width: "50%" }}
             >
-              {/* <div>
-                <h5>Radio Buttons</h5>
-                <ButtonGroup>
-                  <Button
-                    name="album"
-                    value={input.searchOption}
-                    color="primary"
-                    onClick={(e) => handleClickSearchOption(e)}
-                  >
-                    Albums
-                  </Button>
-                  <Button
-                    name="artist"
-                    value="artist"
-                    color="primary"
-                    //   onClick={handleInput}
-                  >
-                    Artists
-                  </Button>
-                  <Button
-                    name="song"
-                    value="song"
-                    color="primary"
-                    // onClick={handleInput}
-                  >
-                    Songs
-                  </Button>
-                  <Button
-                    name="user"
-                    value="user"
-                    color="primary"
-                    // onClick={handleInput}
-                  >
-                    Users
-                  </Button>
-                </ButtonGroup>
-              </div> */}
-              <Form
-                onSubmit={handleSubmitInput}
-                className={styles.searchBar}
-                // style={{
-                //   display: "flex",
-                //   flexDirection: "row",
-                //   justifyContent: "spaceAround",
-                //   alignContent: "center",
-                // }}
-              >
+              <Form onSubmit={handleSubmitInput} className={styles.searchBar}>
                 <Input
                   style={{
                     color: "#dd9202",
@@ -236,7 +175,7 @@ function Home() {
                     height: "3em",
                     margin: "2em",
                     border: "2px solid rgba(66, 66, 66, 0.651)",
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent",
                   }}
                   type="select"
                   name="searchOption"
@@ -258,7 +197,7 @@ function Home() {
                     height: "3em",
                     margin: "2em",
                     border: "2px solid rgba(66, 66, 66, 0.651)",
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent",
                   }}
                   onChange={handleInput}
                   type="text"
@@ -289,7 +228,7 @@ function Home() {
                 song.map((e) => {
                   return (
                     <Link
-                    className={styles.linkHomeSong}
+                      className={styles.linkHomeSong}
                       to={`/song/${e.id}`}
                       style={{ display: "inline-block", color: "#f5f5f5" }}
                     >
@@ -308,8 +247,8 @@ function Home() {
               {album &&
                 album.map((e) => {
                   return (
-                    <Link 
-                    className={styles.linkHomeAlbum}
+                    <Link
+                      className={styles.linkHomeAlbum}
                       to={`/album/${e.id}`}
                     >
                       <div key={e.id} style={{ display: "inline-block" }}>
@@ -323,10 +262,10 @@ function Home() {
                   if (e.id !== undefined) {
                     return (
                       <Link to={`/artist/${e.id}`}>
-                      <div className="artistDiv" key={e.id}>
-                        <SearchData data={e} />
-                      </div>
-                    </Link>
+                        <div className="artistDiv" key={e.id}>
+                          <SearchData data={e} />
+                        </div>
+                      </Link>
                     );
                   } else {
                   }
