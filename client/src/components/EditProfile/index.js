@@ -289,24 +289,28 @@ function EditProfile({ showModal, handleShowModal }) {
   };
 
   const handleArtist = async () => {
-    // navigate("/whypay");
-    try {
-      const response = await axios.post(api.changeUserToArtist, {
-        userName: user.userName,
-      });
-      Swal.fire(
-        "🎭",
-        "You are now an artist. Please log in again.",
-        "success"
-      ).then((result) => {
-        if (result.isConfirmed) {
-          window.localStorage.removeItem("userCredentials");
-          handleShowModal();
-          navigate("/");
-        }
-      });
-    } catch (e) {
-      alert(e.response.data.msgE);
+    if (user.typeUser === "Standard") {
+      navigate("/whypay");
+    }
+    if (user.typeUser === "Premium") {
+      try {
+        const response = await axios.post(api.changeUserToArtist, {
+          userName: user.userName,
+        });
+        Swal.fire(
+          "🎭",
+          "You are now an artist. Please log in again.",
+          "success"
+        ).then((result) => {
+          if (result.isConfirmed) {
+            window.localStorage.removeItem("userCredentials");
+            handleShowModal();
+            navigate("/");
+          }
+        });
+      } catch (e) {
+        alert(e.response.data.msgE);
+      }
     }
   };
 
@@ -752,7 +756,7 @@ function EditProfile({ showModal, handleShowModal }) {
                   </Button>
                 )}
 
-                {user.typeUser !== "Artist" && (
+                {user.typeUser === "Standard" || user.typeUser === "Premium" ? (
                   <Button
                     onClick={() => handleArtist()}
                     style={{
@@ -765,7 +769,7 @@ function EditProfile({ showModal, handleShowModal }) {
                   >
                     Become Artist
                   </Button>
-                )}
+                ) : null}
               </TabPane>
             </TabContent>
           </div>
