@@ -106,7 +106,7 @@ function Profile(props) {
     (<img className={styles.profileImg} src={profileImage} alt=""></img>))
   );
 
-  console.log(profileImage);
+  //console.log(profileImage);
 
   //Reportes
   function openReport(e, type) {

@@ -126,7 +126,7 @@ export default function Feed() {
   //    console.log(e)
   //   dispatch(getPhotoUser(e.User.userName));
   // });
-
+  //console.log(user);
   const handleSearchImage = (e) => {
     setInput({
       ...input,

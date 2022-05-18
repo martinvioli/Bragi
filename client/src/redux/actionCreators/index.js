@@ -365,7 +365,7 @@ export const userNewComment = function (input) {
       //console.log(response.data);
       return dispatch(getAllComments(input.idPost));
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -460,7 +460,7 @@ export const followUser = (obj) => {
         payload: obj,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -579,7 +579,7 @@ export const getAllPostToAdmin = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(api.getAllPostToAdmin);
-      console.group("post");
+      //console.group("post");
       //console.log(response.data);
       return dispatch({ type: GET_ALL_POSTS_USERS, payload: response.data });
     } catch (error) {
@@ -765,7 +765,7 @@ export const createPlansPremiums = (plan) => {
 export const deletePlansPremiums = (idPlanPremium) => {
   return async (dispatch) => {
     const response = await axios.post(api.deletePremiumPlan, idPlanPremium);
-    console.log(response.data);
+    //console.log(response.data);
     return dispatch({
       type: DELETE_PLANS_PREMIUMS,
       payload: response.data,
@@ -875,7 +875,7 @@ export const getPremiumPlan = function () {
   return async (dispatch) => {
     try {
       const response = await axios.get(api.getPremiumPlan);
-      console.log(response.data);
+      //console.log(response.data);
       return dispatch({
         type: GET_PREMIUM_PLANS,
         payload: response.data,
@@ -900,7 +900,7 @@ export const reportComment = (token, idComment, causeReport) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -920,7 +920,7 @@ export const reportUser = (token, idUser, causeReport) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -934,14 +934,14 @@ export const reportPost = (token, idPost, causeReport) => {
         idPost,
         causeReport
       );
-      console.log(response);
+      //console.log(response);
 
       return dispatch({
         type: REPORT_POST,
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
