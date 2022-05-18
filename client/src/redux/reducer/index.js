@@ -119,6 +119,7 @@ const initialState = {
   //updatePosts: {}
   allPostToAdmin: [],
   premiumPlans: [],
+  responseToArtist: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -477,6 +478,7 @@ function rootReducer(state = initialState, action) {
     case WHY_ARTIST:
       return {
         ...state,
+        responseToArtist: action.payload,
       };
     default:
       return { ...state };
