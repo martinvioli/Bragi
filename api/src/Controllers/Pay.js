@@ -59,9 +59,6 @@ class PayClass {
       return res.json({ message: error.message });
     }
   };
-  convertToPremium = async (req, res) =>{
-    
-  }
 }
 
 module.exports = PayClass;
