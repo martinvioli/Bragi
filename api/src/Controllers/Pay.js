@@ -52,9 +52,7 @@ class PayClass {
       const status = subscription["latest_invoice"]; //['payment_intent']//['status'] || "something failed" //['payment_intent']['status'];
       const client_secret = subscription["latest_invoice"]; //['payment_intent']['client_secret'];
 
-      res.json({
-        hola: subscription,
-      });
+      res.status(200).json({subscription, status});
     } catch (error) {
       return res.json({ message: error.message });
     }

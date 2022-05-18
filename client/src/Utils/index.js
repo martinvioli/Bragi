@@ -82,6 +82,9 @@ const apiHeroku = {
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
   getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
   getPremiumPlan:
+  "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
+  payment: "https://bragiproject.herokuapp.com/pay/sub",
+  aprobedPayment: "",
     "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
   whyArtist:
     "https://bragiproject.herokuapp.com/changeUserType/emailReasonToArtist",
@@ -164,6 +167,8 @@ const api = {
   getAllCausesOfBan: "http://localhost:3001/report/getCausesReport",
   getAllPostToAdmin: "http://localhost:3001/admin/getAllPostUsers",
   getPremiumPlan: "http://localhost:3001/admin/premiumPlan/premiumPlans",
+  payment: "http://localhost:3001/pay/sub",
+  aprobedPayment: "http://localhost:3001/",
   whyArtist: "http://localhost:3001/changeUserType/emailReasonToArtist",
 };
 
