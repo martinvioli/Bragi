@@ -71,7 +71,7 @@ function LandingPage() {
       }
       setInput({ email: "", password: "" });
     } catch (e) {
-      setInput({ email: "", password: "" });
+      setInput("");
       Swal.fire({
         title: "Oops...",
         text: "That username or email is not linked to an existent account. Please, verify your inputs.",
@@ -89,29 +89,29 @@ function LandingPage() {
       id: 1,
       title: "Keep up to date",
       description:
-        "Know everything about your favourite music bands and singers.",
+        "Know more about your favourite artists on a daily basis!",
     },
     {
       id: 2,
-      title: "Be part of a fangroup",
-      description: "Make it or be part of one if it doesn't already exists.",
+      title: "Bragi Premium",
+      description: "Access exclusive content from your favorite artists with Bragi Premium",
     },
     {
       id: 3,
-      title: "Never miss a concert again",
+      title: "Check out Bragi's top 10's live",
       description:
-        "Our system will notify you when a band/singer post a new date.",
+        "Our top 10 rankings keep you posted about the best songs and artists right now!",
     },
     {
       id: 4,
       title: "Make friends",
-      description: "Meet people who also like the same music you do.",
+      description: "Meet, follow and be friends with people who vibe to the same music than you.",
     },
     {
       id: 5,
       title: "Participate",
       description:
-        "Comment and like every new post, and share it with your friends.",
+        "Comment, like and participate on the latest post from your idols.",
     },
   ];
 
@@ -230,7 +230,7 @@ function LandingPage() {
           </Link>
           <Link to="/submitEmail" style={{ textDecoration: "none" }}>
             <Button color="success" block outline style={{ marginTop: "2em" }}>
-              Did you forget your password? Reset it!
+              Did you forgot your password? Reset it!
             </Button>
           </Link>
         </div>

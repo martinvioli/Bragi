@@ -778,7 +778,7 @@ function Profile(props) {
                     setShowModalFollowed(true);
                   }}
                 >
-                  Followeds
+                  Followed
                 </Button>
                 <Modal
                   isOpen={showModalFollowed}
@@ -790,7 +790,7 @@ function Profile(props) {
                       setShowModalFollowed(false);
                     }}
                   >
-                    Followeds
+                    Followed
                   </ModalHeader>
                   <ModalBody>
                     {listFolloweds.map((e) => {
