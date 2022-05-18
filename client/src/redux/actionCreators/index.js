@@ -454,13 +454,10 @@ export const clearDetails = () => {
 export const followUser = (obj) => {
   return async (dispatch) => {
     try {
-      //console.log(obj);
       const response = await axios.post(api.followUser, obj);
-      //console.log(response);
-      //console.log("hasta aca si");
       return dispatch({
         type: FOLLOW_USER,
-        payload: response.data,
+        payload: obj,
       });
     } catch (error) {
       //console.log(error);
@@ -470,11 +467,12 @@ export const followUser = (obj) => {
 export const unfollowUser = (obj) => {
   return async (dispatch) => {
     try {
+      console.log(obj);
       const response = await axios.post(api.unfollowUser, obj);
       //console.log(response.data);
       return dispatch({
         type: UNFOLLOW_USER,
-        payload: response.data,
+        payload: obj,
       });
     } catch (error) {
       console.error(error);
@@ -486,10 +484,9 @@ export const listFollowed = (userName) => {
   return async (dispatch) => {
     try {
       //console.log(userName);
-      const response = await axios.post(
-        "http://localhost:3001/follow/followeds",
-        { userName: userName }
-      );
+      const response = await axios.post(api.listFolloweds, {
+        userName: userName,
+      });
       //console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
@@ -505,10 +502,9 @@ export const listFollowers = (userName) => {
   return async (dispatch) => {
     try {
       //console.log(userName);
-      const response = await axios.post(
-        "http://localhost:3001/follow/followers",
-        { userName: userName }
-      );
+      const response = await axios.post(api.listFollowers, {
+        userName: userName,
+      });
       //console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWERS,

@@ -167,12 +167,12 @@ function Home() {
   }
 
   var followed = useSelector((state) => state.listFollowed);
+  console.log(followed);
 
   useEffect(() => {
     dispatch(listFollowed(user.userName));
   }, [user]);
-  console.log(user);
-  console.log(followed);
+
   return (
     <div>
       {show ? (
@@ -317,22 +317,32 @@ function Home() {
                 })}
               {artist &&
                 artist.map((e) => {
-                  return (
-                    <Link to={`/artist/${e.id}`}>
-                      <div key={e.id} style={{ display: "inline-block" }}>
-                        <SearchData data={e} />
-                      </div>
-                    </Link>
-                  );
+                  if (e.id !== undefined) {
+                    return (
+                      <Link to={`/artist/${e.id}`}>
+                        <div key={e.id} style={{ display: "inline-block" }}>
+                          <SearchData data={e} />
+                        </div>
+                      </Link>
+                    );
+                  } else {
+                  }
                 })}
               {userSearch[0] &&
                 userSearch[0].map((e) => {
-                  return (
-                    <div key={e.idUser} style={{ display: "inline-block" }}>
-                      <SearchData data={e} />
-                    </div>
-                  );
+                  if (e.userName !== user.userName) {
+                    return (
+                      <div key={e.userName} style={{ display: "inline-block" }}>
+                        <SearchData data={e} />
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
                 })}
+              {userSearch[0] && userSearch[0].length === 0 ? (
+                <h3>We couldn't find any user with that name 😪. Try again!</h3>
+              ) : null}
             </div>
           </div>
           {/* <div className={`${styles.top10}`}> */}

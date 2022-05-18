@@ -61,9 +61,6 @@ function Profile(props) {
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
     dispatch(getUser(userToken));
-    dispatch(getPhotoUser(user.userName));
-    dispatch(listFollowed(user.userName));
-    dispatch(listFollowers(user.userName));
     // if (!user.name) {
     //   navigate("/");
     // }
@@ -71,10 +68,11 @@ function Profile(props) {
     // }
   }, []);
 
-  user = {
-    ...user,
-    description: null,
-  };
+  useEffect(() => {
+    dispatch(getPhotoUser(user.userName));
+    dispatch(listFollowed(user.userName));
+    dispatch(listFollowers(user.userName));
+  }, [user]);
 
   //console.log(listFollowed);
 
