@@ -64,8 +64,12 @@ function LandingPage() {
         "userCredentials",
         JSON.stringify(response.data.token)
       );
-      navigate("feed");
-      setInput("");
+      if (input.email === "BragiSystem@gmail.com") {
+        navigate("admin");
+      } else {
+        navigate("feed");
+      }
+      setInput({ email: "", password: "" });
     } catch (e) {
       setInput("");
       Swal.fire({

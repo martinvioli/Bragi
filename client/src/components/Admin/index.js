@@ -44,6 +44,8 @@ import {
   getPremiumPlan,
   createPlansPremiums,
   deletePlansPremiums,
+  getToken,
+  getUser,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -56,7 +58,7 @@ import {
 } from "react-icons/fc";
 import api from "../../Utils";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 let idUser = "";
 
 function Admin() {
@@ -73,7 +75,7 @@ function Admin() {
   const causesOfReport = useSelector((state) => state.causesOfReport);
   const premiumPlans = useSelector((state) => state.premiumPlans);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("1");
   const [userId, setUserId] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -111,25 +113,30 @@ function Admin() {
   };
 
   useEffect(() => {
+    const userToken = JSON.parse(
+      window.localStorage.getItem("userCredentials")
+    );
+    dispatch(getToken(userToken));
+    dispatch(getUser(userToken));
     dispatch(getAllPostToAdmin());
     dispatch(getStandarUsers());
     dispatch(getPremiumUsers());
     dispatch(getArtistUsers());
-    // dispatch(getAllReports());
     dispatch(getUserReports());
     dispatch(getCommentReports());
     dispatch(getPostReports());
     dispatch(getAllBannedUsers());
     dispatch(getAllCausesofReport());
-    // setTimeout(() => {
-    //   dispatch(getPremiumPlan());
-    // }, 2000);
     dispatch(getPremiumPlan());
+    // if (user && user.typeUser !== "Admin") {
+    //   Swal.fire({
+    //     title: "Sorry, You aren't Bragi administrator 😪 ",
+    //     confirmButtonColor: "#dd9202",
+    //   });
+    // }
   }, []);
-  //console.log(premiumPlans);
+
   const handleDelete = (e) => {
-    //console.log(e.idPost);
-    //console.log(e.target.value);
     Swal.fire({
       title: "Are you sure you want to delete this post?",
       showDenyButton: true,
@@ -203,44 +210,11 @@ function Admin() {
       [e.target.name]: e.target.value,
     });
   };
-  const modifyPlan = () => {
-    //e.preventDefault();
-    switch (plan.name) {
-      case "silver":
-        setPlan({
-          ...plan,
-          numberOfMonths: 1,
-        });
-        break;
-      case "gold":
-        setPlan({
-          ...plan,
-          numberOfMonths: 3,
-        });
-        break;
-      case "platinum":
-        setPlan({
-          ...plan,
-          numberOfMonths: 6,
-        });
-        break;
-      case "ruby":
-        setPlan({
-          ...plan,
-          numberOfMonths: 12,
-        });
-        break;
-      default:
-        return { ...plan };
-    }
-    // const newPlan = {
-    //   idPlanPremium: "", //falta como obtener el id
-    //   priceMembership: input.price,
-    //   namePlanPremium: input.plan,
-    //   numberOfMonths: input.months,
-    //   discount: input.discount,
-    // };
-    // dispatch(modifyPlansPremiums(newPlan));
+  const handleAlert = () => {
+    Swal.fire({
+      title: "Sorry, You aren't Bragi administrator 😪 ",
+      confirmButtonColor: "#dd9202",
+    });
   };
   const handleDeletePlan = (e) => {
     // e.preventDefault();
@@ -365,11 +339,34 @@ function Admin() {
     dispatch(UnbanUser({ idUser: e.target.name }));
   };
 
-  const handleActiveTab = (tab) => setActiveTab(tab);
+  async function handleClick(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure you want to finish your work?",
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then(async (result) => {
+      if (result.isDenied) {
+        window.localStorage.removeItem("userCredentials");
+        navigate("/");
+      }
+    });
+  }
 
+  const handleActiveTab = (tab) => setActiveTab(tab);
+  //console.log(user);
   return (
     <>
-      {user.typeUser === "Admin" ? (
+      {user && user.typeUser === "Admin" ? (
         <div className="container">
           <h1
             style={{
@@ -378,8 +375,11 @@ function Admin() {
               marginBottom: "50px",
             }}
           >
-            ADMIN🔨 PROFILE
+            ADMIN 🔨
           </h1>
+          <div style={{ marginBottom: "2em" }}>
+            <Button onClick={(e) => handleClick(e)}>END</Button>
+          </div>
           <div>
             <Nav tabs>
               <NavItem>
@@ -865,7 +865,41 @@ function Admin() {
           </div>
         </div>
       ) : (
-        <h1 style={{ color: "red" }}>No sos Admin</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "15em",
+          }}
+        >
+          <Card
+            style={{
+              background: "white",
+              width: "30em",
+              height: "10em",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CardTitle style={{ color: "black", fontSize: "1.5em" }}>
+              Sorry you aren't Bragi Administrator 😥
+            </CardTitle>
+            <Link to="/feed">
+              <Button
+                style={{
+                  marginTop: "1.5em",
+                  background: "#dd9202",
+                  color: "black",
+                  border: "2px solid #dd9202",
+                }}
+              >
+                Back
+              </Button>
+            </Link>
+          </Card>
+        </div>
       )}
     </>
   );
