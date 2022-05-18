@@ -1,5 +1,5 @@
 .box{
-    height: 500px;
+    height: 650px;
     width: 500px;
     margin: auto;
     margin-top: 10%;
@@ -29,7 +29,8 @@
     font-size: 25px;
     margin-top: -100px;
     margin-bottom: 50px;
-    margin-left: 250px;
+    /* margin-left: 250px; */
+    text-align: center;
 }
 
 .dollarWSign{
@@ -40,4 +41,13 @@
     width: 50%;
     border: 3px solid #dd9202;
     padding: 10px;
+}
+
+.detail{
+    font-size: 20px;
+    text-align: center;
+    margin-right: 100px;
+    margin-bottom: 15px;
+    /* font-weight: bold; */
+    color: black;
 }
