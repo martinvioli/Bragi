@@ -121,17 +121,6 @@ function CreateUser() {
     setShow2(false);
   };
 
-  // AUTH THINGS //
-
-  // ESTA FUNCION ES PARA OBTENER EL TOKEN DESDE EL LOCALSTORAGE DEPRECIADA POR EL MOMENTO.
-  // const getToken = () => {
-  //   const userCredentials = window.localStorage.getItem("userCredentials");
-  //   const userToken = JSON.parse(userCredentials);
-  //   userToken
-  //     ? setInputToken({ ...inputToken, token: userToken })
-  //     : setInputToken({ ...inputToken, token: "" });
-  // };
-
   const handleChangeAuth = (e) => {
     setInputToken({
       ...inputToken,

@@ -155,7 +155,6 @@ const api = {
   createPremiumPlan: "http://localhost:3001/admin/premiumPlan/create",
   editPremiumPlan: "http://localhost:3001/admin/premiumPlan/edition",
   deletePremiumPlan: "http://localhost:3001/admin/premiumPlan/delete",
-  //changeTypeOfPost: "http://localhost:3001/post/changePostType",
   disBanUser: "http://localhost:3001/admin/allowUser",
   getAllStatistics: "http://localhost:3001/admin/getAllStatistics",
   forgottenPasswordPre: "http://localhost:3001/recoverPassword/pre",
@@ -171,6 +170,106 @@ const api = {
   payment: "http://localhost:3001/pay/sub",
   aprobedPayment: "http://localhost:3001/",
   whyArtist: "http://localhost:3001/changeUserType/emailReasonToArtist",
+};
+
+// created and updated at 18/05/2022
+const apiDeploy = {
+  baseUrl: "https://bragiproject.herokuapp.com/",
+  registerUrl: "https://bragiproject.herokuapp.com/register/",
+  registerValidateUrl: "https://bragiproject.herokuapp.com/register/validate",
+  authenticateUrl: "https://bragiproject.herokuapp.com/validationUser/",
+  loginUrl: "https://bragiproject.herokuapp.com/login",
+  logoutUrl: "https://bragiproject.herokuapp.com/closeSessionUser",
+  getUserByName: "https://bragiproject.herokuapp.com/search/",
+  searchSongUrl: "https://bragiproject.herokuapp.com/song",
+  searchGenreUrl: "https://bragiproject.herokuapp.com/genre",
+  searchUrl: "https://bragiproject.herokuapp.com/searh",
+  getUser: "https://bragiproject.herokuapp.com/profileUser/getData",
+  getUserProfile: "https://bragiproject.herokuapp.com/profileUser/profile",
+  searchSongByName: "https://bragiproject.herokuapp.com/search/song",
+  searchAlbumByName: "https://bragiproject.herokuapp.com/search/album",
+  searchArtistByName: "https://bragiproject.herokuapp.com/artist",
+  deleteToken: "https://bragiproject.herokuapp.com/closeSessionUser",
+  getTop10artist: "https://bragiproject.herokuapp.com/getTop10/artists",
+  getTop10albums: "https://bragiproject.herokuapp.com/getTop10/albums",
+  getTop10songs: "https://bragiproject.herokuapp.com/getTop10/songs",
+  getAllPost: "https://bragiproject.herokuapp.com/post",
+  changeTypeOfPost: "https://bragiproject.herokuapp.com/post/changePostType",
+  userNewPost: "https://bragiproject.herokuapp.com/post",
+  userUpdatePost: "https://bragiproject.herokuapp.com/post/updatepost",
+  deletePost: "https://bragiproject.herokuapp.com/post",
+  getSongByID: "https://bragiproject.herokuapp.com/song/",
+  getAlbumByID: "https://bragiproject.herokuapp.com/album/",
+  getArtistByID: "https://bragiproject.herokuapp.com/artist/",
+  getPhotoUser:
+    "https://bragiproject.herokuapp.com/profileUser/getPhotoUser?userName=",
+  changeUserToPremium:
+    "https://bragiproject.herokuapp.com/changeUserType/toPremium",
+  changeUserToArtist:
+    "https://bragiproject.herokuapp.com/changeUserType/toArtist",
+  changeUserToStandard:
+    "https://bragiproject.herokuapp.com/changeUserType/toStandard",
+  updateBasicData:
+    "https://bragiproject.herokuapp.com/profileUser/editionBasicProfile",
+  updateSensitiveData:
+    "https://bragiproject.herokuapp.com/profileUser/editionSensitiveProfile",
+  getAllComments: "https://bragiproject.herokuapp.com/post/comments",
+  userNewComment: "https://bragiproject.herokuapp.com/post/comment",
+  userUpdateComment: "https://bragiproject.herokuapp.com/post/comment/edit",
+  deleteComment: "https://bragiproject.herokuapp.com/post/comment",
+  reportComment: "https://bragiproject.herokuapp.com/report/comment",
+  reportPost: "https://bragiproject.herokuapp.com/report/post",
+  reportUser: "https://bragiproject.herokuapp.com/report/user",
+  followUser: "https://bragiproject.herokuapp.com/follow/follow",
+  unfollowUser: "https://bragiproject.herokuapp.com/follow/unfollow",
+  listFolloweds: "https://bragiproject.herokuapp.com/follow/followeds",
+  listFollowers: "https://bragiproject.herokuapp.com/follow/followers",
+  likePost: "https://bragiproject.herokuapp.com/reactionHeart/likePost",
+  dislikePost: "https://bragiproject.herokuapp.com/reactionHeart/dislikePost",
+  banUser: "https://bragiproject.herokuapp.com/admin/banUser",
+  unbanUser: "https://bragiproject.herokuapp.com/admin/unbanUser",
+  getAllStandarUsers: "https://bragiproject.herokuapp.com/admin/getUserStandar",
+  getAllPremiumUsers: "https://bragiproject.herokuapp.com/admin/getUserPremium",
+  getAllArtistUsers: "https://bragiproject.herokuapp.com/admin/getUserArtist",
+  getAllReports: "https://bragiproject.herokuapp.com/admin/reports",
+  getUserReports: "https://bragiproject.herokuapp.com/admin/reports/reportUser",
+  getPostReports:
+    "https://bragiproject.herokuapp.com/admin/reports/reportsPost",
+  getCommentsReports:
+    "https://bragiproject.herokuapp.com/admin/reports/reportsComment",
+  getReportByID: "https://bragiproject.herokuapp.com/admin/reports/",
+  adminDeletePost:
+    "https://bragiproject.herokuapp.com/admin/reports/deletePost",
+  adminAllowPost: "https://bragiproject.herokuapp.com/admin/reports/allowPost",
+  adminDeleteComment:
+    "https://bragiproject.herokuapp.com/admin/reports/deleteComment",
+  adminAllowComment:
+    "https://bragiproject.herokuapp.com/admin/reports/allowComment",
+  createPremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/create",
+  editPremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/edition",
+  deletePremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/delete",
+  disBanUser: "https://bragiproject.herokuapp.com/admin/allowUser",
+  getAllStatistics: "https://bragiproject.herokuapp.com/admin/getAllStatistics",
+  forgottenPasswordPre:
+    "https://bragiproject.herokuapp.com/recoverPassword/pre",
+  forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
+  getAllAdminPosts: "https://bragiproject.herokuapp.com/admin/allPostAdmin",
+  createAdminPost: "https://bragiproject.herokuapp.com/admin/createPostAdmin",
+  editAdminPost: "https://bragiproject.herokuapp.com/admin/editPostAdmin",
+  deleteAdminPost: "https://bragiproject.herokuapp.com/admin/deletePostAdmin",
+  getAllBannedUsers: "https://bragiproject.herokuapp.com/admin/allBannedUser",
+  getAllCausesOfBan:
+    "https://bragiproject.herokuapp.com/report/getCausesReport",
+  getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
+  getPremiumPlan:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
+  payment: "https://bragiproject.herokuapp.com/pay/sub",
+  aprobedPayment: "https://bragiproject.herokuapp.com/",
+  whyArtist:
+    "https://bragiproject.herokuapp.com/changeUserType/emailReasonToArtist",
 };
 
 export default api;

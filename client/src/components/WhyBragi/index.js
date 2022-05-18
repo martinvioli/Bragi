@@ -6,7 +6,7 @@ function WhyBragi() {
     <div>
       <NavBar2 />
       <div className={styles.container}>
-        <h1 className={styles.firstSubtitle}>HOW IS BRAGI?</h1>
+        <h1 className={styles.firstSubtitle}>WHO IS BRAGI?</h1>
         <div className={styles.textAndImg1}>
           <h3 className={styles.firstText}>
             Bragi is the god of poetry in Norse mythology. He is the personal

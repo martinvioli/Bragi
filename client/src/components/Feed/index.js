@@ -99,20 +99,13 @@ export default function Feed() {
     setInput({ ...input, token: token });
   }, [token]);
 
-  //useEffect(() => {}, []);
   useEffect(() => {
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
     dispatch(getToken(userToken));
     dispatch(getUser(userToken));
-    // posts.forEach((e) => {
-    //   console.log(e)
-    //   dispatch(getPhotoUser(e.userName))
-    // })
-    // setTimeout(function () {
-    //   dispatch(getAllPost());
-    // }, 1000);
+
     if (user.typeUser === "admin") {
       navigate("/admin");
     }
@@ -121,25 +114,12 @@ export default function Feed() {
     }
   }, []);
 
-  // posts && posts.forEach((e) => {
-  //    console.log(e)
-  //   dispatch(getPhotoUser(e.User.userName));
-  // });
-  //console.log(user);
-  const handleSearchImage = (e) => {
-    setInput({
-      ...input,
-      imagePost: e.target.files[0],
-    });
-  };
-
   function handleChange(e) {
     e.preventDefault();
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   function handleClick(e) {
     e.preventDefault();
-    //console.log(input);
     dispatch(userNewPost({ ...input, contentPost: input.contentPost.trim() }));
 
     setTimeout(function () {
@@ -154,7 +134,6 @@ export default function Feed() {
   }
 
   const onClickContent = (e) => {
-    // console.log(e)
     if (e === "" || e === null || e === undefined) {
       Swal.fire({
         title: "Oops...",
@@ -197,17 +176,6 @@ export default function Feed() {
     });
   };
 
-  // ESTO PARA CUANDO SUBAMOS LA IMAGEN // axios.post("url", "archivo a postear", {
-  // //   onUploadProgress: (progressEvent) => {
-  // //     console.log(
-  // //       `Upload Progress: ${Math.round(
-  // //         (progressEvent.loaded / progressEvent.total) * 100
-  // //       )}% `
-  // //     );
-  // //   },
-  // });
-
-  // SECTOR MODAL VER COMENTARIOS
   const [viewPost, setViewPost] = useState();
   const [showModalComments, setShowModalComments] = useState(false);
 
@@ -225,14 +193,9 @@ export default function Feed() {
 
   const [slicer, setSlicer] = useState(3);
 
-  //console.log(posts);
-
   const handlePremiumPost = (e) => {
     e.preventDefault();
-    // setInput({
-    //   ...input,
-    //   select : e.target.value
-    // })
+
     if (e.target.value === "Premium") {
       setInput({
         ...input,
@@ -333,7 +296,6 @@ export default function Feed() {
     token && user.typeUser !== "Artist" && dispatch(getAllPost(token));
   }, [token]);
 
-  console.log(posts);
   // EDITAR POST
 
   const handleEdit = (e) => {
@@ -364,10 +326,7 @@ export default function Feed() {
       <div className={styles.containerArtist}>
         {user.typeUser === "Standard" && (
           <div className={styles.glowOnHover}>
-            <Link
-              to="/pay"
-              className={styles.linkPremium}
-            >
+            <Link to="/pay" className={styles.linkPremium}>
               <h4>Get premium now so you don't miss out on anything!</h4>
             </Link>
             <div>
