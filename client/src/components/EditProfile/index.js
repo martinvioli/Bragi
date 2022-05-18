@@ -289,25 +289,25 @@ function EditProfile({ showModal, handleShowModal }) {
   };
 
   const handleArtist = async () => {
-    navigate("/whypay");
-    // try {
-    //   const response = await axios.post(api.changeUserToArtist, {
-    //     userName: user.userName,
-    //   });
-    //   Swal.fire(
-    //     "🎭",
-    //     "You are now an artist. Please log in again.",
-    //     "success"
-    //   ).then((result) => {
-    //     if (result.isConfirmed) {
-    //       window.localStorage.removeItem("userCredentials");
-    //       handleShowModal();
-    //       navigate("/");
-    //     }
-    //   });
-    // } catch (e) {
-    //   alert(e.response.data.msgE);
-    // }
+    // navigate("/whypay");
+    try {
+      const response = await axios.post(api.changeUserToArtist, {
+        userName: user.userName,
+      });
+      Swal.fire(
+        "🎭",
+        "You are now an artist. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          handleShowModal();
+          navigate("/");
+        }
+      });
+    } catch (e) {
+      alert(e.response.data.msgE);
+    }
   };
 
   const handleImage = (e) => {
@@ -733,7 +733,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became fan
+                    Become fan
                   </Button>
                 )}
 
@@ -748,7 +748,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became Premium
+                    Become Premium
                   </Button>
                 )}
 
@@ -763,7 +763,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became Artist
+                    Become Artist
                   </Button>
                 )}
               </TabPane>

@@ -253,7 +253,14 @@ function Profile(props) {
           ></img>
           {profile.name ? (
             <div>
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <div className={styles.name}>
                   {profile.name + " " + profile.lastName}
                 </div>
@@ -771,7 +778,7 @@ function Profile(props) {
                     setShowModalFollowed(true);
                   }}
                 >
-                  Followeds
+                  Followed
                 </Button>
                 <Modal
                   isOpen={showModalFollowed}
@@ -783,7 +790,7 @@ function Profile(props) {
                       setShowModalFollowed(false);
                     }}
                   >
-                    Followeds
+                    Followed
                   </ModalHeader>
                   <ModalBody>
                     {listFolloweds.map((e) => {

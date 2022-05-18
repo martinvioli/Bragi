@@ -147,7 +147,7 @@ function CreateUser() {
         if (response.data.msg) {
           Swal.fire({
             title: "🎉🎊",
-            text: "Congratulations, you are now officially a member of this beatiful community!.",
+            text: "Congratulations, you are now officially a member of this beautiful community!.",
             icon: "success",
             showConfirmButton: true,
             confirmButtonColor: "#efb810",

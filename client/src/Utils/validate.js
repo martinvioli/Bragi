@@ -30,13 +30,13 @@ export default function validate(input) {
     errors.name = "First Name is required";
   } else if (!/^[a-zA-Z\s]{3,25}$/.test(input.name)) {
     errors.name =
-      "The First Name must be a valid name with only 3 to 15 letters.";
+      "First Name must be a valid name with only 3 characters to 15 characters letters.";
   }
   if (!input.lastName) {
     errors.lastName = "Last Name is required";
   } else if (!/^[a-zA-Z\s]{3,25}$/.test(input.lastName)) {
     errors.lastName =
-      "The Last Name must be a valid name with only 3 to 15 letters.";
+      "Last Name must be a valid name with only 3 characters to 15 characters letters.";
   }
   if (!input.email) {
     errors.email = "Email is required";
@@ -93,11 +93,11 @@ export function validateEdit(input) {
   const errors = {};
   if (!/^[a-zA-Z\s]{3,25}$/.test(input.name) && input.name) {
     errors.name =
-      "The First Name must be a valid name with only 3 to 15 letters.";
+      "First Name must be a valid name with only 3 characters to 15 characters letters.";
   }
   if (!/^[a-zA-Z\s]{3,25}$/.test(input.lastName) && input.lastName) {
     errors.lastName =
-      "The Last Name must be a valid name with only 3 to 15 letters.";
+      "Last Name must be a valid name with only 3 characters to 15 characters letters.";
   }
   if (
     !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
@@ -122,15 +122,15 @@ export function validateEdit(input) {
     input.password
   ) {
     errors.password =
-      "Password must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
+      "Password must be only letters and numbers and must have a length of 8 characters as minimum and 15 characters as maximum.";
   }
   if (!/^([A-Za-z0-9]){8,15}$/.test(input.userName) && input.userName) {
     errors.userName =
-      "Username must be only letters and numbers and must have a length of 8 as minimum and 15 as maximum.";
+      "User name must only contain letters and numbers and must have a length of 8 characters as minimum and 15 characters as maximum.";
   }
   if (!underAgeValidate(input.birthday) && input.birthday) {
     errors.birthday =
-      "You need to be 18 or older, but you can't be older than 100 years old.";
+      "You need to be 18 or older.";
   }
   if (!input.repeatPassword && input.password) {
     errors.repeatPassword = "Password is required";
