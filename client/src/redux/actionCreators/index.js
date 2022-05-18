@@ -658,7 +658,7 @@ export const getAllReports = () => {
 export const getUserReports = () => {
   return async (dispatch) => {
     const response = await axios.get(api.getUserReports);
-    console.log(response.data);
+    //console.log(response.data);
     return dispatch({
       type: GET_USER_REPORTS,
       payload: response.data,
@@ -669,7 +669,7 @@ export const getUserReports = () => {
 export const getPostReports = () => {
   return async (dispatch) => {
     const response = await axios.get(api.getPostReports);
-    console.log(response.data);
+    //console.log(response.data);
     return dispatch({
       type: GET_POST_REPORTS,
       payload: response.data,
@@ -691,7 +691,7 @@ export const getReportByID = (id) => {
 export const getCommentReports = () => {
   return async (dispatch) => {
     const response = await axios.get(api.getCommentsReports);
-    console.log(response.data);
+    //console.log(response.data);
     return dispatch({
       type: GET_COMMENT_REPORTS,
       payload: response.data,

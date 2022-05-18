@@ -243,28 +243,26 @@ function Admin() {
           confirmButtonColor: "#dd9202",
         });
       } else {
-        // let checkModify =
-        //   premiumPlans &&
-        //   premiumPlans.map(
-        //     (e) => e.numberOfMonths === parseInt(plan.numberOfMonths)
-        //   );
-        // //console.log(checkModify);
-        // if (checkModify.includes(true)) {
-        dispatch(modifyPlansPremiums(plan));
-        setTimeout(function () {
-          dispatch(getPremiumPlan());
-        }, 2000);
-        // } else {
-        //   Swal.fire({
-        //     title: "There is no plan to modify 😪. Try to create it",
-        //     confirmButtonColor: "#dd9202",
-        //   });
-
-        // let obj = {
-        //   idPlanPremium: plan.idPlanPremium,
-        //   priceMembership: parseInt(plan.priceMembership),
-        //   numberOfMonths: parseInt(plan.numberOfMonths),
-        // };
+        let checkModify =
+          premiumPlans &&
+          premiumPlans.map(
+            (e) =>
+              e.numberOfMonths === parseInt(plan.numberOfMonths) &&
+              e.priceMembership === parseInt(plan.priceMembership)
+          );
+        //console.log(checkModify);
+        if (checkModify.includes(true)) {
+          Swal.fire({
+            title:
+              "This plan already exists with these data 😪. Try to create or modify other plan",
+            confirmButtonColor: "#dd9202",
+          });
+        } else {
+          dispatch(modifyPlansPremiums(plan));
+          setTimeout(function () {
+            dispatch(getPremiumPlan());
+          }, 2000);
+        }
       }
     }
   };
