@@ -64,11 +64,11 @@ function Profile(props) {
     dispatch(getPhotoUser(user.userName));
     dispatch(listFollowed(user.userName));
     dispatch(listFollowers(user.userName));
-    if (!user.name) {
-      navigate("/");
-    }
-    if (userToken) {
-    }
+    // if (!user.name) {
+    //   navigate("/");
+    // }
+    // if (userToken) {
+    // }
   }, []);
 
   user = {
@@ -100,6 +100,12 @@ function Profile(props) {
   function handleShowModalComments() {
     setShowModalComments(!showModalComments);
   }
+
+  const image =
+  !profileImage.includes("undefined")
+  ? <img className={styles.profileImg} src={profileImage} alt=""></img>
+  : (dispatch(getPhotoUser(user.userName)),<img className={styles.profileImg} src={profileImage} alt=""></img>)
+
 
   console.log(profileImage);
 
@@ -196,8 +202,6 @@ function Profile(props) {
 
   const [slicer, setSlicer] = useState(3);
 
-  //console.log(viewPost);
-
   //// test
 
   return props.visitant ? (
@@ -228,7 +232,11 @@ function Profile(props) {
               onClick={() => {openReport(profile, "user");}}
             />
           </div>
-          <img className={styles.profileImg} src={profileImage} alt=""></img>
+          <img
+              className={styles.profileImg}
+              src={`${api.getPhotoUser}${profile.userName}`}
+              alt=""
+            ></img>
           {profile.name ? (
             <div>
               <div>
@@ -486,6 +494,11 @@ function Profile(props) {
             >
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
+                <img
+                  style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                  src={`${api.getPhotoUser}${viewPost.User.userName}`}
+                  alt=""
+                ></img>
                   {viewPost.User ? viewPost.User.userName : user.userName}
                 </CardTitle>
                 <CardTitle
@@ -532,6 +545,11 @@ function Profile(props) {
                   <Card key={e.idComment} style={{ marginBottom: "0.5em" }}>
                     <CardBody>
                       <CardTitle tag="h5">
+                        <img
+                          style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                          src={`${api.getPhotoUser}${e.userNameComment}`}
+                          alt=""
+                        ></img>
                         {user.userName === e.userNameComment ? (
                           e.userNameComment
                         ) : (
@@ -614,7 +632,7 @@ function Profile(props) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <div className={styles.top}>
-            <img className={styles.profileImg} src={profileImage} alt=""></img>
+            {image}
             <div>
               {showEditProfile ? (
                 <EditProfile

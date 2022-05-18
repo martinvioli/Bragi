@@ -537,7 +537,7 @@ export default function Feed() {
                             >
                               <img
                                 className={styles.profileImg}
-                                src={profileImage}
+                                src={`${api.getPhotoUser}${user.userName}`}
                                 alt=""
                               ></img>
                               {e.User.userName === user.userName ? (
@@ -792,7 +792,7 @@ export default function Feed() {
                             >
                               <img
                                 className={styles.profileImg}
-                                src={profileImage}
+                                src={`${api.getPhotoUser}${e.nameUser}`}
                                 alt=""
                               ></img>
                               `@${e.nameUser}`
@@ -942,7 +942,7 @@ export default function Feed() {
                             >
                               <img
                                 className={styles.profileImg}
-                                src={profileImage}
+                                src={`${api.getPhotoUser}${e.nameUser}`}
                                 alt=""
                               ></img>
                               {e.nameUser === user.userName ? (
@@ -1132,6 +1132,12 @@ export default function Feed() {
             >
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
+                  <img
+                    // className={styles.profileImg}
+                    style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                    src={`${api.getPhotoUser}${viewPost.nameUser}`}
+                    alt=""
+                  ></img>
                   {viewPost.nameUser ? viewPost.nameUser : user.userName}
                 </CardTitle>
                 <CardTitle
@@ -1178,11 +1184,17 @@ export default function Feed() {
                   <Card key={e.idComment} style={{ marginBottom: "0.5em" }}>
                     <CardBody>
                       <CardTitle tag="h5">
+                        <img
+                          // className={styles.profileImg}
+                          style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                          src={`${api.getPhotoUser}${e.userNameComment}`}
+                          alt=""
+                        ></img>
                         {user.userName === e.userNameComment ? (
                           e.userNameComment
                         ) : (
                           <Link to={`/profile/${e.userNameComment}`}>
-                            {e.userNameComment}
+                            @{e.userNameComment}
                           </Link>
                         )}
                         {e.userNameComment === user.userName ? null : (
