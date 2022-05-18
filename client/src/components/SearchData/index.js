@@ -26,16 +26,16 @@ function SearchData({ data }) {
   var followed = useSelector((state) => state.listFollowed);
 
   return (
-    <>
+    <div className={styles.containerSearch}>
       <div
-        className={styles.containerSearch}
+        className={styles.containerEachSearch}
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
         {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
         {data.cover && <img src={data.cover_xl} alt="Imagen" />}
-        {data.name && !data.userName && <h1>{data.name}</h1>}
-        {data.picture && <img src={data.picture} alt="img" />}
+        {data.name && !data.userName && <h1 className={styles.nameDetailsArtist}>{data.name}</h1>}
+        {data.picture_xl && <img className={styles.imgArtist} src={data.picture_xl} alt="img" />}
         {data.userName && (
           <div
             id={data.userName}
@@ -85,7 +85,7 @@ function SearchData({ data }) {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -365,7 +365,7 @@ export default function Feed() {
         {user.typeUser === "Standard" && (
           <div className={styles.glowOnHover}>
             <Link
-              to="/profile"
+              to="/pay"
               style={{
                 display: "flex",
                 textAlign: "center",
