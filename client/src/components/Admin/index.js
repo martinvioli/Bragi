@@ -23,6 +23,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import Swal from "sweetalert2";
+import styles from "./Admin.module.css";
 
 import {
   getAllReports,
@@ -40,6 +41,8 @@ import {
   getAllBannedUsers,
   getAllCausesofReport,
   deletePost,
+  getPremiumPlan,
+  createPlansPremiums,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -67,7 +70,7 @@ function Admin() {
   const userSearch = useSelector((state) => state.usersList);
   const bannedUsers = useSelector((state) => state.bannedUsers);
   const causesOfReport = useSelector((state) => state.causesOfReport);
-
+  const premiumPlans = useSelector((state) => state.premiumPlans);
   const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState("1");
@@ -82,6 +85,30 @@ function Admin() {
     discount: "",
   });
 
+  // create precio, nombre, descuento(1-100)
+  // edit planId, precio, nombre, descuento(1-100)
+  // delete planId
+  // que no se creen dos planes con el mismo nombre
+  const [plan, setPlan] = useState({
+    idPlanPremium: "",
+    namePlanPremium: "",
+    priceMembership: "",
+    numberOfMonths: "",
+    discount: "",
+  });
+
+  const [plan2, setPlan2] = useState({
+    namePlanPremium: "",
+    priceMembership: "",
+    numberOfMonths: "",
+    discount: "",
+  });
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setPlan({ ...plan, [e.target.name]: e.target.value });
+  };
+
   useEffect(() => {
     dispatch(getAllPostToAdmin());
     dispatch(getStandarUsers());
@@ -93,8 +120,9 @@ function Admin() {
     dispatch(getPostReports());
     dispatch(getAllBannedUsers());
     dispatch(getAllCausesofReport());
+    dispatch(getPremiumPlan());
   }, []);
-
+  console.log(premiumPlans);
   const handleDelete = (e) => {
     //console.log(e.idPost);
     //console.log(e.target.value);
@@ -120,7 +148,9 @@ function Admin() {
       }
     });
   };
+
   const handleSubmitInput = (e) => {
+    console.log(input);
     e.preventDefault();
     dispatch(getUserByName(input.user));
     setInput({
@@ -147,40 +177,88 @@ function Admin() {
     setShowModal(!showModal);
     console.log(e.target.name);
   };
-
-  const modifyPlan = (e) => {
-    e.preventDefault();
-    switch (input.plan) {
+  const handlePlan = (e) => {
+    //e.preventDefault();
+    setPlan({
+      ...plan,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handlePlan2 = (e) => {
+    //e.preventDefault();
+    setPlan2({
+      ...plan2,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const modifyPlan = () => {
+    //e.preventDefault();
+    switch (plan.name) {
       case "silver":
-        setInput({
-          ...input,
+        setPlan({
+          ...plan,
           numberOfMonths: 1,
         });
         break;
       case "gold":
-        setInput({
-          ...input,
+        setPlan({
+          ...plan,
           numberOfMonths: 3,
         });
         break;
       case "platinum":
-        setInput({
-          ...input,
+        setPlan({
+          ...plan,
           numberOfMonths: 6,
         });
         break;
-
+      case "ruby":
+        setPlan({
+          ...plan,
+          numberOfMonths: 12,
+        });
+        break;
       default:
-        return { ...input };
+        return { ...plan };
     }
-    const newPlan = {
-      idPlanPremium: "", //falta como obtener el id
-      priceMembership: input.price,
-      namePlanPremium: input.plan,
-      numberOfMonths: input.months,
-      discount: input.discount,
+    // const newPlan = {
+    //   idPlanPremium: "", //falta como obtener el id
+    //   priceMembership: input.price,
+    //   namePlanPremium: input.plan,
+    //   numberOfMonths: input.months,
+    //   discount: input.discount,
+    // };
+    // dispatch(modifyPlansPremiums(newPlan));
+  };
+  const handleSubmitModifyPlans = (e) => {
+    e.preventDefault();
+    console.log(plan);
+    premiumPlans &&
+      premiumPlans.forEach((e) => {
+        if (e.numberOfMonths === parseInt(plan.numberOfMonths)) {
+          plan.idPlanPremium = e.idPlanPremium;
+        }
+      });
+    let obj = {
+      idPlanPremium: plan.idPlanPremium,
+      priceMembership: parseInt(plan.priceMembership),
+      numberOfMonths: parseInt(plan.numberOfMonths),
     };
-    dispatch(modifyPlansPremiums(newPlan));
+    console.log(obj);
+    dispatch(modifyPlansPremiums(plan));
+  };
+
+  const handleSubmitCreatePlans = (e) => {
+    e.preventDefault();
+    console.log(plan2);
+    let obj = {
+      priceMembership: parseInt(plan2.priceMembership),
+      namePlanPremium: plan2.namePlanPremium,
+      numberOfMonths: parseInt(plan2.numberOfMonths),
+      discount: parseInt(plan2.discount),
+    };
+    console.log(obj);
+    dispatch(createPlansPremiums(obj));
   };
 
   const handleUnban = async (e) => {
@@ -312,7 +390,6 @@ function Admin() {
                   <h6>Gold</h6>
                   <h6>Platinum</h6>
                 </Col>
-
                 <Col sm="4">
                   Months
                   <h6>1 </h6>
@@ -325,43 +402,104 @@ function Admin() {
                   <h6>$1.49</h6>
                   <h6>$1.99</h6>
                 </Col>
-                <Form onSubmit={modifyPlan}>
-                  <h4 style={{ color: "red" }}>Modify Plans Premiums</h4>
-                  <Input
-                    type="select"
-                    name="plan"
-                    onChange={handleInput}
-                    value={input.plan}
-                    style={{ maxWidth: "46%", marginRight: "2%" }}
-                  >
-                    <option value="default">Select plan ...</option>
-                    <option value="silver">1 month</option>
-                    <option value="gold">3 months</option>
-                    <option value="platinum">6 months</option>
-                  </Input>
-                  <Label htmlFor="price" style={{ color: "white" }}>
-                    Price :{" "}
-                  </Label>
-                  <Input
-                    type="number"
-                    name="price"
-                    value={input.price}
-                    style={{ maxWidth: "46%", marginRight: "2%" }}
-                  />
-                  <Label htmlFor="discount" style={{ color: "white" }}>
-                    Discount :{" "}
-                  </Label>
-                  <Input
-                    type="number"
-                    name="discount"
-                    value={input.discount}
-                    style={{ maxWidth: "46%", marginRight: "2%" }}
-                  />
-                  <Input
-                    type="submit"
-                    style={{ maxWidth: "46%", marginRight: "2%" }}
-                  />
-                </Form>
+                <div className={styles.plansPremiums}>
+                  <div className={styles.modifyPlan}>
+                    <Form onSubmit={(e) => handleSubmitModifyPlans(e)}>
+                      <h4 style={{ color: "red" }}>Modify Plans Premiums</h4>
+                      <Label htmlFor="type" style={{ color: "white" }}>
+                        Number Of Months
+                      </Label>
+                      <Input
+                        type="select"
+                        name="numberOfMonths"
+                        onChange={(e) => handlePlan(e)}
+                        value={plan.numberOfMonths}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                      >
+                        <option value="default">Select plan ...</option>
+                        <option value="1">1 month</option>
+                        <option value="3">3 months</option>
+                        <option value="6">6 months</option>
+                        <option value="12">12 months</option>
+                      </Input>
+                      <Label htmlFor="price" style={{ color: "white" }}>
+                        Price :
+                      </Label>
+                      <Input
+                        type="number"
+                        name="priceMembership"
+                        value={plan.priceMembership}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        onChange={(e) => handlePlan(e)}
+                      />
+                      <Input
+                        type="submit"
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                      />
+                    </Form>
+                  </div>
+                  <div className={styles.createPlan}>
+                    <Form onSubmit={(e) => handleSubmitCreatePlans(e)}>
+                      <h4 style={{ color: "red" }}>Create Plans Premiums</h4>
+                      <Label htmlFor="type" style={{ color: "white" }}>
+                        Name
+                      </Label>
+                      <Input
+                        type="select"
+                        name="namePlanPremium"
+                        onChange={(e) => handlePlan2(e)}
+                        value={plan2.namePlanPremium}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                      >
+                        <option value="default">Select plan ...</option>
+                        <option value="silver">Silver</option>
+                        <option value="gold">Gold</option>
+                        <option value="platinum">Platinum</option>
+                        <option value="ruby">Ruby</option>
+                      </Input>
+                      <Label htmlFor="type" style={{ color: "white" }}>
+                        Number Of Months
+                      </Label>
+                      <Input
+                        type="select"
+                        name="numberOfMonths"
+                        onChange={(e) => handlePlan2(e)}
+                        value={plan2.numberOfMonths}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                      >
+                        <option value="default">Select plan ...</option>
+                        <option value="1">1 month</option>
+                        <option value="3">3 months</option>
+                        <option value="6">6 months</option>
+                        <option value="12">12 months</option>
+                      </Input>
+                      <Label htmlFor="price" style={{ color: "white" }}>
+                        Price :{" "}
+                      </Label>
+                      <Input
+                        type="number"
+                        name="priceMembership"
+                        value={plan2.priceMembership}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        onChange={(e) => handlePlan2(e)}
+                      />
+                      <Label htmlFor="discount" style={{ color: "white" }}>
+                        Discount :
+                      </Label>
+                      <Input
+                        type="number"
+                        name="discount"
+                        value={plan2.discount}
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        onChange={(e) => handlePlan2(e)}
+                      />
+                      <Input
+                        type="submit"
+                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                      />
+                    </Form>
+                  </div>
+                </div>
               </Row>
             </TabPane>
             <TabPane tabId="4">
@@ -548,7 +686,6 @@ function Admin() {
                                 }}
                               ></FcLink>
                             </CardLink>
-
                             <Button
                               style={{
                                 background: "white",

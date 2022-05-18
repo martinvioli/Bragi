@@ -61,6 +61,7 @@ import {
   CHANGE_TYPE_OF_POST,
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
+  GET_PREMIUM_PLANS,
   REPORT_COMMENT,
   REPORT_POST,
   REPORT_USER
@@ -757,7 +758,7 @@ export const modifyPlansPremiums = (plan) => {
 
 export const createPlansPremiums = (plan) => {
   return async (dispatch) => {
-    const response = await axios.post(api.editPremiumPlan, plan);
+    const response = await axios.post(api.createPremiumPlan, plan);
     return dispatch({
       type: CREATE_PLANS_PREMIUMS,
       payload: response.data,
@@ -873,6 +874,20 @@ export const forgottenPasswordPost = function (userName, email) {
   };
 };
 
+export const getPremiumPlan = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getPremiumPlan);
+      console.log(response.data);
+      return dispatch({
+        type: GET_PREMIUM_PLANS,
+        payload: response.data,
+      });
+    } catch (error) {
+      //console.log(error);
+    }
+  };
+};
 export const reportComment = (token, idComment, causeReport) =>{
   return async ( dispatch) =>{
     try {
