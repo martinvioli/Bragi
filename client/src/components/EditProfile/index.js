@@ -289,29 +289,8 @@ function EditProfile({ showModal, handleShowModal }) {
   };
 
   const handleArtist = async () => {
-    if (user.typeUser === "Standard") {
       navigate("/whypay");
-    }
-    if (user.typeUser === "Premium") {
-      try {
-        const response = await axios.post(api.changeUserToArtist, {
-          userName: user.userName,
-        });
-        Swal.fire(
-          "🎭",
-          "You are now an artist. Please log in again.",
-          "success"
-        ).then((result) => {
-          if (result.isConfirmed) {
-            window.localStorage.removeItem("userCredentials");
-            handleShowModal();
-            navigate("/");
-          }
-        });
-      } catch (e) {
-        alert(e.response.data.msgE);
-      }
-    }
+      handleShowModal();
   };
 
   const handleImage = (e) => {
