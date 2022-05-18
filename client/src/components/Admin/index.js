@@ -154,7 +154,7 @@ function Admin() {
   };
 
   const handleSubmitInput = (e) => {
-    console.log(input);
+    //console.log(input);
     e.preventDefault();
     if (!input.user) {
       Swal.fire({
@@ -187,7 +187,7 @@ function Admin() {
     setUserId(e.target.name);
     idUser = e.target.name;
     setShowModal(!showModal);
-    console.log(e.target.name);
+    //console.log(e.target.name);
   };
   const handlePlan = (e) => {
     //e.preventDefault();
@@ -297,7 +297,7 @@ function Admin() {
         priceMembership: parseInt(plan.priceMembership),
         numberOfMonths: parseInt(plan.numberOfMonths),
       };
-      console.log(obj);
+      //console.log(obj);
       dispatch(modifyPlansPremiums(plan));
       setTimeout(function () {
         dispatch(getPremiumPlan());
@@ -307,7 +307,7 @@ function Admin() {
 
   const handleSubmitCreatePlans = (e) => {
     e.preventDefault();
-    console.log(premiumPlans);
+    //console.log(premiumPlans);
     let checkName =
       premiumPlans &&
       premiumPlans.map(
@@ -316,7 +316,7 @@ function Admin() {
           plan2.namePlanPremium.toLowerCase()
       );
 
-    console.log(checkName);
+    //console.log(checkName);
     if (checkName.includes(true)) {
       Swal.fire({
         title:
@@ -352,7 +352,7 @@ function Admin() {
         numberOfMonths: parseInt(plan2.numberOfMonths),
         discount: parseInt(plan2.discount),
       };
-      console.log(obj);
+      //console.log(obj);
       dispatch(createPlansPremiums(obj));
       setTimeout(function () {
         dispatch(getPremiumPlan());
@@ -361,7 +361,7 @@ function Admin() {
   };
 
   const handleUnban = async (e) => {
-    console.log(e.target.name);
+    //console.log(e.target.name);
     dispatch(UnbanUser({ idUser: e.target.name }));
   };
 
@@ -369,146 +369,151 @@ function Admin() {
 
   return (
     <>
-      <div className="container">
-        <h1
-          style={{ color: "white", textAlign: "center", marginBottom: "50px" }}
-        >
-          ADMIN🔨 PROFILE
-        </h1>
-        <div>
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={activeTab === "1" ? "active" : ""}
-                onClick={() => handleActiveTab("1")}
-                style={{ color: "red" }}
-              >
-                Reports
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={activeTab === "2" ? "active" : ""}
-                onClick={() => handleActiveTab("2")}
-                style={{ color: "red" }}
-              >
-                Banned Users
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={activeTab === "3" ? "active" : ""}
-                onClick={() => handleActiveTab("3")}
-                style={{ color: "red" }}
-              >
-                Plans
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={activeTab === "4" ? "active" : ""}
-                onClick={() => handleActiveTab("4")}
-                style={{ color: "red" }}
-              >
-                Statistics
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={activeTab === "5" ? "active" : ""}
-                onClick={() => handleActiveTab("5")}
-                style={{ color: "red" }}
-              >
-                Search Users
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={activeTab === "6" ? "active" : ""}
-                onClick={() => handleActiveTab("6")}
-                style={{ color: "red" }}
-              >
-                Search Posts
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={activeTab} style={{ color: "white" }}>
-            <TabPane tabId="1">
-              <Row>
-                <Col sm="4">
-                  <h5>Users</h5>
-                  {userReports.length &&
-                    userReports.map((e) => {
-                      return <div key={e.idReport}>{e.idReport}</div>;
-                    })}
-                </Col>
-                <Col sm="4">
-                  {" "}
-                  <h5>Posts</h5>
-                  {postReports &&
-                    postReports.map((e) => {
-                      return <div key={e.idReport}>{e.idReport}</div>;
-                    })}
-                </Col>
-                <Col sm="4">
-                  {" "}
-                  <h5>Comments</h5>
-                  {commentReports &&
-                    commentReports.map((e) => {
-                      return <div key={e.idReport}>{e.idReport}</div>;
-                    })}
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="2">
-              <Row>
-                <Col sm="6">
-                  <h6>LIST OF BANNED USERS</h6>
-                  {bannedUsers &&
-                    bannedUsers.map((e) => {
-                      return (
-                        <div key={e.idUser}>
-                          <h6 style={{ display: "inline-block" }}>
-                            {e.userName}
-                          </h6>
-                          <Input
-                            name={e.idUser}
-                            type="button"
-                            onClick={handleUnban}
-                            value={"Unban"}
-                            style={{
-                              width: "fit-content",
-                              display: "inline-block",
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="3">
-              <Row>
-                <Col sm="2">
-                  <h6>Name:</h6> <hr className={styles.hr} width="600% " />
-                  <h6>Price:</h6> <hr className={styles.hr} width="600% " />
-                  <h6>Months:</h6> <hr className={styles.hr} width="600% " />
-                  {/* <h6>Discount:</h6> <hr className={styles.hr} width="600% " /> */}
-                  <h6>Delete:</h6>
-                </Col>
-                {premiumPlans &&
-                  premiumPlans.map((e) => (
-                    <Col sm="2">
-                      <h6>
-                        {e.namePlanPremium.charAt(0).toUpperCase() +
-                          e.namePlanPremium.slice(1)}
-                      </h6>
-                      <hr className={styles.nohr} />
-                      <h6> ${e.priceMembership} </h6>
-                      <hr className={styles.nohr} />
-                      <h6> {e.numberOfMonths}</h6>
-                      <hr className={styles.nohr} />
-                      {/* {e.discount ? (
+      {user.typeUser === "Admin" ? (
+        <div className="container">
+          <h1
+            style={{
+              color: "white",
+              textAlign: "center",
+              marginBottom: "50px",
+            }}
+          >
+            ADMIN🔨 PROFILE
+          </h1>
+          <div>
+            <Nav tabs>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "1" ? "active" : ""}
+                  onClick={() => handleActiveTab("1")}
+                  style={{ color: "red" }}
+                >
+                  Reports
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "2" ? "active" : ""}
+                  onClick={() => handleActiveTab("2")}
+                  style={{ color: "red" }}
+                >
+                  Banned Users
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "3" ? "active" : ""}
+                  onClick={() => handleActiveTab("3")}
+                  style={{ color: "red" }}
+                >
+                  Plans
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "4" ? "active" : ""}
+                  onClick={() => handleActiveTab("4")}
+                  style={{ color: "red" }}
+                >
+                  Statistics
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "5" ? "active" : ""}
+                  onClick={() => handleActiveTab("5")}
+                  style={{ color: "red" }}
+                >
+                  Search Users
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={activeTab === "6" ? "active" : ""}
+                  onClick={() => handleActiveTab("6")}
+                  style={{ color: "red" }}
+                >
+                  Search Posts
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <TabContent activeTab={activeTab} style={{ color: "white" }}>
+              <TabPane tabId="1">
+                <Row>
+                  <Col sm="4">
+                    <h5>Users</h5>
+                    {userReports.length &&
+                      userReports.map((e) => {
+                        return <div key={e.idReport}>{e.idReport}</div>;
+                      })}
+                  </Col>
+                  <Col sm="4">
+                    {" "}
+                    <h5>Posts</h5>
+                    {postReports &&
+                      postReports.map((e) => {
+                        return <div key={e.idReport}>{e.idReport}</div>;
+                      })}
+                  </Col>
+                  <Col sm="4">
+                    {" "}
+                    <h5>Comments</h5>
+                    {commentReports &&
+                      commentReports.map((e) => {
+                        return <div key={e.idReport}>{e.idReport}</div>;
+                      })}
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="2">
+                <Row>
+                  <Col sm="6">
+                    <h6>LIST OF BANNED USERS</h6>
+                    {bannedUsers &&
+                      bannedUsers.map((e) => {
+                        return (
+                          <div key={e.idUser}>
+                            <h6 style={{ display: "inline-block" }}>
+                              {e.userName}
+                            </h6>
+                            <Input
+                              name={e.idUser}
+                              type="button"
+                              onClick={handleUnban}
+                              value={"Unban"}
+                              style={{
+                                width: "fit-content",
+                                display: "inline-block",
+                              }}
+                            />
+                          </div>
+                        );
+                      })}
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="3">
+                <Row>
+                  <Col sm="2">
+                    <h6>Name:</h6> <hr className={styles.hr} width="600% " />
+                    <h6>Price:</h6> <hr className={styles.hr} width="600% " />
+                    <h6>Months:</h6> <hr className={styles.hr} width="600% " />
+                    {/* <h6>Discount:</h6> <hr className={styles.hr} width="600% " /> */}
+                    <h6>Delete:</h6>
+                  </Col>
+                  {premiumPlans &&
+                    premiumPlans.map((e) => (
+                      <Col sm="2">
+                        <h6>
+                          {e.namePlanPremium.charAt(0).toUpperCase() +
+                            e.namePlanPremium.slice(1)}
+                        </h6>
+                        <hr className={styles.nohr} />
+                        <h6> ${e.priceMembership} </h6>
+                        <hr className={styles.nohr} />
+                        <h6> {e.numberOfMonths}</h6>
+                        <hr className={styles.nohr} />
+                        {/* {e.discount ? (
                         <div>
                           <h6>{e.discount}</h6>
                           <hr className={styles.nohr} />
@@ -519,344 +524,349 @@ function Admin() {
                           <hr className={styles.nohr} />
                         </div>
                       )} */}
-                      <button
-                        style={{
-                          color: "white",
-                          backgroundColor: "red",
-                          marginTop: "0.3em",
-                        }}
-                        onClick={() => handleDeletePlan(e)}
-                      >
-                        X
-                      </button>
-                    </Col>
-                  ))}
-                <div className={styles.plansPremiums}>
-                  <div className={styles.modifyPlan}>
-                    <Form onSubmit={(e) => handleSubmitModifyPlans(e)}>
-                      <h4 style={{ color: "red" }}>Modify Plans Premiums</h4>
-                      <Label htmlFor="type" style={{ color: "white" }}>
-                        Number Of Months
-                      </Label>
-                      <Input
-                        type="select"
-                        name="numberOfMonths"
-                        onChange={(e) => handlePlan(e)}
-                        value={plan.numberOfMonths}
-                        style={{ width: "15em" }}
-                      >
-                        <option value="default">Select plan ...</option>
-                        <option value="1">1 month</option>
-                        <option value="3">3 months</option>
-                        <option value="6">6 months</option>
-                        <option value="12">12 months</option>
-                      </Input>
-                      <Label htmlFor="price" style={{ color: "white" }}>
-                        Price :
-                      </Label>
-                      <Input
-                        type="number"
-                        name="priceMembership"
-                        value={plan.priceMembership}
-                        style={{ width: "15em", marginBottom: "1em" }}
-                        onChange={(e) => handlePlan(e)}
-                      />
-                      <Input type="submit" style={{ width: "15em" }} />
-                    </Form>
-                  </div>
-                  <div className={styles.createPlan}>
-                    <Form onSubmit={(e) => handleSubmitCreatePlans(e)}>
-                      <h4 style={{ color: "red" }}>Create Plans Premiums</h4>
-                      <Label htmlFor="type" style={{ color: "white" }}>
-                        Name
-                      </Label>
-                      <Input
-                        type="select"
-                        name="namePlanPremium"
-                        onChange={(e) => handlePlan2(e)}
-                        value={plan2.namePlanPremium}
-                        style={{ width: "15em" }}
-                      >
-                        <option value="default">Select plan ...</option>
-                        <option value="silver">Silver</option>
-                        <option value="gold">Gold</option>
-                        <option value="platinum">Platinum</option>
-                        <option value="ruby">Ruby</option>
-                      </Input>
-                      <Label htmlFor="type" style={{ color: "white" }}>
-                        Number Of Months
-                      </Label>
-                      <Input
-                        type="select"
-                        name="numberOfMonths"
-                        onChange={(e) => handlePlan2(e)}
-                        value={plan2.numberOfMonths}
-                        style={{ width: "15em" }}
-                      >
-                        <option value="default">Select plan ...</option>
-                        <option value="1">1 month</option>
-                        <option value="3">3 months</option>
-                        <option value="6">6 months</option>
-                        <option value="12">12 months</option>
-                      </Input>
-                      <Label htmlFor="price" style={{ color: "white" }}>
-                        Price :
-                      </Label>
-                      <Input
-                        type="number"
-                        name="priceMembership"
-                        value={plan2.priceMembership}
-                        style={{ width: "15em" }}
-                        onChange={(e) => handlePlan2(e)}
-                      />
-                      <Label htmlFor="discount" style={{ color: "white" }}>
-                        Discount :
-                      </Label>
-                      <Input
-                        type="number"
-                        name="discount"
-                        value={plan2.discount}
-                        style={{ width: "15em", marginBottom: "1em" }}
-                        onChange={(e) => handlePlan2(e)}
-                      />
-                      <Input type="submit" style={{ width: "15em" }} />
-                    </Form>
-                  </div>
-                </div>
-              </Row>
-            </TabPane>
-            <TabPane tabId="4">
-              <Row>
-                <Col sm="4">
-                  <h6>Premium Users</h6>
-                  {premiumUsers &&
-                    premiumUsers.map((e) => {
-                      return (
-                        <div key={e.idUser}>
-                          <h6 style={{ display: "inline-block" }}>
-                            {e.userName}
-                          </h6>
-                          <Input
-                            name={e.idUser}
-                            type="button"
-                            onClick={handleBan}
-                            value={"🔨"}
-                            style={{
-                              width: "fit-content",
-                              display: "inline-block",
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                </Col>
-                <Col sm="4">
-                  <h6>Standards Users</h6>
-                  {standardUsers &&
-                    standardUsers.map((e) => {
-                      return (
-                        <div key={e.idUser}>
-                          <h6 style={{ display: "inline-block" }}>
-                            {e.userName}
-                          </h6>
-                          <Input
-                            name={e.idUser}
-                            type="button"
-                            onClick={handleBan}
-                            value={"🔨"}
-                            style={{
-                              width: "fit-content",
-                              display: "inline-block",
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                </Col>
-                <Col sm="4">
-                  <h6>Artists Users </h6>
-                  {artistUsers &&
-                    artistUsers.map((e) => {
-                      return (
-                        <div key={e.idUser}>
-                          <h6 style={{ display: "inline-block" }}>
-                            {e.userName}
-                          </h6>
-                          <Input
-                            name={e.idUser}
-                            type="button"
-                            onClick={handleBan}
-                            value={"🔨"}
-                            style={{
-                              width: "fit-content",
-                              display: "inline-block",
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="5">
-              <Row>
-                <div>
-                  <Form onSubmit={handleSubmitInput}>
-                    <Label htmlFor="user">Search For Users</Label>
-                    <Input
-                      //color="bg-danger"
-                      onChange={handleInput}
-                      type="text"
-                      value={input.user}
-                      name="user"
-                      placeholder="Search Users..."
-                      style={{
-                        width: "40em",
-                        height: "3em",
-                        margin: "2em",
-                        border: "5px solid gray",
-                        borderRadius: "10px",
-                      }}
-                    />
-                    <Input
-                      type="submit"
-                      value="Search"
-                      style={{
-                        width: "40em",
-                        height: "3em",
-                        margin: "2em",
-                        border: "5px solid gray",
-                        borderRadius: "10px",
-                      }}
-                    />
-                  </Form>
-                  {userSearch[0] &&
-                    userSearch[0].map((e) => {
-                      return (
-                        <div
-                          key={e.idUser}
+                        <button
                           style={{
-                            display: "inline-block",
-                            border: "1px solid orange",
-                            borderRadius: "20px",
-                            margin: "10px",
-                            width: "150px",
-                            height: "50px",
-                            textAlign: "center",
-                            alignContent: "center",
+                            color: "white",
+                            backgroundColor: "red",
+                            marginTop: "0.3em",
                           }}
+                          onClick={() => handleDeletePlan(e)}
                         >
-                          <h6 style={{ display: "inline-block" }}>
-                            {e.userName}
-                          </h6>
-                          <Input
-                            name={e.idUser}
-                            type="button"
-                            onClick={handleBan}
-                            value={"🔨"}
-                            style={{
-                              width: "fit-content",
-                              display: "inline-block",
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                </div>
-              </Row>
-            </TabPane>
-            <TabPane tabId="6">
-              <Row>
-                {/* <Form onSubmit={handleSubmitInput}>
-                  <Label htmlFor="user">Search For Posts</Label>
-                  <Input
-                    onChange={handleInput}
-                    type="text"
-                    value={input.posts}
-                    name="post"
-                    placeholder="Search Posts..."
-                  />
-                  <Input type="submit" value="Search" />
-                </Form> */}
-                <div>
-                  {posts &&
-                    posts.map((e) => {
-                      return (
-                        <Card
-                          style={{
-                            marginLeft: "20em",
-                            width: "50%",
-                            height: "43%",
-                            minWidth: "25em",
-                          }}
-                          color="bg-light"
-                          key={e.token}
+                          X
+                        </button>
+                      </Col>
+                    ))}
+                  <div className={styles.plansPremiums}>
+                    <div className={styles.modifyPlan}>
+                      <Form onSubmit={(e) => handleSubmitModifyPlans(e)}>
+                        <h4 style={{ color: "red" }}>Modify Plans Premiums</h4>
+                        <Label htmlFor="type" style={{ color: "white" }}>
+                          Number Of Months
+                        </Label>
+                        <Input
+                          type="select"
+                          name="numberOfMonths"
+                          onChange={(e) => handlePlan(e)}
+                          value={plan.numberOfMonths}
+                          style={{ width: "15em" }}
                         >
-                          <CardBody>
-                            <CardTitle
+                          <option value="default">Select plan ...</option>
+                          <option value="1">1 month</option>
+                          <option value="3">3 months</option>
+                          <option value="6">6 months</option>
+                          <option value="12">12 months</option>
+                        </Input>
+                        <Label htmlFor="price" style={{ color: "white" }}>
+                          Price :
+                        </Label>
+                        <Input
+                          type="number"
+                          name="priceMembership"
+                          value={plan.priceMembership}
+                          style={{ width: "15em", marginBottom: "1em" }}
+                          onChange={(e) => handlePlan(e)}
+                        />
+                        <Input type="submit" style={{ width: "15em" }} />
+                      </Form>
+                    </div>
+                    <div className={styles.createPlan}>
+                      <Form onSubmit={(e) => handleSubmitCreatePlans(e)}>
+                        <h4 style={{ color: "red" }}>Create Plans Premiums</h4>
+                        <Label htmlFor="type" style={{ color: "white" }}>
+                          Name
+                        </Label>
+                        <Input
+                          type="select"
+                          name="namePlanPremium"
+                          onChange={(e) => handlePlan2(e)}
+                          value={plan2.namePlanPremium}
+                          style={{ width: "15em" }}
+                        >
+                          <option value="default">Select plan ...</option>
+                          <option value="silver">Silver</option>
+                          <option value="gold">Gold</option>
+                          <option value="platinum">Platinum</option>
+                          <option value="ruby">Ruby</option>
+                        </Input>
+                        <Label htmlFor="type" style={{ color: "white" }}>
+                          Number Of Months
+                        </Label>
+                        <Input
+                          type="select"
+                          name="numberOfMonths"
+                          onChange={(e) => handlePlan2(e)}
+                          value={plan2.numberOfMonths}
+                          style={{ width: "15em" }}
+                        >
+                          <option value="default">Select plan ...</option>
+                          <option value="1">1 month</option>
+                          <option value="3">3 months</option>
+                          <option value="6">6 months</option>
+                          <option value="12">12 months</option>
+                        </Input>
+                        <Label htmlFor="price" style={{ color: "white" }}>
+                          Price :
+                        </Label>
+                        <Input
+                          type="number"
+                          name="priceMembership"
+                          value={plan2.priceMembership}
+                          style={{ width: "15em" }}
+                          onChange={(e) => handlePlan2(e)}
+                        />
+                        <Label htmlFor="discount" style={{ color: "white" }}>
+                          Discount :
+                        </Label>
+                        <Input
+                          type="number"
+                          name="discount"
+                          value={plan2.discount}
+                          style={{ width: "15em", marginBottom: "1em" }}
+                          onChange={(e) => handlePlan2(e)}
+                        />
+                        <Input type="submit" style={{ width: "15em" }} />
+                      </Form>
+                    </div>
+                  </div>
+                </Row>
+              </TabPane>
+              <TabPane tabId="4">
+                <Row>
+                  <Col sm="4">
+                    <h6>Premium Users</h6>
+                    {premiumUsers &&
+                      premiumUsers.map((e) => {
+                        return (
+                          <div key={e.idUser}>
+                            <h6 style={{ display: "inline-block" }}>
+                              {e.userName}
+                            </h6>
+                            <Input
+                              name={e.idUser}
+                              type="button"
+                              onClick={handleBan}
+                              value={"🔨"}
                               style={{
-                                color: "blue",
-                                display: "flex",
-                                justifyContent: "flex-start",
+                                width: "fit-content",
+                                display: "inline-block",
                               }}
-                              tag="h7"
-                            >
-                              {e.datePost}
-                            </CardTitle>
-                            <CardSubtitle className="mb-2 text-muted" tag="h6">
-                              {e.contentPost}
-                            </CardSubtitle>
-                          </CardBody>
-                          {e.imagePost && (
-                            <div>
-                              <img
-                                src={e.imagePost}
-                                class="img-fluid"
-                                alt="Responsive"
-                              />
-                            </div>
-                          )}
-                          <div>
-                            <CardLink href={e.linkContent}>
-                              <FcLink
-                                style={{
-                                  marginBottom: "0.4em",
-                                  width: "2em",
-                                  height: "2em",
-                                }}
-                              ></FcLink>
-                            </CardLink>
-                            <Button
-                              style={{
-                                background: "white",
-                                border: "0px",
-                                marginLeft: "100px",
-                              }}
-                              onClick={() => handleDelete(e)}
-                            >
-                              <FcFullTrash
-                                style={{
-                                  marginBottom: "0.5em",
-                                  marginLeft: "1em",
-                                  width: "1.5em",
-                                  height: "1.5em",
-                                }}
-                              />
-                            </Button>
+                            />
                           </div>
-                        </Card>
-                      );
-                    })}
-                </div>
-              </Row>
-            </TabPane>
-          </TabContent>
-          <HandleBan
-            showModal={showModal}
-            handleShowModal={() => setShowModal(false)}
-          />
+                        );
+                      })}
+                  </Col>
+                  <Col sm="4">
+                    <h6>Standards Users</h6>
+                    {standardUsers &&
+                      standardUsers.map((e) => {
+                        return (
+                          <div key={e.idUser}>
+                            <h6 style={{ display: "inline-block" }}>
+                              {e.userName}
+                            </h6>
+                            <Input
+                              name={e.idUser}
+                              type="button"
+                              onClick={handleBan}
+                              value={"🔨"}
+                              style={{
+                                width: "fit-content",
+                                display: "inline-block",
+                              }}
+                            />
+                          </div>
+                        );
+                      })}
+                  </Col>
+                  <Col sm="4">
+                    <h6>Artists Users </h6>
+                    {artistUsers &&
+                      artistUsers.map((e) => {
+                        return (
+                          <div key={e.idUser}>
+                            <h6 style={{ display: "inline-block" }}>
+                              {e.userName}
+                            </h6>
+                            <Input
+                              name={e.idUser}
+                              type="button"
+                              onClick={handleBan}
+                              value={"🔨"}
+                              style={{
+                                width: "fit-content",
+                                display: "inline-block",
+                              }}
+                            />
+                          </div>
+                        );
+                      })}
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="5">
+                <Row>
+                  <div>
+                    <Form onSubmit={handleSubmitInput}>
+                      <Label htmlFor="user">Search For Users</Label>
+                      <Input
+                        //color="bg-danger"
+                        onChange={handleInput}
+                        type="text"
+                        value={input.user}
+                        name="user"
+                        placeholder="Search Users..."
+                        style={{
+                          width: "40em",
+                          height: "3em",
+                          margin: "2em",
+                          border: "5px solid gray",
+                          borderRadius: "10px",
+                        }}
+                      />
+                      <Input
+                        type="submit"
+                        value="Search"
+                        style={{
+                          width: "40em",
+                          height: "3em",
+                          margin: "2em",
+                          border: "5px solid gray",
+                          borderRadius: "10px",
+                        }}
+                      />
+                    </Form>
+                    {userSearch[0] &&
+                      userSearch[0].map((e) => {
+                        return (
+                          <div
+                            key={e.idUser}
+                            style={{
+                              display: "inline-block",
+                              border: "1px solid orange",
+                              borderRadius: "20px",
+                              margin: "10px",
+                              width: "150px",
+                              height: "50px",
+                              textAlign: "center",
+                              alignContent: "center",
+                            }}
+                          >
+                            <h6 style={{ display: "inline-block" }}>
+                              {e.userName}
+                            </h6>
+                            <Input
+                              name={e.idUser}
+                              type="button"
+                              onClick={handleBan}
+                              value={"🔨"}
+                              style={{
+                                width: "fit-content",
+                                display: "inline-block",
+                              }}
+                            />
+                          </div>
+                        );
+                      })}
+                  </div>
+                </Row>
+              </TabPane>
+              <TabPane tabId="6">
+                <Row>
+                  <div>
+                    {posts &&
+                      posts.map((e) => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Card
+                              style={{
+                                marginLeft: "20em",
+                                width: "50%",
+                                height: "43%",
+                                minWidth: "25em",
+                                margin: "1em",
+                              }}
+                              color="bg-light"
+                              key={e.token}
+                            >
+                              <CardBody>
+                                <CardTitle
+                                  style={{
+                                    color: "blue",
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                  }}
+                                  tag="h7"
+                                >
+                                  {e.datePost}
+                                </CardTitle>
+                                <CardSubtitle
+                                  className="mb-2 text-muted"
+                                  tag="h6"
+                                >
+                                  {e.contentPost}
+                                </CardSubtitle>
+                              </CardBody>
+                              {e.imagePost && (
+                                <div>
+                                  <img
+                                    src={e.imagePost}
+                                    class="img-fluid"
+                                    alt="Responsive"
+                                  />
+                                </div>
+                              )}
+                              <div>
+                                <CardLink href={e.linkContent}>
+                                  <FcLink
+                                    style={{
+                                      marginBottom: "0.4em",
+                                      width: "2em",
+                                      height: "2em",
+                                    }}
+                                  ></FcLink>
+                                </CardLink>
+                                <Button
+                                  style={{
+                                    background: "white",
+                                    border: "0px",
+                                    marginLeft: "100px",
+                                  }}
+                                  onClick={() => handleDelete(e)}
+                                >
+                                  <FcFullTrash
+                                    style={{
+                                      marginBottom: "0.5em",
+                                      marginLeft: "1em",
+                                      width: "1.5em",
+                                      height: "1.5em",
+                                    }}
+                                  />
+                                </Button>
+                              </div>
+                            </Card>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </Row>
+              </TabPane>
+            </TabContent>
+            <HandleBan
+              showModal={showModal}
+              handleShowModal={() => setShowModal(false)}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <h1 style={{ color: "red" }}>No sos Admin</h1>
+      )}
     </>
   );
 }
@@ -875,7 +885,7 @@ const HandleBan = ({ showModal, handleShowModal }) => {
       idUser: idUser,
       causeBan: input.causeBan,
     };
-    console.log(ban);
+    //console.log(ban);
     dispatch(banUser(ban));
   };
   const handleClick = () => {
