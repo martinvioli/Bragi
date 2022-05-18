@@ -7,7 +7,16 @@
     margin: 3em;
 }
 .modifyPlan{
+    margin-right: 10em;
+    margin-bottom: 8.5em;
 }
 .createPlan{
     margin-right: 20em;
+}
+.hr{
+    background-color: rgb(255, 0, 0);
+    border: 2px solid rgb(255, 0, 0)
+}
+.nohr{
+    background-color: black
 }
