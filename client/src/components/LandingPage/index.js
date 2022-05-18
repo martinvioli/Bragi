@@ -71,7 +71,11 @@ function LandingPage() {
       }
       setInput({ email: "", password: "" });
     } catch (e) {
-      setInput("");
+      setInput({
+        email: "",
+        password: "",
+        userName: "",
+      });
       Swal.fire({
         title: "Oops...",
         text: "That username or email is not linked to an existent account. Please, verify your inputs.",
