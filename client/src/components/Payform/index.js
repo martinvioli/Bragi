@@ -57,13 +57,13 @@ const CheckoutForm = () => {
           payment_method: result.paymentMethod.id,
           email: "bragisystem@gmail.com",
         });
-        console.log(data);
+        console.log(input.planDetails.namePlanPremium);
 
         elements.getElement(CardElement).clear();
         if(data.status.paid === true){
           setLoading(false);
-          // console.log(input.planDetails)
-          const payAprobe = await axios.post(api.changeUserToPremium, {userName: user.userName})
+          console.log(user.userName)
+          const payAprobe = await axios.post(api.changeUserToPremium, {userName: user.userName, premiumPlan: input.planDetails.idPlanPremium})
           console.log(payAprobe)
           Swal.fire({
             title: "Success",

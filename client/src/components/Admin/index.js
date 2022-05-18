@@ -46,6 +46,7 @@ import {
   deletePlansPremiums,
   getToken,
   getUser,
+  deleteAdminPost,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -74,6 +75,7 @@ function Admin() {
   const bannedUsers = useSelector((state) => state.bannedUsers);
   const causesOfReport = useSelector((state) => state.causesOfReport);
   const premiumPlans = useSelector((state) => state.premiumPlans);
+  const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("1");
@@ -335,6 +337,15 @@ function Admin() {
     });
   }
 
+  const handleDeletePost = (e) => {
+    dispatch(
+      deleteAdminPost({
+        idPost: e.target.name,
+        idReport: e.target.key,
+      })
+    );
+  };
+
   const handleActiveTab = (tab) => setActiveTab(tab);
   return (
     <>
@@ -424,7 +435,19 @@ function Admin() {
                     <h5>Posts</h5>
                     {postReports &&
                       postReports.map((e) => {
-                        return <div key={e.idReport}>{e.idReport}</div>;
+                        return (
+                          <div key={e.idReport}>
+                            <h6>ID : {e.idReport}</h6>
+                            <h6>Cause : {e.RowReports[0].causeReport}</h6>
+                            <Input
+                              key={e.idReport}
+                              type="button"
+                              name={e.PostIdPost}
+                              onChange={handleDeletePost}
+                              value={"Delete"}
+                            />
+                          </div>
+                        );
                       })}
                   </Col>
                   <Col sm="4">
