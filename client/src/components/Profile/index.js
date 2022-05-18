@@ -228,7 +228,7 @@ function Profile(props) {
             className={styles.editButton}
             style={{
               display: "inline-block",
-              marginRight: "-270px",
+              marginRight: "-60%",
               marginBottom: "-50px",
             }}
           >
@@ -530,7 +530,7 @@ function Profile(props) {
                       border: "2px solid gray",
                       marginRight: "15px",
                     }}
-                    // src={`${api.getPhotoUser}${viewPost.User.userName}`}
+                    src={`${api.getPhotoUser}${viewPost.User.userName}`}
                     alt=""
                   ></img>
                   {viewPost.User ? viewPost.User.userName : user.userName}
@@ -597,21 +597,23 @@ function Profile(props) {
                             {e.userNameComment}
                           </Link>
                         )}
-                        <div
-                          style={{
-                            display: "inline-flex",
-                            // marginRight: "-640px",
-                            marginLeft: "250px",
-                          }}
-                        >
-                          <GoReport
-                            style={{ height: "25px", width: "50px" }}
-                            onClick={() => {
-                              setViewPost({ ...e });
-                              openReport(e, "comment");
+                        {e.userNameComment !== user.userName && (
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              // marginRight: "-640px",
+                              marginLeft: "250px",
                             }}
-                          />
-                        </div>
+                          >
+                            <GoReport
+                              style={{ height: "25px", width: "50px" }}
+                              onClick={() => {
+                                setViewPost({ ...e });
+                                openReport(e, "comment");
+                              }}
+                            />
+                          </div>
+                        )}
                       </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"
