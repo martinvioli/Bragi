@@ -63,6 +63,7 @@ import {
   CHANGE_TYPE_OF_POST,
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
+  GET_PREMIUM_PLANS,
 } from "../actions";
 
 // STATE CREATION
@@ -116,6 +117,7 @@ const initialState = {
   causesOfReport: [],
   //updatePosts: {}
   allPostToAdmin: [],
+  premiumPlans: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -461,6 +463,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPostToAdmin: action.payload,
+      };
+    case GET_PREMIUM_PLANS:
+      return {
+        ...state,
+        premiumPlans: action.payload,
       };
     default:
       return { ...state };

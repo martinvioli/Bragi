@@ -61,6 +61,7 @@ import {
   CHANGE_TYPE_OF_POST,
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
+  GET_PREMIUM_PLANS,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -752,7 +753,7 @@ export const modifyPlansPremiums = (plan) => {
 
 export const createPlansPremiums = (plan) => {
   return async (dispatch) => {
-    const response = await axios.post(api.editPremiumPlan, plan);
+    const response = await axios.post(api.createPremiumPlan, plan);
     return dispatch({
       type: CREATE_PLANS_PREMIUMS,
       payload: response.data,
@@ -860,6 +861,21 @@ export const forgottenPasswordPost = function (userName, email) {
       //console.log(response.data);
       return dispatch({
         type: FORGOTTEN_PASSWORD_POST,
+        payload: response.data,
+      });
+    } catch (error) {
+      //console.log(error);
+    }
+  };
+};
+
+export const getPremiumPlan = function () {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(api.getPremiumPlan);
+      console.log(response.data);
+      return dispatch({
+        type: GET_PREMIUM_PLANS,
         payload: response.data,
       });
     } catch (error) {
