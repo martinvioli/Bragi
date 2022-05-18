@@ -244,15 +244,16 @@ function EditProfile({ showModal, handleShowModal }) {
   };
 
   const handleArtist = async () => {
-    try {
-      const response = await axios.post(api.changeUserToArtist, {
-        userName: user.userName,
-      });
+    // try {
+    //   const response = await axios.post(api.changeUserToArtist, {
+    //     userName: user.userName,
+    //   });
 
-      alert(response.data);
-    } catch (e) {
-      alert(e.response.data.msgE);
-    }
+    //   alert(response.data);
+    // } catch (e) {
+    //   alert(e.response.data.msgE);
+    // }
+    navigate("/whypay");
   };
 
   const handleImage = (e) => {
