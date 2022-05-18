@@ -1,4 +1,4 @@
-const {User, Post, Comment, ReportPostCommentUser, RowReport, PlanPremium} = require('../db.js');
+const {User, Post, Comment, ReportPostCommentUser, RowReport, PlanPremium, MembershipUser} = require('../db.js');
 const {Op} = require('sequelize');
 const validation = require('../Validations/auths');
 const jwt = require("jsonwebtoken");
@@ -529,6 +529,27 @@ class Admin{
                 return res.status(400).json({msgE: "Error canceling premium plan"})
             }
         }
+        getCashFlow = async (req, res) => {
+            try {
+                const memberships = await MembershipUser.findAll({
+                    where: {statePlan: 'Active'},
+                    attributes: ['dateStart', 'dateExpiry' ,'statePlan'],
+                    include:{ 
+                        model: PlanPremium,
+                        attributes: ['namePlanPremium', 'priceMembership']
+                    }
+                })
+                // console.log(memberships);
+                if(!memberships.length) return res.status(200).json({msg: "There are no users with membership"});
+                let totalAmountOfMoney = 0;
+                for (let user = 0; user < memberships.length; user++) {
+                    totalAmountOfMoney += memberships[user].dataValues.PlanPremium.dataValues.priceMembership     
+                }
+                return res.status(200).json({memberships, totalAmountOfMoney});
+            } catch (error) {
+                console.log(error);
+            }
+        }
     //Banneo de usuarios
         getAllBannedUser = async (req, res) => {
             try{
@@ -586,5 +607,6 @@ class Admin{
                  res.status(500).json({msgE: "User unbanned error"});
              }  
         }
+        
 }
 module.exports = Admin;

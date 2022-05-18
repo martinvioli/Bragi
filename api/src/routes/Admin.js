@@ -41,5 +41,6 @@ router.post("/premiumPlan/create",[verifyAdmin], admin.creatPremiumPlan);
 router.post("/premiumPlan/edition",[verifyAdmin], admin.editPremiumPlan);
 router.post("/premiumPlan/delete",[verifyAdmin], admin.cancelPremiumPlan);
 router.get("/premiumPlan/premiumPlans", admin.getPremiumPlan);
+router.get("/premiumPlan/getCashFlow", admin.getCashFlow);
 
 module.exports = router;
