@@ -6,15 +6,16 @@ function WhyBragi() {
     <div>
       <NavBar2 />
       <div className={styles.container}>
-        <h1 className={styles.firstSubtitle}>HOW IS BRAGI?</h1>
+        <h1 className={styles.firstSubtitle}>WHO IS BRAGI?</h1>
         <div className={styles.textAndImg1}>
           <h3 className={styles.firstText}>
             Bragi is the god of poetry in Norse mythology. He is the personal
-            poet of his father, Odin, lives in Asgard and is considered one of
+            poet of his father, Odin, he lives in Asgard and is considered one of
             the wisest gods, recognised as the god in charge of reciting poems.
+
             He is also in charge of composing songs and verses in honour of the
             gods and heroes who arrive at Valhalla, where he was sent by his
-            father to receive them and offer the toast of welcome. <br />
+            father to receive them and offer a toast to welcome them. <br />
             He married the goddess Idun (Iðunn), the goddess of youth, who
             guards the fruit consumed by the gods so that they do not grow old.{" "}
             <br />
@@ -57,7 +58,8 @@ function WhyBragi() {
             Bragi is associated with bragr, the Norse word for poetry. Just as
             the god Bragi connects his other deities with music and poetry
             through his compositions, the main purpose of the Bragi App is to
-            connect the singer with his fans through his music-oriented posts.
+            connect an artist with his fans through his music-oriented posts.
+            
             You can follow your favourite artists, see their posts in real time,
             like them and see them on your profile, but above all you can choose
             to be Premium and feel much closer to your favourite singers,
