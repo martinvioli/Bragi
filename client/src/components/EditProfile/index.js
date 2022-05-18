@@ -733,7 +733,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became fan
+                    Become fan
                   </Button>
                 )}
 
@@ -748,7 +748,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became Premium
+                    Become Premium
                   </Button>
                 )}
 
@@ -763,7 +763,7 @@ function EditProfile({ showModal, handleShowModal }) {
                       marginRight: "20px",
                     }}
                   >
-                    Became Artist
+                    Become Artist
                   </Button>
                 )}
               </TabPane>
