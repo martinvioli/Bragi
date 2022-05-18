@@ -40,6 +40,6 @@ router.post("/unbanUser",[verifyAdmin], admin.unbanUser);
 router.post("/premiumPlan/create",[verifyAdmin], admin.creatPremiumPlan);
 router.post("/premiumPlan/edition",[verifyAdmin], admin.editPremiumPlan);
 router.post("/premiumPlan/delete",[verifyAdmin], admin.cancelPremiumPlan);
-router.get("/premiumPlan/premiumPlans",[verifyAdmin], admin.getPremiumPlan);
+router.get("/premiumPlan/premiumPlans", admin.getPremiumPlan);
 
 module.exports = router;

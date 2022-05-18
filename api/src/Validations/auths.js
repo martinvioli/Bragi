@@ -268,6 +268,51 @@ async function userUnbanned (name, lastName, email){
     }
 };
 
+async function toArtist (userName, email, reason){
+    try{const transporter = nodemailer.createTransport({
+        // host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        service: 'Gmail',
+        auth: {
+          user: 'bragiadmtoartist@gmail.com', // generated ethereal user
+          pass: 'yyhuaqsauczocjym', // generated ethereal password
+        },tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    transporter.verify().then(() => {
+        console.log("Ready for send emails")
+    });
+
+    await transporter.sendMail({
+        from: '"Bragi to Artist" <bragiadmtoartist@gmail.com>', // sender address
+        to: "BragiSystem@gmail.com", // list of receivers
+        subject: "To Artist", // Subject line
+        text: `${reason}`,
+        html: `
+        <div style="width: 400px; border: 5px solid cyan; padding: 50px; margin: auto;">
+            <header style="border-bottom: 5px solid cyan">
+                <img style="width: 100px; height:100px; margin-top: -50px; margin-left: -50px" src='https://i.imgur.com/ZX1OBOr.jpg' alt='img'>
+            </header>
+            <h1 style="margin-top:px">To Artist</h1>
+            <br/><br/>
+            <h2 style="margin-top:px">The user ${userName} wants to be an artist.</h2>
+            <br/>
+            <h2 style="margin-top:px">Email: ${email}</h2>
+            <br/>
+            <p style="margin-top:px">Motivation: ${reason}</p>
+            <h4>Bragi administrative to artist team</h4>
+        </div>
+        `, // html body
+    });}
+    catch(e){
+        console.log(e)
+        return res.status(501).json({msgE: "nodemailer error for artist"})
+    }
+};
+
 validateCodeReset = async(req,res) => {
     const {email, code} = req.body;
     try {
@@ -323,4 +368,4 @@ comparePasswords = async (req, res) => {
     }
 }
 
-module.exports = {validationLoginUser, userBanned ,userUnbanned , validationRegisterEmailUsername, verifactionEmail, validateUserCode, comparePasswords, recoverEmail, validateCodeReset, validateEmailReset}
+module.exports = {validationLoginUser, toArtist, userBanned ,userUnbanned , validationRegisterEmailUsername, verifactionEmail, validateUserCode, comparePasswords, recoverEmail, validateCodeReset, validateEmailReset}
