@@ -768,7 +768,7 @@ export const createPlansPremiums = (plan) => {
 
 export const deletePlansPremiums = (idPlanPremium) => {
   return async (dispatch) => {
-    const response = await axios.delete(api.deletePremiumPlan, idPlanPremium);
+    const response = await axios.post(api.deletePremiumPlan, idPlanPremium);
     console.log(response.data);
     return dispatch({
       type: DELETE_PLANS_PREMIUMS,

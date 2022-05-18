@@ -244,10 +244,28 @@ function Admin() {
   };
   const handleDeletePlan = (e) => {
     // e.preventDefault();
-    console.log(e.idPlanPremium);
-    let obj = { idPlanPremium: e.idPlanPremium };
-    console.log(obj);
-    dispatch(deletePlansPremiums(obj));
+    Swal.fire({
+      title: "Are you sure you want to delete this plan?",
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      denyButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then((result) => {
+      if (result.isDenied) {
+        let obj = { idPlanPremium: e.idPlanPremium };
+        dispatch(deletePlansPremiums(obj));
+        setTimeout(function () {
+          dispatch(getPremiumPlan());
+        }, 2000);
+      }
+    });
   };
   const handleSubmitModifyPlans = (e) => {
     e.preventDefault();
