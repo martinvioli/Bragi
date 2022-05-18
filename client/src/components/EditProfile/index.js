@@ -23,6 +23,7 @@ import { getPhotoUser, getToken, getUser } from "../../redux/actionCreators";
 import axios from "axios";
 import api from "../../Utils";
 import { validateEdit } from "../../Utils/validate";
+import Swal from "sweetalert2";
 
 function EditProfile({ showModal, handleShowModal }) {
   const user = useSelector((state) => state.user);
@@ -159,11 +160,23 @@ function EditProfile({ showModal, handleShowModal }) {
     const response = await axios.put(api.updateBasicData, fd);
     if (response.data.msgE) {
       setResponseEdit(response.data.msgE);
-      alert(response.data.msgE);
+      Swal.fire(
+        "Error",
+        "Something has gone grown. Please, try again!.",
+        "warning"
+      ).then((result) => {
+        result.isConfirmed && window.location.reload();
+      });
     }
     if (response.data.msg) {
       setResponseEdit(response.data.msg);
-      alert(response.data.msg);
+      Swal.fire(
+        "Great!",
+        "You have edited your profile successfully.",
+        "success"
+      ).then((result) => {
+        result.isConfirmed && window.location.reload();
+      });
     }
     setInput({
       name: "",
@@ -177,7 +190,6 @@ function EditProfile({ showModal, handleShowModal }) {
       userName: "",
       description: "",
     });
-    window.location.reload();
     handleShowModal();
   };
 
@@ -193,26 +205,55 @@ function EditProfile({ showModal, handleShowModal }) {
         : user.repeatPassword,
     });
     if (response.data.msgE) {
-      alert(response.data.msgE);
+      Swal.fire(
+        "Error",
+        "Something has gone grown. Please, try again!. Please log in again.",
+        "warning"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          setInput({
+            name: "",
+            lastName: "",
+            email: "",
+            gender: "",
+            tel: "",
+            password: "",
+            repeatPassword: "",
+            birthday: "",
+            userName: "",
+            description: "",
+          });
+          handleShowModal();
+          navigate("/");
+        }
+      });
     }
     if (response.data.msg) {
-      alert(response.data.msg);
+      Swal.fire(
+        "Great!",
+        "You have edited your account successfully. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          setInput({
+            name: "",
+            lastName: "",
+            email: "",
+            gender: "",
+            tel: "",
+            password: "",
+            repeatPassword: "",
+            birthday: "",
+            userName: "",
+            description: "",
+          });
+          handleShowModal();
+          navigate("/");
+        }
+      });
     }
-    window.localStorage.removeItem("userCredentials");
-    setInput({
-      name: "",
-      lastName: "",
-      email: "",
-      gender: "",
-      tel: "",
-      password: "",
-      repeatPassword: "",
-      birthday: "",
-      userName: "",
-      description: "",
-    });
-    handleShowModal();
-    navigate("/");
   };
 
   const handleTabs = (tab) => {
@@ -224,7 +265,7 @@ function EditProfile({ showModal, handleShowModal }) {
       const response = await axios.post(api.changeUserToStandard, {
         userName: user.userName,
       });
-
+      handleShowModal();
       alert(response.data);
     } catch (error) {
       //console.log(error.response.data.msgE);
@@ -237,6 +278,7 @@ function EditProfile({ showModal, handleShowModal }) {
       // const response = await axios.post(api.changeUserToPremium, {
       //   userName: user.userName,
       // });
+      handleShowModal();
       navigate("/pay");
     } catch (e) {
       alert(e.response.data.msgE);
@@ -248,8 +290,17 @@ function EditProfile({ showModal, handleShowModal }) {
       const response = await axios.post(api.changeUserToArtist, {
         userName: user.userName,
       });
-
-      alert(response.data);
+      Swal.fire(
+        "🎭",
+        "You are now an artist. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          handleShowModal();
+          navigate("/");
+        }
+      });
     } catch (e) {
       alert(e.response.data.msgE);
     }
@@ -668,7 +719,7 @@ function EditProfile({ showModal, handleShowModal }) {
               </TabPane>
               <TabPane tabId="3">
                 <Button
-                  onClick={handlePremium}
+                  onClick={() => handlePremium}
                   style={{
                     marginTop: "2em",
                     background: "#dd9202",
