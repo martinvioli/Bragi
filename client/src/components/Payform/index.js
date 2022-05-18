@@ -12,8 +12,8 @@ import styles from "./Payform.module.css";
 import axios from "axios";
 import { useState } from "react";
 import { FiDollarSign } from "react-icons/fi";
-import { Input } from "reactstrap"
-import {getPremiumPlan} from "../../redux/actionCreators";
+import { Button, Input } from "reactstrap"
+import {getPremiumPlan, getToken, getUser} from "../../redux/actionCreators";
 import Swal from "sweetalert2";
 import api from "../../Utils";
 
@@ -34,10 +34,20 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const userCredentials = window.localStorage.getItem("userCredentials");
+    if (userCredentials) {
+      const userToken = JSON.parse(userCredentials);
+      dispatch(getUser(userToken));
+      dispatch(getToken(userToken));
+    }
+    if (!userCredentials) {
+      navigate("/");
+    }
     dispatch(getPremiumPlan())
   }, [])
   
   const plans = premiumPlans
+  console.log(user)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +83,7 @@ const CheckoutForm = () => {
             confirmButtonColor: "#0d6efd",
             timer: 2000,
           });
-          navigate('/home')
+          navigate('/feed')
           return
         }
       } catch (error) {
@@ -162,6 +172,11 @@ const CheckoutForm = () => {
 };
 
 function PayForm() {
+  const navigate = useNavigate()
+
+  const handleOnClickBack = () => {
+    navigate("/feed")
+  }
   return (
     <>
       {/* <div style={{ height: "500px", width: "500px"}}className={styles.payment}>
@@ -196,6 +211,9 @@ function PayForm() {
             </div>
           </div>
         </Elements>
+        <Button style={{ backgroundColor: "#dd9202", marginTop: "30px"}} onClick={handleOnClickBack}>
+          Back
+        </Button>
       </div>
     </>
   );
