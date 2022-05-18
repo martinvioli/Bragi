@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import { FaMinusCircle } from "react-icons/fa";
 import { Button } from "reactstrap";
@@ -8,74 +8,88 @@ import {
   getUser,
   unfollowUser,
 } from "../../redux/actionCreators";
-import { useDispatch } from "react-redux";
-import styles from "./SearchData.css";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./SearchData.module.css";
+import { Link } from "react-router-dom";
+import api from "../../Utils";
 function SearchData({ data }) {
   const dispatch = useDispatch();
+  const [token, setToken] = useState();
 
-  React.useEffect(() => {
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
+  useEffect(() => {
+    setToken(
+      (token) =>
+        (token = JSON.parse(window.localStorage.getItem("userCredentials")))
     );
-    // dispatch(getToken(userToken));
-    // dispatch(getUser(userToken));
-    // console.log(data.userName);
-    let userNameOtherProfile = data.userName;
   }, []);
-  const handleClickFollow = (data) => {
-    //e.preventDefault()
-    document.getElementById("followBtn").disabled = true;
-    document.getElementById("unFollowBtn").disabled = false;
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
-    );
-    console.log(userToken);
-    // console.log(data.token);
-    let obj = { token: userToken, tokenFollowed: data.token };
-    console.log(obj);
-    dispatch(followUser(obj));
-  };
-  const handleClickUnfollow = (data) => {
-    document.getElementById("unFollowBtn").disabled = true;
-    document.getElementById("followBtn").disabled = false;
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
-    );
-    console.log(userToken);
-    // console.log(data.token);
-    let obj = { token: userToken, tokenFollowed: data.token };
-    console.log(obj);
-    dispatch(unfollowUser(obj));
-  };
 
+  var followed = useSelector((state) => state.listFollowed);
 
   return (
-    <div className="containerSearch">
-      {console.log(data)}
-      {data.error && <h3>We didnt find any coincidence.</h3>}
-      {
+    <>
       <div
-        className="containerEachSearch"
+        className={styles.containerSearch}
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
         {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
         {data.cover && <img src={data.cover_xl} alt="Imagen" />}
-        {data.name && !data.userName && <h1 className="nameDetailsArtist">{data.name}</h1>}
-        {data.picture_xl && <img className="imgArtist" src={data.picture_xl} alt="img" />}
+        {data.name && !data.userName && <h1>{data.name}</h1>}
+        {data.picture && <img src={data.picture} alt="img" />}
         {data.userName && (
-          <h1 style={{ marginTop: "2em" }} className="username">
-            @{data.userName}
-          </h1>
-        )}
-        {data.userName && (
-          <div>
-            <Button id="followBtn" className="followBtn" onClick={() => handleClickFollow(data)}>Follow</Button>{" "}
-            <Button id="unFollowBtn" className="unFollowBtn" onClick={() => handleClickUnfollow(data)}>Unfollow</Button>
+          <div
+            id={data.userName}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={`${api.getPhotoUser}${data.userName}`}
+              alt=""
+              style={{
+                height: "60px",
+                width: "60px",
+                borderRadius: "50%",
+                marginTop: "15px",
+              }}
+            ></img>
+            <Link
+              to={`/profile/${data.userName}`}
+              className={styles.username}
+              style={{ marginTop: "-20px" }}
+            >
+              <h1 style={{ marginTop: "2em" }}>@{data.userName}</h1>
+            </Link>
+            {followed.some((e) => e.userNameFollowed === data.userName) ? (
+              <Button
+                className={styles.unFollowBtn}
+                onClick={() => {
+                  dispatch(
+                    unfollowUser({ token, unfollowedUsername: data.userName })
+                  );
+                }}
+              >
+                Unfollow
+              </Button>
+            ) : (
+              <Button
+                className={styles.followBtn}
+                onClick={() =>
+                  dispatch(
+                    followUser({ token, followedUsername: data.userName })
+                  )
+                }
+              >
+                Follow
+              </Button>
+            )}
           </div>
         )}
-      </div>}
-    </div>
+      </div>
+    </>
   );
 }
 
