@@ -117,6 +117,7 @@ const api = {
   getPhotoUser: "http://localhost:3001/profileUser/getPhotoUser?userName=",
   changeUserToPremium: "http://localhost:3001/changeUserType/toPremium",
   changeUserToArtist: "http://localhost:3001/changeUserType/toArtist",
+  changeUserToStandard: "http://localhost:3001/changeUserType/toStandard",
   updateBasicData: "http://localhost:3001/profileUser/editionBasicProfile",
   updateSensitiveData:
     "http://localhost:3001/profileUser/editionSensitiveProfile",

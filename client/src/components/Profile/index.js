@@ -31,6 +31,8 @@ import {
   falseAddComment,
   falseAddComentProfile,
   listFollowers,
+  unfollowUser,
+  followUser,
 } from "../../redux/actionCreators";
 import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
@@ -200,6 +202,11 @@ function Profile(props) {
 
   //// test
 
+  useEffect(() => {
+    dispatch(listFollowed(user.userName));
+  }, [user]);
+  var followed = useSelector((state) => state.listFollowed);
+
   return props.visitant ? (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -251,6 +258,37 @@ function Profile(props) {
                   {profile.name + " " + profile.lastName}
                 </div>
                 <div className={styles.name}>@{profile.userName}</div>
+                {followed.some(
+                  (e) => e.userNameFollowed === profile.userName
+                ) ? (
+                  <Button
+                    className={styles.unFollowBtn}
+                    onClick={() => {
+                      dispatch(
+                        unfollowUser({
+                          token,
+                          unfollowedUsername: profile.userName,
+                        })
+                      );
+                    }}
+                  >
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button
+                    className={styles.followBtn}
+                    onClick={() =>
+                      dispatch(
+                        followUser({
+                          token,
+                          followedUsername: profile.userName,
+                        })
+                      )
+                    }
+                  >
+                    Follow
+                  </Button>
+                )}
                 <h3 style={{ marginBottom: "25px" }}>
                   {profile.nameTypeUser === "Standard" ? (
                     <div style={{ color: "#dd9202" }}>Fan</div>

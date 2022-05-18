@@ -265,19 +265,22 @@ function EditProfile({ showModal, handleShowModal }) {
       const response = await axios.post(api.changeUserToStandard, {
         userName: user.userName,
       });
-      handleShowModal();
-      alert(response.data);
-    } catch (error) {
-      //console.log(error.response.data.msgE);
-      //console.log(error.response.data.msgE)
-    }
+      Swal.fire(
+        "🔮",
+        "You are now an fan. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          handleShowModal();
+          navigate("/");
+        }
+      });
+    } catch (error) {}
   };
 
   const handlePremium = async () => {
     try {
-      // const response = await axios.post(api.changeUserToPremium, {
-      //   userName: user.userName,
-      // });
       handleShowModal();
       navigate("/pay");
     } catch (e) {
@@ -340,7 +343,7 @@ function EditProfile({ showModal, handleShowModal }) {
                   className={activeTab === "3" ? "active" : ""}
                   onClick={(e) => handleTabs("3")}
                 >
-                  Premium Suscription
+                  Change account type
                 </NavLink>
               </NavItem>
             </Nav>
@@ -718,44 +721,50 @@ function EditProfile({ showModal, handleShowModal }) {
                 </Form>
               </TabPane>
               <TabPane tabId="3">
-                <Button
-                  onClick={() => handlePremium}
-                  style={{
-                    marginTop: "2em",
-                    background: "#dd9202",
-                    color: "black",
-                    border: "2px solid #dd9202",
-                    marginRight: "20px",
-                  }}
-                >
-                  Became Premium
-                </Button>
+                {user.typeUser === "Artist" && (
+                  <Button
+                    onClick={() => handleStandard()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Became fan
+                  </Button>
+                )}
 
-                <Button
-                  onClick={handleArtist}
-                  style={{
-                    marginTop: "2em",
-                    background: "#dd9202",
-                    color: "black",
-                    border: "2px solid #dd9202",
-                    marginRight: "20px",
-                  }}
-                >
-                  Became Artist
-                </Button>
+                {user.typeUser === "Standard" && (
+                  <Button
+                    onClick={() => handlePremium()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Became Premium
+                  </Button>
+                )}
 
-                <Button
-                  onClick={handleStandard}
-                  style={{
-                    marginTop: "2em",
-                    background: "#dd9202",
-                    color: "black",
-                    border: "2px solid #dd9202",
-                    marginRight: "20px",
-                  }}
-                >
-                  Became Standard User
-                </Button>
+                {user.typeUser !== "Artist" && (
+                  <Button
+                    onClick={() => handleArtist()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Became Artist
+                  </Button>
+                )}
               </TabPane>
             </TabContent>
           </div>
