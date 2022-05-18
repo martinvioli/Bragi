@@ -249,7 +249,7 @@ export default function Feed() {
 
     //Reportes
   function openReport(e, type){
-    console.log(e)
+    // console.log({token, id: e.idComment})
     const swal = Swal.fire({
       title: "REPORT A POST",
       showConfirmButton: true,
@@ -278,13 +278,16 @@ export default function Feed() {
         (async function fafa(){
           try {
             if(type === "comment"){
-              console.log(token)
+              // console.log(token)
               const responseComment = await axios.post(api.reportComment, {token, idComment: e.idComment, causeReport: swal.getInput().value})
+              return
             }
             if(type === "user"){
               const responseUser = await axios.post(api.reportUser, {token, idUser: e.idUser, causeReport: swal.getInput().value})
+              return
             }else{
               const response = await axios.post(api.reportPost, {token, idPost: e.idPost, causeReport: swal.getInput().value})
+              return
             }
           } catch (error) {
             const swal2 = Swal.fire({
@@ -1108,7 +1111,7 @@ export default function Feed() {
             >
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
-                  {viewPost.User ? viewPost.User.userName : user.userName}
+                  {viewPost.nameUser ? viewPost.nameUser : user.userName}
                 </CardTitle>
                 <CardTitle
                   style={{

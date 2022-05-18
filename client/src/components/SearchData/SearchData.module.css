@@ -5,11 +5,22 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    box-shadow: none ! important;
+    box-shadow: none !important;
+    background-color: #4d4d4d !important;
+    border: 2px solid #dd9202 !important;
 }
 
 .username{
+    background-color: transparent !important;
+}
+
+.username > h1 {
+    margin-top: 25px;
+    margin-bottom: 25px;
     font-size: 20px;
+}
+.username:hover{
+    background-color: transparent !important;
 }
 
 .followBtn{
