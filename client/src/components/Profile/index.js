@@ -201,34 +201,34 @@ function Profile(props) {
   //// test
 
   return props.visitant ? (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "1em",
-          marginTop: "8em",
-        }}
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className={styles.container}
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   gap: "1em",
+        //   marginTop: "8em",
+        // }}
       >
-        <div
-          style={{
-            background: "#2c292a",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            maxHeight: "35em",
-            width: "20em",
-            marginRight: "0em",
-          }}
+        <div className={styles.profile}
+          // style={{
+          //   background: "#2c292a",
+          //   display: "flex",
+          //   justifyContent: "center",
+          //   flexDirection: "column",
+          //   alignItems: "center",
+          //   maxHeight: "35em",
+          //   width: "20em",
+          //   marginRight: "0em",
+          // }}
         >
-          <img className={styles.profileImg} src={profileImage} alt=""></img>
-          <div style={{ display: "inline-flex", marginLeft: "300px" }}>
+          <div className={styles.editButton} style={{ display: "inline-block" , marginRight: "-270px", marginBottom: "-50px"}}>
             <GoReport
               style={{ height: "25px", width: "50px",}}
               onClick={() => {openReport(profile, "user");}}
             />
           </div>
+          <img className={styles.profileImg} src={profileImage} alt=""></img>
           {profile.name ? (
             <div>
               <div>
@@ -236,10 +236,10 @@ function Profile(props) {
                   {profile.name + " " + profile.lastName}
                 </div>
                 <div className={styles.name}>@{profile.userName}</div>
-                <h3>
+                <h3 style={{ marginBottom: "25px"}}>
                   {profile.nameTypeUser === "Standard"
-                    ? "Fan"
-                    : profile.nameTypeUser}
+                    ? <div style={{ color: "#dd9202" }}>Fan</div>
+                    : <div style={{ color: "#dd9202" }}>{profile.nameTypeUser}</div>}
                 </h3>
                 <div className={styles.description}>{profile.description}</div>
               </div>
@@ -247,16 +247,21 @@ function Profile(props) {
           ) : null}
         </div>
         <br></br>
-        {profile.nameTypeUser === "Artist" ? (
+    </div>
+    <div>
+      {profile.nameTypeUser === "Artist" ? (
           <>
+          <h1 style={{ color: "white", marginTop: "125px", marginLeft: "20px" }}>Posts of the Artist</h1>
             <div
-              className={styles.post}
+              className={styles.postProfile}
               style={{
                 width: "32em",
                 padding: 0,
                 margin: 0,
                 overflowY: "auto",
                 maxHeight: "30em",
+                marginTop: "10px",
+                marginLeft: "25px"
               }}
             >
               {posts &&
@@ -448,7 +453,7 @@ function Profile(props) {
           </>
         ) : (
           <div className={styles.fan}>
-            <h1>FOLLOWING</h1>
+            {/* <h1>FOLLOWING</h1> */}
           </div>
         )}
       </div>

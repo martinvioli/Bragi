@@ -33,7 +33,7 @@ class PayClass {
 
     };
 
-    sub = async = (req, res) => {
+    sub = async (req, res) => {
       const { email, payment_method } = req.body;
       try {
         const customer = await stripe.customers.create({
