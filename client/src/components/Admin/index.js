@@ -43,6 +43,7 @@ import {
   deletePost,
   getPremiumPlan,
   createPlansPremiums,
+  deletePlansPremiums,
 } from "../../redux/actionCreators";
 import {
   FcEditImage,
@@ -120,9 +121,12 @@ function Admin() {
     dispatch(getPostReports());
     dispatch(getAllBannedUsers());
     dispatch(getAllCausesofReport());
+    // setTimeout(() => {
+    //   dispatch(getPremiumPlan());
+    // }, 2000);
     dispatch(getPremiumPlan());
   }, []);
-  console.log(premiumPlans);
+  //console.log(premiumPlans);
   const handleDelete = (e) => {
     //console.log(e.idPost);
     //console.log(e.target.value);
@@ -152,7 +156,15 @@ function Admin() {
   const handleSubmitInput = (e) => {
     console.log(input);
     e.preventDefault();
-    dispatch(getUserByName(input.user));
+    if (!input.user) {
+      Swal.fire({
+        title: "We were unable to perform your user search 😪",
+        confirmButtonColor: "#dd9202",
+      });
+    } else {
+      dispatch(getUserByName(input.user));
+    }
+
     setInput({
       plan: "",
       user: "",
@@ -230,35 +242,104 @@ function Admin() {
     // };
     // dispatch(modifyPlansPremiums(newPlan));
   };
+  const handleDeletePlan = (e) => {
+    // e.preventDefault();
+    console.log(e.idPlanPremium);
+    let obj = { idPlanPremium: e.idPlanPremium };
+    console.log(obj);
+    dispatch(deletePlansPremiums(obj));
+  };
   const handleSubmitModifyPlans = (e) => {
     e.preventDefault();
-    console.log(plan);
-    premiumPlans &&
-      premiumPlans.forEach((e) => {
-        if (e.numberOfMonths === parseInt(plan.numberOfMonths)) {
-          plan.idPlanPremium = e.idPlanPremium;
-        }
+    //console.log(plan);
+    if (!plan.priceMembership || !plan.numberOfMonths) {
+      Swal.fire({
+        title:
+          "We were unable to modify this plan 😪 Please, fill in all fields ",
+        confirmButtonColor: "#dd9202",
       });
-    let obj = {
-      idPlanPremium: plan.idPlanPremium,
-      priceMembership: parseInt(plan.priceMembership),
-      numberOfMonths: parseInt(plan.numberOfMonths),
-    };
-    console.log(obj);
-    dispatch(modifyPlansPremiums(plan));
+    } else if (
+      parseInt(plan.priceMembership) > 1000 ||
+      parseInt(plan.priceMembership) <= 0
+    ) {
+      Swal.fire({
+        title:
+          "We were unable to modify this plan 😪. Please set a valid price",
+        confirmButtonColor: "#dd9202",
+      });
+    } else {
+      premiumPlans &&
+        premiumPlans.forEach((e) => {
+          if (e.numberOfMonths === parseInt(plan.numberOfMonths)) {
+            plan.idPlanPremium = e.idPlanPremium;
+          }
+        });
+      let obj = {
+        idPlanPremium: plan.idPlanPremium,
+        priceMembership: parseInt(plan.priceMembership),
+        numberOfMonths: parseInt(plan.numberOfMonths),
+      };
+      console.log(obj);
+      dispatch(modifyPlansPremiums(plan));
+      setTimeout(function () {
+        dispatch(getPremiumPlan());
+      }, 2000);
+    }
   };
 
   const handleSubmitCreatePlans = (e) => {
     e.preventDefault();
-    console.log(plan2);
-    let obj = {
-      priceMembership: parseInt(plan2.priceMembership),
-      namePlanPremium: plan2.namePlanPremium,
-      numberOfMonths: parseInt(plan2.numberOfMonths),
-      discount: parseInt(plan2.discount),
-    };
-    console.log(obj);
-    dispatch(createPlansPremiums(obj));
+    console.log(premiumPlans);
+    let checkName =
+      premiumPlans &&
+      premiumPlans.map(
+        (e) =>
+          e.namePlanPremium.toLowerCase() ===
+          plan2.namePlanPremium.toLowerCase()
+      );
+
+    console.log(checkName);
+    if (checkName.includes(true)) {
+      Swal.fire({
+        title:
+          "We were unable to create this plan 😪 The name you have chosen already exists. Please try another one ",
+        confirmButtonColor: "#dd9202",
+      });
+    } else if (
+      !plan2.priceMembership ||
+      !plan2.numberOfMonths ||
+      !plan2.namePlanPremium ||
+      !plan2.discount
+    ) {
+      Swal.fire({
+        title:
+          "We were unable to create this plan 😪 Please, fill in all fields ",
+        confirmButtonColor: "#dd9202",
+      });
+    } else if (
+      parseInt(plan2.priceMembership) > 1000 ||
+      parseInt(plan2.priceMembership) <= 0 ||
+      parseInt(plan2.discount) < 1 ||
+      parseInt(plan2.discount) > 99
+    ) {
+      Swal.fire({
+        title:
+          "We were unable to create this plan 😪. Please set a valid price and discount",
+        confirmButtonColor: "#dd9202",
+      });
+    } else {
+      let obj = {
+        priceMembership: parseInt(plan2.priceMembership),
+        namePlanPremium: plan2.namePlanPremium,
+        numberOfMonths: parseInt(plan2.numberOfMonths),
+        discount: parseInt(plan2.discount),
+      };
+      console.log(obj);
+      dispatch(createPlansPremiums(obj));
+      setTimeout(function () {
+        dispatch(getPremiumPlan());
+      }, 2000);
+    }
   };
 
   const handleUnban = async (e) => {
@@ -282,6 +363,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "1" ? "active" : ""}
                 onClick={() => handleActiveTab("1")}
+                style={{ color: "red" }}
               >
                 Reports
               </NavLink>
@@ -290,6 +372,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "2" ? "active" : ""}
                 onClick={() => handleActiveTab("2")}
+                style={{ color: "red" }}
               >
                 Banned Users
               </NavLink>
@@ -298,6 +381,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "3" ? "active" : ""}
                 onClick={() => handleActiveTab("3")}
+                style={{ color: "red" }}
               >
                 Plans
               </NavLink>
@@ -306,6 +390,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "4" ? "active" : ""}
                 onClick={() => handleActiveTab("4")}
+                style={{ color: "red" }}
               >
                 Statistics
               </NavLink>
@@ -314,6 +399,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "5" ? "active" : ""}
                 onClick={() => handleActiveTab("5")}
+                style={{ color: "red" }}
               >
                 Search Users
               </NavLink>
@@ -322,6 +408,7 @@ function Admin() {
               <NavLink
                 className={activeTab === "6" ? "active" : ""}
                 onClick={() => handleActiveTab("6")}
+                style={{ color: "red" }}
               >
                 Search Posts
               </NavLink>
@@ -384,24 +471,48 @@ function Admin() {
             </TabPane>
             <TabPane tabId="3">
               <Row>
-                <Col sm="4">
-                  Type
-                  <h6>Silver</h6>
-                  <h6>Gold</h6>
-                  <h6>Platinum</h6>
+                <Col sm="2">
+                  <h6>Name:</h6> <hr className={styles.hr} width="600% " />
+                  <h6>Price:</h6> <hr className={styles.hr} width="600% " />
+                  <h6>Months:</h6> <hr className={styles.hr} width="600% " />
+                  {/* <h6>Discount:</h6> <hr className={styles.hr} width="600% " /> */}
+                  <h6>Delete:</h6>
                 </Col>
-                <Col sm="4">
-                  Months
-                  <h6>1 </h6>
-                  <h6>3</h6>
-                  <h6>6</h6>
-                </Col>
-                <Col sm="4">
-                  Prices
-                  <h6>$0.99</h6>
-                  <h6>$1.49</h6>
-                  <h6>$1.99</h6>
-                </Col>
+                {premiumPlans &&
+                  premiumPlans.map((e) => (
+                    <Col sm="2">
+                      <h6>
+                        {e.namePlanPremium.charAt(0).toUpperCase() +
+                          e.namePlanPremium.slice(1)}
+                      </h6>
+                      <hr className={styles.nohr} />
+                      <h6> ${e.priceMembership} </h6>
+                      <hr className={styles.nohr} />
+                      <h6> {e.numberOfMonths}</h6>
+                      <hr className={styles.nohr} />
+                      {/* {e.discount ? (
+                        <div>
+                          <h6>{e.discount}</h6>
+                          <hr className={styles.nohr} />
+                        </div>
+                      ) : (
+                        <div>
+                          <h6>No Discount</h6>
+                          <hr className={styles.nohr} />
+                        </div>
+                      )} */}
+                      <button
+                        style={{
+                          color: "white",
+                          backgroundColor: "red",
+                          marginTop: "0.3em",
+                        }}
+                        onClick={() => handleDeletePlan(e)}
+                      >
+                        X
+                      </button>
+                    </Col>
+                  ))}
                 <div className={styles.plansPremiums}>
                   <div className={styles.modifyPlan}>
                     <Form onSubmit={(e) => handleSubmitModifyPlans(e)}>
@@ -414,7 +525,7 @@ function Admin() {
                         name="numberOfMonths"
                         onChange={(e) => handlePlan(e)}
                         value={plan.numberOfMonths}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em" }}
                       >
                         <option value="default">Select plan ...</option>
                         <option value="1">1 month</option>
@@ -429,13 +540,10 @@ function Admin() {
                         type="number"
                         name="priceMembership"
                         value={plan.priceMembership}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em", marginBottom: "1em" }}
                         onChange={(e) => handlePlan(e)}
                       />
-                      <Input
-                        type="submit"
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
-                      />
+                      <Input type="submit" style={{ width: "15em" }} />
                     </Form>
                   </div>
                   <div className={styles.createPlan}>
@@ -449,7 +557,7 @@ function Admin() {
                         name="namePlanPremium"
                         onChange={(e) => handlePlan2(e)}
                         value={plan2.namePlanPremium}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em" }}
                       >
                         <option value="default">Select plan ...</option>
                         <option value="silver">Silver</option>
@@ -465,7 +573,7 @@ function Admin() {
                         name="numberOfMonths"
                         onChange={(e) => handlePlan2(e)}
                         value={plan2.numberOfMonths}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em" }}
                       >
                         <option value="default">Select plan ...</option>
                         <option value="1">1 month</option>
@@ -474,13 +582,13 @@ function Admin() {
                         <option value="12">12 months</option>
                       </Input>
                       <Label htmlFor="price" style={{ color: "white" }}>
-                        Price :{" "}
+                        Price :
                       </Label>
                       <Input
                         type="number"
                         name="priceMembership"
                         value={plan2.priceMembership}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em" }}
                         onChange={(e) => handlePlan2(e)}
                       />
                       <Label htmlFor="discount" style={{ color: "white" }}>
@@ -490,13 +598,10 @@ function Admin() {
                         type="number"
                         name="discount"
                         value={plan2.discount}
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
+                        style={{ width: "15em", marginBottom: "1em" }}
                         onChange={(e) => handlePlan2(e)}
                       />
-                      <Input
-                        type="submit"
-                        style={{ maxWidth: "46%", marginRight: "2%" }}
-                      />
+                      <Input type="submit" style={{ width: "15em" }} />
                     </Form>
                   </div>
                 </div>
@@ -586,9 +691,26 @@ function Admin() {
                       type="text"
                       value={input.user}
                       name="user"
-                      placeholder="Search User..."
+                      placeholder="Search Users..."
+                      style={{
+                        width: "40em",
+                        height: "3em",
+                        margin: "2em",
+                        border: "5px solid gray",
+                        borderRadius: "10px",
+                      }}
                     />
-                    <Input type="submit" value="Search" />
+                    <Input
+                      type="submit"
+                      value="Search"
+                      style={{
+                        width: "40em",
+                        height: "3em",
+                        margin: "2em",
+                        border: "5px solid gray",
+                        borderRadius: "10px",
+                      }}
+                    />
                   </Form>
                   {userSearch[0] &&
                     userSearch[0].map((e) => {

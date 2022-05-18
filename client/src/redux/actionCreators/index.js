@@ -64,7 +64,7 @@ import {
   GET_PREMIUM_PLANS,
   REPORT_COMMENT,
   REPORT_POST,
-  REPORT_USER
+  REPORT_USER,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -454,9 +454,9 @@ export const clearDetails = () => {
 export const followUser = (obj) => {
   return async (dispatch) => {
     try {
-      console.log(obj)
+      console.log(obj);
       const response = await axios.post(api.followUser, obj);
-      console.log(response)
+      console.log(response);
       console.log("hasta aca si");
       return dispatch({
         type: FOLLOW_USER,
@@ -766,9 +766,10 @@ export const createPlansPremiums = (plan) => {
   };
 };
 
-export const deletePlansPremiums = (plan) => {
+export const deletePlansPremiums = (idPlanPremium) => {
   return async (dispatch) => {
-    const response = await axios.post(api.editPremiumPlan, plan);
+    const response = await axios.delete(api.deletePremiumPlan, idPlanPremium);
+    console.log(response.data);
     return dispatch({
       type: DELETE_PLANS_PREMIUMS,
       payload: response.data,
@@ -888,48 +889,63 @@ export const getPremiumPlan = function () {
     }
   };
 };
-export const reportComment = (token, idComment, causeReport) =>{
-  return async ( dispatch) =>{
+export const reportComment = (token, idComment, causeReport) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.post(api.reportComment, token, idComment, causeReport )
+      const response = await axios.post(
+        api.reportComment,
+        token,
+        idComment,
+        causeReport
+      );
 
       return dispatch({
         type: REPORT_COMMENT,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
 
-export const reportUser = (token, idUser, causeReport) =>{
-  return async ( dispatch) =>{
+export const reportUser = (token, idUser, causeReport) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.post(api.reportUser, token, idUser, causeReport )
+      const response = await axios.post(
+        api.reportUser,
+        token,
+        idUser,
+        causeReport
+      );
 
       return dispatch({
         type: REPORT_USER,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
 
-export const reportPost = (token, idPost, causeReport) =>{
-  return async ( dispatch) =>{
+export const reportPost = (token, idPost, causeReport) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.post(api.reportPost, token, idPost, causeReport )
-      console.log(response)
+      const response = await axios.post(
+        api.reportPost,
+        token,
+        idPost,
+        causeReport
+      );
+      console.log(response);
 
       return dispatch({
         type: REPORT_POST,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
