@@ -44,6 +44,7 @@ function SearchData({ data }) {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              gap: "15px",
             }}
           >
             <img
@@ -53,15 +54,10 @@ function SearchData({ data }) {
                 height: "60px",
                 width: "60px",
                 borderRadius: "50%",
-                marginTop: "15px",
               }}
             ></img>
-            <Link
-              to={`/profile/${data.userName}`}
-              className={styles.username}
-              style={{ marginTop: "-20px" }}
-            >
-              <h1 style={{ marginTop: "2em" }}>@{data.userName}</h1>
+            <Link to={`/profile/${data.userName}`} className={styles.username}>
+              <h4>@{data.userName}</h4>
             </Link>
             {followed.some((e) => e.userNameFollowed === data.userName) ? (
               <Button

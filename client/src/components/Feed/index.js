@@ -113,7 +113,6 @@ export default function Feed() {
     // setTimeout(function () {
     //   dispatch(getAllPost());
     // }, 1000);
-    dispatch(getAllPost());
     if (user.typeUser === "admin") {
       navigate("/admin");
     }
@@ -334,6 +333,7 @@ export default function Feed() {
     token && user.typeUser !== "Artist" && dispatch(getAllPost(token));
   }, [token]);
 
+  console.log(posts);
   // EDITAR POST
 
   const handleEdit = (e) => {
