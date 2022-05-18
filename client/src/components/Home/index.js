@@ -28,6 +28,7 @@ import {
   clearData,
   getPhotoUser,
   getTop10Songs,
+  listFollowed,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
 import { Link, useNavigate } from "react-router-dom";
@@ -164,6 +165,14 @@ function Home() {
       }
     });
   }
+
+  var followed = useSelector((state) => state.listFollowed);
+
+  useEffect(() => {
+    dispatch(listFollowed(user.userName));
+  }, [user]);
+  console.log(user);
+  console.log(followed);
   return (
     <div>
       {show ? (

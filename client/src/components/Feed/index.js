@@ -357,56 +357,65 @@ export default function Feed() {
     }, 1000);
   }
 
+  console.log(posts);
+
   return (
     <div className="container-fluid">
       <div className={styles.containerArtist}>
-        <div className={styles.glowOnHover}>
-          <Link
-            to="/profile"
-            style={{
-              display: "flex",
-              textAlign: "center",
-              fontSize: "large",
-              fontWeight: "bold",
-              marginTop: "5%",
-              marginBottom: "5%",
-              marginLeft: "5%",
-            }}
-          >
-            Get premium now so you don't miss out on anything!
-          </Link>
-          <div>
-            {fakePosts.map((e) => {
-              return (
-                <Card
-                  style={{
-                    width: "90%",
-                    height: "90%",
-                  }}
-                  color="bg-light"
-                  className={styles.backgroundPostPremium}
-                  key={e.token}
-                >
-                  <CardBody>
-                    <CardTitle tag="h5">{user.username}</CardTitle>
-                    <CardSubtitle className="mb-2 text-muted" tag="h6">
-                      {e.content}
-                    </CardSubtitle>
-                  </CardBody>
-                  <div className={styles.img}>
-                    <img alt="img" src={e.image} height="250px" width="300px" />
-                  </div>
-                  <CardLink
-                    href={e.link}
-                  >{`LINK DEL POST : ${e.link}`}</CardLink>
-                </Card>
-              );
-            })}
+        {user.typeUser === "Standard" && (
+          <div className={styles.glowOnHover}>
+            <Link
+              to="/profile"
+              style={{
+                display: "flex",
+                textAlign: "center",
+                fontSize: "large",
+                fontWeight: "bold",
+                marginTop: "5%",
+                marginBottom: "5%",
+                marginLeft: "5%",
+              }}
+            >
+              Get premium now so you don't miss out on anything!
+            </Link>
+            <div>
+              {fakePosts.map((e) => {
+                return (
+                  <Card
+                    style={{
+                      width: "90%",
+                      height: "90%",
+                    }}
+                    color="bg-light"
+                    className={styles.backgroundPostPremium}
+                    key={e.token}
+                  >
+                    <CardBody>
+                      <CardTitle tag="h5">{user.username}</CardTitle>
+                      <CardSubtitle className="mb-2 text-muted" tag="h6">
+                        {e.content}
+                      </CardSubtitle>
+                    </CardBody>
+                    <div className={styles.img}>
+                      <img
+                        alt="img"
+                        src={e.image}
+                        height="250px"
+                        width="300px"
+                      />
+                    </div>
+                    <CardLink
+                      href={e.link}
+                    >{`LINK DEL POST : ${e.link}`}</CardLink>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className={styles.center}>
-          {user.typeUser === "Artist" || user.userName === "primoro12" ? (
+          {user.typeUser === "Artist" ? (
             <div className={styles.newPost}>
               <form>
                 <div className={styles.divTextarea}>
@@ -466,7 +475,7 @@ export default function Feed() {
               <div className={styles.postsArtist}>
                 YOUR POSTS
                 <div className={styles.post}>
-                  {ownPosts.length > 0 &&
+                  {ownPosts.length > 0 ? (
                     ownPosts.map((e) => {
                       return (
                         <Card
@@ -661,7 +670,10 @@ export default function Feed() {
                           </div>
                         </Card>
                       );
-                    })}
+                    })
+                  ) : (
+                    <h2>You don't have any posts yet!.</h2>
+                  )}
                 </div>
                 <Modal isOpen={showModal}>
                   <ModalHeader toggle={() => setShowModal(!showModal)}>
@@ -762,7 +774,7 @@ export default function Feed() {
           ) : (
             <div className={styles.posts}>
               <div className={styles.post} style={{ marginTop: "1.5em" }}>
-                {posts &&
+                {posts && posts.length > 0 ? (
                   posts.map((e) => {
                     // console.log(e)
                     //console.log(user)
@@ -1098,7 +1110,13 @@ export default function Feed() {
                         </Card>
                       );
                     }
-                  })}
+                  })
+                ) : (
+                  <h2>
+                    Oops... It seems that you don't follow anyone yet... Or your
+                    favourite artist is too lazy for posting something!.
+                  </h2>
+                )}
               </div>
             </div>
           )}
@@ -1135,7 +1153,13 @@ export default function Feed() {
                 <CardTitle style={{ color: "orange" }} tag="h7">
                   <img
                     // className={styles.profileImg}
-                    style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50px",
+                      border: "2px solid gray",
+                      marginRight: "15px",
+                    }}
                     src={`${api.getPhotoUser}${viewPost.nameUser}`}
                     alt=""
                   ></img>
@@ -1187,7 +1211,13 @@ export default function Feed() {
                       <CardTitle tag="h5">
                         <img
                           // className={styles.profileImg}
-                          style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50px",
+                            border: "2px solid gray",
+                            marginRight: "15px",
+                          }}
                           src={`${api.getPhotoUser}${e.userNameComment}`}
                           alt=""
                         ></img>
