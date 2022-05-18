@@ -1,31 +1,45 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Label } from "reactstrap";
 import { whyArtist } from "../../redux/actionCreators";
+import api from "../../Utils";
 
 const WhyPay = () => {
+  // const responseToArtist = useSelector((state) => state.responseToArtist);
+
   const [input, setInput] = useState({
     reason: "",
     userName: "",
     email: "",
   });
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!input.email || !input.reason || !input.userName) {
-      alert("All fields must be completed");
-      return;
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (!input.email || !input.reason || !input.userName) {
+        alert("All fields must be completed");
+        return;
+      }
+      const response = await axios.post(api.whyArtist, input);
+      console.log(response.data.msg);
+      alert(response.data.msg);
+      setInput({
+        reason: "",
+        userName: "",
+        email: "",
+      });
+    } catch (error) {
+      console.log(error.response.data.msgE);
+      alert(error.response.data.msgE);
+      setInput({
+        reason: "",
+        userName: "",
+        email: "",
+      });
     }
-    console.log(input);
-    dispatch(whyArtist(input));
-    alert("Form Send");
-    setInput({
-      reason: "",
-      userName: "",
-      email: "",
-    });
   };
 
   const handleChange = (e) => {
@@ -37,7 +51,9 @@ const WhyPay = () => {
 
   return (
     <>
-      <h2 style={{ color: "white", textAling: "center" }}>WHY ARTIST</h2>
+      <h2 style={{ color: "white", textAling: "center" }}>
+        Do you want to became an artist? Give us your reasons
+      </h2>
       <div className="container">
         <Form onSubmit={handleSubmit}>
           <Label htmlFor="userName" style={{ color: "white" }}>
@@ -59,7 +75,7 @@ const WhyPay = () => {
             onChange={handleChange}
           />
           <Label htmlFor="reason" style={{ color: "white" }}>
-            Reason why :{" "}
+            Reason why. Please include a link to your music:{" "}
           </Label>
           <Input
             type="textarea"
