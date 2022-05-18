@@ -415,32 +415,37 @@ export default function Feed() {
         )}
 
         <div className={styles.center}>
-          {user.typeUser === "Artist" ? (
+          {user.typeUser === "Artist" || user.userName === "demopris12" ? (
             <div className={styles.newPost}>
               <form>
                 <div className={styles.divTextarea}>
                   <h3>Add new post</h3>
                   <Input
-                    style={{ width: "50em", height: "6em" }}
+                    style={{
+                      width: "50em",
+                      height: "6em",
+                      border: "3px solid #dd9202",
+                      borderRadius: "8px",
+                    }}
                     color="bg-light"
                     placeholder="Tell your fans something new in no more than 200 characters!."
-                    //className={styles.textarea}
                     name="contentPost"
                     maxlength="200"
                     value={input.contentPost}
                     type="textarea"
                     onChange={(e) => handleChange(e)}
                   />
-                </div>
+                </div>{" "}
                 <div className={styles.buttons}>
-                  {/* <Input
-                    accept="image/png,image/jpeg"
-                    type="file"
-                    name="imagePost"
-                    onChange={handleSearchImage}
-                  /> */}
                   <Input
-                    style={{ width: "38em", height: "2.5em" }}
+                    style={{
+                      width: "39em",
+                      height: "2.5em",
+                      border: "3px solid #dd9202",
+                      margin: "0.4em",
+                      borderRadius: "8px",
+                      marginLeft: "-0.1em",
+                    }}
                     onChange={handleChange}
                     type="url"
                     name="linkContent"
@@ -448,7 +453,12 @@ export default function Feed() {
                     placeholder="Insert URL 🔗"
                   />
                   <Input
-                    style={{ width: "7em", height: "2.5em" }}
+                    style={{
+                      width: "7.5em",
+                      height: "2.5em",
+                      border: "3px solid #dd9202",
+                      borderRadius: "8px",
+                    }}
                     type="select"
                     name="select"
                     value={input.select}
@@ -457,13 +467,12 @@ export default function Feed() {
                     <option value="Standard">Standard Post</option>
                     <option value="Premium">Premium Post</option>
                   </Input>
-
                   <Button
                     disabled={
                       input.contentPost.trim().length > 0 ? false : true
                     }
-                    style={{ width: "5em", height: "2.5em" }}
-                    color="primary"
+                    style={{ width: "5em", height: "2.5em", margin: "0.3em" }}
+                    color="warning"
                     onClick={(e) => {
                       handleClick(e);
                     }}
@@ -480,7 +489,6 @@ export default function Feed() {
                       return (
                         <Card
                           style={{
-                            //marginLeft: "4em",
                             width: "100%",
                             height: "50%",
                             minHeight: "10em",
@@ -538,8 +546,7 @@ export default function Feed() {
                               className={styles.topArtist}
                               style={{
                                 color: "black",
-                                // display: "flex",
-                                // justifyContent: "flex-start",
+
                                 marginLeft: "-570px",
                               }}
                               tag="h7"
@@ -603,7 +610,6 @@ export default function Feed() {
                             </div>
                           )}
                           <div className={styles.icons}>
-                            {/* <CardLink href={e.linkContent}> */}
                             <FcLink
                               onClick={() => onClickContent(e.linkContent)}
                               style={{
@@ -612,7 +618,6 @@ export default function Feed() {
                                 height: "2em",
                               }}
                             />
-                            {/* </CardLink> */}
                             <div
                               style={{
                                 marginBottom: "0.4em",
@@ -709,7 +714,7 @@ export default function Feed() {
                   </ModalBody>
                   <ModalFooter>
                     <Button
-                      color="primary"
+                      color="warning"
                       disabled={
                         editPost.contentPost &&
                         editPost.contentPost.trim().length > 0
@@ -729,55 +734,12 @@ export default function Feed() {
                   </ModalFooter>
                 </Modal>
               </div>
-              {/* <br></br>
-              <div className={styles.concertAndEventPost}>
-                <form className={styles.newConcert}>
-                  <h3>Add new concert</h3>
-                  <input
-                    type="textarea"
-                    name="contentConcert"
-                    placeholder="Describe some thing about the concert."
-                  />
-                  <input
-                    accept="image/png,image/jpeg"
-                    type="file"
-                    name="imageConcert"
-                  />
-                  <input type="date" name="dateConcert" />
-                  <input
-                    type="text"
-                    name="textConcert"
-                    placeholder="Name the country and the stadium or place."
-                  />
-                </form>
-                <form className={styles.newEvent}>
-                  <h3>Add new event</h3>
-                  <input
-                    type="textarea"
-                    name="contentEvent"
-                    placeholder="Describe some thing about the event."
-                  />
-                  <input
-                    accept="image/png,image/jpeg"
-                    type="file"
-                    name="imageEvent"
-                  />
-                  <input type="date" name="dateEvent" />
-                  <input
-                    type="text"
-                    name="textEvent"
-                    placeholder="Name the place or where is going to be the event."
-                  />
-                </form>
-              </div> */}
             </div>
           ) : (
             <div className={styles.posts}>
               <div className={styles.post} style={{ marginTop: "1.5em" }}>
                 {posts && posts.length > 0 ? (
                   posts.map((e) => {
-                    // console.log(e)
-                    //console.log(user)
                     if (
                       e.typeOfPost === "Premium" &&
                       user.typeUser !== "Premium"
@@ -833,16 +795,13 @@ export default function Feed() {
                             </div>
                           )}
                           <div className={styles.icons}>
-                            {/* <CardLink href={e.linkContent}> */}
                             <FcLink
-                              // onClick={() => onClickContent(e.linkContent)}
                               style={{
                                 marginBottom: "0.4em",
                                 width: "2em",
                                 height: "2em",
                               }}
                             ></FcLink>
-                            {/* </CardLink> */}
                             <div
                               style={{
                                 marginBottom: "0.4em",
@@ -865,17 +824,6 @@ export default function Feed() {
                                     width: "2em",
                                     height: "2em",
                                   }}
-                                  // onClick={() => {
-                                  //   dispatch(
-                                  //     falseDislike({
-                                  //       index: posts.indexOf(e),
-                                  //       userName: user.userName,
-                                  //     })
-                                  //   );
-                                  //   dispatch(
-                                  //     dislike({ token, idPost: e.idPost })
-                                  //   );
-                                  // }}
                                 />
                               ) : (
                                 <FcLikePlaceholder
@@ -883,15 +831,6 @@ export default function Feed() {
                                     width: "2em",
                                     height: "2em",
                                   }}
-                                  // onClick={() => {
-                                  //   dispatch(
-                                  //     falseLike({
-                                  //       index: posts.indexOf(e),
-                                  //       userName: user.userName,
-                                  //     })
-                                  //   );
-                                  //   dispatch(like({ token, idPost: e.idPost }));
-                                  // }}
                                 />
                               )}
                             </div>
@@ -915,17 +854,6 @@ export default function Feed() {
                                   width: "2em",
                                   height: "2em",
                                 }}
-                                // onClick={() => {
-                                //   setViewPost({ ...e });
-                                //   dispatch(getAllComments(e.idPost));
-                                //   handleShowModalComments();
-                                //   setCommentInput({
-                                //     ...commentInput,
-                                //     idPost: e.idPost,
-                                //     token: token,
-                                //   });
-                                //   setSlicer(3);
-                                // }}
                               />
                             </div>
                           </div>
@@ -1011,7 +939,6 @@ export default function Feed() {
                             </div>
                           )}
                           <div className={styles.icons}>
-                            {/* <CardLink href={e.linkContent}> */}
                             <FcLink
                               onClick={() => onClickContent(e.linkContent)}
                               style={{
@@ -1020,7 +947,6 @@ export default function Feed() {
                                 height: "2em",
                               }}
                             ></FcLink>
-                            {/* </CardLink> */}
                             <div
                               style={{
                                 marginBottom: "0.4em",
@@ -1113,8 +1039,8 @@ export default function Feed() {
                   })
                 ) : (
                   <h2>
-                    Oops... It seems that you don't follow anyone yet... Or your
-                    favourite artist is too lazy for posting something!.
+                    Oops... It seems that you don't follow anyone yet... 😪 Or
+                    your favourite artist is too lazy for posting something! 😁.
                   </h2>
                 )}
               </div>
@@ -1152,7 +1078,6 @@ export default function Feed() {
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
                   <img
-                    // className={styles.profileImg}
                     style={{
                       width: "50px",
                       height: "50px",
@@ -1210,7 +1135,6 @@ export default function Feed() {
                     <CardBody>
                       <CardTitle tag="h5">
                         <img
-                          // className={styles.profileImg}
                           style={{
                             width: "50px",
                             height: "50px",

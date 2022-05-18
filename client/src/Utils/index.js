@@ -82,9 +82,9 @@ const apiHeroku = {
   forgottenPasswordPost: "https://bragiproject.herokuapp.com/recoverPassword",
   getAllPostToAdmin: "https://bragiproject.herokuapp.com/admin/getAllPostUsers",
   getPremiumPlan:
-  "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
   payment: "https://bragiproject.herokuapp.com/pay/sub",
-  aprobedPayment: "",
+  aprobedPayment:
     "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
   whyArtist:
     "https://bragiproject.herokuapp.com/changeUserType/emailReasonToArtist",
