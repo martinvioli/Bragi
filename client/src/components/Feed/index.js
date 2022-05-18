@@ -951,6 +951,7 @@ export default function Feed() {
                                 <Link
                                   className={styles.userName}
                                   to={`/profile/${e.nameUser}`}
+                                  style={{ color: "black" }}
                                   onClick={() =>
                                     dispatch(getUseProfile(token, e.nameUser))
                                   }
@@ -1142,7 +1143,7 @@ export default function Feed() {
                 </CardTitle>
                 <CardTitle
                   style={{
-                    color: "blue",
+                    color: "black",
                     display: "flex",
                     justifyContent: "flex-start",
                     fontSize: "small",

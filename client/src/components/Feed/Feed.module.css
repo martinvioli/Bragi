@@ -329,8 +329,16 @@
   justify-content: flex-start;
   margin-left: 5px;
   margin-right: 5px;
-
+  transition: 0.3s;
 }
+
+.userName:hover {
+  color: gray !important;
+  font-size: 20px !important;
+  background-color: transparent !important;
+  transition: 0.3s;
+}
+
 .userNameArtist {
   justify-content: flex-start;
   margin-left: 5px;
