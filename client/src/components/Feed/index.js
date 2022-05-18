@@ -126,7 +126,7 @@ export default function Feed() {
   //    console.log(e)
   //   dispatch(getPhotoUser(e.User.userName));
   // });
-
+  //console.log(user);
   const handleSearchImage = (e) => {
     setInput({
       ...input,
@@ -1135,7 +1135,13 @@ export default function Feed() {
                 <CardTitle style={{ color: "orange" }} tag="h7">
                   <img
                     // className={styles.profileImg}
-                    style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50px",
+                      border: "2px solid gray",
+                      marginRight: "15px",
+                    }}
                     src={`${api.getPhotoUser}${viewPost.nameUser}`}
                     alt=""
                   ></img>
@@ -1187,7 +1193,13 @@ export default function Feed() {
                       <CardTitle tag="h5">
                         <img
                           // className={styles.profileImg}
-                          style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50px",
+                            border: "2px solid gray",
+                            marginRight: "15px",
+                          }}
                           src={`${api.getPhotoUser}${e.userNameComment}`}
                           alt=""
                         ></img>
