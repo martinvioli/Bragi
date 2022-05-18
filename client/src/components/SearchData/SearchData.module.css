@@ -37,6 +37,9 @@
 .username{
     font-size: 20px;
 }
+.username:hover {
+    background-color: transparent !important;   
+}
 
 .followBtn{
     background-color: #dd9202 !important;
