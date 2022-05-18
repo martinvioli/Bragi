@@ -26,6 +26,7 @@ import { validateEdit } from "../../Utils/validate";
 
 function EditProfile({ showModal, handleShowModal }) {
   const user = useSelector((state) => state.user);
+  const profileImage = useSelector((state) => state.profileImage);
   const [input, setInput] = useState({
     name: user.name ? user.name : "",
     lastName: user.lastName ? user.lastName : "",
@@ -122,6 +123,11 @@ function EditProfile({ showModal, handleShowModal }) {
       })
     );
   };
+
+  // useEffect(() => {
+  //   dispatch(getPhotoUser(null))
+  //   console.log(profileImage)
+  // },[])
 
   const handleBlur = (e) => {
     setErrors(
