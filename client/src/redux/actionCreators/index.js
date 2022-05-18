@@ -61,6 +61,9 @@ import {
   CHANGE_TYPE_OF_POST,
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
+  REPORT_COMMENT,
+  REPORT_POST,
+  REPORT_USER
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -450,14 +453,16 @@ export const clearDetails = () => {
 export const followUser = (obj) => {
   return async (dispatch) => {
     try {
+      console.log(obj)
       const response = await axios.post(api.followUser, obj);
-      //console.log(response.data);
+      console.log(response)
+      console.log("hasta aca si");
       return dispatch({
         type: FOLLOW_USER,
         payload: response.data,
       });
     } catch (error) {
-      //console.log(error);
+      console.log(error);
     }
   };
 };
@@ -867,3 +872,49 @@ export const forgottenPasswordPost = function (userName, email) {
     }
   };
 };
+
+export const reportComment = (token, idComment, causeReport) =>{
+  return async ( dispatch) =>{
+    try {
+      const response = await axios.post(api.reportComment, token, idComment, causeReport )
+
+      return dispatch({
+        type: REPORT_COMMENT,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const reportUser = (token, idUser, causeReport) =>{
+  return async ( dispatch) =>{
+    try {
+      const response = await axios.post(api.reportUser, token, idUser, causeReport )
+
+      return dispatch({
+        type: REPORT_USER,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const reportPost = (token, idPost, causeReport) =>{
+  return async ( dispatch) =>{
+    try {
+      const response = await axios.post(api.reportPost, token, idPost, causeReport )
+      console.log(response)
+
+      return dispatch({
+        type: REPORT_POST,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

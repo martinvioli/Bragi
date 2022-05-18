@@ -9,7 +9,8 @@ import {
   unfollowUser,
 } from "../../redux/actionCreators";
 import { useDispatch } from "react-redux";
-import styles from "./SearchData.css";
+import styles from "./SearchData.module.css";
+import { Link } from "react-router-dom";
 function SearchData({ data }) {
   const dispatch = useDispatch();
 
@@ -27,8 +28,8 @@ function SearchData({ data }) {
   //console.log(data);
   const handleClickFollow = (data) => {
     //e.preventDefault()
-    document.getElementById("followBtn").disabled = true;
-    document.getElementById("unFollowBtn").disabled = false;
+    document.getElementById(`followBtn${data.userName}`).disabled = true;
+    document.getElementById(`unFollowBtn${data.userName}`).disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
@@ -39,8 +40,8 @@ function SearchData({ data }) {
     dispatch(followUser(obj));
   };
   const handleClickUnfollow = (data) => {
-    document.getElementById("unFollowBtn").disabled = true;
-    document.getElementById("followBtn").disabled = false;
+    document.getElementById(`unFollowBtn${data.userName}`).disabled = true;
+    document.getElementById(`followBtn${data.userName}`).disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
@@ -55,7 +56,7 @@ function SearchData({ data }) {
     <>
       {data.error && <h3>We didnt find any coincidence.</h3>}
       <div
-        className="containerSearch"
+        className={styles.containerSearch}
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
@@ -64,22 +65,24 @@ function SearchData({ data }) {
         {data.name && !data.userName && <h1>{data.name}</h1>}
         {data.picture && <img src={data.picture} alt="img" />}
         {data.userName && (
-          <h1 style={{ marginTop: "2em" }} className="username">
-            @{data.userName}
-          </h1>
+          <Link to={`/profile/${data.userName}`} className={styles.username}>
+            <h1 style={{ marginTop: "2em" }} >
+              @{data.userName}
+            </h1>
+          </Link>
         )}
         {data.userName && (
           <div>
             <Button
-              id="followBtn"
-              className="followBtn"
+              id={`followBtn${data.userName}`}
+              className={styles.followBtn}
               onClick={() => handleClickFollow(data)}
             >
               Follow
             </Button>{" "}
             <Button
-              id="unFollowBtn"
-              className="unFollowBtn"
+              id={`unFollowBtn${data.userName}`}
+              className={styles.unFollowBtn}
               onClick={() => handleClickUnfollow(data)}
             >
               Unfollow
