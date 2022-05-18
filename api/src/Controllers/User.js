@@ -207,25 +207,26 @@ class UserClass {
         userName,
         validationCode: codeNum,
         token,
+        MembershipUserIdMembershipUser: null
       });
-      const today = new Date();
-      const membershipUser = await MembershipUser.create({
-        statePlan: "Inactive",
-        dateStart:
-          today.getDate() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getFullYear(),
-        dateExpiry:
-          today.getDate() +
-          "-" +
-          (today.getMonth() + 3) +
-          "-" +
-          today.getFullYear(),
-      });
-      planPremium.addMembershipUser(membershipUser);
-      membershipUser.addUser(user);
+      // const today = new Date();
+      // const membershipUser = await MembershipUser.create({
+      //   statePlan: "Inactive",
+      //   dateStart:
+      //     today.getDate() +
+      //     "-" +
+      //     (today.getMonth() + 1) +
+      //     "-" +
+      //     today.getFullYear(),
+      //   dateExpiry:
+      //     today.getDate() +
+      //     "-" +
+      //     (today.getMonth() + 3) +
+      //     "-" +
+      //     today.getFullYear(),
+      // });
+      // planPremium.addMembershipUser(membershipUser);
+      // membershipUser.addUser(user);
       return res.status(200).json({ msg: "User created successfully", token }); //Prueba para el front
     } catch (error) {
       console.log(error);
@@ -437,6 +438,30 @@ class UserClass {
       return res.status(500).json({ message: error.message });
     }
   };
+  justificationForBecomingAnArtist = async (req, res) => {
+    const {userName, email, reason} = req.body;
+    try {
+      let userFound;
+      try{
+        userFound = await User.findOne({where: {userName}});
+        console.log(userFound)
+        if(userFound.dataValues.nameTypeUser === 'Artist'){
+          return res.status(400).json({msgE: "You are already an artist"});
+        }
+        if(userFound.dataValues.nameTypeUser === 'Standard'){
+          return res.status(400).json({msgE: "You need to be premium to be an artist."});
+        }
+      }catch(e){
+        console.log(e)
+        res.status(404).json({msgE: "User not found"});
+      }
+      await validation.toArtist(userName, email, reason);
+      res.status(200).json({msg: "Request made successfully"})
+    } catch (error) {
+      console.log(error)
+      //Mandar mensaje
+    }
+  }
 }
 
 module.exports = UserClass;
