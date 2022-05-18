@@ -6,6 +6,15 @@ class Admin{
     constructor(){};
 
     //Estadísticas de cada perfil.
+        getCashFlow = async (req, res) => {
+            try {
+                //LLamado a la api stripe
+                
+            } catch (e) {
+                console.log(e);
+                return res.status(400).json({msgE: "Error in getting money flow"});
+            }
+        }
         getUserStandar = async (req, res) => {
             try{
             const userStandars = await User.findAll({

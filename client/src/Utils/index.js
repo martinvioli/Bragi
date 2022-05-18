@@ -85,6 +85,9 @@ const apiHeroku = {
   "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
   payment: "https://bragiproject.herokuapp.com/pay/sub",
   aprobedPayment: "",
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/premiumPlans",
+  whyArtist:
+    "https://bragiproject.herokuapp.com/changeUserType/emailReasonToArtist",
 };
 
 const api = {
@@ -128,8 +131,10 @@ const api = {
   reportComment: "http://localhost:3001/report/comment",
   reportPost: "http://localhost:3001/report/post",
   reportUser: "http://localhost:3001/report/user",
-  followUser: "http://localhost:3001/follow/",
-  unfollowUser: "http://localhost:3001/unfollow",
+  followUser: "http://localhost:3001/follow/follow",
+  unfollowUser: "http://localhost:3001/follow/unfollow",
+  listFolloweds: "http://localhost:3001/follow/followeds",
+  listFollowers: "http://localhost:3001/follow/followers",
   likePost: "http://localhost:3001/reactionHeart/likePost",
   dislikePost: "http://localhost:3001/reactionHeart/dislikePost",
   banUser: "http://localhost:3001/admin/banUser",
@@ -164,6 +169,7 @@ const api = {
   getPremiumPlan: "http://localhost:3001/admin/premiumPlan/premiumPlans",
   payment: "http://localhost:3001/pay/sub",
   aprobedPayment: "http://localhost:3001/",
+  whyArtist: "http://localhost:3001/changeUserType/emailReasonToArtist",
 };
 
 export default api;

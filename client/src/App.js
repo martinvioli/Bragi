@@ -18,6 +18,7 @@ import Admin from "./components/Admin";
 import SubmitEmail from "./components/ForgottenPassword";
 import ForgottenPassword from "./components/ForgottenPassword/ForgottenPasswordPost";
 import WhyBragi from "./components/WhyBragi";
+import WhyPay from "./components/WhyPay";
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
             path="/register/authenticate"
             element={<Authenticate />}
           />
+          <Route exact path="/whypay" element={<WhyPay />} />
 
           <Route exact path="/pay" element={<PayForm />} />
 

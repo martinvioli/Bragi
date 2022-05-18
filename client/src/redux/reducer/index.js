@@ -64,6 +64,7 @@ import {
   GET_ALL_CAUSES_OF_REPORT,
   GET_ALL_POSTS_USERS,
   GET_PREMIUM_PLANS,
+  WHY_ARTIST,
 } from "../actions";
 
 // STATE CREATION
@@ -118,6 +119,7 @@ const initialState = {
   //updatePosts: {}
   allPostToAdmin: [],
   premiumPlans: [],
+  responseToArtist: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -283,12 +285,16 @@ function rootReducer(state = initialState, action) {
     case FOLLOW_USER:
       return {
         ...state,
-        followed: action.payload,
+        listFollowed: [...state.listFollowed].concat({
+          userNameFollowed: action.payload.followedUsername,
+        }),
       };
     case UNFOLLOW_USER:
       return {
         ...state,
-        unfollowed: action.payload,
+        listFollowed: [...state.listFollowed].filter(
+          (e) => e.userNameFollowed !== action.payload.unfollowedUsername
+        ),
       };
 
     case LIST_FOLLOWED:
@@ -468,6 +474,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         premiumPlans: action.payload,
+      };
+    case WHY_ARTIST:
+      return {
+        ...state,
+        responseToArtist: action.payload,
       };
     default:
       return { ...state };

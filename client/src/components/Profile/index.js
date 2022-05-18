@@ -61,9 +61,6 @@ function Profile(props) {
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
     dispatch(getUser(userToken));
-    dispatch(getPhotoUser(user.userName));
-    dispatch(listFollowed(user.userName));
-    dispatch(listFollowers(user.userName));
     // if (!user.name) {
     //   navigate("/");
     // }
@@ -71,10 +68,11 @@ function Profile(props) {
     // }
   }, []);
 
-  user = {
-    ...user,
-    description: null,
-  };
+  useEffect(() => {
+    dispatch(getPhotoUser(user.userName));
+    dispatch(listFollowed(user.userName));
+    dispatch(listFollowers(user.userName));
+  }, [user]);
 
   //console.log(listFollowed);
 
@@ -101,15 +99,16 @@ function Profile(props) {
     setShowModalComments(!showModalComments);
   }
 
-  const image =
-  !profileImage.includes("undefined")
-  ? <img className={styles.profileImg} src={profileImage} alt=""></img>
-  : (dispatch(getPhotoUser(user.userName)),<img className={styles.profileImg} src={profileImage} alt=""></img>)
+  const image = !profileImage.includes("undefined") ? (
+    <img className={styles.profileImg} src={profileImage} alt=""></img>
+  ) : (
+    (dispatch(getPhotoUser(user.userName)),
+    (<img className={styles.profileImg} src={profileImage} alt=""></img>))
+  );
 
+  //console.log(profileImage);
 
-  console.log(profileImage);
-
-    //Reportes
+  //Reportes
   function openReport(e, type) {
     // console.log({token, id: e.idComment})
     const swal = Swal.fire({
@@ -203,7 +202,8 @@ function Profile(props) {
 
   return props.visitant ? (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div className={styles.container}
+      <div
+        className={styles.container}
         // style={{
         //   display: "flex",
         //   justifyContent: "center",
@@ -211,7 +211,8 @@ function Profile(props) {
         //   marginTop: "8em",
         // }}
       >
-        <div className={styles.profile}
+        <div
+          className={styles.profile}
           // style={{
           //   background: "#2c292a",
           //   display: "flex",
@@ -223,17 +224,26 @@ function Profile(props) {
           //   marginRight: "0em",
           // }}
         >
-          <div className={styles.editButton} style={{ display: "inline-block" , marginRight: "-270px", marginBottom: "-50px"}}>
+          <div
+            className={styles.editButton}
+            style={{
+              display: "inline-block",
+              marginRight: "-60%",
+              marginBottom: "-50px",
+            }}
+          >
             <GoReport
-              style={{ height: "25px", width: "50px",}}
-              onClick={() => {openReport(profile, "user");}}
+              style={{ height: "25px", width: "50px" }}
+              onClick={() => {
+                openReport(profile, "user");
+              }}
             />
           </div>
           <img
-              className={styles.profileImg}
-              src={`${api.getPhotoUser}${profile.userName}`}
-              alt=""
-            ></img>
+            className={styles.profileImg}
+            src={`${api.getPhotoUser}${profile.userName}`}
+            alt=""
+          ></img>
           {profile.name ? (
             <div>
               <div>
@@ -241,10 +251,14 @@ function Profile(props) {
                   {profile.name + " " + profile.lastName}
                 </div>
                 <div className={styles.name}>@{profile.userName}</div>
-                <h3 style={{ marginBottom: "25px"}}>
-                  {profile.nameTypeUser === "Standard"
-                    ? <div style={{ color: "#dd9202" }}>Fan</div>
-                    : <div style={{ color: "#dd9202" }}>{profile.nameTypeUser}</div>}
+                <h3 style={{ marginBottom: "25px" }}>
+                  {profile.nameTypeUser === "Standard" ? (
+                    <div style={{ color: "#dd9202" }}>Fan</div>
+                  ) : (
+                    <div style={{ color: "#dd9202" }}>
+                      {profile.nameTypeUser}
+                    </div>
+                  )}
                 </h3>
                 <div className={styles.description}>{profile.description}</div>
               </div>
@@ -252,11 +266,15 @@ function Profile(props) {
           ) : null}
         </div>
         <br></br>
-    </div>
-    <div>
-      {profile.nameTypeUser === "Artist" ? (
+      </div>
+      <div>
+        {profile.nameTypeUser === "Artist" ? (
           <>
-          <h1 style={{ color: "white", marginTop: "125px", marginLeft: "20px" }}>Posts of the Artist</h1>
+            <h1
+              style={{ color: "white", marginTop: "125px", marginLeft: "20px" }}
+            >
+              Posts of the Artist
+            </h1>
             <div
               className={styles.postProfile}
               style={{
@@ -266,7 +284,7 @@ function Profile(props) {
                 overflowY: "auto",
                 maxHeight: "30em",
                 marginTop: "10px",
-                marginLeft: "25px"
+                marginLeft: "25px",
               }}
             >
               {posts &&
@@ -472,9 +490,7 @@ function Profile(props) {
             </div>
           </>
         ) : (
-          <div className={styles.fan}>
-            {/* <h1>FOLLOWING</h1> */}
-          </div>
+          <div className={styles.fan}>{/* <h1>FOLLOWING</h1> */}</div>
         )}
       </div>
       {/* MODAL PARA VER COMENTARIOS */}
@@ -506,11 +522,17 @@ function Profile(props) {
             >
               <CardBody>
                 <CardTitle style={{ color: "orange" }} tag="h7">
-                <img
-                  style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
-                  // src={`${api.getPhotoUser}${viewPost.User.userName}`}
-                  alt=""
-                ></img>
+                  <img
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50px",
+                      border: "2px solid gray",
+                      marginRight: "15px",
+                    }}
+                    src={`${api.getPhotoUser}${viewPost.User.userName}`}
+                    alt=""
+                  ></img>
                   {viewPost.User ? viewPost.User.userName : user.userName}
                 </CardTitle>
                 <CardTitle
@@ -558,7 +580,13 @@ function Profile(props) {
                     <CardBody>
                       <CardTitle tag="h5">
                         <img
-                          style={{ width: "50px", height: "50px", borderRadius: "50px", border: "2px solid gray", marginRight: "15px"}}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50px",
+                            border: "2px solid gray",
+                            marginRight: "15px",
+                          }}
                           src={`${api.getPhotoUser}${e.userNameComment}`}
                           alt=""
                         ></img>
@@ -569,21 +597,23 @@ function Profile(props) {
                             {e.userNameComment}
                           </Link>
                         )}
-                        <div
-                          style={{
-                            display: "inline-flex",
-                            // marginRight: "-640px",
-                            marginLeft: "250px",
-                          }}
-                        >
-                          <GoReport
-                            style={{ height: "25px", width: "50px" }}
-                            onClick={() => {
-                              setViewPost({ ...e });
-                              openReport(e, "comment");
+                        {e.userNameComment !== user.userName && (
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              // marginRight: "-640px",
+                              marginLeft: "250px",
                             }}
-                          />
-                        </div>
+                          >
+                            <GoReport
+                              style={{ height: "25px", width: "50px" }}
+                              onClick={() => {
+                                setViewPost({ ...e });
+                                openReport(e, "comment");
+                              }}
+                            />
+                          </div>
+                        )}
                       </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"

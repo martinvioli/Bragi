@@ -65,6 +65,7 @@ import {
   REPORT_COMMENT,
   REPORT_POST,
   REPORT_USER,
+  WHY_ARTIST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -365,7 +366,7 @@ export const userNewComment = function (input) {
       //console.log(response.data);
       return dispatch(getAllComments(input.idPost));
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -454,27 +455,25 @@ export const clearDetails = () => {
 export const followUser = (obj) => {
   return async (dispatch) => {
     try {
-      console.log(obj);
       const response = await axios.post(api.followUser, obj);
-      console.log(response);
-      console.log("hasta aca si");
       return dispatch({
         type: FOLLOW_USER,
-        payload: response.data,
+        payload: obj,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
 export const unfollowUser = (obj) => {
   return async (dispatch) => {
     try {
+      console.log(obj);
       const response = await axios.post(api.unfollowUser, obj);
       //console.log(response.data);
       return dispatch({
         type: UNFOLLOW_USER,
-        payload: response.data,
+        payload: obj,
       });
     } catch (error) {
       console.error(error);
@@ -486,10 +485,9 @@ export const listFollowed = (userName) => {
   return async (dispatch) => {
     try {
       //console.log(userName);
-      const response = await axios.post(
-        "http://localhost:3001/follow/followeds",
-        { userName: userName }
-      );
+      const response = await axios.post(api.listFolloweds, {
+        userName: userName,
+      });
       //console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWED,
@@ -505,10 +503,9 @@ export const listFollowers = (userName) => {
   return async (dispatch) => {
     try {
       //console.log(userName);
-      const response = await axios.post(
-        "http://localhost:3001/follow/followers",
-        { userName: userName }
-      );
+      const response = await axios.post(api.listFollowers, {
+        userName: userName,
+      });
       //console.log(response.data);
       return dispatch({
         type: LIST_FOLLOWERS,
@@ -583,7 +580,7 @@ export const getAllPostToAdmin = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(api.getAllPostToAdmin);
-      console.group("post");
+      //console.group("post");
       //console.log(response.data);
       return dispatch({ type: GET_ALL_POSTS_USERS, payload: response.data });
     } catch (error) {
@@ -769,7 +766,7 @@ export const createPlansPremiums = (plan) => {
 export const deletePlansPremiums = (idPlanPremium) => {
   return async (dispatch) => {
     const response = await axios.post(api.deletePremiumPlan, idPlanPremium);
-    console.log(response.data);
+    //console.log(response.data);
     return dispatch({
       type: DELETE_PLANS_PREMIUMS,
       payload: response.data,
@@ -879,7 +876,7 @@ export const getPremiumPlan = function () {
   return async (dispatch) => {
     try {
       const response = await axios.get(api.getPremiumPlan);
-      console.log(response.data);
+      //console.log(response.data);
       return dispatch({
         type: GET_PREMIUM_PLANS,
         payload: response.data,
@@ -904,7 +901,7 @@ export const reportComment = (token, idComment, causeReport) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -924,7 +921,7 @@ export const reportUser = (token, idUser, causeReport) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
@@ -938,14 +935,27 @@ export const reportPost = (token, idPost, causeReport) => {
         idPost,
         causeReport
       );
-      console.log(response);
+      //console.log(response);
 
       return dispatch({
         type: REPORT_POST,
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
+  };
+};
+
+//Why Artist
+
+export const whyArtist = (input) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.whyArtist, input);
+    console.log(response.data);
+    return dispatch({
+      type: WHY_ARTIST,
+      payload: response.data,
+    });
   };
 };

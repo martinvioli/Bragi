@@ -9,8 +9,7 @@ import {
   unfollowUser,
 } from "../../redux/actionCreators";
 import { useDispatch } from "react-redux";
-import styles from "./SearchData.module.css";
-import { Link } from "react-router-dom";
+import styles from "./SearchData.css";
 function SearchData({ data }) {
   const dispatch = useDispatch();
 
@@ -20,77 +19,63 @@ function SearchData({ data }) {
     );
     // dispatch(getToken(userToken));
     // dispatch(getUser(userToken));
-    //console.log(userToken);
-    //console.log(data.userName);
+    // console.log(data.userName);
     let userNameOtherProfile = data.userName;
-    //console.log(userNameOtherProfile);
   }, []);
-  //console.log(data);
   const handleClickFollow = (data) => {
     //e.preventDefault()
-    document.getElementById(`followBtn${data.userName}`).disabled = true;
-    document.getElementById(`unFollowBtn${data.userName}`).disabled = false;
+    document.getElementById("followBtn").disabled = true;
+    document.getElementById("unFollowBtn").disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
-    //console.log(userToken);
-    //console.log(data.token);
+    console.log(userToken);
+    // console.log(data.token);
     let obj = { token: userToken, tokenFollowed: data.token };
-    //console.log(obj);
+    console.log(obj);
     dispatch(followUser(obj));
   };
   const handleClickUnfollow = (data) => {
-    document.getElementById(`unFollowBtn${data.userName}`).disabled = true;
-    document.getElementById(`followBtn${data.userName}`).disabled = false;
+    document.getElementById("unFollowBtn").disabled = true;
+    document.getElementById("followBtn").disabled = false;
     const userToken = JSON.parse(
       window.localStorage.getItem("userCredentials")
     );
-    //console.log(userToken);
-    //console.log(data.token);
+    console.log(userToken);
+    // console.log(data.token);
     let obj = { token: userToken, tokenFollowed: data.token };
-    //console.log(obj);
+    console.log(obj);
     dispatch(unfollowUser(obj));
   };
 
+
   return (
-    <>
+    <div className="containerSearch">
+      {console.log(data)}
       {data.error && <h3>We didnt find any coincidence.</h3>}
+      {
       <div
-        className={styles.containerSearch}
+        className="containerEachSearch"
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
         {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
         {data.cover && <img src={data.cover_xl} alt="Imagen" />}
-        {data.name && !data.userName && <h1>{data.name}</h1>}
-        {data.picture && <img src={data.picture} alt="img" />}
+        {data.name && !data.userName && <h1 className="nameDetailsArtist">{data.name}</h1>}
+        {data.picture_xl && <img className="imgArtist" src={data.picture_xl} alt="img" />}
         {data.userName && (
-          <Link to={`/profile/${data.userName}`} className={styles.username}>
-            <h1 style={{ marginTop: "2em" }} >
-              @{data.userName}
-            </h1>
-          </Link>
+          <h1 style={{ marginTop: "2em" }} className="username">
+            @{data.userName}
+          </h1>
         )}
         {data.userName && (
           <div>
-            <Button
-              id={`followBtn${data.userName}`}
-              className={styles.followBtn}
-              onClick={() => handleClickFollow(data)}
-            >
-              Follow
-            </Button>{" "}
-            <Button
-              id={`unFollowBtn${data.userName}`}
-              className={styles.unFollowBtn}
-              onClick={() => handleClickUnfollow(data)}
-            >
-              Unfollow
-            </Button>
+            <Button id="followBtn" className="followBtn" onClick={() => handleClickFollow(data)}>Follow</Button>{" "}
+            <Button id="unFollowBtn" className="unFollowBtn" onClick={() => handleClickUnfollow(data)}>Unfollow</Button>
           </div>
         )}
-      </div>
-    </>
+      </div>}
+    </div>
   );
 }
 

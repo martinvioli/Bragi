@@ -86,3 +86,5 @@ export const REPORT_COMMENT = "REPORT_COMMENT";
 export const REPORT_USER = "REPORT_COMMENT";
 export const REPORT_POST = "REPORT_COMMENT";
 
+//Why Artist
+export const WHY_ARTIST = "WHY_ARTIST";

@@ -28,6 +28,7 @@ import {
   clearData,
   getPhotoUser,
   getTop10Songs,
+  listFollowed,
 } from "../../redux/actionCreators";
 import SearchData from "../SearchData";
 import { Link, useNavigate } from "react-router-dom";
@@ -164,6 +165,14 @@ function Home() {
       }
     });
   }
+
+  var followed = useSelector((state) => state.listFollowed);
+  console.log(followed);
+
+  useEffect(() => {
+    dispatch(listFollowed(user.userName));
+  }, [user]);
+
   return (
     <div>
       {show ? (
@@ -222,11 +231,12 @@ function Home() {
               >
                 <Input
                   style={{
+                    color: "#dd9202",
                     width: "50em",
                     height: "3em",
                     margin: "2em",
-                    border: "3px solid #dd9202",
-                    borderRadius: "8px",
+                    border: "2px solid rgba(66, 66, 66, 0.651)",
+                    backgroundColor: "transparent"
                   }}
                   type="select"
                   name="searchOption"
@@ -243,11 +253,12 @@ function Home() {
                 </Input>
                 <Input
                   style={{
+                    color: "#dd9202",
                     width: "80em",
                     height: "3em",
                     margin: "2em",
-                    border: "3px solid #dd9202",
-                    borderRadius: "8px",
+                    border: "2px solid rgba(66, 66, 66, 0.651)",
+                    backgroundColor: "transparent"
                   }}
                   onChange={handleInput}
                   type="text"
@@ -256,14 +267,14 @@ function Home() {
                   placeholder="Search ..."
                 />
                 <Input
+                  className={styles.buttonToSearchHome}
                   style={{
                     width: "7em",
                     height: "3em",
                     margin: "2em",
-                    border: "3px solid #dd9202",
-                    borderRadius: "8px",
+                    border: "2px solid rgba(66, 66, 66, 0.651)",
                     color: "#dd9202",
-                    backgroundColor: "black",
+                    backgroundColor: "transparent",
                   }}
                   type="submit"
                   value="Search"
@@ -278,6 +289,7 @@ function Home() {
                 song.map((e) => {
                   return (
                     <Link
+                    className={styles.linkHomeSong}
                       to={`/song/${e.id}`}
                       style={{ display: "inline-block", color: "#f5f5f5" }}
                     >
@@ -296,8 +308,8 @@ function Home() {
               {album &&
                 album.map((e) => {
                   return (
-                    <Link
-                      style={{ color: "white", backgroundColor: "transparent" }}
+                    <Link 
+                    className={styles.linkHomeAlbum}
                       to={`/album/${e.id}`}
                     >
                       <div key={e.id} style={{ display: "inline-block" }}>
@@ -308,22 +320,32 @@ function Home() {
                 })}
               {artist &&
                 artist.map((e) => {
-                  return (
-                    <Link to={`/artist/${e.id}`}>
-                      <div key={e.id} style={{ display: "inline-block" }}>
+                  if (e.id !== undefined) {
+                    return (
+                      <Link to={`/artist/${e.id}`}>
+                      <div className="artistDiv" key={e.id}>
                         <SearchData data={e} />
                       </div>
                     </Link>
-                  );
+                    );
+                  } else {
+                  }
                 })}
               {userSearch[0] &&
                 userSearch[0].map((e) => {
-                  return (
-                    <div key={e.idUser} style={{ display: "inline-block" }}>
-                      <SearchData data={e} />
-                    </div>
-                  );
+                  if (e.userName !== user.userName) {
+                    return (
+                      <div key={e.userName} style={{ display: "inline-block" }}>
+                        <SearchData data={e} />
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
                 })}
+              {userSearch[0] && userSearch[0].length === 0 ? (
+                <h3>We couldn't find any user with that name 😪. Try again!</h3>
+              ) : null}
             </div>
           </div>
           {/* <div className={`${styles.top10}`}> */}
