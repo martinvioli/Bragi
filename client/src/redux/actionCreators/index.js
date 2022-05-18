@@ -65,6 +65,7 @@ import {
   REPORT_COMMENT,
   REPORT_POST,
   REPORT_USER,
+  WHY_ARTIST,
 } from "../actions";
 import axios from "axios";
 import api from "../../Utils";
@@ -943,5 +944,18 @@ export const reportPost = (token, idPost, causeReport) => {
     } catch (error) {
       //console.log(error);
     }
+  };
+};
+
+//Why Artist
+
+export const whyArtist = (input) => {
+  return async (dispatch) => {
+    const response = await axios.post(api.whyArtist, input);
+    console.log(response.data);
+    return dispatch({
+      type: WHY_ARTIST,
+      payload: response.data,
+    });
   };
 };
