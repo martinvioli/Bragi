@@ -25,26 +25,28 @@ const CheckoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const result = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
+      billing_details: {
+        email: "bragisystem@gmail.com",
+      },
     });
     setLoading(true);
 
-    if (!error) {
+    if (!result.error) {
       // console.log(paymentMethod)
-      const { id } = paymentMethod;
+
       try {
-        const { data } = await axios.post("http://localhost:3001/pay", {
-          id: id,
-          amount: 99,
-          description: "BRAGI - Monthly Suscription",
+        const { data } = await axios.post("http://localhost:3001/pay/sub", {
+          payment_method: result.paymentMethod.id,
+          email: "bragisystem@gmail.com",
         });
-        //console.log(data);
+        console.log(data);
 
         elements.getElement(CardElement).clear();
       } catch (error) {
-        //console.log(error);
+        console.log(error);
       }
       setLoading(false);
     }
@@ -105,7 +107,7 @@ function PayForm() {
             />
           </div>
         </div>
-        <h1>Became Premium</h1>
+        <h1>Become Premium</h1>
         <Elements stripe={stripePromise}>
           <div>
             <div>

@@ -53,10 +53,14 @@ class PostClass {
       } catch {
         return res.status(200).json({ msgE: "User not found" });
       }
-      const followedsFound = await Followed.findAll({
-        where: { UserIdUser: userFound.dataValues.idUser },
-        attributes: ["userProfileFollowed", "userNameFollowed"],
-      });
+      let followedsFound;
+      try{
+          followedsFound = await Followed.findAll({
+          where: { UserIdUser: userFound.dataValues.idUser },
+          attributes: ["userProfileFollowed", "userNameFollowed"],
+        });
+        if(!followedsFound.length){return res.status(200).json({msg: "You do not have any users followed with posts to display"})}
+      }catch(e){return res.status(200).json(e)}
       let users = [];
       for (
         let userFollowed = 0;
