@@ -27,7 +27,7 @@ class Search {
         }
     }
 
-        searchArtistById = async(req,res) => {
+    searchArtistById = async(req,res) => {
         const id = req.params.artistId
         try {
             if(id){
@@ -132,7 +132,8 @@ class Search {
                             lastName: { [Op.iLike]: `%${nameUser}%` },
                             userName: { [Op.iLike]: `%${nameUser}%`}
                         }
-                    }
+                    },
+                    attributes: ['userName']
                 })
                 searchNameInDb
                 ? res.status(200).send(searchNameInDb)

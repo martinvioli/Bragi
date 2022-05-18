@@ -9,26 +9,33 @@ class Follow{
 
     //Las siguientes 2 funciones, tratan sobre un usuario que sigue a otro y que lo deja de seguir
     followAction = async(req, res) => { //user1 -> user2
-        const { token, tokenFollowed} = req.body//token de user1 y token de user2
-        const tokenDecode = jwt.decode(token)
-        const decodeFollowed = jwt.decode(tokenFollowed)
-        // console.log(decodeFollowed)
-
+        const { token, followedUsername} = req.body//token de user1 y token de user2
+        const tokenDecode = jwt.decode(token);
         try {
-            const userFwer = await User.findOne({ //busco a user1. El user seguidor
+            let userFwer 
+            try{
+                userFwer = await User.findOne({ //busco a user1. El user seguidor
+                    where: {
+                        userName: tokenDecode.userName
+                    }
+                })
+            }catch(e){
+                console.log(e);
+                return res.status(404).json({ msgE: 'Could not find your user' });
+            }
+            if(!userFwer) return res.status(404).json({ msgE: 'Could not find your user' });
+            let userFwed
+            try{
+                userFwed = await User.findOne({ //busco a user2. El user seguido
                 where: {
-                    userName: tokenDecode.userName
+                    userName: followedUsername
                 }
-            })
-            if(!userFwer) return res.status(404).json({ msgE: 'Could not find your user' })
-            // console.log(user)
-
-            const userFwed = await User.findOne({ //busco a user2. El user seguido
-                where: {
-                    userName: decodeFollowed.userName
-                }
-            })
-            if(!userFwer) return res.status(404).json({ msgE: 'Could not find the user'})
+                })
+            }catch(e){
+                console.log(e)
+                return res.status(404).json({ msgE: 'Could not find the user'})
+            }
+            if(!userFwed) return res.status(404).json({ msgE: 'Could not find the user'});
 
             const userFollower = await Followed.findOne({ //busco en la tabla Followed para ver si ya el user 1 sigue al usuario
                 where:{
@@ -48,24 +55,32 @@ class Follow{
     }
 
     unFollowAction = async(req,res) => { //user1 -/->  user2
-        const { token, tokenFollowed } = req.body //llega el token de user1
-        const tokenDecode = jwt.decode(token)
-        const decodeFollowed = jwt.decode(tokenFollowed)
-
+        const { token, followedUsername } = req.body //llega el token de user1
+        const tokenDecode = jwt.decode(token);
         try {
-            const userFwer = await User.findOne({ //busco a user2
-                where: {
-                    userName: tokenDecode.userName
-                }
-            })
-            // if(!userFwed) return res.status(404).json({ msgE: 'Could not find your user' })
-            const userFwed = await User.findOne({ //busco a user2
-                where: {
-                    userName: decodeFollowed.userName
-                }
-            })
-            // if(!userFwed) return res.status(404).json({ msgE: 'Could not find your user' })
-
+            let userFwer, userFwed;
+            try{
+                userFwer = await User.findOne({ //busco a user2
+                    where: {
+                        userName: tokenDecode.userName
+                    }
+                })
+            }catch(e){
+                console.log(e);
+                return res.status(404).json({ msgE: 'Could not find your user' });
+            }
+            if(!userFwer) return res.status(404).json({ msgE: 'Could not find your user' });
+            try{
+                userFwed = await User.findOne({ //busco a user2
+                    where: {
+                        userName: followedUsername
+                    }
+                })
+            }catch(e){
+                console.log(e);
+                return res.status(404).json({ msgE: 'Could not find the user' })
+            }
+            if(!userFwed) return res.status(404).json({ msgE: 'Could not find the user' })
             const findFollower = await Follower.findOne({ //busco a user1
                 where:{
                     [Op.and] : {
@@ -75,7 +90,6 @@ class Follow{
                 }
             })
             if(!findFollower) return res.status(404).json({ msgE: "You are not following this user" }) //si no lo encuentra no lo sigue
-
             const followedDelete = await this.unFollowed(userFwed.userName, userFwer.idUser)
             const kaBum = await findFollower.destroy()// se borra el user1 de la tabla de user2
             return res.status(200).json({ msg: "User unfollowed correctly"})
@@ -84,7 +98,6 @@ class Follow{
             return res.status(404).json({ msgE: "The follow action failed" })
         }
     }
-
 
 //foolowed cuando siga a alguien va a invocar a follwAction
     followed = async(idFollower, userNameFollowed, idFollowed) => { //follower: user1, followed: user2
