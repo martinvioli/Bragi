@@ -22,10 +22,10 @@ class CommentClass {
       if (!user)
         return res.status(404).json({ msgE: "Could not find your user" });
 
-      if (user.nameTypeUser !== "Premium")
+      if (user.nameTypeUser !== "Premium" && user.nameTypeUser !== "Artist")
         return res
           .status(400)
-          .json({ msgE: "Only premium users can comment posts" });
+          .json({ msgE: "Only premium and artist users can comment posts" });
 
       if (commentContent.length > 255)
         return res.status(403).json({ msgE: "This content is too long" });

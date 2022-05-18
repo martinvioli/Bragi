@@ -15,6 +15,7 @@ import {
   Modal,
   Input,
 } from "reactstrap";
+import { GoReport } from "react-icons/go";
 import {
   getPhotoUser,
   getUseProfile,
@@ -35,6 +36,9 @@ import EditProfile from "../EditProfile";
 import styles from "./Profile.module.css";
 import { FcLike, FcLink, FcComments, FcLikePlaceholder } from "react-icons/fc";
 import { BiEdit } from "react-icons/bi";
+import axios from "axios";
+import api from "../../Utils";
+import Swal from "sweetalert2";
 
 function Profile(props) {
   var user = useSelector((state) => state.user);
@@ -99,6 +103,85 @@ function Profile(props) {
 
   console.log(profileImage);
 
+    //Reportes
+  function openReport(e, type){
+    // console.log({token, id: e.idComment})
+    const swal = Swal.fire({
+      title: "REPORT A POST",
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Report",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc3741",
+      icon: "warning",
+      input: 'select',
+      inputOptions: {
+        'Discrimnation': 'Discrimination',
+        'Verbal Abuse': 'Verbal Abuse',
+        'Blasphemous Dialog': 'Blasphemous Dialog',
+        'Sexual Situations or Dialog':'Sexual Situations or Dialog'
+      },
+      inputPlaceholder: "Select One Report Cause",
+    })
+    if(type === "comment"){
+      swal.update({ title:"REPORT A COMMENT" })
+    }
+    if(type === "user"){
+      swal.update({ title:"REPORT A USER" })
+    }
+    const swal2 = Swal.fire({
+        title: "Reported",
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: "Ok",
+        confirmButtonColor: "#dc3741",
+        icon: "sucess",
+        text: "User Reported Successfully"
+    })
+    if(type === "comment"){
+      swal2.update({ text: "You already reported this comment" })
+    }
+    if(type === "user"){
+      swal2.update({ text:"You already reported this user" })
+    }
+    swal.then(function (result){
+      if(result.isConfirmed){
+        (async function fafa(){
+          try {
+            if(type === "comment"){
+              // console.log(token)
+              const responseComment = await axios.post(api.reportComment, {token, idComment: e.idComment, causeReport: swal.getInput().value})
+              return
+            }
+            if(type === "user"){
+              const responseUser = await axios.post(api.reportUser, {token, idUser: e.idUser, causeReport: swal.getInput().value})
+              return 
+            }else{
+              const response = await axios.post(api.reportPost, {token, idPost: e.idPost, causeReport: swal.getInput().value})
+              return
+            }
+          } catch (error) {
+            const swal3 = Swal.fire({
+              title: "WARNING",
+              showConfirmButton: false,
+              showCancelButton: true,
+              cancelButtonText: "Ok",
+              confirmButtonColor: "#dc3741",
+              icon: "info",
+              text: "You already reported this post"
+            })
+            if(type === "comment"){
+              swal3.update({ text: "You already reported this comment" })
+            }
+            if(type === "user"){
+              swal2.update({ text:"You already reported this user" })
+            }
+          }
+        })();
+      }
+    })
+  }
+
   // useEffect(() => {
 
   // },[profileImage])
@@ -118,27 +201,33 @@ function Profile(props) {
   //// test
 
   return props.visitant ? (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "1em",
-          marginTop: "8em",
-        }}
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className={styles.container}
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   gap: "1em",
+        //   marginTop: "8em",
+        // }}
       >
-        <div
-          style={{
-            background: "#2c292a",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            maxHeight: "35em",
-            width: "20em",
-            marginRight: "0em",
-          }}
+        <div className={styles.profile}
+          // style={{
+          //   background: "#2c292a",
+          //   display: "flex",
+          //   justifyContent: "center",
+          //   flexDirection: "column",
+          //   alignItems: "center",
+          //   maxHeight: "35em",
+          //   width: "20em",
+          //   marginRight: "0em",
+          // }}
         >
+          <div className={styles.editButton} style={{ display: "inline-block" , marginRight: "-270px", marginBottom: "-50px"}}>
+            <GoReport
+              style={{ height: "25px", width: "50px",}}
+              onClick={() => {openReport(profile, "user");}}
+            />
+          </div>
           <img className={styles.profileImg} src={profileImage} alt=""></img>
           {profile.name ? (
             <div>
@@ -147,10 +236,10 @@ function Profile(props) {
                   {profile.name + " " + profile.lastName}
                 </div>
                 <div className={styles.name}>@{profile.userName}</div>
-                <h3>
+                <h3 style={{ marginBottom: "25px"}}>
                   {profile.nameTypeUser === "Standard"
-                    ? "Fan"
-                    : profile.nameTypeUser}
+                    ? <div style={{ color: "#dd9202" }}>Fan</div>
+                    : <div style={{ color: "#dd9202" }}>{profile.nameTypeUser}</div>}
                 </h3>
                 <div className={styles.description}>{profile.description}</div>
               </div>
@@ -158,16 +247,21 @@ function Profile(props) {
           ) : null}
         </div>
         <br></br>
-        {profile.nameTypeUser === "Artist" ? (
+    </div>
+    <div>
+      {profile.nameTypeUser === "Artist" ? (
           <>
+          <h1 style={{ color: "white", marginTop: "125px", marginLeft: "20px" }}>Posts of the Artist</h1>
             <div
-              className={styles.post}
+              className={styles.postProfile}
               style={{
                 width: "32em",
                 padding: 0,
                 margin: 0,
                 overflowY: "auto",
                 maxHeight: "30em",
+                marginTop: "10px",
+                marginLeft: "25px"
               }}
             >
               {posts &&
@@ -359,7 +453,7 @@ function Profile(props) {
           </>
         ) : (
           <div className={styles.fan}>
-            <h1>FOLLOWING</h1>
+            {/* <h1>FOLLOWING</h1> */}
           </div>
         )}
       </div>
