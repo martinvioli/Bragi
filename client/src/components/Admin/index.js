@@ -330,10 +330,22 @@ function Admin() {
       const response = await axios.post(api.unbanUser, {
         idUser: e.target.name,
       });
-
-      alert(response.data.msg);
+      Swal.fire({
+        title: response.data.msg,
+        confirmButtonColor: "#dd9202",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+      // alert(response.data.msg);
     } catch (error) {
-      alert(error.response.data.msgE);
+      Swal.fire({
+        title: error.response.data.msgE,
+        confirmButtonColor: "#dd9202",
+      });
+      // window.location.reload();
+      // alert(error.response.data.msgE);
     }
   };
 
@@ -963,9 +975,20 @@ const HandleBan = ({ showModal, handleShowModal }) => {
       // dispatch(banUser(ban));
       const response = await axios.post(api.banUser, ban);
 
-      alert(response.data.msg);
+      Swal.fire({
+        title: response.data.msg,
+        confirmButtonColor: "#dd9202",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
     } catch (error) {
-      alert(error.response.data.msgE);
+      Swal.fire({
+        title: error.response.data.msgE,
+        confirmButtonColor: "#dd9202",
+      });
+      // window.location.reload();
     }
   };
   const handleClick = () => {
