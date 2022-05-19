@@ -469,7 +469,6 @@ export const followUser = (obj) => {
 export const unfollowUser = (obj) => {
   return async (dispatch) => {
     try {
-      console.log(obj);
       const response = await axios.post(api.unfollowUser, obj);
       //console.log(response.data);
       return dispatch({
@@ -952,11 +951,9 @@ export const cashFlow = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(api.getCashFlow);
-      console.log(response.data);
+
       return dispatch({ type: GET_CASH_FLOW, payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 

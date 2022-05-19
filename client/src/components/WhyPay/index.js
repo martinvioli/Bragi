@@ -24,7 +24,7 @@ const WhyPay = () => {
         return;
       }
       const response = await axios.post(api.whyArtist, input);
-      console.log(response.data.msg);
+
       alert(response.data.msg);
       setInput({
         reason: "",
@@ -32,7 +32,6 @@ const WhyPay = () => {
         email: "",
       });
     } catch (error) {
-      console.log(error.response.data.msgE);
       alert(error.response.data.msgE);
       setInput({
         reason: "",
