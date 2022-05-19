@@ -65,6 +65,7 @@ import {
   GET_ALL_POSTS_USERS,
   GET_PREMIUM_PLANS,
   WHY_ARTIST,
+  GET_CASH_FLOW,
 } from "../actions";
 
 // STATE CREATION
@@ -120,6 +121,7 @@ const initialState = {
   allPostToAdmin: [],
   premiumPlans: [],
   responseToArtist: {},
+  getCashFlow: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -479,6 +481,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         responseToArtist: action.payload,
+      };
+    case GET_CASH_FLOW:
+      return {
+        ...state,
+        getCashFlow: action.payload,
       };
     default:
       return { ...state };

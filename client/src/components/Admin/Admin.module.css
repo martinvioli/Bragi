@@ -20,3 +20,10 @@
 .nohr{
     background-color: black
 }
+.totalCash{
+text-align: center;
+}
+.square{
+    border: 3px solid brown;
+    margin-right: 3em;
+}
