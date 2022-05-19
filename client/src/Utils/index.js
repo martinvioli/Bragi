@@ -1,4 +1,4 @@
-const apiLocal = {
+const apiLocale = {
   baseUrl: "http://localhost:3001/",
   registerUrl: "http://localhost:3001/register/",
   registerValidateUrl: "http://localhost:3001/register/validate",
