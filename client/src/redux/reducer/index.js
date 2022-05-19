@@ -29,12 +29,43 @@ import {
   GET_USER_PROFILE,
   UNFOLLOW_USER,
   LIST_FOLLOWED,
+  LIST_FOLLOWERS,
   GET_OWN_POSTS,
   POST_REEPLACER,
   GET_STATISTICS,
   BAN_USER,
-  DIS_BAN_USER,
   GET_REPORTS,
+  FALSE_ADDCOMENT,
+  FALSE_ADDCOMENTPROFILE,
+  // CLEAN_DETAIL_TOP10,
+  UNBAN_USER,
+  GET_COMMENT_REPORTS,
+  GET_POST_REPORTS,
+  GET_USER_REPORTS,
+  GET_REPORT_BY_ID,
+  GET_ARTIST_USERS,
+  GET_PREMIUM_USERS,
+  GET_STANDARD_USERS,
+  ADMIN_DELETE_POST,
+  ADMIN_ALLOW_POST,
+  ADMIN_DELETE_COMMENT,
+  ADMIN_ALLOW_COMMENT,
+  MODIFY_PLANS_PREMIUMS,
+  CREATE_PLANS_PREMIUMS,
+  DELETE_PLANS_PREMIUMS,
+  CLEAN_DETAIL_TOP10,
+  FORGOTTEN_PASSWORD_PRE,
+  GET_ALL_BANNED_USERS,
+  GET_ALL_ADMIN_POSTS,
+  CREATE_ADMIN_POST,
+  EDIT_ADMIN_POST,
+  DELETE_ADMIN_POST,
+  CHANGE_TYPE_OF_POST,
+  GET_ALL_CAUSES_OF_REPORT,
+  GET_ALL_POSTS_USERS,
+  GET_PREMIUM_PLANS,
+  WHY_ARTIST,
+  GET_CASH_FLOW,
 } from "../actions";
 
 // STATE CREATION
@@ -47,24 +78,50 @@ const initialState = {
   album: [],
   artist: [],
   songs: [],
+  usersList: [],
   topSongs: [],
   topArtists: [],
   topAlbums: [],
   songById: {},
   albumById: {},
   artistById: {},
-  usersList: [],
   profileImage: "",
   comments: [],
   followed: [],
   unfollowed: [],
   listFollowed: [],
+  listFollowers: [],
   userProfile: {},
   ownPosts: [],
-  statistics: {},
   banned: [],
-  disbanned: [],
+  unbanned: [],
+  standardUsers: [],
+  premiumUsers: [],
+  artistUsers: [],
   reports: [],
+  userReports: [],
+  postReports: [],
+  commentReports: [],
+  report: {},
+  adminDeletePost: {},
+  adminAllowPost: {},
+  adminDeleteComment: {},
+  adminAllowComment: {},
+  createPremiumPlan: {},
+  modifyPremiumPlan: {},
+  deletePremiumPlan: {},
+  email: "",
+  code: "",
+  bannedUsers: [],
+  adminPosts: [],
+  editedPost: {},
+  postPremium: [],
+  causesOfReport: [],
+  //updatePosts: {}
+  allPostToAdmin: [],
+  premiumPlans: [],
+  responseToArtist: {},
+  getCashFlow: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -115,8 +172,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         song: [],
-        artist: [],
         album: [],
+        artist: [],
+        topSongs: [],
+        topArtists: [],
+        topAlbums: [],
+        usersList: [],
       };
     case GET_TOP_10_ALBUMS:
       return {
@@ -141,17 +202,21 @@ function rootReducer(state = initialState, action) {
     case USER_NEW_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: [...state.posts, action.payload],
       };
     case USER_UPDATE_POST:
       return {
         ...state,
-        posts: action.payload,
       };
     case DELETE_POST:
       return {
         ...state,
         posts: action.payload,
+      };
+    case CHANGE_TYPE_OF_POST:
+      return {
+        ...state,
+        postPremium: action.payload,
       };
     case GET_SONG_BY_ID:
       return {
@@ -185,6 +250,30 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: action.payload,
       };
+    case FALSE_ADDCOMENT:
+      var addComment = [...state.posts];
+      addComment.splice(action.payload, 1, {
+        ...state.posts[action.payload],
+        Comments: [...state.posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        posts: addComment,
+      };
+    case FALSE_ADDCOMENTPROFILE:
+      var addCommentProfile = [...state.userProfile.Posts];
+      addCommentProfile.splice(action.payload, 1, {
+        ...state.userProfile.Posts[action.payload],
+        Comments: [...state.userProfile.Posts[action.payload].Comments].concat({
+          falseComment: true,
+        }),
+      });
+      return {
+        ...state,
+        userProfile: { ...state.userProfile, Posts: addCommentProfile },
+      };
     case USER_UPDATE_COMMENT:
       return {
         ...state,
@@ -198,19 +287,28 @@ function rootReducer(state = initialState, action) {
     case FOLLOW_USER:
       return {
         ...state,
-        followed: action.payload,
+        listFollowed: [...state.listFollowed].concat({
+          userNameFollowed: action.payload.followedUsername,
+        }),
       };
     case UNFOLLOW_USER:
       return {
         ...state,
-        unfollowed: action.payload,
+        listFollowed: [...state.listFollowed].filter(
+          (e) => e.userNameFollowed !== action.payload.unfollowedUsername
+        ),
       };
 
     case LIST_FOLLOWED:
       return {
         ...state,
-        listFollowed: action.payload
-      }
+        listFollowed: action.payload,
+      };
+    case LIST_FOLLOWERS:
+      return {
+        ...state,
+        listFollowers: action.payload,
+      };
     case FALSE_LIKE:
       var postsEditable = [...state.posts];
       postsEditable[action.payload.index].Likes.push({
@@ -243,26 +341,151 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.userProfile.Posts,
-      }
-    case GET_STATISTICS:
-      return {
-        ...state,
-        statistics: action.payload,
       };
     case BAN_USER:
       return {
         ...state,
         banned: action.payload,
       };
-    case DIS_BAN_USER:
+    case UNBAN_USER:
       return {
         ...state,
-        disbanned: action.payload,
+        unbanned: action.payload,
       };
     case GET_REPORTS:
       return {
         ...state,
         reports: action.payload,
+      };
+    case GET_COMMENT_REPORTS:
+      return {
+        ...state,
+        commentReports: action.payload,
+      };
+    case GET_POST_REPORTS:
+      return {
+        ...state,
+        postReports: action.payload,
+      };
+    case GET_USER_REPORTS:
+      return {
+        ...state,
+        userReports: action.payload,
+      };
+    case GET_REPORT_BY_ID:
+      return {
+        ...state,
+        report: action.payload,
+      };
+    case GET_ARTIST_USERS:
+      return {
+        ...state,
+        artistUsers: action.payload,
+      };
+    case GET_PREMIUM_USERS:
+      return {
+        ...state,
+        premiumUsers: action.payload,
+      };
+    case GET_STANDARD_USERS:
+      return {
+        ...state,
+        standardUsers: action.payload,
+      };
+    case ADMIN_DELETE_POST:
+      return {
+        ...state,
+        adminDeletePost: action.payload,
+      };
+
+    case ADMIN_ALLOW_POST:
+      return {
+        ...state,
+        adminAllowPost: action.payload,
+      };
+
+    case ADMIN_DELETE_COMMENT:
+      return {
+        ...state,
+        adminDeleteComment: action.payload,
+      };
+
+    case ADMIN_ALLOW_COMMENT:
+      return {
+        ...state,
+        adminAllowComment: action.payload,
+      };
+    case MODIFY_PLANS_PREMIUMS:
+      return {
+        ...state,
+        modifyPremiumPlan: action.payload,
+      };
+
+    case CREATE_PLANS_PREMIUMS:
+      return {
+        ...state,
+        createPremiumPlan: action.payload,
+      };
+
+    case DELETE_PLANS_PREMIUMS:
+      return {
+        ...state,
+        deletePremiumPlan: action.payload,
+      };
+
+    case FORGOTTEN_PASSWORD_PRE:
+      return {
+        ...state,
+        email: action.payload,
+      };
+    case GET_ALL_BANNED_USERS:
+      return {
+        ...state,
+        bannedUsers: action.payload,
+      };
+    case GET_ALL_ADMIN_POSTS:
+      return {
+        ...state,
+        adminPosts: action.payload,
+      };
+    case CREATE_ADMIN_POST:
+      return {
+        ...state,
+        adminPosts: [...state.adminPosts, action.payload],
+      };
+    case EDIT_ADMIN_POST:
+      return {
+        ...state,
+        editedPost: {},
+      };
+    case DELETE_ADMIN_POST:
+      return {
+        ...state,
+      };
+    case GET_ALL_CAUSES_OF_REPORT:
+      return {
+        ...state,
+        causesOfReport: action.payload,
+      };
+    case GET_ALL_POSTS_USERS:
+      return {
+        ...state,
+        allPostToAdmin: action.payload,
+      };
+    case GET_PREMIUM_PLANS:
+      return {
+        ...state,
+        premiumPlans: action.payload,
+      };
+    case WHY_ARTIST:
+      return {
+        ...state,
+        responseToArtist: action.payload,
+      };
+    case GET_CASH_FLOW:
+      return {
+        ...state,
+        getCashFlow: action.payload,
       };
     default:
       return { ...state };

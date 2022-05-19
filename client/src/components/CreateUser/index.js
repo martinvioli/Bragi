@@ -121,17 +121,6 @@ function CreateUser() {
     setShow2(false);
   };
 
-  // AUTH THINGS //
-
-  // ESTA FUNCION ES PARA OBTENER EL TOKEN DESDE EL LOCALSTORAGE DEPRECIADA POR EL MOMENTO.
-  // const getToken = () => {
-  //   const userCredentials = window.localStorage.getItem("userCredentials");
-  //   const userToken = JSON.parse(userCredentials);
-  //   userToken
-  //     ? setInputToken({ ...inputToken, token: userToken })
-  //     : setInputToken({ ...inputToken, token: "" });
-  // };
-
   const handleChangeAuth = (e) => {
     setInputToken({
       ...inputToken,
@@ -147,10 +136,10 @@ function CreateUser() {
         if (response.data.msg) {
           Swal.fire({
             title: "🎉🎊",
-            text: "Congratulations, you are now officially a member of this beatiful community!.",
+            text: "Congratulations, you are now officially a member of this beautiful community!.",
             icon: "success",
             showConfirmButton: true,
-            confirmButtonColor: "#0d6efd",
+            confirmButtonColor: "#efb810",
             timer: 2000,
           });
           navigate("/home");
@@ -427,12 +416,24 @@ function CreateUser() {
               className="btn-primary btn"
               value="Send"
               disabled={disabled}
+              style={{
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}
             />
           )}
         </Form>
 
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Button color="primary" style={{ marginTop: "2em" }}>
+          <Button
+            style={{
+              marginTop: "2em",
+              background: "#dd9202",
+              color: "black",
+              border: "2px solid #dd9202",
+            }}
+          >
             Back
           </Button>
         </Link>
@@ -446,7 +447,7 @@ function CreateUser() {
             <FcApproval style={{ width: "2em", height: "2em" }} />
             <h2 className={styles.subtitle}>
               Thanks you for your registration on
-              <p className={"text-primary"}>BRAGI</p>
+              <p className={"text-warning"}>BRAGI</p>
               <hr />
             </h2>
             <p className={styles.text}>
@@ -463,8 +464,8 @@ function CreateUser() {
               />
             </FormGroup>
           </ModalBody>
-          <ModalFooter className="bg-light rounded-1">
-            <Button color="primary" onClick={handleClickAuth}>
+          <ModalFooter className={styles.buttonSend}>
+            <Button color="warning" onClick={handleClickAuth}>
               Send
             </Button>
           </ModalFooter>

@@ -23,19 +23,22 @@ import { getPhotoUser, getToken, getUser } from "../../redux/actionCreators";
 import axios from "axios";
 import api from "../../Utils";
 import { validateEdit } from "../../Utils/validate";
+import Swal from "sweetalert2";
 
 function EditProfile({ showModal, handleShowModal }) {
+  const user = useSelector((state) => state.user);
+  const profileImage = useSelector((state) => state.profileImage);
   const [input, setInput] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    gender: "",
-    tel: "",
+    name: user.name ? user.name : "",
+    lastName: user.lastName ? user.lastName : "",
+    email: user.email ? user.email : "",
+    gender: user.gender ? user.gender : "",
+    tel: user.tel ? user.tel : "",
     password: "",
     repeatPassword: "",
-    birthday: "",
-    userName: "",
-    description: "",
+    birthday: user.birthday ? user.birthday : "",
+    userName: user.userName ? user.userName : "",
+    description: user.description ? user.description : "",
   });
   const [errors, setErrors] = useState({
     name: "",
@@ -53,11 +56,12 @@ function EditProfile({ showModal, handleShowModal }) {
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
   const [responseEdit, setResponseEdit] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
-  const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const history = useHistory();
 
   useEffect(() => {
     const userCredentials = window.localStorage.getItem("userCredentials");
@@ -68,7 +72,7 @@ function EditProfile({ showModal, handleShowModal }) {
       dispatch(getPhotoUser(user.userName));
     }
     if (!userCredentials) {
-      console.log(user);
+      //console.log(user);
       navigate("/");
     }
   }, []);
@@ -113,7 +117,18 @@ function EditProfile({ showModal, handleShowModal }) {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validateEdit({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
+
+  // useEffect(() => {
+  //   dispatch(getPhotoUser(null))
+  //   console.log(profileImage)
+  // },[])
 
   const handleBlur = (e) => {
     setErrors(
@@ -128,7 +143,7 @@ function EditProfile({ showModal, handleShowModal }) {
 
   const handleSubmitBasicData = async (e) => {
     e.preventDefault();
-    console.log(photoProfile);
+    //console.log(photoProfile);
     const fd = new FormData();
     fd.append("photoProfile", photoProfile);
     fd.append("token", token);
@@ -139,17 +154,29 @@ function EditProfile({ showModal, handleShowModal }) {
       "description",
       input.description ? input.description : user.description
     );
-    fd.append("birthday", input.birthday ? input.birthday : user.birthday);
+    fd.append("birthday", input.birthday ? input.birthday : user.birthday); //Necesitamos user.birthday para que funcione.
     fd.append("tel", input.tel ? input.tel : user.tel);
 
     const response = await axios.put(api.updateBasicData, fd);
     if (response.data.msgE) {
       setResponseEdit(response.data.msgE);
-      alert(response.data.msgE);
+      Swal.fire(
+        "Error",
+        "Something has gone grown. Please, try again!.",
+        "warning"
+      ).then((result) => {
+        result.isConfirmed && window.location.reload();
+      });
     }
     if (response.data.msg) {
       setResponseEdit(response.data.msg);
-      alert(response.data.msg);
+      Swal.fire(
+        "Great!",
+        "You have edited your profile successfully.",
+        "success"
+      ).then((result) => {
+        result.isConfirmed && window.location.reload();
+      });
     }
     setInput({
       name: "",
@@ -164,7 +191,6 @@ function EditProfile({ showModal, handleShowModal }) {
       description: "",
     });
     handleShowModal();
-    navigate("/profile");
   };
 
   const handleSubmitSenstiveData = async (e) => {
@@ -179,57 +205,96 @@ function EditProfile({ showModal, handleShowModal }) {
         : user.repeatPassword,
     });
     if (response.data.msgE) {
-      alert(response.data.msgE);
+      Swal.fire(
+        "Error",
+        "Something has gone grown. Please, try again!. Please log in again.",
+        "warning"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          setInput({
+            name: "",
+            lastName: "",
+            email: "",
+            gender: "",
+            tel: "",
+            password: "",
+            repeatPassword: "",
+            birthday: "",
+            userName: "",
+            description: "",
+          });
+          handleShowModal();
+          navigate("/");
+        }
+      });
     }
     if (response.data.msg) {
-      alert(response.data.msg);
+      Swal.fire(
+        "Great!",
+        "You have edited your account successfully. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          setInput({
+            name: "",
+            lastName: "",
+            email: "",
+            gender: "",
+            tel: "",
+            password: "",
+            repeatPassword: "",
+            birthday: "",
+            userName: "",
+            description: "",
+          });
+          handleShowModal();
+          navigate("/");
+        }
+      });
     }
-    setInput({
-      name: "",
-      lastName: "",
-      email: "",
-      gender: "",
-      tel: "",
-      password: "",
-      repeatPassword: "",
-      birthday: "",
-      userName: "",
-      description: "",
-    });
-    handleShowModal();
-    navigate("/profile");
   };
 
   const handleTabs = (tab) => {
     setActiveTab(tab);
   };
 
-  const handlePremium = async () => {
+  const handleStandard = async () => {
     try {
-      const response = await axios.post(api.changeUserToPremium, {
+      const response = await axios.post(api.changeUserToStandard, {
         userName: user.userName,
       });
+      Swal.fire(
+        "🔮",
+        "You are now an fan. Please log in again.",
+        "success"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.localStorage.removeItem("userCredentials");
+          handleShowModal();
+          navigate("/");
+        }
+      });
+    } catch (error) {}
+  };
 
-      alert(response.data);
+  const handlePremium = async () => {
+    try {
+      handleShowModal();
+      navigate("/pay");
     } catch (e) {
       alert(e.response.data.msgE);
     }
   };
 
   const handleArtist = async () => {
-    try {
-      const response = await axios.post(api.changeUserToArtist, {
-        userName: user.userName,
-      });
-
-      alert(response.data);
-    } catch (e) {
-      alert(e.response.data.msgE);
-    }
+      navigate("/whypay");
+      handleShowModal();
   };
 
   const handleImage = (e) => {
-    console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
     setPhotoProfile(e.target.files[0]);
   };
 
@@ -262,7 +327,7 @@ function EditProfile({ showModal, handleShowModal }) {
                   className={activeTab === "3" ? "active" : ""}
                   onClick={(e) => handleTabs("3")}
                 >
-                  Premium Suscription
+                  Change account type
                 </NavLink>
               </NavItem>
             </Nav>
@@ -454,12 +519,28 @@ function EditProfile({ showModal, handleShowModal }) {
                   errors.tel ||
                   errors.birthday ||
                   errors.description ? (
-                    <Input type="submit" disabled value="Send" />
+                    <Input
+                      type="submit"
+                      disabled
+                      value="Send"
+                      style={{
+                        marginTop: "2em",
+                        backgroundColor: "black",
+                        color: "#dd9202",
+                        border: "2px solid #dd9202",
+                      }}
+                    />
                   ) : (
                     <Input
                       type="submit"
                       className="btn-primary btn"
                       value="Send"
+                      style={{
+                        marginTop: "2em",
+                        background: "#dd9202",
+                        color: "black",
+                        border: "2px solid #dd9202",
+                      }}
                     />
                   )}
                 </Form>
@@ -597,22 +678,77 @@ function EditProfile({ showModal, handleShowModal }) {
                     )}
                   </FormGroup>
                   {errors.userName || errors.password || errors.email ? (
-                    <Input type="submit" disabled value="Send" />
+                    <Input
+                      type="submit"
+                      disabled
+                      value="Send"
+                      style={{
+                        marginTop: "2em",
+                        background: "#dd9202",
+                        color: "black",
+                        border: "2px solid #dd9202",
+                      }}
+                    />
                   ) : (
                     <Input
                       type="submit"
                       className="btn-primary btn"
                       value="Send"
+                      style={{
+                        marginTop: "2em",
+                        background: "#dd9202",
+                        color: "black",
+                        border: "2px solid #dd9202",
+                      }}
                     />
                   )}
                 </Form>
               </TabPane>
               <TabPane tabId="3">
-                <Button style={{ marginRight: "20px" }} onClick={handlePremium}>
-                  Became Premium
-                </Button>
+                {user.typeUser === "Artist" && (
+                  <Button
+                    onClick={() => handleStandard()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Become fan
+                  </Button>
+                )}
 
-                <Button onClick={handleArtist}>Became Artist</Button>
+                {user.typeUser === "Standard" && (
+                  <Button
+                    onClick={() => handlePremium()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Become Premium
+                  </Button>
+                )}
+
+                {user.typeUser === "Standard" || user.typeUser === "Premium" ? (
+                  <Button
+                    onClick={() => handleArtist()}
+                    style={{
+                      marginTop: "2em",
+                      background: "#dd9202",
+                      color: "black",
+                      border: "2px solid #dd9202",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Become Artist
+                  </Button>
+                ) : null}
               </TabPane>
             </TabContent>
           </div>
@@ -620,7 +756,13 @@ function EditProfile({ showModal, handleShowModal }) {
         <ModalFooter>
           <Button
             color="primary"
-            style={{ marginTop: "2em" }}
+            style={{
+              marginTop: "2em",
+              background: "#dd9202",
+              color: "black",
+              border: "2px solid #dd9202",
+              marginRight: "20px",
+            }}
             onClick={handleShowModal}
           >
             Back

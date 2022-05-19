@@ -1,0 +1,126 @@
+@keyframes move {
+    0% {
+        transform: translateY(-20%);
+    }
+
+    100% {
+        transform: translateY(-170%);
+    }
+}
+
+/* .BRAGI{color: className={"text-primary"};} */
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 50%;
+    margin-left: 23%;
+    background-color: rgba(255, 255, 255, 0.899);
+    padding: 1em;
+    border-radius: 0.5em;
+    border: 1px solid black;
+    box-shadow: 0px 13px 6px -4px rgba(1, 1, 1, 0.3), 0px -8px 15px -3px rgba(1, 1, 1, 0.3);
+    z-index: 2;
+}
+
+.form>img {
+    margin-left: 45%;
+    margin-right: 50%;
+    filter: invert(45%) sepia(78%) saturate(5357%) hue-rotate(217deg) brightness(95%) contrast(85%);
+}
+
+.background {
+    border-radius: 1em;
+    /* border-top-right-radius: 100%; */
+    width: 50%;
+    height: 50%;
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.244);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feature {
+    font-size: 6vw;
+    color: white;
+    margin-bottom: -0.5em;
+    -webkit-animation-name: move;
+    -webkit-animation-duration: 8s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate-reverse;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.feature:nth-child(odd) {
+    text-align: left;
+}
+
+.feature:nth-child(even) {
+    text-align: right;
+}
+
+.feature>h2 {
+    color: #dd9202;
+    font-weight: bold;
+}
+
+.feature>h1 {
+    background-color: #dd9202;
+    display: inline;
+    border-radius: 100%;
+    padding: 0.1em 0.5em 0.1em 0.5em;
+    font-weight: bold;
+    color: white;
+    /* box-shadow: 4px 4px 0px -3px rgb(101, 175, 254); */
+    /* box-shadow: 4px 4px 4px 0 rgba(222, 145, 2, 0.555); */
+}
+
+@media (max-width: 1000px) {
+    @keyframes move {
+        0% {
+            transform: translateY(-370%);
+        }
+
+        100% {
+            transform: translateY(0%);
+        }
+    }
+
+    .background {
+        flex-direction: column;
+        border-radius: 1em;
+    }
+
+    .form {
+        min-width: 100%;
+    }
+
+    .scroller {
+        min-width: 100%;
+        padding-bottom: 0;
+        position: static;
+        border-top-right-radius: 0;
+        width: 100%;
+        padding-right: 0;
+        padding-bottom: 3em;
+        margin-top: -1em;
+    }
+
+    .falseScroller {
+        display: none;
+    }
+}
+
+.logoMusic {
+    width: 100px;
+    height: 100px;
+    color: #dd9202;
+    margin-left: 35%;
+}
