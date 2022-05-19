@@ -73,7 +73,7 @@ import api from "../../Utils";
 
 export const createUser = function (input) {
   return async (dispatch) => {
-    const response = await axios.post("http://localhost:3001/register", input);
+    const response = await axios.post(api.registerUrl, input);
     return dispatch({
       type: CREATE_USER,
       payload: response.data,
