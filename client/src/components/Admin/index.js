@@ -289,8 +289,7 @@ function Admin() {
     } else if (
       !plan2.priceMembership ||
       !plan2.numberOfMonths ||
-      !plan2.namePlanPremium ||
-      !plan2.discount
+      !plan2.namePlanPremium
     ) {
       Swal.fire({
         title:
@@ -299,9 +298,7 @@ function Admin() {
       });
     } else if (
       parseInt(plan2.priceMembership) > 1000 ||
-      parseInt(plan2.priceMembership) <= 0 ||
-      parseInt(plan2.discount) < 1 ||
-      parseInt(plan2.discount) > 99
+      parseInt(plan2.priceMembership) <= 0
     ) {
       Swal.fire({
         title:
@@ -313,7 +310,7 @@ function Admin() {
         priceMembership: parseInt(plan2.priceMembership),
         namePlanPremium: plan2.namePlanPremium,
         numberOfMonths: parseInt(plan2.numberOfMonths),
-        discount: parseInt(plan2.discount),
+        discount: false,
       };
       dispatch(createPlansPremiums(obj));
       setTimeout(function () {
@@ -643,7 +640,7 @@ function Admin() {
                           style={{ width: "15em" }}
                           onChange={(e) => handlePlan2(e)}
                         />
-                        <Label htmlFor="discount" style={{ color: "white" }}>
+                        {/*                         <Label htmlFor="discount" style={{ color: "white" }}>
                           Discount :
                         </Label>
                         <Input
@@ -652,7 +649,7 @@ function Admin() {
                           value={plan2.discount}
                           style={{ width: "15em", marginBottom: "1em" }}
                           onChange={(e) => handlePlan2(e)}
-                        />
+                        /> */}
                         <Input type="submit" style={{ width: "15em" }} />
                       </Form>
                     </div>

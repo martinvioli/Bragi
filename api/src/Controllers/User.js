@@ -19,17 +19,30 @@ const fs = require("fs");
 class UserClass {
   constructor() {}
 
-  async createSuperAdminDefault(){
-    try{
+  async createSuperAdminDefault() {
+    try {
       const tokenAdmin = jwt.sign(
-        { userName:"BragiSystem" , email: "BragiSystem@gmail.com", TypeUser: "Admin" },authConfig.secret,
-        { expiresIn: authConfig.expires,}
+        {
+          userName: "BragiSystem",
+          email: "BragiSystem@gmail.com",
+          TypeUser: "Admin",
+        },
+        authConfig.secret,
+        { expiresIn: authConfig.expires }
       );
-      let password = bcrypt.hashSync("BragiSystem77", Number.parseInt(authConfig.rounds));
-      const adminExist = await User.findAll({where: {userName: "BragiSystem"}})
-      if(adminExist.length && !adminExist[0].dataValues.token){
-        await User.update({token: tokenAdmin},{where: {userName: "BragiSystem"}});
-      }else if(!adminExist.length){
+      let password = bcrypt.hashSync(
+        "BragiSystem77",
+        Number.parseInt(authConfig.rounds)
+      );
+      const adminExist = await User.findAll({
+        where: { userName: "BragiSystem" },
+      });
+      if (adminExist.length && !adminExist[0].dataValues.token) {
+        await User.update(
+          { token: tokenAdmin },
+          { where: { userName: "BragiSystem" } }
+        );
+      } else if (!adminExist.length) {
         await User.create({
           name: "BragiAdmin",
           lastName: "Admin",
@@ -39,12 +52,12 @@ class UserClass {
           nameTypeUser: "Admin",
           gender: "Non binary",
           nameStateUser: "Active",
-          token: tokenAdmin
-        })
+          token: tokenAdmin,
+        });
       }
-    }catch(e){
-      console.log(e)
-      console.log("No se pudo crear el superAdmin")
+    } catch (e) {
+      console.log(e);
+      console.log("No se pudo crear el superAdmin");
     }
   }
   getAllUsers = async (req, res) => {
@@ -159,7 +172,10 @@ class UserClass {
       userName,
       repeatPassword,
     } = req.body;
-    password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+    password = bcrypt.hashSync(
+      req.body.password,
+      Number.parseInt(authConfig.rounds)
+    );
     if (!bcrypt.compareSync(repeatPassword, password))
       return res.status(409).json({ msgE: "Passwords do not match" });
 
@@ -207,7 +223,7 @@ class UserClass {
         userName,
         validationCode: codeNum,
         token,
-        MembershipUserIdMembershipUser: null
+        MembershipUserIdMembershipUser: null,
       });
       return res.status(200).json({ msg: "User created successfully", token }); //Prueba para el front
     } catch (error) {
@@ -325,52 +341,68 @@ class UserClass {
       where: { [Op.or]: [{ userName: userName }] },
     });
     try {
-      if (!userFoundDB)return res.status(404).json({ msgE: "Could not find the user" });
-      if (userFoundDB.dataValues.nameTypeUser === "Artist")return res.status(400).json({ msgE: "The user was already Artist" });
-      const token = jwt.sign({
-        userName: userFoundDB.dataValues.userName,
-        email: userFoundDB.dataValues.email,
-        TypeUser: "Artist" 
-      },authConfig.secret,{expiresIn: authConfig.expires,});
+      if (!userFoundDB)
+        return res.status(404).json({ msgE: "Could not find the user" });
+      if (userFoundDB.dataValues.nameTypeUser === "Artist")
+        return res.status(400).json({ msgE: "The user was already Artist" });
+      const token = jwt.sign(
+        {
+          userName: userFoundDB.dataValues.userName,
+          email: userFoundDB.dataValues.email,
+          TypeUser: "Artist",
+        },
+        authConfig.secret,
+        { expiresIn: authConfig.expires }
+      );
       await User.update(
-        { nameTypeUser: "Artist" , token},
+        { nameTypeUser: "Artist", token },
         { where: { [Op.or]: [{ userName: userName }] } }
       );
-      const userToArtist = await User.findOne({where: {userName: userName}})
-      console.log(userToArtist)
-      return res.status(200).json({ msgE: "User updated to Artist", token: userToArtist.dataValues.token});
+      const userToArtist = await User.findOne({
+        where: { userName: userName },
+      });
+      console.log(userToArtist);
+      return res
+        .status(200)
+        .json({
+          msgE: "User updated to Artist",
+          token: userToArtist.dataValues.token,
+        });
     } catch (error) {
       return res.status(501).json(error.message);
     }
   };
 
   changeUserToPremium = async (req, res) => {
-    const {userName, premiumPlan} = req.body;
+    const { userName, premiumPlan } = req.body;
     let userFoundDB, premiumPlanFound;
     try {
       userFoundDB = await User.findOne({
-        where: {userName},
+        where: { userName },
       });
       if (!userFoundDB)
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Premium")
         return res.status(400).json({ msgE: "The user was already Premium" });
       try {
-        premiumPlanFound = await PlanPremium.findOne({where: {idPlanPremium: premiumPlan}});
-        if(!premiumPlanFound) return res.status(404).json({msgE: "Premium plan not found"});
+        premiumPlanFound = await PlanPremium.findOne({
+          where: { idPlanPremium: premiumPlan },
+        });
+        if (!premiumPlanFound)
+          return res.status(404).json({ msgE: "Premium plan not found" });
       } catch (error) {
         console.log(error);
-        return res.status(404).json({msgE: "Premium plan not found"});
+        return res.status(404).json({ msgE: "Premium plan not found" });
       }
       const today = new Date();
       let monthsPlan = premiumPlanFound.dataValues.numberOfMonths;
       let months = 0;
       let year = 0;
-      if((monthsPlan + today.getMonth()) > 12){
+      if (monthsPlan + today.getMonth() > 12) {
         year += 1;
-        months = (monthsPlan + today.getMonth()) - 12 + 1
-      }else{
-        months = today.getMonth() + 1;
+        months = monthsPlan + today.getMonth() - 12 + 1;
+      } else {
+        months = today.getMonth() + 1 + monthsPlan;
       }
       const membershipUser = await MembershipUser.create({
         statePlan: "Active",
@@ -381,26 +413,26 @@ class UserClass {
           "-" +
           today.getFullYear(),
         dateExpiry:
-          today.getDate() +
-          "-" +
-          (months) +
-          "-" +
-          (today.getFullYear() + year),
+          today.getDate() + "-" + months + "-" + (today.getFullYear() + year),
       });
       premiumPlanFound.addMembershipUser(membershipUser);
       membershipUser.addUser(userFoundDB);
-      const token = jwt.sign({ 
-        userName: userFoundDB.dataValues.userName,
-        email: userFoundDB.dataValues.email,
-        TypeUser: "Premium" 
-      },authConfig.secret,{expiresIn: authConfig.expires,});
+      const token = jwt.sign(
+        {
+          userName: userFoundDB.dataValues.userName,
+          email: userFoundDB.dataValues.email,
+          TypeUser: "Premium",
+        },
+        authConfig.secret,
+        { expiresIn: authConfig.expires }
+      );
       await User.update(
         { nameTypeUser: "Premium", token },
         { where: { [Op.or]: [{ userName: userName }] } }
       );
-      return res.status(200).json({ msgE: "User updated to Premium" , token});
+      return res.status(200).json({ msgE: "User updated to Premium", token });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(501).json(error.message);
     }
   };
@@ -415,21 +447,32 @@ class UserClass {
         return res.status(404).json({ msgE: "Could not find the user" });
       if (userFoundDB.dataValues.nameTypeUser === "Standard")
         return res.status(400).json({ msgE: "The user was already Standard" });
-      const token = jwt.sign({
-        userName: userFoundDB.dataValues.userName,
-        email: userFoundDB.dataValues.email,
-        TypeUser: "Standard" 
-      },authConfig.secret,{expiresIn: authConfig.expires,});
+      const token = jwt.sign(
+        {
+          userName: userFoundDB.dataValues.userName,
+          email: userFoundDB.dataValues.email,
+          TypeUser: "Standard",
+        },
+        authConfig.secret,
+        { expiresIn: authConfig.expires }
+      );
       await User.update(
-        { nameTypeUser: "Standard",token , MembershipUserIdMembershipUser: null},
+        {
+          nameTypeUser: "Standard",
+          token,
+          MembershipUserIdMembershipUser: null,
+        },
         { where: { [Op.or]: [{ userName: userName }] } }
-        );
-      await MembershipUser.destroy({where: {
-        idMembershipUser: userFoundDB.dataValues.MembershipUserIdMembershipUser
-      }});
-      return res.status(200).json({ msgE: "User updated to Standard" , token});
+      );
+      await MembershipUser.destroy({
+        where: {
+          idMembershipUser:
+            userFoundDB.dataValues.MembershipUserIdMembershipUser,
+        },
+      });
+      return res.status(200).json({ msgE: "User updated to Standard", token });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(501).json(error.message);
     }
   };
@@ -460,31 +503,33 @@ class UserClass {
       return res.status(500).json({ message: error.message });
     }
   };
-  
+
   justificationForBecomingAnArtist = async (req, res) => {
-    const {userName, email, reason} = req.body;
+    const { userName, email, reason } = req.body;
     try {
       let userFound;
-      try{
-        userFound = await User.findOne({where: {userName}});
-        console.log(userFound)
-        if(userFound.dataValues.nameTypeUser === 'Artist'){
-          return res.status(400).json({msgE: "You are already an artist"});
+      try {
+        userFound = await User.findOne({ where: { userName } });
+        console.log(userFound);
+        if (userFound.dataValues.nameTypeUser === "Artist") {
+          return res.status(400).json({ msgE: "You are already an artist" });
         }
-        if(userFound.dataValues.nameTypeUser === 'Standard'){
-          return res.status(400).json({msgE: "You need to be premium to be an artist."});
+        if (userFound.dataValues.nameTypeUser === "Standard") {
+          return res
+            .status(400)
+            .json({ msgE: "You need to be premium to be an artist." });
         }
-      }catch(e){
-        console.log(e)
-        res.status(404).json({msgE: "User not found"});
+      } catch (e) {
+        console.log(e);
+        res.status(404).json({ msgE: "User not found" });
       }
       await validation.toArtist(userName, email, reason);
-      res.status(200).json({msg: "Request made successfully"})
+      res.status(200).json({ msg: "Request made successfully" });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       //Mandar mensaje
     }
-  }
+  };
 }
 
 module.exports = UserClass;
