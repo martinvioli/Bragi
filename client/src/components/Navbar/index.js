@@ -52,6 +52,7 @@ export default function NavBar() {
       if (result.isDenied) {
         window.localStorage.removeItem("userCredentials");
         navigate("/");
+        window.location.reload();
       }
     });
   }
