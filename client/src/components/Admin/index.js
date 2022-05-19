@@ -73,6 +73,7 @@ function Admin() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("1");
   const [userId, setUserId] = useState("");
+  const [usersFound, setUsersFound] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const bannedMsg = useSelector((state) => state.banned);
   const unBannedMsg = useSelector((state) => state.unbanned);
@@ -147,6 +148,8 @@ function Admin() {
     });
   };
 
+  const allUsers = [...premiumUsers, ...standardUsers, ...artistUsers];
+
   const handleSubmitInput = (e) => {
     e.preventDefault();
     if (!input.user) {
@@ -154,9 +157,13 @@ function Admin() {
         title: "We were unable to perform your user search 😪",
         confirmButtonColor: "#dd9202",
       });
-    } else {
-      dispatch(getUserByName(input.user));
     }
+    // } else {
+    //   dispatch(getUserByName(input.user));
+    // }
+    console.log(allUsers);
+    setUsersFound([allUsers.filter((e) => e.userName.includes(input.user))]);
+    console.log(usersFound);
 
     setInput({
       plan: "",
@@ -783,8 +790,8 @@ function Admin() {
                         }}
                       />
                     </Form>
-                    {userSearch[0] &&
-                      userSearch[0].map((e) => {
+                    {usersFound[0] &&
+                      usersFound[0].map((e) => {
                         return (
                           <div
                             key={e.idUser}
