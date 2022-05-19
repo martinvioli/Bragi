@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Elements,
@@ -12,24 +12,24 @@ import styles from "./Payform.module.css";
 import axios from "axios";
 import { useState } from "react";
 import { FiDollarSign } from "react-icons/fi";
-import { Button, Input } from "reactstrap"
-import {getPremiumPlan, getToken, getUser} from "../../redux/actionCreators";
+import { Button, Input } from "reactstrap";
+import { getPremiumPlan, getToken, getUser } from "../../redux/actionCreators";
 import Swal from "sweetalert2";
 import api from "../../Utils";
 
 const stripePromise = loadStripe(
-  "pk_test_51KyQ9pE8TxQAl8Y82fJm1D0MB9ECZTRMoCzivFanYuiJDBbRDAY0ObUh0zKEZ4diN9PeZeJ3D0j3AtF1a3kBJ10H005WnwH2qT"
+  "pk_test_51L0ws6ADS8TOvH2dlToX4bzaqYWsrLCPsMaFcTxb1mSNGxseAfyAWm3PGR6r2kzc7yWtxV31L5yFbkaYcgzFgIB000OpkIuaOF"
 );
 
 //TENGO QUE MANDAR USERNAME, ID PLAN
 
 const CheckoutForm = () => {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
-  const premiumPlans = useSelector((state) => state.premiumPlans)
-  const navigate = useNavigate()
+  const premiumPlans = useSelector((state) => state.premiumPlans);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -43,16 +43,24 @@ const CheckoutForm = () => {
     if (!userCredentials) {
       navigate("/");
     }
-    dispatch(getPremiumPlan())
-  }, [])
-  
-  const plans = premiumPlans
-  console.log(user)
+    dispatch(getPremiumPlan());
+  }, []);
+
+  const plans = premiumPlans;
+
+  const [input, setInput] = useState({ planDetails: null });
+
+  const handleInput = (e) => {
+    /// console.log(input);
+    if (e.target.value === "default")
+      return setInput({ ...input, planDetails: null });
+    setInput({ ...input, [e.target.name]: JSON.parse(e.target.value) });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
       billing_details: {
@@ -61,20 +69,21 @@ const CheckoutForm = () => {
     });
     setLoading(true);
 
-    if (!result.error) {
+    if (!error) {
       try {
+        const { id } = paymentMethod;
         const { data } = await axios.post(api.payment, {
-          payment_method: result.paymentMethod.id,
-          email: "bragisystem@gmail.com",
+          id,
+          amount: Number(Number(input.planDetails.priceMembership) * 100),
         });
-        console.log(input.planDetails.namePlanPremium);
 
         elements.getElement(CardElement).clear();
-        if(data.status.paid === true){
+        if (data.message === "Successful Payment") {
           setLoading(false);
-          console.log(user.userName)
-          const payAprobe = await axios.post(api.changeUserToPremium, {userName: user.userName, premiumPlan: input.planDetails.idPlanPremium})
-          console.log(payAprobe)
+          const payAprobe = await axios.post(api.changeUserToPremium, {
+            userName: user.userName,
+            premiumPlan: input.planDetails.idPlanPremium,
+          });
           Swal.fire({
             title: "Success",
             text: "Your payment has been made successfully, thank you!",
@@ -83,35 +92,37 @@ const CheckoutForm = () => {
             confirmButtonColor: "#0d6efd",
             timer: 2000,
           });
-          navigate('/feed')
-          return
+          navigate("/feed");
+          return;
+        } else {
+          Swal.fire({
+            title: "We were unable to perform your payment 😪",
+            text: data.message,
+            icon: "error",
+            confirmButtonColor: "#dd9202",
+          });
+          setLoading(false);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (data) {
+        Swal.fire({
+          title: "We were unable to perform your payment 😪",
+          text: data.message,
+          icon: "error",
+          confirmButtonColor: "#dd9202",
+        });
+        setLoading(false);
       }
       setLoading(false);
-    }else{
+    } else {
       Swal.fire({
         title: "We were unable to perform your payment 😪",
+        text: error,
         icon: "error",
         confirmButtonColor: "#dd9202",
-      })
+      });
       setLoading(false);
     }
   };
-
-  const [input, setInput] = useState(
-    {planDetails: null}
-  );
-
-  const handleInput = (e) => {
-    /// console.log(input);
-    if(e.target.value === "default") return setInput({...input, planDetails: null})
-    setInput({...input, [e.target.name]: JSON.parse(e.target.value)});
-  };
-
-  console.log(input)
-  //console.log(!stripe || loading);
 
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
@@ -123,7 +134,7 @@ const CheckoutForm = () => {
           margin: "2em",
           border: "3px solid #dd9202",
           borderRadius: "8px",
-          marginLeft: "200px"
+          marginLeft: "200px",
         }}
         type="select"
         defaultValue="default"
@@ -131,19 +142,21 @@ const CheckoutForm = () => {
         onChange={(e) => handleInput(e)}
       >
         <option value="default">Select a Plan...</option>
-        {plans && plans.map((e) => {
-          return(
-            <option value={JSON.stringify(e)}>{e.namePlanPremium}</option>
-          )
-        })}
+        {plans &&
+          plans.map((e) => {
+            return (
+              <option value={JSON.stringify(e)}>{e.namePlanPremium}</option>
+            );
+          })}
       </Input>
-      {/* {console.log(input)} */}
 
-      {input.planDetails &&
+      {input.planDetails && (
         <div className={styles.detail}>
-          Months: {input.planDetails.numberOfMonths}<br/>
+          Months: {input.planDetails.numberOfMonths}
+          <br />
           You would pay: ${input.planDetails.priceMembership} USD
-      </div>}
+        </div>
+      )}
 
       {/* User Card Input */}
       <div className={styles.form}>
@@ -157,14 +170,16 @@ const CheckoutForm = () => {
         style={{ backgroundColor: "#dd9202" }}
       >
         {loading ? (
-          <div style={{ display: "inline-flex"}}>
-            <div style={{ color: "white", marginRight: "15px", fontSize: "20px" }}>Loading...</div>
-            <div className="spinner-border text-light" role="status"/>
+          <div style={{ display: "inline-flex" }}>
+            <div
+              style={{ color: "white", marginRight: "15px", fontSize: "20px" }}
+            >
+              Loading...
+            </div>
+            <div className="spinner-border text-light" role="status" />
           </div>
         ) : (
-          <p style={{ color: "white", marginBottom: "-2px" }}>
-            Buy
-          </p>
+          <p style={{ color: "white", marginBottom: "-2px" }}>Buy</p>
         )}
       </button>
     </form>
@@ -172,11 +187,11 @@ const CheckoutForm = () => {
 };
 
 function PayForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleOnClickBack = () => {
-    navigate("/feed")
-  }
+    navigate("/feed");
+  };
   return (
     <>
       {/* <div style={{ height: "500px", width: "500px"}}className={styles.payment}>
@@ -211,7 +226,10 @@ function PayForm() {
             </div>
           </div>
         </Elements>
-        <Button style={{ backgroundColor: "#dd9202", marginTop: "30px"}} onClick={handleOnClickBack}>
+        <Button
+          style={{ backgroundColor: "#dd9202", marginTop: "30px" }}
+          onClick={handleOnClickBack}
+        >
           Back
         </Button>
       </div>
