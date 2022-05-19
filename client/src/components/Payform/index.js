@@ -47,7 +47,6 @@ const CheckoutForm = () => {
   }, []);
 
   const plans = premiumPlans;
-  console.log(user);
 
   const [input, setInput] = useState({ planDetails: null });
 
@@ -125,9 +124,6 @@ const CheckoutForm = () => {
     }
   };
 
-  console.log(input);
-  //console.log(!stripe || loading);
-
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
       {/* Form select */}
@@ -153,7 +149,6 @@ const CheckoutForm = () => {
             );
           })}
       </Input>
-      {/* {console.log(input)} */}
 
       {input.planDetails && (
         <div className={styles.detail}>
