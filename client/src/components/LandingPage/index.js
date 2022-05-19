@@ -56,7 +56,20 @@ function LandingPage() {
       //Estas son las URLs a cambiar para que funcione el back.
       // console.log(response.code);
       if (response.data.msgE) {
-        alert(response.data.msgE);
+        setInput({
+          email: "",
+          password: "",
+          userName: "",
+        });
+        Swal.fire({
+          title: "Oops...",
+          text: response.data.msgE,
+          icon: "error",
+          cancelButtonText: "Close",
+          cancelButtonColor: "#E74C3C ",
+          showCancelButton: true,
+          showConfirmButton: false,
+        });
         return;
       }
       dispatch(getToken(response.data.token));
@@ -71,7 +84,11 @@ function LandingPage() {
       }
       setInput({ email: "", password: "" });
     } catch (e) {
-      setInput("");
+      setInput({
+        email: "",
+        password: "",
+        userName: "",
+      });
       Swal.fire({
         title: "Oops...",
         text: "That username or email is not linked to an existent account. Please, verify your inputs.",
@@ -88,13 +105,13 @@ function LandingPage() {
     {
       id: 1,
       title: "Keep up to date",
-      description:
-        "Know more about your favourite artists on a daily basis!",
+      description: "Know more about your favourite artists on a daily basis!",
     },
     {
       id: 2,
       title: "Bragi Premium",
-      description: "Access exclusive content from your favorite artists with Bragi Premium",
+      description:
+        "Access exclusive content from your favorite artists with Bragi Premium",
     },
     {
       id: 3,
@@ -105,7 +122,8 @@ function LandingPage() {
     {
       id: 4,
       title: "Make friends",
-      description: "Meet, follow and be friends with people who vibe to the same music than you.",
+      description:
+        "Meet, follow and be friends with people who vibe to the same music than you.",
     },
     {
       id: 5,
