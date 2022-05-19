@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { getToken } from "../../redux/actionCreators";
 import { validate } from "../../Utils/validateLogin";
 import Swal from "sweetalert2";
+import NavBar2 from "../NavBar2";
 
 function LandingPage() {
   const [input, setInput] = useState({
@@ -63,8 +64,12 @@ function LandingPage() {
         "userCredentials",
         JSON.stringify(response.data.token)
       );
-      navigate("feed");
-      setInput("");
+      if (input.email === "BragiSystem@gmail.com") {
+        navigate("admin");
+      } else {
+        navigate("feed");
+      }
+      setInput({ email: "", password: "" });
     } catch (e) {
       setInput("");
       Swal.fire({
@@ -84,34 +89,35 @@ function LandingPage() {
       id: 1,
       title: "Keep up to date",
       description:
-        "Know everything about your favourite music bands and singers.",
+        "Know more about your favourite artists on a daily basis!",
     },
     {
       id: 2,
-      title: "Be part of a fangroup",
-      description: "Make it or be part of one if it doesn't already exists.",
+      title: "Bragi Premium",
+      description: "Access exclusive content from your favorite artists with Bragi Premium",
     },
     {
       id: 3,
-      title: "Never miss a concert again",
+      title: "Check out Bragi's top 10's live",
       description:
-        "Our system will notify you when a band/singer post a new date.",
+        "Our top 10 rankings keep you posted about the best songs and artists right now!",
     },
     {
       id: 4,
       title: "Make friends",
-      description: "Meet people who also like the same music you do.",
+      description: "Meet, follow and be friends with people who vibe to the same music than you.",
     },
     {
       id: 5,
       title: "Participate",
       description:
-        "Comment and like every new post, and share it with your friends.",
+        "Comment, like and participate on the latest post from your idols.",
     },
   ];
 
   return (
     <div className={styles.container}>
+      <NavBar2></NavBar2>
       <motion.div
         className={styles.background}
         initial={{ opacity: 0 }}
@@ -139,7 +145,7 @@ function LandingPage() {
             onSubmit={(e) => handleSubmit(e)}
             style={{ marginBottom: "2em" }}
           >
-            <FormGroup className="position-relative">
+            {/* <FormGroup className="position-relative">
               <Label for="userName">Username</Label>
               <Input
                 type="text"
@@ -154,7 +160,7 @@ function LandingPage() {
               ) : (
                 <FormFeedback tooltip></FormFeedback>
               )}
-            </FormGroup>
+            </FormGroup> */}
             <FormGroup className="position-relative">
               <Label for="email">Email</Label>
               <Input
@@ -189,8 +195,8 @@ function LandingPage() {
             </FormGroup>
             {errors.email ||
             errors.password ||
-            errors.userName ||
-            !input.userName ||
+            // errors.userName ||
+            // !input.userName ||
             !input.email ||
             !input.password ? (
               <Input type="submit" disabled value="Sign in" />
@@ -199,13 +205,32 @@ function LandingPage() {
                 type="submit"
                 value="Sign in"
                 className="btn-primary btn"
+                style={{
+                  background: "rgba(1, 1, 1, 0.3)",
+                  color: "black",
+                  border: "2px solid rgba(1, 1, 1, 0.3)",
+                }}
               />
             )}
           </Form>
           <hr></hr>
           <Link to="/register" style={{ textDecoration: "none" }}>
-            <Button color="success" block outline style={{ marginTop: "2em" }}>
+            <Button
+              block
+              outline
+              style={{
+                marginTop: "2em",
+                background: "#dd9202",
+                color: "black",
+                border: "2px solid #dd9202",
+              }}
+            >
               Don't have an account? Sign up!
+            </Button>
+          </Link>
+          <Link to="/submitEmail" style={{ textDecoration: "none" }}>
+            <Button color="success" block outline style={{ marginTop: "2em" }}>
+              Did you forgot your password? Reset it!
             </Button>
           </Link>
         </div>

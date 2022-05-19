@@ -1,45 +1,188 @@
+/* general container */
 .container {
-  width: 100%;
+  height: 100%;
+  width: 25%;
   display: flex;
-  flex-direction: row;
+  box-shadow: 0px 9px 25px rgba(0, 0, 0, 0.7);
+  margin-top: 125px;
+  margin-left: 40px;
+  /* border: 5px solid black; */
+  /* margin-left: 100px; */
+}
+
+/* Profile */
+.profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 570px;
+  width: 600px;
+  border: 5px transparent black;
+  box-shadow: 0px 0px 0px #1c1c1c;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Description text */
+.description {
+  /* height: auto;
+  width: auto; */
+  display: flex;
+  color: #f5f5f5;
+  /* text-align: center; */
+  /* overflow: hidden */
+  /* padding: 100px; */
+  /* display: flex; */
+  /* padding-left: 250px; */
+}
+
+/* .profile > div > h3 {
+}
+.profile > div > div {
+} */
+
+/* Imagen de perfil */
+.profileImg {
+  /*padding-top: 2px;*/
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  /* align-items: center;
+  justify-content: center; */
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  margin-top: 35px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px #f5f5f5;
+}
+.top {
+  display: flex;
+}
+
+.top > div {
+  height: 15px;
+  width: 15px;
+}
+
+/* Posteos */
+
+.followeds {
+  color: #f5f5f5;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.followers {
+  color: #f5f5f5;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+/* Listas de follow, con description y fan incluido*/
+.followList {
+  margin-top: 1em;
+  overflow-y: auto;
+  display: grid;
+  gap: -12px;
+  grid-template-columns: repeat(2, 1fr);
+  /* display: flex;*/
   justify-content: center;
   align-items: center;
-  padding: 1em 5em 1em 5em;
-  padding-top: 125px;
+  flex-direction: column;
 }
 
-.profile {
-  height: 50em;
-  min-width: 30em;
-  margin-left: 1em;
-  border-radius: 1em;
-  background-color: #dd9202;
-  margin-right: 150px;
+/* .followList > h3 {
+} */
+
+.followBtn {
+  background-color: #dd9202 !important;
+  color: #f5f5f5 !important;
+  border: #dd9202 !important;
+  height: 39px;
+  width: 85px;
 }
-.description{
-  margin-bottom: 2em;
-  margin-left: 8em;
-  margin-right: 20px;
-  text-align: center; 
+
+.followBtn:hover {
+  background-color: #f5f5f5 !important;
+  color: #dd9202 !important;
+  border: #f5f5f5 !important;
+  height: 39px;
+  width: 85px;
 }
-.editButton{
-  margin-left: 1em;
+
+.unFollowBtn {
+  background-color: transparent !important;
+  border-color: #f5f5f5 !important;
 }
-.profile > div > div > p {
+
+.unFollowBtn:hover {
+  background-color: transparent !important;
+  color: #1c1c1c !important;
+  background-color: #f5f5f5 !important;
+  border-color: #1c1c1c !important;
+}
+
+.imgFollower > img {
+  display: flex;
+  height: 50px;
+  width: 50px;
+}
+.editButton {
+  margin-top: 9px;
+  margin-left: 3vw;
+  color: #dd9202;
+}
+
+.editButton:hover {
+  color: #f5f5f5;
+}
+
+/* NOMBRE */
+.name {
+  font-size: 20px;
+  text-align: center;
+  color: #dd9202;
+  font-weight: bold;
+}
+
+.userName {
+  font-size: 15px;
+  text-align: center;
+}
+
+.nameNData {
+  margin-top: 10px;
+  display: flex;
+  color: #f5f5f5;
+}
+
+.userStatus {
+}
+
+.description {
+  margin-top: -10px;
+}
+
+/* .profile > div > div > p {
   height: 12em;
   overflow: auto;
-}
+} */
 
-.artist {
+/* .artist {
   width: fit-content;
   height: fit-content;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1em 0 1em;
-}
+} */
 
-.events {
+/* .events {
   background-color: rgba(240, 248, 255, 0.344);
   width: fit-content;
   margin-right: 5em;
@@ -69,126 +212,10 @@
   background-color: aliceblue;
   text-align: center;
   border-radius: 1em;
-}
+} */
 
-.posts {
-  width: 100%;
-  height: 50em;
-  overflow-y: auto;
-  background-color: rgba(255, 255, 255, 0.274);
-  display: flex;
-  /* flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-}
-
-.profileImg {
-  /*padding-top: 2px;*/
-  /* margin-top: 5px;
-  margin-left: 5px; */
-  /* align-items: center;
-  justify-content: center; */
-  /* border-radius: 50%; */
-  margin-top: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 8em;
-  width: 8em;
-  border: 1px solid black;
-}
-
-.name{
-  text-align: center;
-  font-size: 25px;
-  text-transform: capitalize;
-  font-weight: bold;
-  color: white;
-}
-
-.description{
-  margin-top: 25px;
-  border: 1px solid orange;
-  border-radius: 25%;
-  height: fit-content;
-  width: fit-content;
-  display: block;
-  background-color: #b87903;
-  border-radius: 25px;
-  overflow: hidden;
-  text-align: center;
-  position: relative;
-  text-decoration: none;
-  padding: 4px;
-  box-shadow: 0px 9px 25px rgba(0, 0, 0, .7);
-}
-
-.post {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.fan {
-  /* display: flex; */
-  /* width: 100%;
-  max-width: 60em; */
-  /* justify-content: center; */
-  /* border: 1px solid white; */
-  margin-top: -12em;
-  text-align: center;
-}
-
-.fan > h1{
-  text-align: center;
-  color: white;
-}
-
-.followed {
-  margin-top: 1em;
-  overflow-y: auto;
-  width: auto;
-  height: 25em;
-  display: grid;
-  gap: 3px;
-  grid-template-columns: repeat(3, 1fr);
-  /* display: flex;*/
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.followedArtist {
-  display: flex;
-  border-radius: 0.5em;
-  margin-bottom: 1em;
-  width: 15em;
-  height: 7em;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: rgba(240, 248, 255, 0.484);
-
-}
-
-.followedArtist > section {
-  width: 6em;
-  font-size: large;
-}
-
-.followedArtist > section > p:nth-child(1) {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-.followedArtist > section > p:nth-child(2) {
-  font-style: italic;
-  margin: 0;
-  padding: 0;
-}
-
-.assistedConcerts {
+/* Conciertos */
+/* .assistedConcerts {
   margin-top: 1em;
   overflow-y: auto;
   width: 50%;
@@ -226,4 +253,4 @@
 
 .assistedConcert > p:nth-child(3) {
   font-size: small;
-}
+} */

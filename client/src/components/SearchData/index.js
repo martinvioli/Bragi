@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import { FaMinusCircle } from "react-icons/fa";
 import { Button } from "reactstrap";
@@ -8,76 +8,84 @@ import {
   getUser,
   unfollowUser,
 } from "../../redux/actionCreators";
-import { useDispatch } from "react-redux";
-import styles from "./SearchData.css";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./SearchData.module.css";
+import { Link } from "react-router-dom";
+import api from "../../Utils";
 function SearchData({ data }) {
   const dispatch = useDispatch();
+  const [token, setToken] = useState();
 
-  React.useEffect(() => {
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
+  useEffect(() => {
+    setToken(
+      (token) =>
+        (token = JSON.parse(window.localStorage.getItem("userCredentials")))
     );
-    // dispatch(getToken(userToken));
-    // dispatch(getUser(userToken));
-    console.log(userToken);
-    // console.log(data.userName);
-    let userNameOtherProfile = data.userName;
-    console.log(userNameOtherProfile);
   }, []);
-  console.log(data);
-  const handleClickFollow = (data) => {
-    //e.preventDefault()
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
-    );
-    console.log(userToken);
-    // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
-    console.log(obj);
-    dispatch(followUser(obj));
-  };
-  const handleClickUnfollow = (data) => {
-    const userToken = JSON.parse(
-      window.localStorage.getItem("userCredentials")
-    );
-    console.log(userToken);
-    // console.log(data.token);
-    let obj = { token: userToken, userNameOtherProfile: data.userName };
-    console.log(obj);
-    dispatch(unfollowUser(obj));
-  };
+
+  var followed = useSelector((state) => state.listFollowed);
 
   return (
-    <>
-      {data.error && <h3>We didnt find any coincidence.</h3>}
+    <div className={styles.containerSearch}>
       <div
-        className="containerSearch"
+        className={styles.containerEachSearch}
         style={{ height: "200px", width: "200px" }}
       >
         {data.title && <h6 color="white"> {data.title}</h6>}
-        {data.album && <img src={data.album.cover} alt="Imagen" />}
-        {data.cover && <img src={data.cover} alt="Imagen" />}
-        {data.name && !data.userName && <h1>{data.name}</h1>}
-        {data.picture && <img src={data.picture} alt="img" />}
+        {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
+        {data.cover && <img src={data.cover_xl} alt="Imagen" />}
+        {data.name && !data.userName && <h1 className={styles.nameDetailsArtist}>{data.name}</h1>}
+        {data.picture_xl && <img className={styles.imgArtist} src={data.picture_xl} alt="img" />}
         {data.userName && (
-          <h1 style={{ marginTop: "2em" }} className="username">
-            @{data.userName}
-          </h1>
-        )}
-        {data.userName && (
-          <div>
-            <Button onClick={() => handleClickFollow(data)}>
-              <FcPlus style={{ width: "3em", height: "3em" }}></FcPlus>
-            </Button>{" "}
-            <Button onClick={() => handleClickUnfollow(data)}>
-              <FaMinusCircle
-                style={{ width: "3em", height: "3em" }}
-              ></FaMinusCircle>
-            </Button>
+          <div
+            id={data.userName}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "15px",
+            }}
+          >
+            <img
+              src={`${api.getPhotoUser}${data.userName}`}
+              alt=""
+              style={{
+                height: "60px",
+                width: "60px",
+                borderRadius: "50%",
+              }}
+            ></img>
+            <Link to={`/profile/${data.userName}`} className={styles.username}>
+              <h4>@{data.userName}</h4>
+            </Link>
+            {followed.some((e) => e.userNameFollowed === data.userName) ? (
+              <Button
+                className={styles.unFollowBtn}
+                onClick={() => {
+                  dispatch(
+                    unfollowUser({ token, unfollowedUsername: data.userName })
+                  );
+                }}
+              >
+                Unfollow
+              </Button>
+            ) : (
+              <Button
+                className={styles.followBtn}
+                onClick={() =>
+                  dispatch(
+                    followUser({ token, followedUsername: data.userName })
+                  )
+                }
+              >
+                Follow
+              </Button>
+            )}
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

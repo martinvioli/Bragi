@@ -39,7 +39,7 @@
   width: 70%;
   height: 70%;
   padding: 1em;
-  background-color: rgba(0, 0, 0, 0.244);
+  background-color: hwb(0 0% 100% / 0.244);
   display: flex;
   justify-content: space-between;
   align-items: center;

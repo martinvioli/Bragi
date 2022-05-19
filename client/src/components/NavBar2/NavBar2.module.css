@@ -1,0 +1,62 @@
+.nav {
+    height: 90px;
+    width: 100%;
+    background-color: #1c1c1c;
+    z-index: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly; 
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.479);
+  }
+  
+  .logoHome{
+    width: 55px;
+    height: 55px;
+    display: flex;
+    color: white;
+    margin-left: 15px;
+  }
+  
+  .logoBragi {
+    width: 115px;
+    height: 125px;
+    margin-top: 10px;
+  }
+
+  .logoSearch {
+    width: 2.5em;
+    height: 2.5em;
+    color: white;
+    margin-right: 0px;
+    padding-right: 10px;
+  }
+  
+  
+  .logoBragi:hover, .logoFriends:hover, .logoHome:hover, .logoOut:hover, .logoProfile:hover, .logoSearch:hover{
+    color: #dd9202;
+  }
+  .home{
+    margin-left: 13px;
+  }
+  .search{
+  margin-left: -15px;
+  }
+  
+ 
+  .home, .logout, .search, .social, .profile{
+    color: white;
+    font-size: 25px;
+    /* color: white; */
+    /* display: flex;
+    justify-content: flex-start;
+    align-self: flex-end;*/
+  } 
+  
+  .h2{
+    display: flex;
+    align-items: baseline;
+  }

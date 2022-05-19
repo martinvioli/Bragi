@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAlbumByID, clearDetails } from "../../redux/actionCreators";
-
+import styles from "./DetailsAlbum.css"
 const DetailsAlbum = () => {
   const id = useParams().id;
   const album = useSelector((state) => state.albumById);
@@ -16,26 +16,23 @@ const DetailsAlbum = () => {
   return (
     <>
       {album && (
-        <div className="container" style={{ color: "white" }}>
-          <h1>TITLE : {album.title}</h1>
-          <a href={album.link}>LINK TO THE ALBUM</a>
-          {/* <h3>Artist : {album.contributors[0].name}</h3> */}
-          <img src={album.cover} alt="" />
-          <h3>Duration : {Math.round(album.duration / 60)} minutes</h3>
-          {/* <h3>Genre : {album.genres.data[0].name}</h3> */}
-          <h3>Number of songs : {album.nb_tracks}</h3>
-          <h3>Release Date : {album.release_date}</h3>
-          <a href={album.tracklist} alt="">
-            Track List
-          </a>
-          {/* {album &&
-            album.tracks.data.map((e) => {
-              return (
-                <div key={e.id}>
-                  <h5>{e.title}</h5>
-                </div>
-              );
-            })} */}
+        <div className="containerDetailAlbum" style={{ color: "white" }}>
+          <img className="imageDetailAlbum" src={album.cover_xl} alt="" />
+          <div className="allTextDetailContainer">
+            <a href={album.link} className="titleDetailAlbum">{album.title}</a>
+            <a className="textDetailAlbum">Duration : {Math.round(album.duration / 60)} minutes</a>
+            <a className="textDetailAlbum">Number of songs : {album.nb_tracks}</a>
+            <a className="textDetailAlbum">Release Date : {album.release_date}</a>
+          </div>
+          <div className="trackListDetailAlbumContainer"> Looking for more info?
+          <a className="trackListDetailAlbum" href={album.link} alt="">Check out the track List</a>
+            <div className="logosDetailAlbumContainer">
+              <img className="imageBragiAlbumDetails" src="https://i.imgur.com/4UBgUvv.png" alt="logo" />
+              <img className="imageDeezerAlbumDetails" src="https://play-lh.googleusercontent.com/r55K1eQcji3QMHRKERq6zE1-csoh_MTOHiKyHTuTOblhFi_rIz06_8GN5-DHUGJOpn79" alt="logo" />
+            </div>
+          <a className="premiumAdtDetailAlbum" alt="">Don´t miss any update from your favorite artist!</a>
+          <button className="premiumAdLinktDetailAlbum" alt="">Go premium now!</button>
+          </div>
         </div>
       )}
     </>

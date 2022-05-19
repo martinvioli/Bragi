@@ -1,0 +1,97 @@
+.container{
+    margin-top: 9em;
+}
+.textAndImg1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em;
+}
+.textAndImg2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em;
+}
+.textAndImg3{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em;
+}
+.img1{
+    margin-right: 1em;
+    width: 14em;
+    height: 15em;
+    border: 5px solid #efb810
+}
+
+.img2{
+    margin-right: 1em;
+    width: 12em;
+    height: 14em;
+    border: 5px solid #efb810
+}
+.img3{
+    margin-right: 1em;
+    width: 12em;
+    height: 16em;
+    border: 5px solid #efb810
+}
+.firstSubtitle{
+    text-align: left;
+    color: #ffff94;
+    margin-left: 1em;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.firstText{
+    text-align: left;
+    color: #d0d0c3;
+    margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.secondSubtitle{
+    text-align: center;
+    color: #ffff94;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.secondText{
+    text-align: left;
+    color: #d0d0c3;
+    margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.thirdSubtitle{
+    text-align: end;
+    color: #ffff94;
+    margin-right: 1em;
+    text-decoration: underline;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.thirdText{
+    text-align: left;
+    color: #d0d0c3;
+    margin-left: 0.5em;
+    font-style: oblique;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* #795300,
+#b28405,
+#efb810,
+#f9db5c,
+#ffff94,
+#dd9202 */

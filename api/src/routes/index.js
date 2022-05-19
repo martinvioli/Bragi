@@ -18,7 +18,10 @@ const postRoutes = require('./Post') ;
 const changeUserType = require('./ChangeUserType');
 const report = require('./Report');
 const reactionHeart = require('./ReactionHeart');
+const pay = require("./Pay");
 const admin = require('./Admin');
+const recoverPassword = require('./RecoverPassword')
+
 
 
 // Importar todos los routers;
@@ -43,5 +46,8 @@ router.use('/post', postRoutes);
 router.use('/changeUserType', changeUserType);
 router.use('/report', report );
 router.use('/reactionHeart', reactionHeart);
+router.use("/pay", pay);
+
 router.use('/admin', admin);
+router.use('/recoverPassword', recoverPassword)
 module.exports = router;

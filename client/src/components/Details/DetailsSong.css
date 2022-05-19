@@ -1,0 +1,125 @@
+.containerDetailsSong{
+    display: flex;
+    flex-direction: column;
+    margin-top: 140px;
+    border: 3px solid #242424;
+    background-color: rgb(24, 24, 24);
+    width: 100%;
+}
+
+.audioAndImgDetailsSong{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.audioDetailsSong{
+    display: flex;
+    width: 615px;
+    background-color: #111111;
+    margin-bottom: 30px;
+    margin-left: -750px;
+
+}
+
+.imageDeezerDetailsSong{
+    display: flex;
+    margin-left: -750px;
+    height: 50%;
+    width: 40%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.textDetailsSong{
+    display: flex;
+    margin-right: 365px;
+    color: #dd9202;
+    margin-left: -750px;
+}
+
+.textDetailsSong:hover{
+    display: flex;
+    color: #f5f5f5;
+    margin-left: -750px;
+    margin-right: 365px;
+    background-color: transparent !important;
+}
+
+
+.textDetailsSongContainer{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    color: white;
+    margin-left: 90px;
+}
+
+.titleDetailsSong{
+    font-size: 40px;
+    color: #dd9202;
+}
+
+.titleDetailsSong:hover{
+    font-size: 40px;
+    color:#f5f5f5;
+    background-color: transparent !important;
+}
+
+
+.durationDetailsSong{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+}
+
+.durationDetailsSong:hover{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+    background-color: transparent !important;
+}
+
+.rankingDetailsSong{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+}
+
+.rankingDetailsSong:hover{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+    background-color: transparent !important;
+}
+
+
+.releaseDetailsSong{
+    font-size: 15px;
+    margin-top: 20px;
+    color: #f5f5f5;
+}
+
+.releaseDetailsSong:hover{
+    font-size: 15px;
+    margin-top: 20px;
+    color: #f5f5f5;
+    background-color: transparent !important;
+}
+
+.songDetailAdsContainer{
+    display: flex;
+    flex-direction: column;
+    align-self:center;
+    margin-top: -350px;
+    margin-bottom: 120px;
+    margin-left: 800px;
+    font-size: 21px;
+    text-align: center;
+}
+
+
