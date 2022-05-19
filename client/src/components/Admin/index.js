@@ -74,6 +74,8 @@ function Admin() {
   const [activeTab, setActiveTab] = useState("1");
   const [userId, setUserId] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const bannedMsg = useSelector((state) => state.banned);
+  const unBannedMsg = useSelector((state) => state.unbanned);
 
   const [input, setInput] = useState({
     plan: "",
@@ -323,7 +325,28 @@ function Admin() {
   };
 
   const handleUnban = async (e) => {
-    dispatch(UnbanUser({ idUser: e.target.name }));
+    // dispatch(UnbanUser({ idUser: e.target.name }));
+    try {
+      const response = await axios.post(api.unbanUser, {
+        idUser: e.target.name,
+      });
+      Swal.fire({
+        title: response.data.msg,
+        confirmButtonColor: "#dd9202",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+      // alert(response.data.msg);
+    } catch (error) {
+      Swal.fire({
+        title: error.response.data.msgE,
+        confirmButtonColor: "#dd9202",
+      });
+      // window.location.reload();
+      // alert(error.response.data.msgE);
+    }
   };
 
   async function handleClick(e) {
@@ -940,14 +963,33 @@ const HandleBan = ({ showModal, handleShowModal }) => {
   });
   const dispatch = useDispatch();
   const causesOfReport = useSelector((state) => state.causesOfReport);
+  const bannedMsg = useSelector((state) => state.banned);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const ban = {
-      idUser: idUser,
-      causeBan: input.causeBan,
-    };
-    dispatch(banUser(ban));
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const ban = {
+        idUser: idUser,
+        causeBan: input.causeBan,
+      };
+      // dispatch(banUser(ban));
+      const response = await axios.post(api.banUser, ban);
+
+      Swal.fire({
+        title: response.data.msg,
+        confirmButtonColor: "#dd9202",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
+    } catch (error) {
+      Swal.fire({
+        title: error.response.data.msgE,
+        confirmButtonColor: "#dd9202",
+      });
+      // window.location.reload();
+    }
   };
   const handleClick = () => {
     handleShowModal();
