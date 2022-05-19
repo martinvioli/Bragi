@@ -363,6 +363,15 @@ class UserClass {
         return res.status(404).json({msgE: "Premium plan not found"});
       }
       const today = new Date();
+      let monthsPlan = premiumPlanFound.dataValues.numberOfMonths;
+      let months = 0;
+      let year = 0;
+      if((monthsPlan + today.getMonth()) > 12){
+        year += 1;
+        months = (monthsPlan + today.getMonth()) - 12 + 1
+      }else{
+        months = today.getMonth() + 1;
+      }
       const membershipUser = await MembershipUser.create({
         statePlan: "Active",
         dateStart:
@@ -374,9 +383,9 @@ class UserClass {
         dateExpiry:
           today.getDate() +
           "-" +
-          (today.getMonth() + premiumPlanFound.dataValues.numberOfMonths) +
+          (months) +
           "-" +
-          today.getFullYear(),
+          (today.getFullYear() + year),
       });
       premiumPlanFound.addMembershipUser(membershipUser);
       membershipUser.addUser(userFoundDB);
@@ -451,6 +460,7 @@ class UserClass {
       return res.status(500).json({ message: error.message });
     }
   };
+  
   justificationForBecomingAnArtist = async (req, res) => {
     const {userName, email, reason} = req.body;
     try {
