@@ -63,6 +63,21 @@ function Profile(props) {
     const userToken = JSON.parse(userCredentials);
     setToken(userToken);
     dispatch(getUser(userToken));
+
+    if (user.stateUser === "Banned") {
+      Swal.fire({
+        title: "🔨",
+        text: "You have been banned.",
+        icon: "error",
+        cancelButtonText: "Close",
+        cancelButtonColor: "#E74C3C ",
+        showCancelButton: true,
+        showConfirmButton: false,
+      });
+      window.localStorage.removeItem("userCredentials");
+      navigate("/");
+    }
+
     // if (!user.name) {
     //   navigate("/");
     // }

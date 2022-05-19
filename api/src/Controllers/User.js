@@ -290,6 +290,12 @@ class UserClass {
       const userFoundDB = await User.findOne({
         where: { [Op.or]: [{ userName: userName }, { email: email }] },
       });
+      if (userFoundDB.dataValues.nameStateUser === "Banned") {
+        return res.status(200).json({
+          msgE: "You are banned, contact the bragi team: BragiSystem@gmail.com",
+          nameStateUser: "Banned",
+        });
+      }
       const token = jwt.sign(
         {
           userName: userFoundDB.userName,
@@ -362,12 +368,10 @@ class UserClass {
         where: { userName: userName },
       });
       console.log(userToArtist);
-      return res
-        .status(200)
-        .json({
-          msgE: "User updated to Artist",
-          token: userToArtist.dataValues.token,
-        });
+      return res.status(200).json({
+        msgE: "User updated to Artist",
+        token: userToArtist.dataValues.token,
+      });
     } catch (error) {
       return res.status(501).json(error.message);
     }
