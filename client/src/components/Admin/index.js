@@ -74,6 +74,8 @@ function Admin() {
   const [activeTab, setActiveTab] = useState("1");
   const [userId, setUserId] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const bannedMsg = useSelector((state) => state.banned);
+  const unBannedMsg = useSelector((state) => state.unbanned);
 
   const [input, setInput] = useState({
     plan: "",
@@ -323,7 +325,16 @@ function Admin() {
   };
 
   const handleUnban = async (e) => {
-    dispatch(UnbanUser({ idUser: e.target.name }));
+    // dispatch(UnbanUser({ idUser: e.target.name }));
+    try {
+      const response = await axios.post(api.unbanUser, {
+        idUser: e.target.name,
+      });
+
+      alert(response.data.msg);
+    } catch (error) {
+      alert(error.response.data.msgE);
+    }
   };
 
   async function handleClick(e) {
@@ -940,14 +951,22 @@ const HandleBan = ({ showModal, handleShowModal }) => {
   });
   const dispatch = useDispatch();
   const causesOfReport = useSelector((state) => state.causesOfReport);
+  const bannedMsg = useSelector((state) => state.banned);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const ban = {
-      idUser: idUser,
-      causeBan: input.causeBan,
-    };
-    dispatch(banUser(ban));
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const ban = {
+        idUser: idUser,
+        causeBan: input.causeBan,
+      };
+      // dispatch(banUser(ban));
+      const response = await axios.post(api.banUser, ban);
+
+      alert(response.data.msg);
+    } catch (error) {
+      alert(error.response.data.msgE);
+    }
   };
   const handleClick = () => {
     handleShowModal();
