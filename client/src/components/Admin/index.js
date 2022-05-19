@@ -46,6 +46,7 @@ import {
   deletePlansPremiums,
   getToken,
   getUser,
+  cashFlow,
 } from "../../redux/actionCreators";
 import { FcFullTrash, FcLink } from "react-icons/fc";
 import api from "../../Utils";
@@ -67,6 +68,7 @@ function Admin() {
   const causesOfReport = useSelector((state) => state.causesOfReport);
   const premiumPlans = useSelector((state) => state.premiumPlans);
   const token = useSelector((state) => state.token);
+  const getCashFlow = useSelector((state) => state.getCashFlow);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("1");
@@ -116,6 +118,7 @@ function Admin() {
     dispatch(getAllBannedUsers());
     dispatch(getAllCausesofReport());
     dispatch(getPremiumPlan());
+    dispatch(cashFlow());
   }, []);
 
   const handleDelete = (e) => {
@@ -553,6 +556,16 @@ function Admin() {
                       </Col>
                     ))}
                   <div className={styles.plansPremiums}>
+                    <div className={styles.square}>
+                      <h1>Total</h1>
+                      {Object.entries(getCashFlow).length ? (
+                        <h1 className={styles.totalCash}>
+                          ${getCashFlow.totalAmountOfMoney}
+                        </h1>
+                      ) : (
+                        <h1>$0</h1>
+                      )}
+                    </div>
                     <div className={styles.modifyPlan}>
                       <Form onSubmit={(e) => handleSubmitModifyPlans(e)}>
                         <h4 style={{ color: "red" }}>Modify Plans Premiums</h4>

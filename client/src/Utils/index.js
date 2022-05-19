@@ -170,6 +170,7 @@ const api = {
   payment: "http://localhost:3001/pay/sub",
   aprobedPayment: "http://localhost:3001/",
   whyArtist: "http://localhost:3001/changeUserType/emailReasonToArtist",
+  getCashFlow: "http://localhost:3001/admin/premiumPlan/getCashFlow",
 };
 
 // created and updated at 18/05/2022
@@ -270,6 +271,8 @@ const apiDeploy = {
   aprobedPayment: "https://bragiproject.herokuapp.com/",
   whyArtist:
     "https://bragiproject.herokuapp.com/changeUserType/emailReasonToArtist",
+  getCashFlow:
+    "https://bragiproject.herokuapp.com/admin/premiumPlan/getCashFlow",
 };
 
 export default api;
