@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, Label } from "reactstrap";
+import { Button, Form, Input, Label } from "reactstrap";
 import { whyArtist } from "../../redux/actionCreators";
 import api from "../../Utils";
+import { useNavigate } from "react-router-dom";
 
 const WhyPay = () => {
   // const responseToArtist = useSelector((state) => state.responseToArtist);
+
+  var navigate = useNavigate();
 
   const [input, setInput] = useState({
     reason: "",
@@ -31,6 +34,7 @@ const WhyPay = () => {
         userName: "",
         email: "",
       });
+      navigate("/");
     } catch (error) {
       alert(error.response.data.msgE);
       setInput({
@@ -97,6 +101,8 @@ const WhyPay = () => {
               border: "2px solid #dd9202",
             }}
           />
+          <br></br>
+          <Button onClick={() => navigate("/")}>Back</Button>
         </Form>
       </div>
     </>

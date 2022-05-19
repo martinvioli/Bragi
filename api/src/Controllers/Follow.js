@@ -46,6 +46,7 @@ class Follow {
         //busco en la tabla Followed para ver si ya el user 1 sigue al usuario
         where: {
           userProfileFollowed: userFwed.dataValues.idUser,
+          UserIdUser: userFwer.dataValues.idUser,
         },
       });
       if (userFollower) {
