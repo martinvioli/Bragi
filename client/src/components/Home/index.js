@@ -159,7 +159,7 @@ function Home() {
   }, [user]);
 
   return (
-    <div>
+    <div className={`${styles.allDivContainer}`}>
       {show ? (
         <div className={`${styles.divContainer}`}>
           <div className={`${styles.inputContainer}`}>
@@ -230,20 +230,17 @@ function Home() {
                     <Link
                       className={styles.linkHomeSong}
                       to={`/song/${e.id}`}
-                      style={{ display: "inline-block", color: "#f5f5f5" }}
                     >
                       <div
                         className={`${styles.searchData}`}
                         key={e.id}
-                        style={{
-                          display: "inline-block",
-                        }}
                       >
                         <SearchData data={e} key={e.id} />
                       </div>
                     </Link>
                   );
                 })}
+                {console.log(song)}
               {album &&
                 album.map((e) => {
                   return (
@@ -251,7 +248,10 @@ function Home() {
                       className={styles.linkHomeAlbum}
                       to={`/album/${e.id}`}
                     >
-                      <div key={e.id} style={{ display: "inline-block" }}>
+                      <div 
+                      className={`${styles.searchData}`}
+                      key={e.id}
+                      >
                         <SearchData data={e} />
                       </div>
                     </Link>
@@ -262,7 +262,7 @@ function Home() {
                   if (e.id !== undefined) {
                     return (
                       <Link to={`/artist/${e.id}`}>
-                        <div className="artistDiv" key={e.id}>
+                        <div className={`${styles.searchData}`} key={e.id}>
                           <SearchData data={e} />
                         </div>
                       </Link>

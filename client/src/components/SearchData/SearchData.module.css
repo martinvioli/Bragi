@@ -1,33 +1,67 @@
 .containerSearch{
+    display: flex;
+    border: 3px solid #242424;
+    background-color: rgb(24, 24, 24);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 670px;
+    height: 130px;
+    border-radius: 2px;
+}
+
+.containerSearch:hover{
+    display: flex;
+    flex-direction: row;
+    border: 3px solid #242424;
+    background-color: rgb(24, 24, 24);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 700px;
+    height: 150px;
 }
 
 .containerEachSearch{
-    border-radius: 10px;
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 100px;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    box-shadow: none ! important;
-    background-color: transparent !important;
 }
 
 .containerEachSearch:hover{
-    border-radius: 10px;
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 100px;
     display: flex;
-    align-items: center;
+}
+
+.imgSongSearchData{
+    display: flex;
+    width: 25%;
+    height: 100%;
+    border-top-left-radius: 2px;
+}
+
+.imgSongSearchData:hover{
+    display: flex;
+}
+
+.songTextContainer{
+    display: flex;
     flex-direction: column;
-    box-shadow: none ! important;
-    background-color: transparent !important;
+}
+
+.songtitleSearchData{
+    display: flex;
+    color: #dd9202;
+    font-size: 25px;
+    margin-left: 20px;
+}
+
+.songArtistSearchData{
+    display: flex;
+    margin-left: 20px;
+    font-size: 15px;
 }
 
 .searchTitle{
-    display: flex;
-    background-color: transparent !important;
+
 }
 
 .searchTitle:hover{
@@ -70,35 +104,23 @@
 }
 
 .nameDetailsArtist{
-    position: absolute;
     display: flex;
-    margin-left: 1450px;
-    color: #f5f5f5;
+    color: #dd9202;
+    font-size: 25px;
+    margin-left: 20px;
 }
 
 .nameDetailsArtist:hover{
-    position: absolute;
-    display: flex;
-    margin-left: 1450px;
-    color: #f5f5f5;
-    background-color: transparent !important;
+
 }
 
 .imgArtist{
     display: flex;
-    margin-left: 1450px;
-    margin-top: 60px;
-    position: absolute;
-    height: 200px;
-    width: 200px;
+    width: 25%;
+    height: 100%;
+    border-top-left-radius: 2px;
 }
 
 .imgArtist:hover{
-    display: flex;
-    margin-left: 1450px;
-    margin-top: 60px;
-    position: absolute;
-    height: 200px;
-    width: 200px;
-    background-color: transparent !important;
+
 }

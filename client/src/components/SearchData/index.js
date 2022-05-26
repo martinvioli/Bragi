@@ -29,13 +29,17 @@ function SearchData({ data }) {
     <div className={styles.containerSearch}>
       <div
         className={styles.containerEachSearch}
-        style={{ height: "200px", width: "200px" }}
       >
-        {data.title && <h6 color="white"> {data.title}</h6>}
-        {data.album && <img src={data.album.cover_xl} alt="Imagen" />}
-        {data.cover && <img src={data.cover_xl} alt="Imagen" />}
-        {data.name && !data.userName && <h1 className={styles.nameDetailsArtist}>{data.name}</h1>}
+        {console.log(data)}
         {data.picture_xl && <img className={styles.imgArtist} src={data.picture_xl} alt="img" />}
+        {data.album && <img className={styles.imgSongSearchData} src={data.album.cover_xl} alt="Imagen" />}
+        {data.cover && <img className={styles.imgSongSearchData} src={data.cover_xl} alt="Imagen" />}
+        <div className={styles.songTextContainer}>
+        {data.title && <h6 className={styles.songtitleSearchData} color="white"> {data.title}</h6>}
+        {data.type === "track" && <h6 className={styles.songArtistSearchData} color="white"> {data.artist.name}</h6>}
+        {data.type === "album" && <h6 className={styles.songArtistSearchData} color="white"> {data.artist.name}</h6>}
+        </div>
+        {data.name && !data.userName && <h1 className={styles.nameDetailsArtist}>{data.name}</h1>}
         {data.userName && (
           <div
             id={data.userName}
