@@ -183,4 +183,4 @@ const api = {
     "https://bragiproject.herokuapp.com/admin/premiumPlan/getCashFlow",
 };
 
-export default apiLocale;
+export default api;
